@@ -19,6 +19,7 @@ homedir=(
     tmux.conf
     pinforc
     Xdefaults{,.d}
+    gitconfig
 )
 
 files=(
