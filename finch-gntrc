@@ -1,0 +1,47 @@
+
+[general]
+mouse = 1
+wm = /usr/lib/gnt/irssi.so
+#small-button = true
+
+[GntWM::binding]
+#c-a-n = window-next 
+
+[colorpairs]
+normal = white; normal
+highlight = green; black
+highlightd = red; black
+shadow = blue; normal
+#title in taskbar and window
+title = red; black
+titled = green; black
+# a focues textbox
+text = red; black
+#textd = red; black
+disabled = gray; black
+# when a new message appears
+urgent = black; red
+
+# default colorpairs
+#[colorpairs]
+#normal = white; black
+#highlight = white; blue
+#highlightd = black; gray
+#shadow = black; darkgray
+#title = white; blue
+#titled = white; gray
+#text = white; blue
+#disabled = gray; black
+#urgent = green; black
+
+
+
+# For the irssi window manager
+[Irssi::binding]
+a-L = move-right
+a-H = move-left
+a-J = move-down
+a-K = move-up
+
+
+
