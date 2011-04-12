@@ -1,0 +1,5 @@
+
+# key bindings
+map <PageUp> navigate previous
+map <PageDown> navigate next
+
