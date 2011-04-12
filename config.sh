@@ -13,6 +13,11 @@ function array2str() {
 homedir=(
     bashrc
     bash.d
+    screenrc
+    vimrc
+    calcrc
+    tmux.conf
+    pinforc
     Xdefaults{,.d}
 )
 

@@ -1,0 +1,11 @@
+/*
+vim: ft=c
+*/
+PI = pi(0.000000000000000001)
+Pi = PI
+pi = PI
+e = exp(1)
+
+
+define binom(n,k) { return n! / k! / (n-k)! ; }
+

@@ -1,0 +1,35 @@
+
+startup_message off
+bell_msg '^GBell in Fenster: %n'
+vbell off
+
+term        "screen-256color"
+
+# An alternative hardstatus to display a bar at the bottom listing the
+# windownames and highlighting the current windowname in blue. (This is only
+# enabled if there is no hardstatus setting for your terminal)
+hardstatus on
+#hardstatus alwayslastline
+hardstatus ignore 
+#hardstatus string "%{w}%-w%{.rW}%n %t%{-}%+w %=%{..G} %H %{..Y} %m/%d %C%a "
+# version 1.0 with [] brackets and spaces
+#hardstatus string "%{= y}%-w%{= W}[%{=b G}%n %t%{= W}]%{= y}%+w%=%{= W}[%{= R}%H%{= W}] [%{= Y}%Y-%m-%d%{= W}] [%{= B}%c%{= b}:%s%{= W}]"
+
+
+caption always
+# caption with focus indicator: []= next to hostname
+#caption string "%{= y}%-w%{= W}[%{=b G}%n %t%{= W}]%{= y}%+w%=%?%F[]= %?%{= W}[%{= R}%H%{= W}] [%{= Y}%Y-%m-%d%{= W}] [%{= B}%c%{= b}:%s%{= W}]"
+# caption with focus indicator: active task is green
+# classic:
+#caption string "%{= y}%-w%{=b W}[%?%F%{=b G}%:%{= y}%?%n %t%{=b W}]%{= y}%+w%=%{=b W}[%{=b R}%H%{=b W}] [%{=b Y}%Y-%m-%d%{=b W}] [%{= B}%c%{=b b}:%s%{=b W}]"
+# pwmt-a bit more tabbed feeling
+caption string "%{= .kR} %H%{= d}:> %{= G}%-w%{+ dd}%{= y} (%{= r}%n %{= d}%t%{-}%{-}) %{-}%{-}%+w %= %{= kd} (%{= Y}%Y-%m-%d%{-}) (%{= b}%c%{= d}) "
+
+
+# version 2.0 with round blue () brackets
+# hardstatus string "%{= B}-(%{= g}%-w%{= G}%n %t%{= g}%+w%{= B})--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------%-35=%{= B}(%{= R}%H%{= B})-(%{= y}%Y-%m-%d%{= B})-(%{= M}%c:%s%{= B})---------"
+
+# version 3.0 with many ____/corners\___
+#hardstatus string "%{=b B}_/%{= g}%-w%{=b G}%n %t%{= g}%+w%{=b B}\________________________________________________________________________________________________________________________________________________________________________________________________________%-35=%{=b B}/%{=b R}%H%{=b B}\_/%{=b Y}%Y-%m-%d%{=b B}\_/%{=b M}%c:%s%{=b B}\________-"
+
+
