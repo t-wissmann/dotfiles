@@ -1,0 +1,17 @@
+Xft.dpi:                96
+Xft.antialias:          true
+Xft.hinting:            true
+Xft.hintstyle:          hintfull
+Xft.rgba:               rgb
+
+Xcursor.theme:          Classic-White
+#xterm*boldFont: xft:mono:bold:antialias=false:pixelsize=10
+#xterm*font:             xft:mono:bold:antialias=false:size=9
+xterm*font: -*-fixed-*-*-*-*-*-200-*-*-*-*-*
+xterm*boldFont: -*-fixed-*-*-*-*-*-200-*-*-*-*-*
+xterm.reverseVideo:     true
+xterm.scrollBar:        false
+xterm.transparent:      false
+xterm*foreground: white
+xterm*background: black
+

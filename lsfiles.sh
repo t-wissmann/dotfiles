@@ -3,13 +3,8 @@
 # list all relevant files for specified hostname
 hostname="$1"
 
-files=(
-    bashrc
-    bash.d
-    Xdefaults
-    ncmpcpp-config
-    config/*
-)
+gitdir="$HOME/dotfiles"
+source "$gitdir/config.sh"
 
 for i in ${!files[@]} ; do
     echo "${files[$i]}"

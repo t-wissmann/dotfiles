@@ -1,0 +1,46 @@
+! --------------------------------------------------
+! file: ~/.Xdefaults
+! author: thorsten wssman
+! modified: February 2009
+! vim: nu:ai:si:et:ts=4:sw=4:ft=xdefaults
+! --------------------------------------------------
+
+
+!!! nice tango color theem
+urxvt*background: #202020
+urxvt*foreground: #EDEDED
+! Black (not tango) + DarkGrey
+xterm*background: #202020
+xterm*foreground: #EDEDED
+! Black (not tango) + DarkGrey
+!urxvt*color0:  #596569
+urxvt*color0:  #202021
+!xterm*color0:  #596569
+xterm*color0:  #202020
+*color8:  #C3A4B9
+!*color8:  #202021
+! DarkRed + Red
+*color1:  #F59B5B
+*color9:  #F24F4F
+! DarkGreen + Green
+*color2:  #77A44A
+*color10: #C3EF98
+! DarkYellow + Yellow
+*color3:  #F4E35C
+*color11: #F6EDA5
+! DarkBlue + Blue
+*color4:  #74A4B8
+*color12: #A6D7EB
+! DarkMangenta + Mangenta
+*color5:  #C08197
+*color13: #D6A8B1
+!DarkCyan + Cyan (both not tango)
+*color6:  #2C9DB4
+*color14: #AEF4C0
+! LightGrey + White
+!*color7:  #E8E8E8
+*color7:  #444444
+*color15: #FFFFFF
+
+
+

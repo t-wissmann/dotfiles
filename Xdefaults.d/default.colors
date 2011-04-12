@@ -1,0 +1,26 @@
+! --------------------------------------------------
+! vim: nu:ai:si:et:ts=4:sw=4:ft=xdefaults
+! --------------------------------------------------
+
+! with white background
+urxvt*background: white
+urxvt*foreground: black
+*color0: black
+*color1: red3
+*color2: green3
+*color3: yellow3
+*color4: blue2
+*color5: magenta3
+*color6: cyan3
+*color7: gray90
+*color8: gray50
+*color9: red
+*color10: green
+*color11: yellow
+*color12: rgb:5c/5c/ff
+*color13: magenta
+*color14: cyan
+*color15: white
+
+
+

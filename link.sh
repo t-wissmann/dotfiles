@@ -1,37 +1,9 @@
 #!/bin/bash
 
-# functions
-function array2str() {
-    local arrayname="$1"
-    local isfirst=1
-    for i in $(eval "echo \${!$arrayname[@]}") ; do
-        [ $isfirst = 1 ] && isfirst=0 || echo -n '\|'
-        eval "echo -n \${$arrayname[$i]}"
-    done
-}
-
 
 # settings
 gitdir="$HOME/dotfiles"
-
-homedir=(
-    bashrc
-    bash.d
-    Xdefaults
-)
-
-color_skip="\e[0;1;41m"
-color_source="\e[0m\e[1;36m"
-color_target="\e[0m\e[0;34m"
-color_default="\e[0m"
-color_link="\e[0m\e[0;32m"
-
-relpath2target=(
-    # just a list of sed commands
-    "s#^\($(array2str homedir)\)\$#$HOME/.\1#"
-    "s#^config/\(.*\)\$#$HOME/.config/\1#"
-    "s#^ncmpcpp-config#$HOME/.ncmpcpp/config#"
-)
+source "$gitdir/config.sh"
 
 dryrun="${dryrun:-1}" # 0 for real run
 
@@ -68,7 +40,8 @@ function create_link() {
                  "${color_default}because ${color_target}$targetpath" \
                  "${color_default}is real file"
     else
-        echo -e "$color_link LINKING  $color_source $origfile" \
+        origfile_aligned=$(printf "%${origfile_width}s" "$origfile")
+        echo -e "$color_link LINKING  $color_source $origfile_aligned" \
                 "$color_link=> $color_target$targetpath$color_default"
         [ "$dryrun" = 0 ] && ln -f -s "$absolutepath" "$targetpath" || return 1
     fi
@@ -76,11 +49,17 @@ function create_link() {
 }
 
 
-for i in $* ; do
-    i=$(echo "$i"|sed "s#/*\$##") # remove all slashes at the end
-    create_link "$i"
-done
-
+if [ "$1" = "-" ] ; then
+    while read i ; do
+        i=$(echo "$i"|sed "s#/*\$##") # remove all slashes at the end
+        create_link "$i"
+    done
+else
+    for i in $* ; do
+        i=$(echo "$i"|sed "s#/*\$##") # remove all slashes at the end
+        create_link "$i"
+    done
+fi
 
 exit 0
 
