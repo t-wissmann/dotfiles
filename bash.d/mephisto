@@ -1,0 +1,30 @@
+#!/bin/bash
+
+### CIP alias
+alias cds='cd `date +/local.stand/adm/syslog/%Y/%m/%d/`'
+alias cdcf="cd /var/cfengine"
+alias cds='cd `date +/local.stand/adm/syslog/%Y/%m/%d/`'
+alias cdyp="cd /local/adm/yp/informatik.uni-erlangen.de-master"
+alias ppkeys="rm -f /var/cfengine/ppkeys/root-* && ssh faui02 'rm -f /var/cfengine/ppkeys/root-*'"
+export LOGNAME="re06huxa"
+### PATH
+PATH="$PATH:/opt/csw/bin:/usr/sfw/bin:/local/gnu-utils/bin:/opt/SUNWspro/bin:/usr/openwin/bin:/usr/dt/bin:/local/openwin+/bin"
+PATH="$PATH:/local/cipadm/bin:/local/adm/bin"
+
+### settings
+export EDITOR='vim'
+### common aliases
+alias ls='ls --color=auto'
+alias ll='ls -l --color=auto'
+alias la='ls -a --color=auto'
+alias :r='source ~/.bashrc'
+alias cscreen='/local/console/bin/cscreen'
+
+
+### git settings
+export GIT_AUTHOR_NAME="Thorsten Wissmann"
+export GIT_AUTHOR_EMAIL="re06huxa@stud.informatik.uni-erlangen.de"
+
+
+
+

@@ -1,0 +1,99 @@
+#/bin/bash
+# this is: ~/.bash_aliases
+
+alias ll='/bin/ls --color=auto -lah'
+alias ls='ls -B --color=auto'
+alias :q='exit'
+function :w() {
+  echo -n "Nothing to write, you are in bash ... "
+  sleep 0.7
+  echo "FOOL!"
+}
+alias :wq='exit'
+alias :r='MPD_Profile= source ~/.bashrc'
+alias sl='ls --color=auto|rev'
+alias beep="echo -ne '\a'"
+alias vitmp="vi ~/.tmp.text && cat ~/.tmp.text"
+alias 2ixio="curl -n -F 'f:1=<-' http://ix.io"
+#alias info='info --vi-keys'
+alias info='pinfo'
+
+alias ..='cd ..'
+alias ...='cd ../..'
+
+alias ctris='ctris -c'
+
+function visrc() {
+   vi -p $(ls|grep -v '~'|sort -r)
+}
+
+alias flashselect='~/scripts/totem/videoselect.sh'
+alias luakit='LD_PRELOAD=~/dev/c/libnounlink/libnounlink.so.1.0.1 luakit'
+
+# clipboard
+alias 2clipboard='xclip -selection clipboard'
+# add colors in grep
+export GREP_COLOR="1;33"
+export GREP_COLORS="mc=1;33"
+alias amute='amixer -q sset Master toggle'
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias igr='grep -i --color=auto'
+alias weather='~/scripts/utils/bashweather.sh'
+alias wg='weatherget -ms GMXX5767'
+alias wgf='weatherget -ms GMXX5767 -e 3'
+#alias myip='wget -q -O - http://www.whatismyip.de|grep "class=\"f30\""|grep -oE "[0-9]\{1,3\}" '
+alias awesome-restart="echo 'awesome.restart()'|awesome-client"
+alias xmonad-restart="echo compiling... && xmonad --recompile && echo restarting... && xmonad --restart"
+alias uzbl_connect='uzbl-core --connect-socket ~/.cache/uzbl/event_daemon'
+function uzbl() {
+    uzbl-core --connect-socket ~/.cache/uzbl/event_daemon $@ 2> /dev/null
+}
+alias trm='echo -e "$(calcurse -r7|sed -r '\''s/\t/\\e[1;32m        /;s/^/\\e[0m/;s/([0-9]{2})\/([0-9]{2})\/([0-9]{2})/\\e[1;34m\2. \1. '$(date +%C)'\3/'\'')"'
+
+
+# things for university
+alias gcc.icpc='gcc -Wall -O2 -g -static -lm'
+alias g++.icpc='g++ -Wall -O2 -g -static'
+alias gcc.sp='gcc -std=c99 -pedantic -D_XOPEN_SOURCE=600 -Wall -Werror'
+alias beamer='~/scripts/utils/beamer.sh'
+alias mensa='w3m -dump http://www.studentenwerk.uni-erlangen.de/verpflegung/de/sp-er-sued.shtml |grep -A2 -E $(date +%d.%m.%y)\|$(date -d today+1days +%d.%m.%y)'
+alias innenstadtmensa='w3m -dump http://www.studentenwerk.uni-erlangen.de/verpflegung/de/sp-er-langemarck.shtml|grep -A1 -B1 $(date +%d.%m.%y)'
+
+# system things
+alias df='df -h'
+alias yogurt='yaourt'
+alias pacman='pacman-color'
+alias wch='weechat-curses'
+alias rc.d.sudo='sudo /root/rc.d'
+alias loadprivatealiases='source ~/.bash_private'
+which ncmatrix > /dev/null 2> /dev/null && alias ncmatrix='ncmatrix -b'
+#alias wol.ameise='wol 00:01:02:B1:96:44' # 3com-karte(war original verbaut).... wol klappt "einfach" nicht
+alias wol.ameise='wol 00:02:B3:88:F8:E0' # intelbootagent-karte wol klappt "einfach" :D
+alias wol.piggy='wol -h 10.202.63.123 00:40:63:c4:e6:c7'
+alias tclock='tty-clock -c -s -C 3'
+
+alias mplayer.console='mplayer -framedrop -really-quiet -vo caca'
+alias setwallpaper='~/scripts/bg-control/setbg.sh'
+
+alias abook='~/dev/c/abook/abook/abook'
+
+# mail things
+alias cm="fetchmail && ~/scripts/mail/countmails.sh"
+alias plan="vim ~/uni/current/stundenplan/tabelle"
+[ -f ~/scripts/utils/colors.sh ] && alias lscolors="~/scripts/utils/colors.sh"
+alias newmail='unison -batch mail && mutt -Z'
+alias mutt='setWindowTitle mutt && mutt'
+
+# cip stuff
+alias sm='ssh -i ~/.ssh/id_rsa_mephisto mephisto'
+alias sms='ssh -t -i ~/.ssh/id_rsa_mephisto mephisto bash -l -c screen\\ -r'
+alias cipmutt='mutt -F ~/.mutt/cipmuttrc'
+alias arbeitarbeit='TERM=rxvt-unicode ssh -t arbeit bash -l -c tmux\\ -S\\ tmux/asdf\\ attach-session'
+alias ameise.ncmpcpp='ssh -t ameise bash -l -c ncmpcpp'
+alias q3='quake3 +set r_fullscreen 1 +set r_customheight "1024" +setr_customwidth "1280" +set r_mode "-1" +connect u'
+
+# for reminder
+[ -f ~/.reminders.d/functions.sh ] && source ~/.reminders.d/functions.sh
+

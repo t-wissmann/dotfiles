@@ -1,0 +1,186 @@
+#!/bin/bash
+
+# TODO:
+#export TERM=xterm
+alias tmux='tmux -S ~/tmux/asdf'
+
+# set dmenu-command
+#export dmenu_command="dmenu -i -nb #202020 -nf #d4d4d4 -sb #D0EEB1 -sf #202020 -fn -*-profont-*-*-*-*-12-*-*-*-*-*-*-*"
+# requires dmenu-vertical-xft
+export dmenu_command="dmenu -i -nb #202020 -nf #d4d4d4 -sb #202020 -sf #B1D631 -fn xft:ProFont:pixelsize=14 -ni"
+export dmenu_command="$HOME/bin/dmenu -b -i -nb #141414 -nf #efefef -sb #9FBC00 -sf #232323 -fn 'xft:BitstreamVeraSans:bold:pixelsize=11' -ni"
+export dmenu_lines="20"                                                                              
+
+BROWSER="iceweasel -P stable"
+
+BOOKMARKS=(
+    home   ~
+    ciptmp /proj/ciptmp/re06huxa/
+    bfs    ~/uni/10WS/BFS
+    mathe  ~/uni/10WS/MatheC3
+    )   
+# mpd profiles
+# settings vor mpd are (currently) not needed
+
+alias gcc.icpc='gcc -Wall -O2 -g -static -lm'
+alias gcc.sp='gcc -std=c99 -pedantic -D_XOPEN_SOURCE=600 -Wall -Werror'
+
+alias q3='/local/q3/bin/q3 +set r_fullscreen 1 +set r_customheight "1200" +setr_customwidth "1920" +set r_mode "-1" +connect u'
+alias pizza='[ -e pizza.$(date +%Y-%m-%d) ] || echo pizza bestellung fuer pizza am $(date +%Y-%m-%d) >> pizza.$(date +%Y-%m-%d) && vim pizza.$(date +%Y-%m-%d)'
+alias lastpizza='vim $(find ~ -maxdepth 1|grep 'pizza\.'|grep -v \~\$|grep -v \.swp\$|sort|tail -1)'
+
+PATH="/local/awesome/bin:$PATH:/local/bin"
+
+if [ -d "$HOME/bin" ] ; then
+    PATH="$PATH:$HOME/bin"
+fi
+export PATH
+
+function git.publish(){(
+    if [ "$1" = public ] ; then echo "Cant publish public dir" ; exit 1 ; fi
+    if ! [ -d "$HOME/git/$1" ] || [ -z "$1" ] ; then echo "Dir ~/git/$1 does not exist" ; exit 1 ; fi
+    # enter git dir
+    echo '==>' entering public git dir &&
+    cd ~/git/public &&
+    # create bare copy to git/public
+    echo '::' creating a bare clone && 
+    git clone --bare ~/git/$1 $1 &&
+    echo '::' allow others to do git pull &&
+    touch $1/git-daemon-export-ok && # make it availible to others
+    echo '==>' entering new public git repo &&
+    cd $1/ && 
+    echo '::' setting default configuration &&
+    git config push.default matching &&
+    #echo current > $1.git/push.default && # make it availible to others
+    echo '==>' entering original repo &&
+    cd ~/git/$1 &&
+    echo '::' adding gitweb as remote repo if necessesary &&
+    (git remote show|grep gitweb && echo already exists || git remote add gitweb ~/git/public/$1) && # enter gitweb as default repo to push to
+    echo '::' copying description &&
+    cp ~/git/$1/.git/description ~/git/public/$1/description &&
+    true || exit 1
+)}
+
+alias sm='ssh -i ~/.ssh/id_rsa_mephisto mephisto'
+alias sms='ssh -t -i ~/.ssh/id_rsa_mephisto mephisto bash -l -c screen\\ -r'
+#alias sa='ssh -t thorstenwissmann@roethelheim.net bash -l -c "ssh\\ -t\\ thorsten@172.17.29.12"'
+alias sa='ssh ameise'
+#alias irc='ssh -t thorstenwissmann@roethelheim.net bash -l -c "ssh\\ -t\\ thorsten@172.17.29.12\\ bash\\ -l\\ -c\\ \\\\\\\"screen-reconnect.sh\\ irc\\\\\\\""'
+alias irc='ssh -t ameise bash -l -c "/home/thorsten/bin/screen-reconnect.sh\\ irc"'
+alias icq='ssh -t ameise bash -l -c "/home/thorsten/bin/screen-reconnect.sh\\ finch"'
+#alias finch='ssh -t thorstenwissmann@roethelheim.net bash -l -c "ssh\\ -t\\ thorsten@172.17.29.12\\ bash\\ -l\\ -c\\ \\\\\\\"screen-reconnect.sh\\ finch\\\\\\\""'
+
+alias cm=~/scripts/checkmail.sh
+
+
+promptline='\[\e[0;33m\]'
+promptinput='\[\e[0m\]'
+PS1=$promptline'┌─(\[\e[0;31m\]\u'$promptline')─(\[\e[0;34m\]\w'$promptline')─(\[\e[0;32m\]\h'$promptline')\n'$promptline'└╼ '$promptinput$XTERM_TITLE
+
+
+PATH="$PATH:/local/cipadm/bin:/local/adm/bin:/opt/SUNWut/bin:/opt/SUNWut/sbin:/opt/SUNWut/lib"
+#PATH="$PATH:/opt/csw/bin:/usr/sfw/bin:/local/gnu-utils/bin:/opt/SUNWspro/bin:/usr/openwin/bin:/usr/dt/bin:/local/openwin+/bin"
+
+function h()
+{
+    grep -HniE "$1" $(find $HOME -maxdepth 1 |grep help|grep -v '~$')
+}
+
+if ! [ "$(uname)" = Linux ] ; then
+    alias ls=ls
+    alias la='ls -a'
+    alias ll='ls -l'
+    alias grep='grep'
+fi
+if [ "$(uname)" = SunOS ] ; then
+    export PATH="$PATH:/usr/ccs/bin/"
+fi
+
+
+function access_granted() {
+    local o='\e[0m\e[1;41m'
+    local i='\e[0;5;33m'
+    local n=''
+echo -e $o' '$n'                                                                 '$n'  \e[0m'
+echo -e $o' '$i'   _   ___ ___ ___ ___ ___    ___ ___    _   _  _ _____ ___ ___  '$o'  \e[0m'
+echo -e $o' '$i'  /_\ / __/ __| __/ __/ __|  / __| _ \  /_\ | \| |_   _| __|   \ '$o'  \e[0m'
+echo -e $o' '$i' / _ \ (_| (__| _|\__ \__ \ | (_ |   / / _ \| .` | | | | _|| |) |'$o'  \e[0m'
+echo -e $o' '$i'/_/ \_\___\___|___|___/___/  \___|_|_\/_/ \_\_|\_| |_| |___|___/ '$o'  \e[0m'
+echo -e $o' '$i'                                                                 '$o'  \e[0m'
+echo -e $o' '$n'                                                                 '$n'  \e[0m'
+}
+
+alias cdsp='cd /proj/i4sp/re06huxa/trunk/'
+
+alias arbeitarbeit='ssh -t arbeit bash -l -c screen\\ -rS\\ arbeit'
+alias x2gofaui03c='x2goclient --session=faui03c --no-menu'
+
+# xset b 100
+A=( 0 0.4 0.4 0.2 0.2 0.4 0.2 0.2 0.2 0.4 0.2 )
+stadion() {
+    for i in ${A[@]} ; do sleep $i ; echo -ne '\a' ; done
+}
+
+
+M=( a 0.7 h 0.7 C 0.7 d 0.7 )
+# never gonna give you up
+#M=( C 0.1 d 0.1 f 0.1 d 0.1 h 0.4 f 0.2  C 0.2 C 0.1 d 0.1 a 0.4 a 0.2  ) 
+#
+#M=( f 0.4 F 0.4 g 0.4)
+M=(
+D 0.05
+g 0.05
+f 0.05
+C 0.05
+d 0.05
+a 0.05
+h 0.05
+F 0.05
+)
+
+say_ton() {
+    local freq=$1
+    local i=$2
+    xset b 100 $((freq*(2**${#i}-1)))
+    echo -en '\a'
+}
+musik() {
+    for i in ${M[@]} ; do
+        case "$i" in
+            a*) say_ton 450 $i ;;
+            h*) say_ton 500 $i ;;
+            C*) say_ton 550 $i ;;
+            d*) say_ton 600 $i ;;
+            D*) say_ton 650 $i ;;
+            f*) say_ton 700 $i ;;
+            F*) say_ton 750 $i ;;
+            g*) say_ton 800 $i ;;
+            [0-9]*) sleep "$i" ;;
+        esac
+    done
+    xset -b
+}
+function addpackage
+{
+    export PATH=/local/$1/bin/:$PATH
+    export MANPATH=/local/$1/man:${MANPATH}
+}
+
+function _addpackage_complete() {
+    # search in lslocal for current word
+    COMPREPLY=(
+        $(lslocal| cut -d' ' -f1 | grep "^${COMP_WORDS[$COMP_CWORD]}")
+        $(lslocal| grep -E ' -- ' | sed 's/^.*Aliases:  //' | tr ' ' '\n' \
+                 | grep "^${COMP_WORDS[$COMP_CWORD]}" )
+    )
+}
+
+complete -F _addpackage_complete addpackage
+
+
+alias clearqueue="ssh faui02 sudo ~re06huxa/bin/lpremoveall.sh"
+
+
+
+
+

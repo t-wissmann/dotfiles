@@ -1,0 +1,92 @@
+#!/bin/bash
+
+# set dmenu-command
+#export dmenu_command="dmenu -i -nb #202020 -nf #d4d4d4 -sb #D0EEB1 -sf #202020 -fn -*-profont-*-*-*-*-12-*-*-*-*-*-*-*"
+# requires dmenu-vertical-xft
+#export dmenu_command="dmenu -i -c -rs -nb #202020 -nf #d4d4d4 -sb #202020 -sf #B1D631 -fn xft:ProFont:pixelsize=14 -ni"
+# pink awesome colors
+#export dmenu_command="dmenu -i -x 16 -w $((1366-2*16)) -y -1 -c -rs -nb #444444 -nf #efefef -sb #EB6E80 -sf #202020 -fn xft:ProFont:pixelsize=14 -ni"
+# theme: greenterm
+#export dmenu_command="dmenu -i -r -x 16 -w $((1366-2*17)) -c -rs -nb #222222 -nf #DAFF30 -sb #181818 -sf #FA2D4D -fn 'xft:BitstreamVeraSans:bold:pixelsize=11' -ni"
+# theme: pwmt
+export dmenu_command="dmenu -i -r -c -rs -nb #141414 -nf #9fbc00 -sb #141414 -sf #d6516c -fn 'xft:BitstreamVeraSansMono:bold:pixelsize=11' -ni"
+# for glassy white/green
+#export dmenu_command="dmenu -i -x 23 -w $((1366-2*23)) -c -rs -nb #7C7978 -nf #efefef -sb #9AFF36 -sf #202020 -fn 'xft:BitstreamVeraSans:bold:pixelsize=11' -ni"
+export dmenu_lines="10"
+alias fauvpn='sudo /root/fauvpn'
+alias killopenvpn='sudo /root/killopenvpn'
+
+# flv video dir
+export flv_video_dir="/mnt/unterhaltung/flv"
+
+function luakit() {
+    LD_PRELOAD=$HOME/dev/c/libnounlink/libnounlink.so.1.0.1 "$(which luakit)" $* 2> /dev/null
+}
+export -f luakit
+# browser
+BROWSER="luakit"
+
+# mpd profiles
+[ -z "$MPD_Profile" ] && [ -f "$HOME/.mpd_profile" ] &&  MPD_Profile="$(cat ~/.mpd_profile)"
+[ -z "$MPD_QueuePort" ] && MPD_QueuePort="23233"
+
+MPD_AvailableProfiles=(ameise ghul eule towi04)
+
+BOOKMARKS=(
+   unterhaltung /mnt/unterhaltung
+   musik        /mnt/unterhaltung/musik
+   flv          /mnt/unterhaltung/flv
+   nose         ~/dev/c/nose/
+   matheskript  ~/uni/10WS/mathec3/vorlesung/faui2k9_mathc3/
+   #${BOOKMARKS[@]}
+   )
+
+case "$MPD_Profile"  in
+    eule)
+        MPD_HOST=localhost
+        MPD_PORT=6600
+        MPD_QueueFile="${HOME}/scripts/mpd/queue"
+        function MPD_QueueGet() { cat "$MPD_QueueFile"; }
+        function MPD_QueueSet() { echo $* > "$MPD_QueueFile"; }
+        function MPD_QueuePushBack() { echo $* >> "$MPD_QueueFile"; }
+        ;;
+    ameise)
+        MPD_HOST=ameise
+        MPD_PORT=6600
+        function MPD_QueueGet() { true; }
+        ;;
+    ghul)
+        MPD_HOST=ghul
+        MPD_PORT=6600
+        function MPD_QueueGet() { true; }
+        ;;
+    towi04)
+        MPD_HOST=towi04
+        MPD_PORT=6600
+        # queue through network is not supported yet ;)
+        MPD_QueueFile="${HOME}/scripts/mpd/queue"
+        function MPD_QueueGet() { echo 'echo $MPD_Queue' \
+                    |console-send $MPD_HOST $MPD_QueuePort ; }
+        function MPD_QueueSet() { echo "var MPD_Queue = \"$*\"" \
+                    |console-send $MPD_HOST $MPD_QueuePort ; }
+        function MPD_QueuePushBack() { MPD_QueueSet $(MPD_QueueGet) $* ; }
+        ;;
+esac
+# export it
+export MPD_QueuePort
+export MPD_HOST
+export MPD_PORT
+export MPD_QueueFile
+
+
+#alias sa='ssh -t ernie bash -l -c "ssh\\ -t\\ zimmer"'
+#alias irc='ssh -t ernie bash -l -c "ssh\\ -t\\ zimmer\\ bash\\ -l\\ -c\\ \\\\\\\"screen-reconnect.sh\\ irc\\\\\\\""'
+#alias finch='ssh -t ernie bash -l -c "ssh\\ -t\\ zimmer\\ bash\\ -l\\ -c\\ \\\\\\\"screen-reconnect.sh\\ finch\\\\\\\""'
+alias irc='ssh -t ameise bash -l -c "screen\\ -S\\ all\\ -x\\ -p\\ irc"'
+alias icq='ssh -t ameise bash -l -c "screen\\ -S\\ all\\ -x\\ -p\\ finch"'
+alias sa='ssh ameise'
+
+#if ps u|grep icewm > /dev/null ; then
+#PS1='C:$(echo ${PWD}|sed "s#/home/$USER#/Eigene Dateien#"|sed "s#/#\\\\\\#g")> '
+#fi
+

@@ -1,0 +1,105 @@
+#!/bin/bash
+
+
+# some colors
+export c_normal='\e[0m'
+export c_red='\e[1;31m'
+export c_green='\e[1;32m'
+export c_yellow='\e[1;33m'
+export c_blue='\e[1;34m'
+export c_purple='\e[1;35m'
+export c_cyan='\e[1;36m'
+export c_white='\e[1;37m'
+export c_grey='\e[0;37m'
+
+# alwayse bhave like xterm..
+#[ "$TERM" = "linux" ] || export TERM=xterm
+export EDITOR=vim
+export PAGER="less -i"
+
+#PS1='[\u@\h \W]\$ '
+# show username if it is not thorsten
+#if ! [ $(whoami) = thorsten ] ; then
+#    # show username in PS1 and xterm-title
+#    SHOWUSERNAME=true
+#else
+#    # clear this var
+#    SHOWUSERNAME=""
+#fi
+
+
+# hint: 0**0 = 1, but 0**x = 0, if x != 0
+if ! [ -z "$SHOWUSERNAME" ] ; then
+PS1='\[\e[1;3$((3+$?*2))m\](\[\e[1;36m\]\h: \[\e[1;31m\]\u\[\e[1;33m\]:\[\e[1;34m\]\w\[\e[1;33m\])\[\e[0;0m\] '
+else
+PS1='\[\e[1;3$((5+(0**$?)*-2))m\](\[\e[1;36m\]\h: \[\e[1;34m\]\w\[\e[1;3$((5+(0**$?)*-2))m\])\[\e[0;0m\] '
+fi
+
+# TIP:
+#\[     begins a sequence of non-printing characters
+#\]     ends a sequence of non-printing characters
+
+# extend path-variable
+if [ -d "${HOME}/bin" ] ; then
+export PATH="${PATH}:${HOME}/bin"
+fi
+
+ # set xterm title
+ case "$TERM" in
+    rxvt-256color|xterm)
+#      XTERM_TITLE='\[\033]0;\W - Konsole (\w)\007\]'
+      if ! [ -z "$SHOWUSERNAME" ] ; then
+        XTERM_TITLE='\[\033]0;\u:\w - Konsole\007\]'
+      else
+        XTERM_TITLE='\[\033]0;\W (\w)\007\]'
+      fi
+	  PS1="${PS1}${XTERM_TITLE}"
+	;;
+ esac;
+
+
+printexitstat() {
+    [ "$?" = 0 ] \
+        && echo -ne "\e[0;32m :)\e[0m " \
+        || echo -ne "\e[1;31m :(\e[0m "
+    # also set window title
+    [ "$1" = 1 ] && echo -ne "\e]0;${PWD##*/} ($PWD) $USER@$HOSTNAME\007";
+# always set window title to current command:
+}
+hasgui=0
+case $TERM in
+    *rxvt*|xterm)
+        hasgui=1
+        ;;
+    *)
+        ;;
+esac
+#PROMPT_COMMAND="printexitstat $hasgui"
+
+
+# activate bash-comple(ti)tion
+
+#if [ -f /etc/bash_completion ] ; then
+#	. /etc/bash_completion
+#fi
+
+# add colors for less when viewing manpages
+export LESS_TERMCAP_mb=$'\e[01;31m' # for what is this line good for ?^^
+export LESS_TERMCAP_md=$'\e[0;36m' # syntax and keywords
+export LESS_TERMCAP_us=$'\e[1;35m' # "variables"
+export LESS_TERMCAP_me=$'\e[0m' # some rows
+export LESS_TERMCAP_se=$'\e[0m' # first and last row background
+export LESS_TERMCAP_so=$'\e[0;43;30m' # statusbar and searchhighlights
+export LESS_TERMCAP_ue=$'\e[0m' # background
+
+# for openoffice .... -.-
+export OOO_FORCE_DESKTOP='gnome'
+
+
+### BASH OPTIONS ###
+shopt -s histappend
+export HISTIGNORE='&:ls:cd ~:cd ..:[bf]g:exit:h:history'
+export HISTSIZE='100000'
+export HISTCONTROL=erasedups
+
+# vim: ft=sh

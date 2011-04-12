@@ -1,0 +1,76 @@
+#!/bin/bash
+
+# set dmenu-command
+# musca-like
+export dmenu_command="dmenu -i -nb #202020 -nf #d4d4d4 -sb #D0EEB1 -sf #202020 -fn -*-profont-*-*-*-*-12-*-*-*-*-*-*-*"
+# scrotwm - white background
+#export dmenu_command="dmenu -i -r -c -rs -nb #efefef -nf #272727 -sb #adc0ea -sf #202020 -fn -*-profont-*-*-*-*-12-*-*-*-*-*-*-* -ni"
+# for an dmenu-conky-feeling:
+# -x 110 -w $((1280-110))
+#export dmenu_command="dmenu -x 16 -w $((1280-16-18)) -i -nb #2E2B2E -nf #EFEFEF -sb #FCE70D -sf #202020 -fn 'xft:BitstreamVeraSans:bold:pixelsize=10' -ni -rs"
+# theme: greenterm
+#export dmenu_command="dmenu -i -r -x 17 -w $((1280-16-17)) -c -rs -nb #222222 -nf #DAFF30 -sb #181818 -sf #FA2D4D -fn 'xft:BitstreamVeraSans:bold:pixelsize=11' -ni"
+# theme: pwmt
+# with options for awesome: -x 17 -w $((1280-16-17)) 
+export dmenu_command="dmenu -i -r -c -rs -nb #000000 -nf #efefef -sb #9FBC00 -sf #232323 -fn 'xft:BitstreamVeraSans:bold:pixelsize=11' -ni"
+# theme: yellow for scrotwm
+#export dmenu_command="dmenu -i -r -c -rs -nb #141414 -nf #efefef -sb #fff900 -sf #232323 -fn  'xft:BitstreamVeraSans:pixelsize=9' -ni"
+export dmenu_lines="20"
+
+# flv-video dir
+export flv_video_dir="/home/unterhaltung/video/Mus/flv"
+
+function luakit() {
+    LD_PRELOAD=$HOME/dev/c/libnounlink/libnounlink.so.1.0.1 "$(which luakit)" $* 2> /dev/null
+}
+export -f luakit
+
+export BROWSER="luakit"
+export DOTREMINDERS="$HOME/.reminders.d/master"
+
+# mpd profiles
+MPD_Profile="$(cat ~/.mpd_profile)"
+MPD_QueuePort="23233"
+MPD_AvailableProfiles=(ameise pyxis towi04)
+
+case "$MPD_Profile"  in
+    eule)
+        MPD_HOST=eule
+        MPD_PORT=6600
+        MPD_QueueFile="${HOME}/scripts/mpd/queue"
+        function MPD_QueueGet() { cat "$MPD_QueueFile"; }
+        function MPD_QueueSet() { echo $* > "$MPD_QueueFile"; }
+        function MPD_QueuePushBack() { echo $* >> "$MPD_QueueFile"; }
+        ;;
+    ameise)
+        MPD_HOST=ameise
+        MPD_PORT=6600
+        MPD_QueueGet() { true; }
+        MPD_QueueSet() { true; }
+        MPD_QueuePushBack() { true; }
+        ;;
+    towi04)
+        MPD_HOST=localhost
+        MPD_PORT=6600
+        # queue through network is not supported yet ;)
+        MPD_QueueFile="${HOME}/scripts/mpd/queue"
+        function MPD_QueueGet() { echo 'echo $MPD_Queue' \
+                    |console-send $MPD_HOST $MPD_QueuePort ; }
+        function MPD_QueueSet() { echo "var MPD_Queue = \"$*\"" \
+                    |console-send $MPD_HOST $MPD_QueuePort ; }
+        function MPD_QueuePushBack() { MPD_QueueSet $(MPD_QueueGet) $* ; }
+        ;;
+esac
+# export it
+export MPD_QueuePort
+export MPD_HOST
+export MPD_PORT
+export MPD_QueueFile
+
+
+
+# fix some wine things
+alias wine='__GL_ExtensionStringVersion=17700 wine'
+alias scrot="scrot --exec 'convert -crop 1280x1024 \$f \$f'"
+
+

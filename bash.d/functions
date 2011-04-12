@@ -1,0 +1,768 @@
+#!/bin/bash
+# this is: ~/.bash_functions
+
+function mkcd()
+{
+   mkdir "$1" && cd "$1"
+}
+
+function unison-sync-all(){
+    local PROFILES=( uni musik video scripts dev internet )
+    [ `hostname` != ameise ] && local PROFILES=( ${PROFILES[@]} biz themes )
+    # do normal thins first -> batch
+    # do critical thins interactive -> -auto
+    for mode in batch auto ; do
+        for i in ${PROFILES[@]} ; do
+            echo -e "\e[0;34m==> \e[1;31mSyncing $i in $mode mode\e[0m"
+            [ "$1" = '-n' ] || unison -$mode "$i"
+        done
+    done
+}
+
+function httppubget(){(
+    RemoteFile="$1"
+    LocalFile=""
+    ! [ -z "$2" ] && LocalFile="-O $2"
+    wget "http://10.202.63.16/httppub/$RemoteFile" $LocalFile
+)}
+
+export AURBUILD_ASDEPS=""
+function aur-build(){
+
+    if ! [ "${1%-git}" = "$1" ] ; then
+        local CLEAN=""
+    else
+        local CLEAN="-c"
+    fi
+    mkdir -p "$HOME/tmp.aur/" &&
+    cd "$HOME/tmp.aur/" &&
+    wget http://aur.archlinux.org/packages/$1/$1.tar.gz -O $1.tar.gz &&
+    tar -xvf $1.tar.gz && cd $1 && 
+    (
+        [ -f PKGBUILD ] && vim PKGBUILD
+        source PKGBUILD
+        [ -f "$install" ] && vim "$install"
+        echo "Überprüfe Abhängigkeiten..."
+        missing=$(pacman -T ${depends[@]} ${makedepends[@]}|sort|uniq)
+        missingrepo=""
+        missingaur=""
+        echo "Noch zu installieren: $missing"
+        for i in $missing ; do
+            if pacman -Siq $i > /dev/null ; then
+                # wenn in repos, dann installierbar
+                missingrepo="$missingrepo $i"
+            else
+                # otherwise: aur
+                missingaur="$missingaur $i"
+            fi
+        done
+        echo "Davon installierbar: $missingrepo"
+        echo "Davon aus dem aur: $missingaur"
+        ! [ -z "$missingrepo" ] && 
+        echo -n "Pakete aus Repo für $1 installieren: " &&
+        su -c "pacman --asdeps -S $(echo $missing)"
+        ! [ -z "$missingaur" ] &&
+        echo -n "Pakete aus dem AUR für $1 installieren: " &&
+        for i in $missingaur ; do
+            export AURBUILD_ASDEPS="--asdeps"
+            aur-build $i
+        done
+        echo -n "Mit makepkg für $1 fortfahren? [J/n] "
+        read -n 1 answer
+        echo
+        if [ "$answer" = "J" -o "$answer" = "j" \
+             -o "$answer" = "" ] ; then
+            exit 0 # return success
+        else
+            exit 1 # return error
+        fi
+    ) &&
+    makepkg $CLEAN -f &&
+    echo  "pacman -U --noconfirm $AURBUILD_ASDEPS $(ls -t *.pkg.tar.xz|head -1)" &&
+    su -c "pacman -U --noconfirm $AURBUILD_ASDEPS ""$(ls -t *.pkg.tar.xz|head -1)"
+}
+
+
+function setWindowTitle(){
+    echo -ne '\033]0;'$1'\007'
+}
+
+function createAbiverabschiedungsMp3(){
+   ffmpeg -i "$1" tmp.wav &&
+   ffmpeg -i tmp.wav tmp.mp3
+   mpgsplit tmp.mp3 [-00:00:49] -o "$2.mp3"
+}
+
+function lscppsrc(){(
+   find |grep '\.h$\|\.c$\|\.cpp$\|projectfile$'|sed 's/^.\///'|sort -r
+)}
+
+# not needed.... it didn't work..... and i uninstalled gnome-settings-daemon pkg
+#function gnome-settings-daemon()
+#{
+#    if [ $(ps -U $USER|grep xfsettingsd|wc -l) -lt 1 ] ; then
+#        # if no xfsettingsd is running... then start gnome-settings-daemon
+#        /usr/bin/gnome-settings-daemon "$1" "$2" "$3"
+#    fi
+#}
+
+function path2tree()
+{
+    # example usage: find -maxdepth 2|path2tree
+	curdepth=1
+	read CURL # current line
+	CURL_NAME=${CURL##*/}
+	CURL_DIR=${CURL%/*}
+	CURL_LEN=$(echo "$CURL"|sed 's#[^/]##g'|wc -m)
+	while read NEXL || ! [ -z "$CURL" ] ; do # read next line
+		# do something with line
+		NEXL_NAME=${NEXL##*/}
+		NEXL_DIR=${NEXL%/*}
+		NEXL_LEN=$(echo "$NEXL"|sed 's#[^/]##g'|wc -m)
+
+
+		itemprefix=$(echo -ne     '├──')
+		if [ $NEXL_LEN -gt $CURL_LEN ] ; then
+			itemprefix=$(echo -ne '├─┬')
+		fi
+		
+		if [ $NEXL_LEN -lt $CURL_LEN ] ; then
+			itemprefix=$(echo -ne '└──')
+		fi
+		indent=""
+		for i in $(seq 2 $CURL_LEN) ; do
+			indent="$indent│ "
+		done
+
+		#echo "NEXT: $NEXL_LEN  ; CURL: $CURL_LEN"
+		echo "$indent$itemprefix→ $CURL_NAME" # $CURL
+
+		# let nextline become current line ;D
+		CURL_NAME="$NEXL_NAME"
+		CURL_DIR="$NEXL_DIR"
+		CURL="$NEXL"
+		CURL_LEN="$NEXL_LEN"
+		# clear next line
+		NEXL=""
+	done
+}
+
+function extract () {
+    if [ -z "$1" ] ; then
+        echo "USAGE: extract FILENAME"
+        echo "  extracts the given archiv FILENAME";
+    elif [ -f  "$1" ] ; then
+        extension=
+        case "${1// /FOO}" in # replace spaces by FOO
+            *.tar.bz2) tar xjf "$1" ;;
+            *.tar.gz) tar xzf "$1" ;;
+            *.bz2) bunzip2 "$1" ;;
+            *.rar) rar x "$1" ;;
+            *.gz) gunzip "$1" ;;
+            *.tar) tar xf "$1" ;;
+            *.tbz2) tar xjf "$1" ;;
+            *.tgz) tar xzf "$1" ;;
+            *.zip) unzip "$1" ;;
+            *.z) uncompress "$1" ;;
+            *) echo "\"$1\" cannot be extracted via extract ()" ;;
+        esac
+    else
+        echo "\"$1\" is not a valid file"
+    fi
+}
+
+# Change Dir [to] BookMark  ... by twi
+# It's something like the bookmark-sidebar in many gtk-file-managary like thunar, nautilus, etc.
+BOOKMARKS=(
+   home         $HOME
+   unterhaltung /home/unterhaltung
+   tv           /home/unterhaltung/TV
+   flv          /home/unterhaltung/video/Mus/flv
+   deb-tw       /mnt/home/thorsten
+   digicam      /mnt/home/thorsten/Documents/digicam
+   debian       /mnt/debian
+   remotecons   $HOME/dev/c/k8055/remote-console/src
+   toych        $HOME/dev/c/sdl/toychallenge
+#  dev          /mnt/home/thorsten/dev
+   musik        /home/unterhaltung/musik
+   sw           /home/unterhaltung/SW
+   SW           /home/unterhaltung/SW
+   hw           $HOME/uni/10SS/HalloWelt
+   sosy3        $HOME/uni/10WS/sosy3/
+  )
+function cdbm(){
+    if [ -z "$1" ] ; then
+        echo "  USAGE: cdbm BOOKMARKNAME"
+        echo "  Changes current dir to dir of bookmark with name BOOKMARKNAME";
+        echo "  Valid BOOKMARKNAMEs are:"
+        i=0
+        while [ "$i" -lt "${#BOOKMARKS[@]}" ] ; do
+            echo "      ${BOOKMARKS[$i]}"
+            i=$[$i+2]
+        done
+        return
+    else
+        i=0
+        while [ "$i" -lt "${#BOOKMARKS[@]}" ] ; do
+            if [ "${BOOKMARKS[$i]}" = "$1" ] ; then
+                #echo bm found: "${BOOKMARKS[$[$i+1]]}"
+                cd "${BOOKMARKS[$[$i+1]]}"
+                return
+            fi
+            i=$[$i+2]
+        done
+        echo "cdbm: Unknown bookmarkname \"$1\"" >&2
+    fi
+}
+
+
+function _cdbm() {
+    local col=0
+    COMPREPLY=( $(
+        for i in ${BOOKMARKS[@]} ; do
+            if [ $col = 0 ] ; then
+                echo $i
+                col=1
+            else
+                col=0
+            fi
+        done |
+        grep  "^${COMP_WORDS[$COMP_CWORD]}"
+    ) )
+}
+complete -F _cdbm cdbm
+
+
+ # got from Bluewind
+# TODO : read file called: /tmp/Flash... and convert it
+# actually it converts any mp4 or flv to mp3...
+# youtube2mp3() {
+# 	for file in "$@"
+# 	do 
+#    	if [ -f "${file}" ] ; then
+# 			title=$(echo ${file} | sed 's/\(.*\)\..*/\1/')
+#       case $(file -b --mime-type "${file}") in
+# 				video/mp4)
+# 					faad "${file}" &&
+# 					lame "${title}.wav" "${title}.mp3" &&
+# 					rm "${title}.wav" 
+# 				;;
+# 				video/x-flv)
+# 					ffmpeg -i "${file}" -vn -acodec copy "${title}.mp3"
+# 				;;
+# 				*)
+# 					echo -e "${RED}Error:$NC No rule how to convert \"${file}\""
+# 				;;
+# 			esac
+# 		else
+#       echo -e "${RED}Error:$NC \"${file}\" doesn't exist"
+#     fi
+# 	done
+# }
+
+
+
+# let vim highlight any file for us and save it as html # got from Bluewind
+#2html() {
+#  vim -n -c ':syntax on' -c ':so $VIMRUNTIME/syntax/2html.vim' -c ':wqa' $1 > /dev/null 2> /dev/null
+#}
+
+function countdown() {
+  (
+    # do it all in a subshell
+    optCount='3'
+    optVerbose='1'
+    optUnit='1' # optUnit is length of unit in seconds; default is 1 sec
+    optUnitName='second'
+    optNoNewline='1'
+    optProgressbar='0'
+    optProgressWidth='30'
+    for curParameter in ${@} ; do
+      case "$curParameter" in
+        -h|--help)       
+          echo "USAGE: $0 COUNT [UNIT] [OPTIONS...]" >&2
+          echo "   UNIT is optional and can be: min sec h"
+          echo "   default UNIT is sec"
+          echo "   Valid Options are:"
+          echo "     -h --help    print this help and exit"
+          echo "     -s --silent  do not print additional info"
+          echo "     -l --lines  print all in different lines"
+          echo "     -p --progress add a nice progressbar"
+          return
+          ;;
+        -s|--silent)
+          optVerbose="0"
+          ;;
+        -v|--verbose)
+          optVerbose="1"
+          ;;
+        -l|--lines)
+          optNoNewline="0"
+          ;;
+        -n|--no-newline)
+          optNoNewline="1"
+          ;;
+        -p|--progress)
+          optProgressbar='1'
+          ;;
+        *)
+          #echo "INVALID OPTION: $curParameter" >&2
+      esac  # case curpar in
+    done # for curpar in..
+    # get unit
+    case "$2" in
+      sec|s) optUnit="1" ; optUnitName="second" ;;
+      hour|h) optUnit="3600"  ; optUnitName="hour";;
+      min|m) optUnit="60"  ; optUnitName="minute";;
+      ds) optUnit="0.1"  ; optUnitName="decisecond";;
+    esac
+
+    # get countdown time
+    optCount=$[$1]
+    for remainTime in $(seq ${optCount} -1 0) ; do
+      # go to beginning of line
+      echo -ne '    \r'
+      ext='s'
+      # print info text
+      [ "$remainTime" = "1" ] && ext=' '
+      [ "$optVerbose" = 1 ] && echo -ne \
+                "${c_normal}Time remaining: ${c_yellow}$remainTime" \
+                "${c_white}$optUnitName$ext "
+      # print progressbar
+      progress=$[$optCount - $remainTime] # absolute progress
+      progress=$[$progress*$optProgressWidth/$optCount] #relative progress
+
+      #echo $(seq 1 $progress) \| $(seq $[1+$progress] $[$optProgressWidth-1]) 
+      [ "$optProgressbar" = 1 ] &&
+      (
+        echo -ne "${c_white}[${c_green}"
+        for i in $(seq 1 $progress) ;
+           do echo -ne "O" 
+        done
+        echo -ne "${c_normal}"
+        for i in $(seq $[1+$progress] $[$optProgressWidth])
+           do echo -ne "."
+        done
+        echo -ne "${c_white}]"
+      )
+      # print newline if wanted
+      [ "$optNoNewline" = 0 ] && echo
+      # wait some time, if there is remaining time
+      [ $remainTime = 0 ] || sleep "$optUnit"
+    done
+    # print newline in no-newline-mode
+    ( [ $optProgressbar = 1 ] || [ "$optNoNewline" = 1 ] ) && echo
+  )
+  echo -en "${c_normal}";
+}
+
+function strlen()
+{
+   echo "${#1}"
+}
+
+function quersumme()
+{(
+  sumn=0
+  i=0
+  while [ "$i" -lt "${#1}" ] ; do
+    sumn=$((sumn+${1:$i:1}))
+    let 'i++'
+  done
+  echo $sumn
+)}
+
+function getFlv() {
+   ffmpeg -i "$1" -sameq -acodec libmp3lame "~/$1.flv"
+}
+
+function lstodo() {
+    cat .todolist | grep -v "^#" | (
+       echo -e ${c_blue}::${c_yellow}TODO${c_white}-Liste
+        while read LINE ; do
+            type="${LINE:0:1}" # first char in line
+            text="${LINE:1}"
+            # make text nicer ;D
+            text="$(echo -n ${text:0:1}|tr "[:lower:]" "[:upper:]")${text:1}"
+            prefix=""
+            suffix=""
+            if [ "$type" = "!" ] ; then
+                prefix=" ${c_white}- ${c_white}"
+                suffix="${c_red}!!!${c_white}"
+            elif [ "$type" = "d" ] ; then
+                prefix=" ${c_white}- ${c_green}(${c_normal}"
+                suffix="${c_green})${c_white}"
+            else
+                prefix=" ${c_white}- ${c_white}"
+            fi
+            echo -e "$prefix$text$suffix"
+        done
+        echo -en "${c_normal}"
+    )
+}
+
+function todoadd() {
+   ( # in a subshell
+       if [ -z "$1" ] ; then
+          echo "USAGE: $0 [-i] TODOTEXT"
+          echo " -i means important"
+          return
+       fi
+       if [ "$1" = "-i" ] ; then
+          # ! is indicator for importance -> RED
+          text="!${@:2}"
+       else
+          # - is indicator for normal -> white
+          text="-${@:1}"
+       fi 
+       echo "$text" >> .todolist
+   )
+}
+
+#function shutdown() {
+#    echo shutdown > ~/scripts/shutdown/userintrest
+#	sudo /root/user-shutdown.sh $(cat ~/scripts/shutdown/userintrest)
+#	logout
+#}
+
+#function updateQt4toVM() {
+#    findnewfiles.sh "$1"  "${HOME}/pub/qtdev/$1"
+#}
+
+function stoppuhr(){
+    (
+        SEC=0
+        MIN=0
+        HOUR=0
+        KEY=""
+        while true ; do
+            # get next key # and print \n to /dev/null
+            #echo give some input
+            KEY=''
+            read -n 1 -t 1 KEY
+            #echo -en "\r$(date +%H-%M-%S)"
+            echo -en '\r                                 \r'
+            printf "%5d:%2d:%2d" $HOUR $MIN $SEC
+            let 'SEC++'
+            [ "$SEC" -ge 60 ] && SEC=0 && let 'MIN++'
+            [ "$MIN" -ge 60 ] && MIN=0 && let 'HOUR++'
+            case "$KEY" in
+              q|Q) echo && return
+                ;;
+              p) read -n 1 KEY # wait for user action
+                ;; 
+              r) echo # go to next line ;D
+                ;; 
+            esac
+        done
+    )
+}
+
+function dorelease(){
+    (
+    # $1 = name of folder/project
+    name="${1%/}"
+    lastrelease=$(ls -t ${HOME}/dev/release|grep -e "^$name-")
+    newversion=0.1
+    if ! [ -z "$lastrelease" ] ; then
+        # if there was an release before this one
+        echo "Last Version was: ${lastrelease#$1-}"
+        echo -n "Enter a new version number: "
+        read newversion
+    fi
+    newdir="${HOME}/dev/release/${name}-$newversion"
+    # copy it
+    echo cp -i "$name" "$newdir" -R
+    cp -i "$name" "$newdir" -R
+    )
+}
+
+
+function checkRegex() { (
+# example: 
+# checkRegex "[0-9]{2}:[0-9]{2}(Uhr){0,1}" "23:11Uhr"
+    EINGABE="$2"
+    REGEX="$1"
+    (echo "$EINGABE"|grep -xE "$REGEX" > /dev/null) &&
+    echo "$EINGABE wird von $REGEX akzeptiert" ||
+    echo "$EINGABE wird von $REGEX abgelehnt"
+) }
+
+function file2wwwcip() { (
+    infile="$1"
+    outfile="$2"
+    [ -z "$2" ] && outfile="${1##*/}" # use basename
+    [ -z "$2" ] && [ "$1" = "-" ] && outfile="pipe.out.$(date +%Y-%m-%d)"
+    username="re06huxa"
+    server="faui0sr2.informatik.uni-erlangen.de"
+    if [ "$1" = "-" ] ; then
+        ssh "$username@$server" tee .www/$outfile
+    else
+        scp -r "$infile" "$username@$server:.www/$outfile"
+    fi
+    echo "http://wwwcip.cs.fau.de/~$username/$outfile" >&2
+) }
+
+function plmain(){(
+    main="main."
+    ! [ -z "$2" ] && main="$2"
+    echo "$main"| pl -q -f "$1" 2>&1 | head -n -3
+)}
+
+function mittelwert(){(
+    if [ $# -lt 1 ] ; then
+        echo "Usage: mittelwert zahl1 zahl2 zahl 3"
+        echo "  gibt den mittelwert aus";
+        echo "  ist die erste zahl - dann wird von stdin gelesen";
+        exit
+    fi
+    sumn=""
+    count=0
+    isfirst=true
+    if [ "$1" = "-" ] ; then
+        while read -r line ; do
+            if ! $isfirst ; then
+                sumn="$sumn + "
+            else
+                isfirst=false
+            fi
+            sumn="$sumn $line"
+            count=$((count+1))
+        done
+    else
+        for i in $* ; do
+            if ! $isfirst ; then
+                sumn="$sumn + "
+            else
+                isfirst=false
+            fi
+            sumn="$sumn $i"
+            count=$((count+1))
+        done
+    fi
+    echo -e '('"$sumn"')/'"$count"'\nexit'|calc
+)}
+
+htrange() {
+    # $1 line from
+    # $2 line to
+    head -$2|tail -$(($2-$1+1))
+}
+
+
+fib() {
+    if [ -z "${FIBTABLE[$1]}" ] ; then
+        local a="$1"
+        local e=1
+        if [ "$1" -gt 1 ] ; then
+            fib $((a-1)) > /dev/null
+            em1=$enderg
+            fib $((a-2)) > /dev/null
+            em2=$enderg
+            e=$(calc $em1+$em2)
+        fi
+        enderg=$e
+        FIBTABLE[$a]=$enderg
+        echo $e
+    else
+        echo "${FIBTABLE[$1]}"
+        enderg="${FIBTABLE[$1]}"
+    fi
+}
+
+function urxvtsetfontsize() {
+    local size=${1:-9}
+    printf '\e]710;%s\007' "xft:Bitstream Vera Sans Mono:bold:size=$size"
+    printf '\e]711;%s\007' "xft:Bitstream Vera Sans Mono:bold:size=$size"
+}
+
+function ccmloop() {
+    while sleep 1 ; do
+        fetchmail && echo -e '\aNeue Mails'
+        sleep 3m
+    done
+}
+
+ssh.irc () {
+    ssh -t ameise "bash -l -c screen\ -p\ irc\ -x 2688"
+}
+ssh.finch () {
+    ssh -t ameise "bash -l -c screen\ -p\ finch\ -x 2688"
+}
+
+
+###########################
+#### other completions ####
+###########################
+_aur-build_complete() {
+    #local opts="-help -auto -batch"
+    local cur="${COMP_WORDS[$COMP_CWORD]}"
+    COMPREPLY=(
+        #$( compgen -W "${opts}" -- ${cur} )
+        $(
+            find $HOME/tmp.aur -maxdepth 1 -mindepth 1 -type d |
+            sed 's#^.*/##' |
+            grep  "^$cur"
+        )
+    )
+}
+
+_unison_complete() {
+    local opts="-help -auto -batch"
+    local cur="${COMP_WORDS[$COMP_CWORD]}"
+    COMPREPLY=(
+        $( compgen -W "${opts}" -- ${cur} )
+        $(
+            ls $HOME/.unison/*.prf |
+            sed 's/\.prf$//' |
+            sed 's#^.*/##' |
+            grep -v '\-files$' |
+            grep -v '^default$' |
+            grep  "^$cur"
+        )
+    )
+}
+_make_complete() {
+    #local opts="-help -auto -batch"
+    local cur="${COMP_WORDS[$COMP_CWORD]}"
+    COMPREPLY=(
+        #$( compgen -W "${opts}" -- ${cur} )
+        $(
+            [ -f Makefile ] &&
+            cat Makefile |
+            grep -E '^[^ :\t.]*:' |
+            cut -d: -f1 |
+            grep  "^$cur"
+        )
+    )
+}
+
+_ssh_complete() {
+    local cur="${COMP_WORDS[$COMP_CWORD]}"
+    COMPREPLY=(
+        #$( compgen -W "${opts}" -- ${cur} )
+        # completions from users ssh config
+        $([ -f "$HOME/.ssh/config" ] &&
+            cat $HOME/.ssh/config |
+            grep -iE "^[ \t]*Host[ \t][ \t]*$cur" |
+            sed 's#^[ \t]*Host[ \t][ \t]*##')
+        # completions from /etc/hosts
+        $([ -f "/etc/hosts" ] &&
+             cat /etc/hosts |
+             grep -v '^#' | #remove comments
+             sed 's/^[0-9.:]*[\t ]*//' | # remove ips
+             tr ' ' '\n' | # create on hostname per line if there are multiple aliases
+             grep "^$cur")
+    )
+}
+
+function hex2bin() {
+    while read -n 1 i ; do
+        case "$i" in
+            [0-9a-f])
+                i=$((0x$i))
+                echo -n "$((i/(2**3)%2))"
+                echo -n "$((i/(2**2)%2))"
+                echo -n "$((i/(2**1)%2))"
+                echo -n "$((i/(2**0)%2))"
+                ;;
+            *)
+                echo -n $i
+                ;;
+        esac
+    done
+    echo
+}
+
+function publish-screenshot() {
+    local fullres="$1"
+    local thumb="${1%.*}-thumb.${1##*.}"
+    local targetdir="cip:.www/screenshots/"
+    local url="http://wwwcip.cs.fau.de/~re06huxa/screenshots/"
+    echo ":: creating thumbnail ..."
+    cp "$fullres" "$thumb"
+    mogrify -resize "x250" "$thumb"
+    echo ":: copying files ..."
+    scp "$fullres" "$thumb" "$targetdir"
+    local src="[url=$url${fullres##*/}][img]$url${thumb##*/}[/img][/url]"
+    echo "$src"|xclip -selection primary
+    echo "$src"|xclip -selection clipboard
+    echo "$src"
+}
+
+function timediff() {
+    local remote=${1:-cip}
+    local format="%-10s: %s\\n"
+    printf "$format" HOSTNAME DATE
+    echo "printf \"$format\" \$(hostname) \$(date +%s)" | ssh $remote bash
+    echo "printf \"$format\" \$(hostname) \$(date +%s)" | bash
+}
+
+function get_git_clone_url() {
+    local url=$(curl -s "$1"|grep -oE 'git://[^"]*')
+    echo "$url"
+    echo -n "$url"|xclip -selection primary -i
+    echo -n "$url"|xclip -selection clipboard -i
+}
+
+function file2moodbarpath() {
+    local f="$1"
+    local dir=$(dirname "${f}")
+    local name=$(basename "${f}")
+    local moodfile=$dir/.${name%.*}.mood
+    echo -n "$moodfile"
+}
+
+function moodbar-create() {
+    local f="$1"
+    local moodfile=$(file2moodbarpath "$f")
+    ! [ -f "$moodfile" ] && [ -f "$f" ] &&
+        moodbar -o "$moodfile" "$f"
+}
+
+function moodbar-preview() {
+    local f="$1"
+    # if file is not moodfile
+    [ "${f%%.mood}" = "${f}" ] &&
+        local f=$(file2moodbarpath "$f")
+    hexdump -v -e '3/1 "%03u "' -e '"\n"' "$f" \
+     | ~/.bash.d/render.awk \
+        -v barlength="$(($(tput cols)-2))"
+}
+function moodbar-preview256() {
+    local f="$1"
+    # if file is not moodfile
+    [ "${f%%.mood}" = "${f}" ] &&
+        local f=$(file2moodbarpath "$f")
+    [ -f "$f" ] || return 1
+    hexdump -v -e '3/1 "%03u "' -e '"\n"' "$f" \
+     | ~/.bash.d/render256.awk \
+        -v barlength="$(($(tput cols)))"
+}
+alias moodbar-ls='for i in * ; do [ -f "$i" ] || continue ; echo "$i:" ;  moodbar-preview256 "$i" ; done'
+
+alias mpc-moodbar='cdbm musik ; f=$(mpc  -f %file% current)  ; moodbar-create "$f" ; clear ; moodbar-preview256 "$f" ; moodbar-preview "$f"'
+
+
+complete -F _aur-build_complete aur-build
+complete -F _unison_complete unison
+complete -F _make_complete make
+complete -F _ssh_complete ssh
+
+#complete -X '--leak-check=yes|--leak-check=full' valgrind
+complete -f -X '!*.pdf' -o plusdirs zathura
+
+
+function q3activate() {
+    ssh -t faui02.informatik.uni-erlangen.de sudo chmod 755 /local.stand/q3
+}
+function q3deactivate() {
+    ssh -t faui02.informatik.uni-erlangen.de sudo chmod 750 /local.stand/q3
+}
+
+function buggy() {
+     echo '   Omm' ; while sleep 0 ; do for i in '('{-,/,\|,\\}')' ; do  echo -ne '\r'$i-$i ; read -n 1 -s -t 0.15 input ; [ "$input" = q ] && echo && return ; done ; done
+}
+
+
+
