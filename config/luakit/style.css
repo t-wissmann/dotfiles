@@ -1,0 +1,11 @@
+body {
+    /* background-color: #141414; */
+    /*color: #efefef; */
+    /*font-family: "Bitstream Vera Sans Mono";*/
+}
+html {
+	-webkit-font-smoothing: antialiased;
+}
+a {
+    color: #6099DD;
+}

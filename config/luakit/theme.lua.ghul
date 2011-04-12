@@ -1,0 +1,172 @@
+--------------------------
+-- Default luakit theme --
+--------------------------
+
+theme_greenterm = {}
+-- Default settings
+theme_greenterm.font = "bitstreams vera sans mono 8 bold"
+--theme.font = "monospace 10"
+theme_greenterm.fg   = "#9FBC00"
+theme_greenterm.bg   = "#222222"
+
+-- Error colours
+theme_greenterm.error_fg = "#FFF"
+theme_greenterm.error_bg = "#F00"
+
+-- Notification colours
+theme_greenterm.notif_fg = "#ef2929"
+theme_greenterm.notif_bg = "#2e3436"
+
+-- Statusbar specific
+theme_greenterm.sbar_fg           = "#9FBC00"
+theme_greenterm.sbar_bg           = "#222222"
+theme_greenterm.loaded_sbar_fg    = "#FE4365"
+
+-- Input bar specific
+theme_greenterm.ibar_fg           = "#dddddd"
+theme_greenterm.ibar_bg           = "#222222"
+
+-- Tab label
+theme_greenterm.tab_fg            = "#DAFF30"
+theme_greenterm.tab_bg            = "#222222"
+theme_greenterm.selected_fg       = "#ED4511"
+theme_greenterm.selected_bg       = "#171717"
+
+-- Trusted/untrusted ssl colours
+theme_greenterm.trust_fg          = "#0F0"
+theme_greenterm.notrust_fg        = "#F00"
+
+
+
+------ pwmt ------
+theme_pwmt = {}
+-- Default settings
+--theme_pwmt.font = "bitstreams vera sans mono 9 bold"
+theme_pwmt.font = "Monospace bold 9"
+--theme.font = "monospace 10"
+theme_pwmt.fg   = "#9FBC00"
+theme_pwmt.bg   = "#222222"
+
+-- Error colours
+theme_pwmt.error_fg = "#FFF"
+theme_pwmt.error_bg = "#F00"
+
+-- Notification colours
+theme_pwmt.notif_fg = "#ef2929"
+theme_pwmt.notif_bg = "#2e3436"
+
+theme_pwmt.menu_fg                   = "#efefef"
+theme_pwmt.menu_bg                   = "#222222"
+theme_pwmt.menu_selected_fg          = theme_pwmt.bg
+theme_pwmt.menu_selected_bg          = theme_pwmt.fg
+theme_pwmt.menu_title_bg             = "#141414"
+theme_pwmt.menu_primary_title_fg     = "#E3BE09"
+theme_pwmt.menu_secondary_title_fg   = "#D6156C"
+
+
+-- Statusbar specific
+theme_pwmt.sbar_fg           = "#dddddd"
+theme_pwmt.sbar_bg           = "#000000"
+theme_pwmt.loaded_sbar_fg    = "#FE4365"
+
+-- Input bar specific
+theme_pwmt.ibar_fg           = "#9FBC00"
+theme_pwmt.ibar_bg           = "#141414"
+
+-- Tab label
+theme_pwmt.tab_fg            = "#efefef"
+theme_pwmt.tab_bg            = "#232323"
+theme_pwmt.selected_fg       = "#232323"
+theme_pwmt.selected_bg       = "#9FBC00"
+
+-- Trusted/untrusted ssl colours
+theme_pwmt.trust_fg          = "#0F0"
+theme_pwmt.notrust_fg        = "#F00"
+theme_pwmt.loading_fg        = "#ff1212"
+theme_pwmt.loading_bg        = "#ff0000"
+
+
+
+follow_theme = {
+    focus_bg     = "#ff0000";
+    normal_bg    = "#FCE70D";
+    opacity      = 0.3;
+    border       = "1px solid #000000";
+    tick_fg      = "#141414";
+    tick_bg      = "#9FBC00";
+    tick_border  = "1px solid #000000";
+    tick_opacity = 0.8;
+    tick_font    = "11px monospace bold";
+    vert_offset  = 0;
+    horiz_offset = -10;
+}
+
+------ yellow ------
+theme_yellow = {}
+-- Default settings
+--theme_yellow.font = "bitstreams vera sans mono 9 bold"
+--theme_yellow.font = "proggysquare 9"
+theme_yellow.font = "monospace 10"
+theme_yellow.fg   = "#fff900"
+theme_yellow.bg   = "#141414"
+
+-- Error colours
+theme_yellow.error_fg = "#FFF"
+theme_yellow.error_bg = "#F00"
+
+-- Notification colours
+theme_yellow.notif_fg = "#ef2929"
+theme_yellow.notif_bg = "#2e3436"
+
+theme_yellow.menu_fg                   = "#efefef"
+theme_yellow.menu_bg                   = "#222222"
+theme_yellow.menu_selected_fg          = theme_yellow.bg
+theme_yellow.menu_selected_bg          = theme_yellow.fg
+theme_yellow.menu_title_bg             = "#141414"
+theme_yellow.menu_primary_title_fg     = "#E3BE09"
+theme_yellow.menu_secondary_title_fg   = "#D6156C"
+
+
+-- Statusbar specific
+theme_yellow.sbar_fg           = "#dddddd"
+theme_yellow.sbar_bg           = "#000000"
+theme_yellow.loaded_sbar_fg    = "#FE4365"
+
+-- Input bar specific
+theme_yellow.ibar_fg           = "#9FBC00"
+theme_yellow.ibar_bg           = "#141414"
+
+-- Tab label
+theme_yellow.tab_fg            = "#141414"
+theme_yellow.tab_bg            = "#fff900"
+theme_yellow.selected_fg       = "#141414"
+theme_yellow.selected_bg       = "#ffffff"
+
+-- Trusted/untrusted ssl colours
+theme_yellow.trust_fg          = "#0F0"
+theme_yellow.notrust_fg        = "#F00"
+theme_yellow.loading_fg        = "#ff1212"
+theme_yellow.loading_bg        = "#ff0000"
+
+
+
+
+theme_pwmt.follow = follow_theme
+theme_yellow.follow = follow_theme
+
+function evaluate_cmd(cmd)
+    pipe = io.popen(cmd, "r")
+    output = pipe:read("*all")
+    pipe:close()
+    return output
+end
+
+--print ("hostname = "..evaluate_cmd("hostname"))
+if evaluate_cmd("hostname") == "towi04\n" then
+    theme = theme_yellow
+else
+    theme = theme_pwmt
+end
+
+return theme
+-- vim: et:sw=4:ts=8:sts=4:tw=80
