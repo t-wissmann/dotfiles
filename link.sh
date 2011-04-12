@@ -17,7 +17,6 @@ homedir=(
     bashrc
     bash.d
     Xdefaults
-    ncmpcpp
 )
 
 configdir=(
@@ -35,6 +34,7 @@ relpath2target=(
     # just a list of sed commands
     "s#^\($(array2str homedir)\)\$#$HOME/.\1#"
     "s#^config/\($(array2str configdir)\)\$#$HOME/.config/\1#"
+    "s#^ncmpcpp-config#$HOME/.ncmpcpp/config#"
 )
 
 dryrun="${dryrun:-1}" # 0 for real run
