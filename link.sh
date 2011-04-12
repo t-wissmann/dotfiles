@@ -13,15 +13,11 @@ function array2str() {
 
 # settings
 gitdir="$HOME/dotfiles"
+
 homedir=(
     bashrc
     bash.d
     Xdefaults
-)
-
-configdir=(
-    zathura
-    luakit
 )
 
 color_skip="\e[0;1;41m"
@@ -33,7 +29,7 @@ color_link="\e[0m\e[0;32m"
 relpath2target=(
     # just a list of sed commands
     "s#^\($(array2str homedir)\)\$#$HOME/.\1#"
-    "s#^config/\($(array2str configdir)\)\$#$HOME/.config/\1#"
+    "s#^config/\(.*\)\$#$HOME/.config/\1#"
     "s#^ncmpcpp-config#$HOME/.ncmpcpp/config#"
 )
 
@@ -63,13 +59,17 @@ function create_link() {
         targetpath=$(echo "$targetpath"|sed "${relpath2target[$i]}")
     done
     if ! [ -e "$absolutepath" ] ; then
-        echo -e "${color_skip} SKIPPING ${color_source} $origfile ${color_default}because it does not exist"
+        echo -e "${color_skip} SKIPPING ${color_source} $origfile" \
+                "${color_default}because it does not exist"
         return 1
     fi
     if ! is_real_file "$targetpath" ; then
-        echo -e "${color_skip} SKIPPING ${color_source} $origfile ${color_default}because ${color_target}$targetpath ${color_default}is real file"
+        echo -e "${color_skip} SKIPPING ${color_source} $origfile" \
+                 "${color_default}because ${color_target}$targetpath" \
+                 "${color_default}is real file"
     else
-        echo -e "$color_link LINKING  $color_source $origfile$color_link => $color_target$targetpath$color_default"
+        echo -e "$color_link LINKING  $color_source $origfile" \
+                "$color_link=> $color_target$targetpath$color_default"
         [ "$dryrun" = 0 ] && ln -f -s "$absolutepath" "$targetpath" || return 1
     fi
     return 0
