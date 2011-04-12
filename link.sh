@@ -17,6 +17,7 @@ homedir=(
     bashrc
     bash.d
     Xdefaults
+    ncmpcpp
 )
 
 configdir=(
@@ -61,6 +62,10 @@ function create_link() {
         #echo sed "${relpath2target[$i]}"
         targetpath=$(echo "$targetpath"|sed "${relpath2target[$i]}")
     done
+    if ! [ -e "$absolutepath" ] ; then
+        echo -e "${color_skip} SKIPPING ${color_source} $origfile ${color_default}because it does not exist"
+        return 1
+    fi
     if ! is_real_file "$targetpath" ; then
         echo -e "${color_skip} SKIPPING ${color_source} $origfile ${color_default}because ${color_target}$targetpath ${color_default}is real file"
     else

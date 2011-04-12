@@ -1,0 +1,34 @@
+
+# just uncommend it
+#mpd_host = "towi04"
+# for editing
+#mpd_music_dir = "/home/unterhaltung/musik"
+mpd_music_dir = "/mnt/unterhaltung/musik"
+# colors
+
+external_editor = "roxterm -e vim"
+
+autocenter_mode = "yes"
+
+# some visual options
+clock_display_seconds = "yes"
+playlist_display_mode = "columns"
+
+alternative_header_first_line_format = "{$4%t$9 von $7%a$9}|{$4%f$9} ($3%l$9)"
+alternative_header_second_line_format = "auf $2{%b}|{%D}$9"
+user_interface = "alternative"
+alternative_ui_separator_color = "yellow"
+
+#progressbar_look = "»> "
+progressbar_look = "─╼·"
+
+
+progressbar_color = "green"
+
+song_columns_list_format = "(7f)[green]{l:Dauer} (25)[cyan]{a|D:Künstler} (40)[]{t|f:Titel} (30)[red]{b}"
+
+
+#song_list_format = "%l %a %t %b %y"
+#song_columns_list_format = "(5f)[green]{lr} (20)[cyan]{a} (35)[]{t} (24)[red]{bE}(1f)[red]{dE} (10f)[magenta]{yE}"
+#song_status_format = "{%a - }{%t}{ ({Album: %b}{ #%d}{, Jahr: %y})}"
+
