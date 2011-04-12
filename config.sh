@@ -11,22 +11,22 @@ function array2str() {
 }
 
 homedir=(
-    bashrc
     bash.d
-    screenrc
-    vimrc
+    bashrc
     calcrc
-    tmux.conf
-    pinforc
-    Xdefaults{,.d}
     gitconfig
+    pinforc
+    screenrc
+    tmux.conf
+    vimrc
+    Xdefaults{,.d}
 )
 
 files=(
-    ${homedir[@]}
-    ncmpcpp-config
     config/*
     finch-gntrc
+    ${homedir[@]}
+    ncmpcpp-config
 )
 
 
