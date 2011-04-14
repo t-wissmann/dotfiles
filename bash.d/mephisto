@@ -25,6 +25,7 @@ alias cscreen='/local/console/bin/cscreen'
 export GIT_AUTHOR_NAME="Thorsten Wissmann"
 export GIT_AUTHOR_EMAIL="re06huxa@stud.informatik.uni-erlangen.de"
 
-
+[ "$USER" = "re06huxa" ] && nickcolor="\[\e[1;32m\]" || nickcolor="\[\e[1;31m\]"
+export PS1="$nickcolor\u\[\e[1;34m\] @ $PS1"
 
 
