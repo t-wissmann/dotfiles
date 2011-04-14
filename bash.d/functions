@@ -764,5 +764,9 @@ function buggy() {
      echo '   Omm' ; while sleep 0 ; do for i in '('{-,/,\|,\\}')' ; do  echo -ne '\r'$i-$i ; read -n 1 -s -t 0.15 input ; [ "$input" = q ] && echo && return ; done ; done
 }
 
+function pdf2bookpdf {
+    pdftops "${1}" - | psbook -q |psnup -2 |ps2pdf - "${1%%.pdf}-book.pdf"
+}
+
 
 
