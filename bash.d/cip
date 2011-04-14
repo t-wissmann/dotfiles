@@ -112,7 +112,8 @@ echo -e $o' '$n'                                                                
 
 alias cdsp='cd /proj/i4sp/re06huxa/trunk/'
 
-alias arbeitarbeit='ssh -t arbeit bash -l -c screen\\ -rS\\ arbeit'
+#alias arbeitarbeit='ssh -t arbeit bash -l -c screen\\ -rS\\ arbeit'
+alias arbeitarbeit='ssh -t arbeit bash -l -c tmux\\ -S\\ tmux/arbeit\\ attach'
 alias x2gofaui03c='x2goclient --session=faui03c --no-menu'
 
 # xset b 100
