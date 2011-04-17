@@ -28,6 +28,7 @@ function visrc() {
 }
 
 alias flashselect='~/scripts/totem/videoselect.sh'
+alias lastflash='ls -t /tmp/Flash*|head -n 1'
 alias luakit='LD_PRELOAD=~/dev/c/libnounlink/libnounlink.so.1.0.1 luakit'
 
 # clipboard
@@ -90,7 +91,7 @@ alias mutt='setWindowTitle mutt && mutt'
 alias sm='ssh -i ~/.ssh/id_rsa_mephisto mephisto'
 alias sms='ssh -t -i ~/.ssh/id_rsa_mephisto mephisto bash -l -c screen\\ -r'
 alias cipmutt='mutt -F ~/.mutt/cipmuttrc'
-alias arbeitarbeit='TERM=rxvt-unicode ssh -t arbeit bash -l -c tmux\\ -S\\ tmux/asdf\\ attach-session'
+alias arbeitarbeit='ssh -t arbeit bash -l -c tmux\\ -S\\ tmux/arbeit\\ attach'
 alias ameise.ncmpcpp='ssh -t ameise bash -l -c ncmpcpp'
 alias q3='quake3 +set r_fullscreen 1 +set r_customheight "1024" +setr_customwidth "1280" +set r_mode "-1" +connect u'
 
