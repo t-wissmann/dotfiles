@@ -203,7 +203,7 @@ end
 --print ("hostname = "..evaluate_cmd("hostname"))
 hostname = evaluate_cmd("hostname")
 --if hostname == "towi04\n" or string.find(hostname, "^faui.*\n") then
-if string.find(hostname, "^faui.*\n") then
+if false and string.find(hostname, "^faui.*\n") then
     theme = theme_blue
 else
     theme = theme_pwmt
