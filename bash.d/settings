@@ -38,6 +38,7 @@ BOOKMARKS=(
    flv          /mnt/unterhaltung/flv
    nose         ~/dev/c/nose/
    matheskript  ~/uni/10WS/mathec3/vorlesung/faui2k9_mathc3/
+   matheuebung  ~/uni/10WS/mathec3/uebungsblaetter/
    #${BOOKMARKS[@]}
    )
 
