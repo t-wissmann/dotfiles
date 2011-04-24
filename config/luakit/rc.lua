@@ -58,6 +58,22 @@ require "cookies"
 -- own modules
 require "plainmarks"
 
+function cmd_toggle_plugins(w, param)
+        local value = not domain_props["all"]["enable-plugins"]
+        if param then
+            if (param == "true" or param == "on") then
+                value = true
+            end
+            if (param == "false" or param == "off") then
+                value = false
+            end
+        end
+        domain_props["all"]["enable-plugins"] = value
+        w:notify(string.format("Plugins are "..
+                (value and "enabled" or "disabled")))
+end
+
+
 function cmd_toggle_javascript(w, param)
         local value = not domain_props["all"]["enable-scripts"]
         if param then
@@ -116,6 +132,7 @@ add_binds("command", {
 local cmd = lousy.bind.cmd
 
 add_cmds({cmd("togglejs", cmd_toggle_javascript )})
+add_cmds({cmd("toggleplugins", cmd_toggle_plugins )})
 --
 --
 -- Init scripts
