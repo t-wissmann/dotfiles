@@ -134,5 +134,25 @@ lal*format: %H:%M:%S
 !     Shift <KeyPress> Home:copy-selection(CLIPBOARD, PRIMARY)\n\
 
 
+!*dpi: 96
+
+Xterm*customization: -color
+!*reverseVideo: true
+
+! Black (not tango) + DarkGrey
+Xterm*background: #202020
+Xterm*foreground: #EFEFEF
+! disable to much colors
+XTerm*veryBoldColors: 2
+xterm*bellIsUrgent: true
+xterm*boldMode: false
+!xterm*faceName: 'xft:GohuFont:pixelsize=12'
+xterm*faceName: 'xft:Bitstream Vera Sans Mono:style=bold:pixelsize=12'
+XTerm*metaSendsEscape: true
+
+
+
+
+
 
 
