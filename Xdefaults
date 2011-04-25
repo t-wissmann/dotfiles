@@ -149,6 +149,10 @@ xterm*boldMode: false
 !xterm*faceName: 'xft:GohuFont:pixelsize=12'
 xterm*faceName: 'xft:Bitstream Vera Sans Mono:style=bold:pixelsize=12'
 XTerm*metaSendsEscape: true
+XTerm*cursorBlink: false
+XTerm*cursorOnTime: 1000
+XTerm*cursorOffTime: 500
+XTerm*cursorColor: #ff9900
 
 
 
