@@ -1,0 +1,10 @@
+#!/bin/bash
+
+alias pacman=pacman
+
+alias irc='ssh -t ameise bash -l -c "screen\\ -S\\ all\\ -x\\ -p\\ irc"'
+alias icq='ssh -t ameise bash -l -c "screen\\ -S\\ all\\ -x\\ -p\\ finch"'
+alias sa='ssh ameise'
+
+alias shutdown='~/scripts/shutdown.sh'
+
