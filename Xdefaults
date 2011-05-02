@@ -125,6 +125,8 @@ lal*color: #CFCFCF
 lal*width:  80
 lal*format: %H:%M:%S
 
+#include ".Xdefaults.d/custom"
+
 !#include ".Xdefaults.d/win"
 
 !Ctrl <KeyPress> Insert:insert-selection(CLIPBOARD, PRIMARY)\n\

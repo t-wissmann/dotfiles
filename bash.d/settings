@@ -19,10 +19,15 @@ alias killopenvpn='sudo /root/killopenvpn'
 # flv video dir
 export flv_video_dir="/mnt/unterhaltung/flv"
 
+
+[ -f "$HOME/dev/c/libnounlink/libnounlink.so.1.0.1" ] &&
 function luakit() {
     LD_PRELOAD=$HOME/dev/c/libnounlink/libnounlink.so.1.0.1 "$(which luakit)" $* 2> /dev/null
+} ||
+function luakit() {
+    luakit $*
 }
-export -f luakit
+export -f luakit 
 # browser
 BROWSER="luakit"
 

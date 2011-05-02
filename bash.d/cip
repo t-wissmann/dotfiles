@@ -183,5 +183,8 @@ alias clearqueue="ssh faui02 sudo ~re06huxa/bin/lpremoveall.sh"
 
 
 
+# addpackage:
+addpackage luakit-develop-git
+addpackage cipadm
 
 
