@@ -122,6 +122,8 @@ add_binds("command", {
         end
         if string.match(i.text, "^:tabopen ")
          or string.match(i.text, "^:open ")
+         or string.match(i.text, "^:o ")
+         or string.match(i.text, "^:t ")
          or string.match(i.text, "^:winopen ") then
             w:set_mode("bmarkcomp")
         end
