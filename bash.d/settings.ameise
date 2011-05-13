@@ -1,12 +1,12 @@
 #!/bin/bash
 
-function update_quotes() {
+function update-quotes() {
     local logdir="$HOME/.weechat/logs"
     cat "$logdir"/irc.uni-erl.#fau* \
         | grep -P '^.{19}\t.?Norad\t#fau(|i[^:]{0,4}): ' \
         | sed 's/^.\{19\}..Norad.//' \
         | sort \
         | uniq \
-        | ssh tee '~/.www/quotes' > /dev/null
+        | ssh cip tee '~/.www/quotes' > /dev/null
 }
 
