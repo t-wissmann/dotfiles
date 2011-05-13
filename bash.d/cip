@@ -16,8 +16,9 @@ BROWSER="iceweasel -P stable"
 BOOKMARKS=(
     home   ~
     ciptmp /proj/ciptmp/re06huxa/
-    bfs    ~/uni/10WS/BFS
-    mathe  ~/uni/10WS/MatheC3
+    #bfs    ~/uni/10WS/BFS
+    #mathe  ~/uni/10WS/MatheC3
+    algoks  ~/uni/11SS/algoks/uebungsblaetter/algoks/
     )   
 # mpd profiles
 # settings vor mpd are (currently) not needed
@@ -188,5 +189,14 @@ alias ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
 # addpackage:
 addpackage luakit-develop-git
 addpackage cipadm
+
+function q() {
+    local quotesfile="$HOME/wwwcip/quotes"
+    if [ -z "$*" ] ; then
+        sort -R "$quotesfile"|head -1
+    else
+        sort -R "$quotesfile"|grep -i "$*"|head -1
+    fi
+}
 
 
