@@ -15,6 +15,7 @@ homedir=(
     bashrc
     calcrc
     gitconfig
+    tigrc
     pinforc
     screenrc
     tmux.conf
