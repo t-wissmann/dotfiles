@@ -559,7 +559,7 @@ fib() {
             em1=$enderg
             fib $((a-2)) > /dev/null
             em2=$enderg
-            e=$(calc $em1+$em2)
+            e=$(calc -d $em1+$em2)
         fi
         enderg=$e
         FIBTABLE[$a]=$enderg
