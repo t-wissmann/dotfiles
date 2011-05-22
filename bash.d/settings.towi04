@@ -13,6 +13,11 @@ export dmenu_command="dmenu -i -nb #202020 -nf #d4d4d4 -sb #D0EEB1 -sf #202020 -
 # theme: pwmt
 # with options for awesome: -x 17 -w $((1280-16-17)) 
 export dmenu_command="dmenu -i -r -c -rs -nb #000000 -nf #efefef -sb #9FBC00 -sf #232323 -fn 'xft:BitstreamVeraSans:bold:pixelsize=11' -ni"
+export dzen2_command='dzen2_font'
+function dzen2_font() {
+    dzen2  -xs 1 -fn "Bitstream Vera Sans Mono:bold:size=9" -bg '#141414'
+}
+export -f dzen2_font
 # theme: yellow for scrotwm
 #export dmenu_command="dmenu -i -r -c -rs -nb #141414 -nf #efefef -sb #fff900 -sf #232323 -fn  'xft:BitstreamVeraSans:pixelsize=9' -ni"
 export dmenu_lines="20"
@@ -27,7 +32,12 @@ export -f luakit
 
 export BROWSER="luakit"
 export DOTREMINDERS="$HOME/.reminders.d/master"
-
+BOOKMARKS=(
+        "${BOOKMARKS[@]}"
+        nose         ~/dev/c/nose/
+        algoks       ~/uni/11SS/algoks/uebungsblaetter/
+        haskell      ~/uni/current/haskell/uebungsblaetter
+    )
 # mpd profiles
 MPD_Profile="$(cat ~/.mpd_profile)"
 MPD_QueuePort="23233"
