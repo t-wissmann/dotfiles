@@ -33,6 +33,7 @@ alias luakit='LD_PRELOAD=~/dev/c/libnounlink/libnounlink.so.1.0.1 luakit'
 
 # clipboard
 alias 2clipboard='xclip -selection clipboard'
+alias clipwget='xclip -o -selection clipboard|xargs wget'
 # add colors in grep
 export GREP_COLOR="1;33"
 export GREP_COLORS="mc=1;33"

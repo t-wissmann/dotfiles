@@ -45,6 +45,9 @@ BOOKMARKS=(
    matheskript  ~/uni/10WS/mathec3/vorlesung/faui2k9_mathc3/
    #matheuebung  ~/uni/10WS/mathec3/uebungsblaetter/
    bfs          ~/uni/10WS/bfs/uebungsblaetter/
+   algoks       ~/uni/11SS/algoks/uebungsblaetter/
+   haskell      ~/uni/current/haskell/uebungsblaetter
+   kompalg      ~/uni/current/kompalg/uebungsblaetter
    #${BOOKMARKS[@]}
    )
 
