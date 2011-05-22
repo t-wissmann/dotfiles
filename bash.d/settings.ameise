@@ -7,6 +7,7 @@ function update-quotes() {
         | sed 's/^.\{19\}..Norad.//' \
         | sort \
         | uniq \
-        | ssh cip tee '~/.www/quotes' > /dev/null
+        | ssh cip tee '~/.www/quotes' \
+        | wc -l
 }
 
