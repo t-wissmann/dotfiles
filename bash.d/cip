@@ -19,6 +19,8 @@ BOOKMARKS=(
     #bfs    ~/uni/10WS/BFS
     #mathe  ~/uni/10WS/MatheC3
     algoks  ~/uni/11SS/algoks/uebungsblaetter/algoks/
+    haskell      ~/uni/current/haskell/uebungsblaetter
+    kompalg      ~/uni/current/kompalg/uebungsblaetter
     )   
 # mpd profiles
 # settings vor mpd are (currently) not needed

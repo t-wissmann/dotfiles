@@ -37,6 +37,8 @@ BOOKMARKS=(
         nose         ~/dev/c/nose/
         algoks       ~/uni/11SS/algoks/uebungsblaetter/
         haskell      ~/uni/current/haskell/uebungsblaetter
+        bfs          ~/uni/10WS/bfs/uebungsblaetter/
+        kompalg      ~/uni/current/kompalg/uebungsblaetter
     )
 # mpd profiles
 MPD_Profile="$(cat ~/.mpd_profile)"
