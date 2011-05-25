@@ -48,6 +48,7 @@ BOOKMARKS=(
    algoks       ~/uni/11SS/algoks/uebungsblaetter/
    haskell      ~/uni/current/haskell/uebungsblaetter
    kompalg      ~/uni/current/kompalg/uebungsblaetter
+   rk           ~/uni/current/rk/uebungsblaetter
    #${BOOKMARKS[@]}
    )
 
