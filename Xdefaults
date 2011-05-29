@@ -14,7 +14,7 @@ Xcursor*theme: Vanilla-DMZ
 !xterm*background: black
 !urxvt*background: #202020
 !urxvt*foreground: #EDEDED
-urxvt*background: #222222
+urxvt*background: #1e1e1e
 !! brown
 !urxvt*background: #221C16
 !! green
@@ -26,7 +26,7 @@ xterm*background: #202020
 xterm*foreground: #EDEDED
 ! Black (not tango) + DarkGrey
 !urxvt*color0:  #596569
-urxvt*color0:  #080808
+urxvt*color0:  black
 !xterm*color0:  #596569
 xterm*color0:  #202020
 *color8:  #505050
@@ -55,8 +55,8 @@ xterm*color0:  #202020
 *color14: #c17d11
 ! LightGrey + White
 !*color7:  #E8E8E8
-*color7:  #808080
-*color15: #B0B0B0
+*color7:  #a0a0a0
+*color15: #ffffff
 
 !#include ".Xdefaults.d/tango.colors"
 !#include ".Xdefaults.d/tangobright.colors"
