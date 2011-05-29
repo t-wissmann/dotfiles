@@ -55,8 +55,8 @@ xterm*color0:  #202020
 *color14: #c17d11
 ! LightGrey + White
 !*color7:  #E8E8E8
-*color7:  #808080
-*color15: #B0B0B0
+*color7:  #a0a0a0
+*color15: #ffffff
 
 !#include ".Xdefaults.d/tango.colors"
 !#include ".Xdefaults.d/tangobright.colors"
