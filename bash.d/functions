@@ -818,7 +818,7 @@ function map() {
 
 function lambda() {(
     eval 'mylam() {( '"$1"' ; )}'
-    echo eval 'mylam() {( '"$1"' ; )}'
+    #echo eval 'mylam() {( '"$1"' ; )}'
     shift
     mylam "$@"
 )}
