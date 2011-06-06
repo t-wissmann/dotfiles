@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Check for an interactive session
-[ -z "$PS1" ] && return
+[ -z "$PS1" ] && [ "$1" != "FORCE" ] && return
 
 # the most important alias due to vi/vim migration on archlinux
 alias vi=vim
