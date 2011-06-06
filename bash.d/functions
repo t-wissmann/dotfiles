@@ -13,9 +13,19 @@ function unison-sync-all(){
     # do critical thins interactive -> -auto
     for mode in batch auto ; do
         for i in ${PROFILES[@]} ; do
-            echo -e "\e[0;34m==> \e[1;31mSyncing $i in $mode mode\e[0m"
+            echo -e "\e[0;34m:: \e[1;31mSyncing $i in $mode mode\e[0m"
             [ "$1" = '-n' ] || unison -$mode "$i"
         done
+    done
+}
+function unison-sync-all-hosts() {
+    local HOSTS=( towi04 ghul ameise )
+    for h in ${HOSTS[@]} ; do
+        echo -e "\e[0;34m==> \e[1;33mSyncing host $h\e[0m"
+        ssh $h bash -l <<EOF
+            source ~/.bash.d/functions FORCE
+            unison-sync-all
+EOF
     done
 }
 
