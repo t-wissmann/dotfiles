@@ -799,4 +799,57 @@ function sethexcolor() {
     echo -en '\e[38;5;'"$num"'m'
 }
 
+function min2() {
+    [ "$1" -lt "$2" ] && echo "$1" || echo "$2"
+}
+function max2() {
+    [ "$1" -gt "$2" ] && echo "$1" || echo "$2"
+}
+
+function reduce() {
+    # usage: $0 CMD [ARGS...]
+    [ "$#" -lt 2 ] && return 1
+    [ "$#" = 2 ] && echo "$2" && return 1
+    local cmd="$1"
+    local a="$2"
+    shift 2
+    local b=$(reduce "$cmd" "$@")
+    eval "$cmd \"$a\" \"$b\""
+}
+
+function map() {
+    # usage: $0 CMD [ARGS...]
+    local cmd="$1"
+    shift 1
+    for i in "$@" ; do
+        eval "$cmd \"$i\""
+    done
+}
+
+function lambda() {(
+    eval 'mylam() {( '"$1"' ; )}'
+    #echo eval 'mylam() {( '"$1"' ; )}'
+    shift
+    mylam "$@"
+)}
+
+## also currying is possible:
+alias max='reduce max2'
+alias min='reduce min2'
+
+## example calls
+# map "lambda 'echo \$((\$1*2))'" 3 -34 233 23 1 32  234 23
+# reduce min2 3 -34 233 23 1 32  234 23
+# max 3 -34 233 23 1 32  234 23
+
+function args() {
+    echo "args to $0 were:"
+    for i in "$@" ; do
+        echo -ne "\e[0;32m\"\e[0;34m"
+        echo -n "$i"
+        echo -e "\e[0;32m\""
+    done
+    echo -ne '\e[0m'
+}
+
 

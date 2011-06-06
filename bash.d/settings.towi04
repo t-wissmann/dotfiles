@@ -39,6 +39,7 @@ BOOKMARKS=(
         haskell      ~/uni/current/haskell/uebungsblaetter
         bfs          ~/uni/10WS/bfs/uebungsblaetter/
         kompalg      ~/uni/current/kompalg/uebungsblaetter
+        rk           ~/uni/current/rk/uebungsblaetter
     )
 # mpd profiles
 MPD_Profile="$(cat ~/.mpd_profile)"
