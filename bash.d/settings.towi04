@@ -84,5 +84,5 @@ export MPD_QueueFile
 # fix some wine things
 alias wine='__GL_ExtensionStringVersion=17700 wine'
 alias scrot="scrot --exec 'convert -crop 1280x1024 \$f \$f'"
-
+alias scrot-s="scrot -s"
 

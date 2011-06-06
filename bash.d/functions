@@ -768,5 +768,25 @@ function pdf2bookpdf {
     pdftops "${1}" - | psbook -q |psnup -2 |ps2pdf - "${1%%.pdf}-book.pdf"
 }
 
+function colorhex2256() {
+    local hex="$1"
+    hex=${hex#\#}
+    local r=$((0x${hex:0:2}))
+    local g=$((0x${hex:2:2}))
+    local b=$((0x${hex:4:2}))
+    #echo "decimal r=$r g=$g b=$b"
+    local r=$(($r*5/255))
+    local g=$(($g*5/255))
+    local b=$(($b*5/255))
+    #echo "6based r=$r g=$g b=$b"
+    local colornum=$((r*6*6+g*6+b))
+    #echo "colornum=$colornum"
+    #echo -ne "\e[38;5;$((r*6*6*6/256+g*6*6/256+b*6/256+30))m"
+    echo -n "$((colornum+16))"
+}
+function sethexcolor() {
+    local num=$(colorhex2256 "$1")
+    echo -en '\e[38;5;'"$num"'m'
+}
 
 
