@@ -22,6 +22,7 @@ BOOKMARKS=(
     algoks  ~/uni/11SS/algoks/uebungsblaetter/algoks/
     haskell      ~/uni/current/haskell/uebungsblaetter
     kompalg      ~/uni/current/kompalg/uebungsblaetter
+    rk           ~/uni/current/rk/uebungsblaetter/
     )   
 # mpd profiles
 # settings vor mpd are (currently) not needed
