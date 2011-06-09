@@ -10,6 +10,7 @@ alias tmux='tmux -S ~/tmux/asdf'
 export dmenu_command="dmenu -i -nb #202020 -nf #d4d4d4 -sb #202020 -sf #B1D631 -fn xft:ProFont:pixelsize=14 -ni"
 export dmenu_command="$HOME/bin/dmenu -b -i -nb #141414 -nf #efefef -sb #9FBC00 -sf #232323 -fn 'xft:BitstreamVeraSans:bold:pixelsize=11' -ni"
 export dmenu_lines="20"                                                                              
+alias cipmap='netcat faui02 1338'
 
 BROWSER="iceweasel -P stable"
 
@@ -21,6 +22,7 @@ BOOKMARKS=(
     algoks  ~/uni/11SS/algoks/uebungsblaetter/algoks/
     haskell      ~/uni/current/haskell/uebungsblaetter
     kompalg      ~/uni/current/kompalg/uebungsblaetter
+    rk           ~/uni/current/rk/uebungsblaetter/
     )   
 # mpd profiles
 # settings vor mpd are (currently) not needed
