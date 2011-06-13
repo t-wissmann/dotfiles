@@ -55,6 +55,7 @@ function uzbl() {
 alias trm='echo -e "$(calcurse -r7|sed -r '\''s/\t/\\e[1;32m        /;s/^/\\e[0m/;s/([0-9]{2})\/([0-9]{2})\/([0-9]{2})/\\e[1;34m\2. \1. '$(date +%C)'\3/'\'')"'
 
 alias makeloop='while sleep 1 ; do make 2>&1 | grep -v "nichts zu tun" ; done'
+alias px='ps aux|grep -i'
 
 # things for university
 alias gcc.icpc='gcc -Wall -O2 -g -static -lm'
@@ -89,6 +90,7 @@ alias plan="vim ~/uni/current/stundenplan/tabelle"
 [ -f ~/scripts/utils/colors.sh ] && alias lscolors="~/scripts/utils/colors.sh"
 alias newmail='unison -batch mail && mutt -Z'
 alias mutt='setWindowTitle mutt && mutt'
+alias mailtree='find ~/Mail -type d |grep -v "\.d"|sort|sed "s#^$HOME/Mail[/]*##"|grep -vx ""|path2tree'
 
 # cip stuff
 alias sm='ssh -i ~/.ssh/id_rsa_mephisto mephisto'
