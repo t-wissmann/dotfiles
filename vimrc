@@ -2,28 +2,40 @@
 " enforce 8 colors
 set t_Co=8
 
+" show line numbers
 set number
+" always do syntaxhighlighting
 syntax on
+" highlight all search matches
 set hlsearch
+" keep indentation when opening new lines
 set autoindent
+" set some vi-modes
 set nocompatible
+" show matching brackets
 set showmatch
+" set width of tabs
+set et
 set shiftwidth=4
 set tabstop=4
+" enable filetype specific features
 filetype plugin on
+" code folding
 set foldmethod=indent
-set modeline
 set nofoldenable
+" show statusbar with current row,col
+set modeline
+" create backupfiles
 set backup
 
+" highlight whitespaces and trailing spaces
 set list
 set listchars=tab:>-,trail:-
 
-" menu and completion
+" menu and completion -> bash-like
 set wildmenu
 set wildmode=longest:full
 
-set et
 set visualbell t_vb=
 
 set scrolloff=2
