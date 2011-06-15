@@ -118,7 +118,7 @@ add_binds("command", {
         local i = w.ibar.input
         if not string.match(i.text, "%s") then
             -- Only complete commands, not args
-            w:set_mode("cmdcomp")
+            w:set_mode("completion")
         end
         if string.match(i.text, "^:tabopen ")
          or string.match(i.text, "^:open ")
