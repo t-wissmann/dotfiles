@@ -72,9 +72,10 @@ alias sms='ssh -t -i ~/.ssh/id_rsa_mephisto mephisto bash -l -c screen\\ -r'
 alias sa='ssh ameise'
 #alias irc='ssh -t thorstenwissmann@roethelheim.net bash -l -c "ssh\\ -t\\ thorsten@172.17.29.12\\ bash\\ -l\\ -c\\ \\\\\\\"screen-reconnect.sh\\ irc\\\\\\\""'
 alias irc='ssh -t ameise bash -l -c "/home/thorsten/bin/screen-reconnect.sh\\ irc"'
+alias twitter='ssh -t ameise bash -l -c "/home/thorsten/bin/screen-reconnect.sh\\ irc"'
 alias icq='ssh -t ameise bash -l -c "/home/thorsten/bin/screen-reconnect.sh\\ finch"'
 #alias finch='ssh -t thorstenwissmann@roethelheim.net bash -l -c "ssh\\ -t\\ thorsten@172.17.29.12\\ bash\\ -l\\ -c\\ \\\\\\\"screen-reconnect.sh\\ finch\\\\\\\""'
-
+alias facebook=mutt
 alias cm=~/scripts/checkmail.sh
 
 
@@ -184,7 +185,7 @@ function _addpackage_complete() {
 
 complete -F _addpackage_complete addpackage
 
-
+alias cursunraymac='utwho  -c|grep $USER|sed "s/.*\.//"'
 alias clearqueue="ssh faui02 sudo ~re06huxa/bin/lpremoveall.sh"
 
 alias fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu='cat ~/fffffffffffffffffffffffffffuuuuuuuuuuuuuuuuu'
@@ -203,4 +204,5 @@ function q() {
     fi
 }
 
+export LD_PRELOAD=
 

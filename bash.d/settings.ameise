@@ -1,5 +1,63 @@
 #!/bin/bash
 
+# set dmenu-command
+#export dmenu_command="dmenu -i -nb #202020 -nf #d4d4d4 -sb #D0EEB1 -sf #202020 -fn -*-profont-*-*-*-*-12-*-*-*-*-*-*-*"
+# requires dmenu-vertical-xft
+#export dmenu_command="dmenu -i -c -rs -nb #202020 -nf #d4d4d4 -sb #202020 -sf #B1D631 -fn xft:ProFont:pixelsize=14 -ni"
+# pink awesome colors
+#export dmenu_command="dmenu -i -x 16 -w $((1366-2*16)) -c -rs -nb #444444 -nf #efefef -sb #EB6E80 -sf #202020 -fn xft:ProFont:pixelsize=14 -ni"
+# for glassy white/green
+export dmenu_command="dmenu -i -x 23 -w $((1366-2*23)) -c -rs -nb #7C7978 -nf #efefef -sb #9AFF36 -sf #202020 -fn 'xft:BitstreamVeraSans:bold:pixelsize=11' -ni"
+export dmenu_lines="10"
+
+# flv video dir
+export flv_video_dir="/mnt/unterhaltung/flv"
+
+
+BOOKMARKS=(
+    flv     /home/.data/flv/
+    musik   /home/.data/musik/
+    ${BOOKMARKS[@]}
+    )
+
+# mpd profiles
+[ -z "$MPD_Profile" ] && MPD_Profile="$(cat ~/.mpd_profile)"
+[ -z "$MPD_QueuePort" ] && MPD_QueuePort="23233"
+
+case "$MPD_Profile"  in
+    eule)
+        MPD_HOST=eule
+        MPD_PORT=6600
+        MPD_QueueFile="${HOME}/scripts/mpd/queue"
+        function MPD_QueueGet() { cat "$MPD_QueueFile"; }
+        function MPD_QueueSet() { echo $* > "$MPD_QueueFile"; }
+        function MPD_QueuePushBack() { echo $* >> "$MPD_QueueFile"; }
+        ;;
+    ameise)
+        MPD_HOST=10.202.63.10
+        MPD_PORT=6600
+        ;;
+    towi04)
+        MPD_HOST=10.202.63.16
+        MPD_PORT=6600
+        # queue through network is not supported yet ;)
+        MPD_QueueFile="${HOME}/scripts/mpd/queue"
+        function MPD_QueueGet() { echo 'echo $MPD_Queue' \
+                    |console-send $MPD_HOST $MPD_QueuePort ; }
+        function MPD_QueueSet() { echo "var MPD_Queue = \"$*\"" \
+                    |console-send $MPD_HOST $MPD_QueuePort ; }
+        function MPD_QueuePushBack() { MPD_QueueSet $(MPD_QueueGet) $* ; }
+        ;;
+esac
+# export it
+export MPD_QueuePort
+export MPD_HOST
+export MPD_PORT
+export MPD_QueueFile
+
+
+
+
 function update-quotes() {
     local logdir="$HOME/.weechat/logs"
     cat "$logdir"/irc.uni-erl.#fau* \
@@ -9,5 +67,8 @@ function update-quotes() {
         | uniq \
         | ssh cip tee '~/.www/quotes' \
         | wc -l
+    # also possible to get !qas:
+    #    | grep -P '^.{19}\t.?(Norad\t#fau(|i[^:]{0,4}): |.*\t!qa )' \
+    #    | sed 's/^.\{19\}..[^\t]*\t!qa //' \
 }
 
