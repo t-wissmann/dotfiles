@@ -89,6 +89,16 @@ function cmd_toggle_javascript(w, param)
                 (value and "enabled" or "disabled")))
 end
 
+function cmd_set_useragent(w, param)
+        local value = not domain_props["all"]["enable-scripts"]
+        if useragents[param] then
+            globals.useragent = useragents[param]
+            w:notify(string.format("Useragent is "..param..": "..globals.useragent))
+        else
+            w:error(string.format("No useragent called \""..param.."\" "))
+        end
+end
+
 local key, buf, but = lousy.bind.key, lousy.bind.buf, lousy.bind.but
 
 add_binds("normal", {
@@ -135,6 +145,7 @@ local cmd = lousy.bind.cmd
 
 add_cmds({cmd("togglejs", cmd_toggle_javascript )})
 add_cmds({cmd("toggleplugins", cmd_toggle_plugins )})
+add_cmds({cmd("useragent", cmd_set_useragent )})
 --
 --
 -- Init scripts

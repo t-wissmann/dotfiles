@@ -5,8 +5,13 @@ globals.term = "roxterm"
 globals.term = "urxvt"
 
 globals.homepage = "about:blank"
-globals.useragent = "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.8.1.6) Gecko/20070725 Firefox/2.0.0.6"
---globals.useragent = "Mozilla/5.0 (X11; Linux x86_64; rv:2.0) Gecko/20110325 Firefox/4.0"
+
+useragents = {
+    ["ff4"] = "Mozilla/5.0 (X11; Linux x86_64; rv:2.0) Gecko/20110325 Firefox/4.0",
+    ["ff2"] = "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.8.1.6) Gecko/20070725 Firefox/2.0.0.6",
+}
+
+globals.useragent = useragents["ff2"]
 
 --search_engines.duk = "http://duckduckgo.com/html/?q=%s"
 search_engines.d = "http://duckduckgo.com/html/?q=%s"
