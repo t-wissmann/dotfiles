@@ -1,4 +1,5 @@
 
+
 -- add the following to your rc.lua
 -- dofile(os.getenv("HOME").."/.config/luakit/rc.local.lua")
 globals.term = "roxterm"
@@ -69,38 +70,6 @@ domain_props = {
     ["panopticlick.eff.org"] = { ["enable-scripts"] = true, },
     ["narf-archive.com"] = { ["enable-scripts"] = true, },
 }
-
-
---
---downloads.add_signal("open-file", function (f, m)
---    local mime_types = {
---        ["^text/"        ] = "gvim",
---        ["^video/"       ] = "mplayer",
---        ["/pdf$"         ] = "zathura",
---    }
---    local extensions = {
---        ["mp3"           ] = "totem --enqueue",
---        ["pdf"           ] = "zathura",
---    }
---
---    if m then
---        for p,e in pairs(mime_types) do
---            if string.match(m, p) then
---                luakit.spawn(string.format('%s "%s"', e, f))
---                return true
---            end
---        end
---    end
---
---    local _,_,ext = string.find(f, ".*%.([^.]*)")
---    for p,e in pairs(extensions) do
---        if string.match(ext, p) then
---            luakit.spawn(string.format('%s "%s"', e, f))
---            return true
---        end
---    end
---end)
-
 
 
 
