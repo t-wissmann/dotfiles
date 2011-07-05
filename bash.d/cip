@@ -203,6 +203,7 @@ function q() {
         sort -R "$quotesfile"|grep -i "$*"|head -1
     fi
 }
+alias luakit='/local/luakit/bin/luakit'
 
 export LD_PRELOAD=
 
