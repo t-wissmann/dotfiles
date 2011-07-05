@@ -71,4 +71,36 @@ domain_props = {
 }
 
 
+--
+--downloads.add_signal("open-file", function (f, m)
+--    local mime_types = {
+--        ["^text/"        ] = "gvim",
+--        ["^video/"       ] = "mplayer",
+--        ["/pdf$"         ] = "zathura",
+--    }
+--    local extensions = {
+--        ["mp3"           ] = "totem --enqueue",
+--        ["pdf"           ] = "zathura",
+--    }
+--
+--    if m then
+--        for p,e in pairs(mime_types) do
+--            if string.match(m, p) then
+--                luakit.spawn(string.format('%s "%s"', e, f))
+--                return true
+--            end
+--        end
+--    end
+--
+--    local _,_,ext = string.find(f, ".*%.([^.]*)")
+--    for p,e in pairs(extensions) do
+--        if string.match(ext, p) then
+--            luakit.spawn(string.format('%s "%s"', e, f))
+--            return true
+--        end
+--    end
+--end)
+
+
+
 
