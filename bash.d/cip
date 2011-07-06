@@ -204,6 +204,7 @@ function q() {
     fi
 }
 alias luakit='/local/luakit/bin/luakit'
+export LC_ALL=de_DE.utf8
 
 export LD_PRELOAD=
 
