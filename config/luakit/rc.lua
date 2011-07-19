@@ -131,6 +131,12 @@ add_binds("normal", {
 }, true) -- true: overwrite already existing
 
 add_binds("normal", {
+    lousy.bind.buf("^sd$", function (w)
+        w:set_mode("downloadlist")
+    end)
+}, true) -- true: overwrite already existing
+
+add_binds("normal", {
     lousy.bind.buf("^JJ$", function (w)
         cmd_toggle_javascript(w, "")
     end)
