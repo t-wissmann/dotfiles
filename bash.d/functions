@@ -7,7 +7,8 @@ function mkcd()
 }
 
 function unison-sync-all(){
-    local PROFILES=( uni musik video scripts dev internet )
+    local PROFILES=( uni scripts dev internet )
+    [ `hostname` != morgentau ] && local PROFILES=( ${PROFILES[@]} musik video )
     [ `hostname` != ameise ] && local PROFILES=( ${PROFILES[@]} biz themes )
     # do normal thins first -> batch
     # do critical thins interactive -> -auto
