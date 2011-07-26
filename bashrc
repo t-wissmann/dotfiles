@@ -36,6 +36,8 @@ fi
 trysource /etc/bash_completion.d/git
 trysource /etc/bash_completion.d/mpc
 trysource /etc/bash_completion.d/tmux
+trysource ~/dev/c/herbstluftwm/share/herbstclient-completion
+trysource ~/git/herbstluftwm/share/herbstclient-completion
 
 case `hostname` in
     faui*) trysource ~/.bash.d/cip ;;
