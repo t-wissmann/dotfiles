@@ -187,6 +187,7 @@ function extract () {
 BOOKMARKS=(
    home         $HOME
    unterhaltung /home/unterhaltung
+   herbstluftwm ~/dev/c/herbstluftwm/
    tv           /home/unterhaltung/TV
    flv          /home/unterhaltung/video/Mus/flv
    deb-tw       /mnt/home/thorsten

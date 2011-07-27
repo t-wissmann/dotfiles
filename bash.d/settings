@@ -43,6 +43,7 @@ BOOKMARKS=(
    flv          /mnt/unterhaltung/flv
    nose         ~/dev/c/nose/
    matheskript  ~/uni/10WS/mathec3/vorlesung/faui2k9_mathc3/
+   herbstluftwm ~/dev/c/herbstluftwm/
    #matheuebung  ~/uni/10WS/mathec3/uebungsblaetter/
    bfs          ~/uni/10WS/bfs/uebungsblaetter/
    algoks       ~/uni/11SS/algoks/uebungsblaetter/

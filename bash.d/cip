@@ -17,6 +17,7 @@ BROWSER="iceweasel -P stable"
 BOOKMARKS=(
     home   ~
     ciptmp /proj/ciptmp/re06huxa/
+    herbstluftwm ~/git/herbstluftwm/
     #bfs    ~/uni/10WS/BFS
     #mathe  ~/uni/10WS/MatheC3
     algoks  ~/uni/11SS/algoks/uebungsblaetter/algoks/
