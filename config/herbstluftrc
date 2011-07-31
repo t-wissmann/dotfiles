@@ -1,0 +1,82 @@
+#!/bin/bash
+
+# this is an simple config to herbstluftwm
+
+function hc() {
+    herbstclient "$@"
+}
+
+#xsetroot -solid '#D47A55'
+hc set window_gap 8
+# raindrops
+#feh --bg-center ~/Documents/wallpaper/water/rain.jpg
+case $HOSTNAME in
+    ghul)
+        feh --bg-scale ~/Documents/wallpaper/nature/02154_standalonecleanwallpaper_2560x1600.jpg
+        ;;
+    dachs)
+        hc remove_monitor 1
+        width=1920
+        height=1200
+        hc move_monitor 0 $((w/2))x$((h))+0+0
+        hc use 1
+        hc add_monitor $((w/2))x$((h))+$((w/2))+0 2
+        ;;
+    *)
+        ;;
+esac
+
+# keybindings
+Mod=Mod4
+hc keybind $Mod-q quit
+hc keybind $Mod-Shift-r reload
+hc keybind $Mod-Shift-c close
+hc keybind $Mod-Return spawn urxvt
+hc keybind $Mod-x spawn ~/scripts/menu/custommenu.sh apps
+hc keybind $Mod-F2 spawn gmrun
+
+# tags
+hc rename default 1 || true # just try it
+for i in {1..9} ; do
+    hc add "$i"
+    hc keybind "$Mod-$i" use "$i"
+    hc keybind "$Mod-Shift-$i" move "$i"
+done
+
+# layouting
+hc keybind $Mod-i toggle always_show_frame
+hc keybind $Mod-r remove
+hc keybind $Mod-u split vertical 0.5
+hc keybind $Mod-o split horizontal 0.5
+hc keybind $Mod-space cycle_layout 1
+hc keybind $Mod-Shift-space cycle_layout -1
+
+# focus
+hc keybind $Mod-Tab cycle_monitor
+hc keybind $Mod-c cycle
+hc keybind $Mod-y cycle -1
+hc keybind $Mod-h focus left
+hc keybind $Mod-j focus down
+hc keybind $Mod-k focus up
+hc keybind $Mod-l focus right
+hc keybind $Mod-Shift-h shift left
+hc keybind $Mod-Shift-j shift down
+hc keybind $Mod-Shift-k shift up
+hc keybind $Mod-Shift-l shift right
+
+## other things
+hc keybind XF86ScreenSaver spawn ~/bin/lock.sh
+hc keybind XF86AudioLowerVolume spawn amixer -q sset Master 2-
+hc keybind XF86AudioRaiseVolume spawn amixer -q sset Master 2+
+hc keybind XF86Launch1 spawn ~/bin/suspend.sh
+
+# new colors
+hc set frame_border_active_color '#49351D'
+hc set frame_border_normal_color '#73532D'
+hc set frame_bg_normal_color '#BD9768'
+hc set frame_bg_active_color '#BD8541'
+hc set frame_border_width 2
+hc set window_border_width 3
+hc set window_border_normal_color '#AE8451'
+hc set window_border_active_color '#F6FF00'
+
