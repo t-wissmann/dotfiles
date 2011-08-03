@@ -89,20 +89,24 @@ if [ "$HOSTNAME" = ghul ] ;then
     hc keybind XF86Launch1 spawn ~/bin/suspend.sh
 fi
 if [ "$HOSTNAME" = towi04 ] ; then
-    hc keybind $Mod-Ctrl-q quit
-    hc keybind $Mod-Shift-q quit
-    hc keybind Pause spawn $HOME/scripts/mpd/mpc.sh toggle
-    hc keybind Mod4+q spawn $HOME/scripts/mpd/dmenu.sh play
-    hc keybind XF86Stop spawn $HOME/scripts/mpd/mpc.sh toggle
-    hc keybind Mod4+w spawn $HOME/scripts/mpd/dmenu.sh totem
-    hc keybind Mod4+t spawn $HOME/scripts/utils/iptv/watch-dmenu.sh
-    hc keybind Mod1+Mod4+y spawn $HOME/scripts/mpd/mpc.sh random
-    hc keybind Mod1+Mod4+u spawn $HOME/scripts/mpd/mpc.sh prev
-    hc keybind Mod1+Mod4+i spawn $HOME/scripts/mpd/mpc.sh toggle
-    hc keybind Mod1+Mod4+o spawn $HOME/scripts/mpd/mpc.sh next
-    hc keybind Redo spawn $HOME/scripts/mpd/mpc.sh seek 0
-    hc keybind Mod4+F1 spawn $HOME/scripts/utils/lock.sh
+    hc keybind $Mod-Control-q spawn ~/scripts/logout-dialog.sh
+    hc keybind $Mod-Shift-q spawn ~/scripts/logout-dialog.sh
+    hc keybind $Mod-Control-Shift-q quit
+    hc keybind Pause spawn ~/scripts/mpd/mpc.sh toggle
+    hc keybind Mod4+q spawn ~/scripts/mpd/dmenu.sh play
+    hc keybind XF86Stop spawn ~/scripts/mpd/mpc.sh toggle
+    hc keybind Mod4+w spawn ~/scripts/mpd/dmenu.sh totem
+    hc keybind Mod4+t spawn ~/scripts/utils/iptv/watch-dmenu.sh
+    hc keybind Mod1+Mod4+y spawn ~/scripts/mpd/mpc.sh random
+    hc keybind Mod1+Mod4+u spawn ~/scripts/mpd/mpc.sh prev
+    hc keybind Mod1+Mod4+i spawn ~/scripts/mpd/mpc.sh toggle
+    hc keybind Mod1+Mod4+o spawn ~/scripts/mpd/mpc.sh next
+    hc keybind Redo spawn ~/scripts/mpd/mpc.sh seek 0
+    hc keybind Mod4+F1 spawn ~/scripts/utils/lock.sh
 fi
+
+hc keybind Mod4+n spawn ~/scripts/utils/utf8select.sh
+
 hc keybind Shift+XF86AudioMute spawn amixer -q sset PCM toggle
 hc keybind XF86AudioMute spawn amixer -q sset Master toggle
 hc keybind XF86AudioLowerVolume spawn amixer -q sset Master 2-
