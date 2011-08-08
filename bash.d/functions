@@ -854,4 +854,11 @@ function args() {
     echo -ne '\e[0m'
 }
 
+function repeat() {
+    COUNT="$1"
+    shift 1
+    for i in $(seq 1 $COUNT) ; do
+        "$@"
+    done
+}
 
