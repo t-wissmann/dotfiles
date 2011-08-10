@@ -96,7 +96,7 @@ alias mailtree='find ~/Mail -type d |grep -v "\.d"|sort|sed "s#^$HOME/Mail[/]*##
 alias sm='ssh -i ~/.ssh/id_rsa_mephisto mephisto'
 alias sms='ssh -t -i ~/.ssh/id_rsa_mephisto mephisto bash -l -c screen\\ -r'
 alias cipmutt='mutt -F ~/.mutt/cipmuttrc'
-alias arbeitarbeit='ssh -t arbeit bash -l -c tmux\\ -S\\ tmux/arbeit\\ attach'
+alias arbeitarbeit='ssh -t arbeit bash -l -c tmux\\ attach'
 alias ameise.ncmpcpp='ssh -t ameise bash -l -c ncmpcpp'
 alias q3='quake3 +set r_fullscreen 1 +set r_customheight "1024" +setr_customwidth "1280" +set r_mode "-1" +connect u'
 
