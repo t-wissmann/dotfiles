@@ -8,7 +8,11 @@ function hc() {
 }
 
 #xsetroot -solid '#D47A55'
-hc set window_gap 8
+if [[ "$HOSTNAME" == faui* ]] ;then
+    hc set window_gap 0
+else
+    hc set window_gap 8
+fi
 # raindrops
 #feh --bg-center ~/Documents/wallpaper/water/rain.jpg
 case "$HOSTNAME" in
@@ -132,7 +136,6 @@ elif [[ "$HOSTNAME" = faui* ]] ; then
     hc set frame_bg_active_color '#580000'
     hc set always_show_frame 1
     hc set frame_border_width 1
-    hc set window_gap 0
     hc set frame_bg_transparent 1
     hc set window_border_width 1
     hc set window_border_normal_color '#242424'
