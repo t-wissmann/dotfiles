@@ -2,6 +2,7 @@
 
 # this is an simple config to herbstluftwm
 
+pad="17 0 0 0"
 function hc() {
     herbstclient "$@"
 }
@@ -44,17 +45,17 @@ case "$HOSTNAME" in
         hc remove_monitor 1
         width=1280
         height=1024
-        hc move_monitor 0 $((width))x$((height))+0+0
+        hc move_monitor 0 $((width))x$((height))+0+0 $pad
         hc use 1
-        hc add_monitor $((width))x$((height))+$((width))+0 2
+        hc add_monitor $((width))x$((height))+$((width))+0 2 $pad
         ;;
     dachs)
         hc remove_monitor 1
         width=1920
         height=1200
-        hc move_monitor 0 $((w/2))x$((h))+0+0
+        hc move_monitor 0 $((w/2))x$((h))+0+0 $pad
         hc use 1
-        hc add_monitor $((w/2))x$((h))+$((w/2))+0 2
+        hc add_monitor $((w/2))x$((h))+$((w/2))+0 2 $pad
         ;;
     *)
         ;;
@@ -112,6 +113,8 @@ hc keybind XF86AudioMute spawn amixer -q sset Master toggle
 hc keybind XF86AudioLowerVolume spawn amixer -q sset Master 2-
 hc keybind XF86AudioRaiseVolume spawn amixer -q sset Master 2+
 
+herbstclient set ignore_class 'Xfce4-notifyd|Conky'
+
 # new colors
 if [ "$HOSTNAME" = ghul ] ; then
     hc set frame_border_active_color '#49351D'
@@ -132,4 +135,6 @@ else
     hc set window_border_normal_color '#565656'
     hc set window_border_active_color '#9fbc00'
 fi
+
+~/dev/c/herbstluftwm/share/restartpanels.sh
 
