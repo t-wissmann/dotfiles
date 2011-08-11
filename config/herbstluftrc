@@ -69,6 +69,13 @@ hc keybind $Mod-o split horizontal 0.5
 hc keybind $Mod-space cycle_layout 1
 hc keybind $Mod-Shift-space cycle_layout -1
 
+# resizing
+RESIZESTEP=0.05
+hc keybind $Mod-Control-h resize left +$RESIZESTEP
+hc keybind $Mod-Control-j resize down +$RESIZESTEP
+hc keybind $Mod-Control-k resize up +$RESIZESTEP
+hc keybind $Mod-Control-l resize right +$RESIZESTEP
+
 # focus
 hc keybind $Mod-Tab cycle_monitor
 hc keybind $Mod-c cycle
