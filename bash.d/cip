@@ -121,7 +121,7 @@ alias cdsp="cd /proj/i4sp/$USER/trunk/"
 alias cdciptmp="cd /proj/ciptmp/$USER/"
 
 #alias arbeitarbeit='ssh -t arbeit bash -l -c screen\\ -rS\\ arbeit'
-alias arbeitarbeit='ssh -t arbeit bash -l -c tmux\\ -S\\ tmux/arbeit\\ attach'
+alias arbeitarbeit='ssh -t arbeit bash -l -c tmux\\ attach'
 alias x2gofaui03c='x2goclient --session=faui03c --no-menu'
 
 # xset b 100

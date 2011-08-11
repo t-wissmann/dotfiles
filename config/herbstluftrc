@@ -8,7 +8,11 @@ function hc() {
 }
 
 #xsetroot -solid '#D47A55'
-hc set window_gap 8
+if [[ "$HOSTNAME" == faui* ]] ;then
+    hc set window_gap 0
+else
+    hc set window_gap 8
+fi
 # raindrops
 #feh --bg-center ~/Documents/wallpaper/water/rain.jpg
 case "$HOSTNAME" in
@@ -132,6 +136,17 @@ if [ "$HOSTNAME" = ghul ] ; then
     hc set window_border_width 3
     hc set window_border_normal_color '#AE8451'
     hc set window_border_active_color '#F6FF00'
+elif [[ "$HOSTNAME" = faui* ]] ; then
+    hc set frame_border_active_color '#b20000'
+    hc set frame_border_normal_color 'black'
+    hc set frame_bg_normal_color '#141414'
+    hc set frame_bg_active_color '#580000'
+    hc set always_show_frame 1
+    hc set frame_border_width 1
+    hc set frame_bg_transparent 1
+    hc set window_border_width 1
+    hc set window_border_normal_color '#242424'
+    hc set window_border_active_color '#b20000'
 else
     hc set frame_border_active_color '#222222'
     hc set frame_border_normal_color '#101010'
@@ -143,5 +158,14 @@ else
     hc set window_border_active_color '#9fbc00'
 fi
 
-~/dev/c/herbstluftwm/share/restartpanels.sh
+if [[ "$HOSTNAME" == faui* ]] ;then
+    ~/git/herbstluftwm/share/restartpanels.sh
+    hc keybind $Mod-x spawn ~/scripts/menu.sh
+    hc keybind $Mod-F1 spawn ~/scripts/lock.sh
+    hc keybind $Mod-Shift-q quit
+    hc keybind $Mod-Control-q quit
+    xset -b
+else
+    ~/dev/c/herbstluftwm/share/restartpanels.sh
+fi
 
