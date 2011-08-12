@@ -56,7 +56,7 @@ function multimonitor() {
 # multimonitors
 case "$HOSTNAME" in
     towi04)
-        multimonitor 1280 1024
+        multimonitor $((2*1280)) 1024
         ;;
     dachs)
         multimonitor 1920 1200
