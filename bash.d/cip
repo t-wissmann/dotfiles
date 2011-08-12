@@ -32,6 +32,7 @@ alias gcc.icpc='gcc -Wall -O2 -g -static -lm'
 alias gcc.sp='gcc -std=c99 -pedantic -D_XOPEN_SOURCE=600 -Wall -Werror'
 
 alias q3='/local/q3/bin/q3 +set r_fullscreen 1 +set r_customheight "1200" +setr_customwidth "1920" +set r_mode "-1" +connect u'
+alias nex='nexuiz +set vid_fullscreen 1 +set vid_height 1200 +set vid_width 1920'
 alias pizza='[ -e pizza.$(date +%Y-%m-%d) ] || echo pizza bestellung fuer pizza am $(date +%Y-%m-%d) >> pizza.$(date +%Y-%m-%d) && vim pizza.$(date +%Y-%m-%d)'
 alias lastpizza='vim $(find ~ -maxdepth 1|grep 'pizza\.'|grep -v \~\$|grep -v \.swp\$|sort|tail -1)'
 
