@@ -42,26 +42,41 @@ for i in {1..9} ; do
     hc keybind "$Mod-Shift-$i" move "$i"
 done
 
+function multimonitor() {
+    width="$1"
+    height="$2"
+    # todo: rememberlast tag on monitor 1
+    hc focus_monitor 0
+    hc remove_monitor 1
+    hc move_monitor 0 $((width/2))x$((height))+0+0 $pad
+    hc use 1
+    hc add_monitor $((width/2))x$((height))+$((width/2))+0 2 $pad
+}
+
 # multimonitors
 case "$HOSTNAME" in
     towi04)
-        # todo: rememberlast tag on monitor 1
-        hc focus_monitor 0
-        hc remove_monitor 1
-        width=1280
-        height=1024
-        hc move_monitor 0 $((width))x$((height))+0+0 $pad
-        hc use 1
-        hc add_monitor $((width))x$((height))+$((width))+0 2 $pad
+        multimonitor 1280 1024
         ;;
     dachs)
-        hc focus_monitor 0
-        hc remove_monitor 1
-        width=1920
-        height=1200
-        hc move_monitor 0 $((w/2))x$((h))+0+0 $pad
-        hc use 1
-        hc add_monitor $((w/2))x$((h))+$((w/2))+0 2 $pad
+        multimonitor 1920 1200
+        ;;
+    faui*)
+        resolution=$(xrandr 2> /dev/null |grep -E '\* $'|awk '{ print $1 ; }')
+        case "$resolution" in
+            1280x1024)
+                # do nothing
+                ;;
+            1920x1200)
+                multimonitor 1920 1200
+                ;;
+            2560x1024)
+                multimonitor 2560 1024
+                ;;
+            *)
+                # do nothing
+                ;;
+        esac
         ;;
     *)
         ;;
