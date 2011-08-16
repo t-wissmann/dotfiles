@@ -132,6 +132,7 @@ if [ "$HOSTNAME" = towi04 ] ; then
     hc keybind Mod1+Mod4+o spawn ~/scripts/mpd/mpc.sh next
     hc keybind Redo spawn ~/scripts/mpd/mpc.sh seek 0
     hc keybind Mod4+F1 spawn ~/scripts/utils/lock.sh
+    hc keybind $Mod-F3 spawn mygtkmenu ~/.config/mygtkmenu.conf
 fi
 
 hc keybind Mod4+n spawn ~/scripts/utils/utf8select.sh
@@ -141,7 +142,9 @@ hc keybind XF86AudioMute spawn amixer -q sset Master toggle
 hc keybind XF86AudioLowerVolume spawn amixer -q sset Master 2-
 hc keybind XF86AudioRaiseVolume spawn amixer -q sset Master 2+
 
-herbstclient set ignore_class 'Xfce4-notifyd|Conky'
+# some settings
+hc set ignore_class 'Xfce4-notifyd|Conky'
+hc set focus_follows_mouse 1
 
 # new colors
 if [ "$HOSTNAME" = ghul ] ; then
