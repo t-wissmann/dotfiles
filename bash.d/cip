@@ -211,3 +211,22 @@ export LC_ALL=de_DE.utf8
 
 export LD_PRELOAD=
 
+function kioskgh() {
+    s=${1:-0}
+    s=${s/,/.}
+    extra=${2:-0}
+    mate=${3:-0}
+    bier=${4:-0}
+    twix=${5:-0}
+    duplo=${6:-0}
+    echo "statistik"
+    echo " start: $s"
+    echo " extra: $extra"
+    echo " mate:  $mate"
+    echo " bier:  $bier"
+    echo " twix:  $twix"
+    echo " duplo: $duplo"
+    echo -n " => neue schulden: "
+    calc -d "0+$s+$extra+0.5*$mate+$bier+0.4*$twix+0.2*$duplo"
+}
+
