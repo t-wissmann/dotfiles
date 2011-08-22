@@ -3,6 +3,7 @@
 # TODO:
 #export TERM=xterm
 alias tmux='tmux -S ~/tmux/asdf'
+alias apt-get='apt-get -o APT::Get::Assume-Yes=false'
 
 # set dmenu-command
 #export dmenu_command="dmenu -i -nb #202020 -nf #d4d4d4 -sb #D0EEB1 -sf #202020 -fn -*-profont-*-*-*-*-12-*-*-*-*-*-*-*"
