@@ -2,4 +2,4 @@
 	name = Thorsten Wißmann
 	email = edu@thorsten-wissmann.de
 [color]
-	diff = auto
+	ui = auto
