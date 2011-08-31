@@ -201,3 +201,7 @@ herbstclient set tree_style '╾│ ├╰╼─╮'
 #herbstclient set tree_style '*| +`>-.'
 #herbstclient set tree_style '*| +`-->'
 
+STATEFILE=~/.config/herbstluftwm/state
+
+[ -f "$STATEFILE" ] && ~/dev/c/herbstluftwm/scripts/loadstate.sh < "$STATEFILE"
+
