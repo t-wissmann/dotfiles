@@ -53,6 +53,10 @@ domain_props = {
         ["enable-scripts"] = true,
         ["enable-plugins"] = true,
     },
+    ["myvideo.de"] = {
+        ["enable-scripts"] = true,
+        ["enable-plugins"] = true,
+    },
     ["www.heise.de"] = { ["enable-scripts"] = true, ["enable-plugins"] = true, },
 --    ["presale.events.ccc.de"] = { ["enable-scripts"] = true, ["enable-plugins"] = true, },
     ["www.hr-fernsehen.de"] = { ["enable-scripts"] = true, ["enable-plugins"] = true, },
