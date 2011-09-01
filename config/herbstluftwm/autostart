@@ -100,6 +100,8 @@ hc keybind $Mod-Control-l resize right +$RESIZESTEP
 
 # focus
 hc keybind $Mod-Tab cycle_monitor
+hc keybind Alt-Tab          cycle_all 1
+hc keybind Alt-Shift-Tab    cycle_all -1
 hc keybind $Mod-c cycle
 hc keybind $Mod-y cycle -1
 hc keybind $Mod-h focus left
