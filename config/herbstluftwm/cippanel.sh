@@ -10,6 +10,7 @@ panelwidth="${geometry%%x*}"
 height=16
 font="-*-fixed-medium-*-*-*-10-*-*-*-*-*-*-*"
 bgcolor='#141414'
+export PATH="$HOME/bin:$PATH"
 
 herbstclient pad $monitor $height
 (
