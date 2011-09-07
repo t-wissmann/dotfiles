@@ -72,7 +72,7 @@ case "$HOSTNAME" in
                 multimonitor 1920 1200
                 ;;
             2560x1024)
-                multimonitor 2560 1024
+                #multimonitor 2560 1024
                 ;;
             *)
                 # do nothing
