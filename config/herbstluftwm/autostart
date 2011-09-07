@@ -86,6 +86,7 @@ esac
 # layouting
 hc keybind $Mod-i toggle always_show_frame
 hc keybind $Mod-r remove
+hc keybind $Mod-s floating toggle
 hc keybind $Mod-u split vertical 0.5
 hc keybind $Mod-o split horizontal 0.5
 hc keybind $Mod-space cycle_layout 1
@@ -213,6 +214,11 @@ herbstclient set tree_style '╾│ ├╰╼─╮'
 #herbstclient set tree_style '*| +`-->'
 
 STATEFILE=~/.config/herbstluftwm/state
+
+# config dir
+c=~/.config/herbstluftwm/
+hc keybind $Mod-F10         spawn $c/fastterminal.sh -t
+hc keybind $Mod-Shift-F10   spawn $c/fastterminal.sh -b
 
 [ -f "$STATEFILE" ] && ~/dev/c/herbstluftwm/scripts/loadstate.sh < "$STATEFILE"
 
