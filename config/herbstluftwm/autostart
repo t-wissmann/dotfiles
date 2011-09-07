@@ -86,6 +86,7 @@ esac
 # layouting
 hc keybind $Mod-i toggle always_show_frame
 hc keybind $Mod-r remove
+hc keybind $Mod-s floating toggle
 hc keybind $Mod-u split vertical 0.5
 hc keybind $Mod-o split horizontal 0.5
 hc keybind $Mod-space cycle_layout 1
@@ -183,6 +184,15 @@ else
     hc set window_border_active_color '#9fbc00'
 fi
 
+SCRIPTSDIR=$HOME/dev/c/herbstluftwm/scripts/
+
+if [ -d "$SCRIPTSDIR" ] ; then
+    hc keybind $Mod-g spawn $SCRIPTSDIR/execwith.sh \
+        ~/.bash_settings $SCRIPTSDIR/dmenu.sh use
+    hc keybind $Mod-Shift-g spawn $SCRIPTSDIR/execwith.sh \
+        ~/.bash_settings $SCRIPTSDIR/dmenu.sh move
+fi
+
 if [[ "$HOSTNAME" == faui* ]] ;then
     ~/git/herbstluftwm/share/restartpanels.sh ~/.config/herbstluftwm/cippanel.sh
     hc keybind $Mod-x spawn ~/scripts/menu.sh
@@ -204,6 +214,11 @@ herbstclient set tree_style '╾│ ├╰╼─╮'
 #herbstclient set tree_style '*| +`-->'
 
 STATEFILE=~/.config/herbstluftwm/state
+
+# config dir
+c=~/.config/herbstluftwm/
+hc keybind $Mod-F10         spawn $c/fastterminal.sh -t
+hc keybind $Mod-Shift-F10   spawn $c/fastterminal.sh -b
 
 [ -f "$STATEFILE" ] && ~/dev/c/herbstluftwm/scripts/loadstate.sh < "$STATEFILE"
 
