@@ -3,6 +3,10 @@
 # this is an simple config to herbstluftwm
 
 pad="17 0 0 0"
+if [ "$HOSTNAME" = towi04 ] ; then
+    pad="16 0 10 0"
+fi
+
 function hc() {
     herbstclient "$@"
 }
@@ -141,6 +145,7 @@ if [ "$HOSTNAME" = towi04 ] ; then
     hc keybind Redo spawn ~/scripts/mpd/mpc.sh seek 0
     hc keybind Mod4+F1 spawn ~/scripts/utils/lock.sh
     hc keybind $Mod-F3 spawn mygtkmenu ~/.config/mygtkmenu.conf
+    hc set frame_bg_transparent 1
 fi
 if [[ "$HOSTNAME" =~ ^(towi04|ghul|x40|eule)$ ]] ; then
     hc keybind Pause spawn ~/scripts/mpd/mpc.sh toggle
