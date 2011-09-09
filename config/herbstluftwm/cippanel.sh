@@ -9,6 +9,7 @@ width="${geometry%%x*}"
 panelwidth="${geometry%%x*}"
 height=16
 font="-*-fixed-medium-*-*-*-10-*-*-*-*-*-*-*"
+#font='-*-montecarlo-medium-*-*-*-*-*-*-*-*-*-*-*'
 bgcolor='#141414'
 export PATH="$HOME/bin:$PATH"
 

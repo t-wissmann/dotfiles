@@ -6,6 +6,7 @@ pad="17 0 0 0"
 function hc() {
     herbstclient "$@"
 }
+[[ "$HOSTNAME" == faui* ]] && hc() { ~/bin/herbstclient "$@" ; }
 
 #xsetroot -solid '#D47A55'
 if [[ "$HOSTNAME" == faui* ]] ;then
@@ -232,6 +233,7 @@ STATEFILE=~/.config/herbstluftwm/state
 c=~/.config/herbstluftwm/
 hc keybind $Mod-F10         spawn $c/fastterminal.sh -t
 hc keybind $Mod-Shift-F10   spawn $c/fastterminal.sh -b
+hc keybind $Mod-F12         spawn $c/toggledualhead.sh
 
 [ -f "$STATEFILE" ] && ~/dev/c/herbstluftwm/scripts/loadstate.sh < "$STATEFILE"
 
