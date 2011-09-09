@@ -43,7 +43,7 @@ for i in {1..9} ; do
     hc keybind "$Mod-Shift-$i" move "$i"
 done
 
-function multimonitor() {
+function dualhead() {
     width="$1"
     height="$2"
     # todo: rememberlast tag on monitor 1
@@ -53,6 +53,15 @@ function multimonitor() {
     hc use 1
     hc add_monitor $((width/2))x$((height))+$((width/2))+0 2 $pad
 }
+
+function singlehead() {
+    width="$1"
+    height="$2"
+    hc focus_monitor 0
+    hc remove_monitor 1
+    hc move_monitor 0 $((width))x$((height))+0+0 $pad
+}
+
 
 # multimonitors
 case "$HOSTNAME" in
@@ -66,12 +75,15 @@ case "$HOSTNAME" in
         resolution=$(xrandr 2> /dev/null |grep -E '\* $'|awk '{ print $1 ; }')
         case "$resolution" in
             1280x1024)
-                # do nothing
+                singlehead ${resolution/x/ }
                 ;;
             1920x1200)
-                multimonitor 1920 1200
+                singlehead ${resolution/x/ }
+                #dualhead ${resolution/x/ }
+                #multimonitor 1920 1200
                 ;;
             2560x1024)
+                dualhead ${resolution/x/ }
                 #multimonitor 2560 1024
                 ;;
             *)
@@ -173,6 +185,7 @@ elif [[ "$HOSTNAME" =~ x40|faui* ]] ; then
     hc set window_border_width 1
     hc set window_border_normal_color '#242424'
     hc set window_border_active_color '#b20000'
+    hc keybind $Mod-q quit
 else
     hc set frame_border_active_color '#222222'
     hc set frame_border_normal_color '#101010'
