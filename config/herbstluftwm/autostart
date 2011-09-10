@@ -13,11 +13,7 @@ function hc() {
 [[ "$HOSTNAME" == faui* ]] && hc() { ~/bin/herbstclient "$@" ; }
 
 #xsetroot -solid '#D47A55'
-if [[ "$HOSTNAME" == faui* ]] ;then
-    hc set window_gap 0
-else
-    hc set window_gap 8
-fi
+hc set window_gap 8
 # raindrops
 #feh --bg-center ~/Documents/wallpaper/water/rain.jpg
 case "$HOSTNAME" in
