@@ -67,10 +67,10 @@ function singlehead() {
 # multimonitors
 case "$HOSTNAME" in
     towi04)
-        multimonitor $((2*1280)) 1024
+        dualhead $((2*1280)) 1024
         ;;
     dachs)
-        multimonitor 1920 1200
+        dualhead 1920 1200
         ;;
     faui*)
         resolution=$(xrandr 2> /dev/null |grep -E '\* $'|awk '{ print $1 ; }')
@@ -81,11 +81,11 @@ case "$HOSTNAME" in
             1920x1200)
                 singlehead ${resolution/x/ }
                 #dualhead ${resolution/x/ }
-                #multimonitor 1920 1200
+                #dualhead 1920 1200
                 ;;
             2560x1024)
                 dualhead ${resolution/x/ }
-                #multimonitor 2560 1024
+                #dualhead 2560 1024
                 ;;
             *)
                 # do nothing
