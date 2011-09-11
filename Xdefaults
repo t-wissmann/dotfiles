@@ -84,7 +84,13 @@ URxvt.keysym.C-9: command:\033]710;xft:Bitstream Vera Sans Mono:bold:size=17\007
 URxvt.keysym.C-0: command:\033]710;xft:Bitstream Vera Sans Mono:bold:size=19\007\033]711;xft:Bitstream Vera Sans Mono:bold:size=19\007
 
 urxvt*scrollBar: false
+urxvt*scrollstyle: plain
+urxvt*scrollColor: #E2BD09
+! scrollbar width
+urxvt*thickness: 5
 urxvt*urgentOnBell: true
+
+
 !urxvt*fading: 30
 !urxvt*fadeColor: #233B12
 !urxvt*borderColor: red
