@@ -106,5 +106,7 @@ alias q3='quake3 +set r_fullscreen 1 +set r_customheight "1024" +setr_customwidt
 alias synclient="setxkbmap us; xmodmap ~/.xmodmaprc ; synergyc -f towi04 ; setxkbmap de nodeadkeys ; xmodmap ~/.xmodmaprc"
 alias synserver="synergys -a `hostname` -f"
 alias dropbox='git'
+complete -o bashdefault -o default -o nospace -F _git dropbox 2>/dev/null \
+    || complete -o default -o nospace -F _git dropbox
 
 
