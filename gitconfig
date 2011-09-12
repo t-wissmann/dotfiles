@@ -3,3 +3,5 @@
 	email = edu@thorsten-wissmann.de
 [color]
 	ui = auto
+[alias]
+	lastpatch = log  -p HEAD^1..HEAD
