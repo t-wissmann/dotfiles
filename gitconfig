@@ -5,3 +5,4 @@
 	ui = auto
 [alias]
 	lastpatch = log  -p HEAD^1..HEAD
+	tree = log --graph --oneline --all
