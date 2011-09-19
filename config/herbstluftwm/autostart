@@ -70,7 +70,8 @@ case "$HOSTNAME" in
         dualhead $((2*1280)) 1024
         ;;
     dachs)
-        dualhead 1920 1200
+        hc keybind $Mod-Return spawn xterm
+        #dualhead 1920 1200
         ;;
     faui*)
         resolution=$(xrandr 2> /dev/null |grep -E '\* $'|awk '{ print $1 ; }')
@@ -220,9 +221,14 @@ if [[ "$HOSTNAME" == faui* ]] ;then
     hc keybind $Mod-Shift-q quit
     hc keybind $Mod-Control-q quit
     xset -b
-elif [[ "$HOSTNAME" = x40 ]] ;then
+elif [[ "$HOSTNAME" =~ x40 ]] ;then
     killall cippanel.sh || true
     ~/.config/herbstluftwm/cippanel.sh &
+elif [[ "$HOSTNAME" =~ dachs ]] ;then
+    killall cippanel.sh || true
+    ~/.config/herbstluftwm/cippanel.sh &
+    hc keybind $Mod-x spawn ~/build/dwm-samoht/dmenu_run
+    hc keybind $Mod-q quit
 else
     ~/dev/c/herbstluftwm/share/restartpanels.sh
 fi
