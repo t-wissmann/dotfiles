@@ -44,6 +44,8 @@ for i in {1..9} ; do
     hc keybind "$Mod-Shift-$i" move "$i"
 done
 
+hc floating 4 on # always float on tag 4
+
 function dualhead() {
     width="$1"
     height="$2"
