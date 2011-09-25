@@ -9,6 +9,7 @@ width="${geometry%%x*}"
 height=14
 font="-*-fixed-medium-*-*-*-12-*-*-*-*-*-*-*"
 bgcolor='#242424'
+icondir=~/.config/herbstluftwm/icons/
 
 herbstclient pad $monitor $height
 (
@@ -40,7 +41,7 @@ herbstclient pad $monitor $height
                     echo -n "^fg(#676767)"
                     ;;
             esac
-            echo -n " ${i:1} "
+            echo -n " ^pa(;2)^i($icondir/${i:1})^pa(;0) "
             echo -n "$separator"
         done
         echo -n "^bg()^p(_CENTER)"

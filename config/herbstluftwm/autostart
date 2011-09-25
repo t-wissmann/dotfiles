@@ -230,7 +230,8 @@ elif [[ "$HOSTNAME" =~ dachs ]] ;then
     hc keybind $Mod-x spawn ~/build/dwm-samoht/dmenu_run
     hc keybind $Mod-q quit
 else
-    panel=~/.config/herbstluftwm/panel.sh
+    [ $HOSTNAME = towi04 ] && panel=~/.config/herbstluftwm/panel.sh
+    panel=
     ~/dev/c/herbstluftwm/share/restartpanels.sh $panel
 fi
 
