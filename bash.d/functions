@@ -506,7 +506,7 @@ function file2wwwcip() { (
     [ -z "$2" ] && outfile="${1##*/}" # use basename
     [ -z "$2" ] && [ "$1" = "-" ] && outfile="pipe.out.$(date +%Y-%m-%d)"
     username="re06huxa"
-    server="faui0sr2.informatik.uni-erlangen.de"
+    server="cip"
     if [ "$1" = "-" ] ; then
         ssh "$username@$server" tee .www/$outfile
     else
