@@ -233,7 +233,8 @@ elif [[ "$HOSTNAME" =~ dachs ]] ;then
     hc keybind $Mod-q quit
 else
     panel=
-    [ $HOSTNAME = towi04 ] && panel=~/.config/herbstluftwm/panel.sh
+    [[ "$HOSTNAME" =~ towi04|ghul ]] &&
+        panel=~/.config/herbstluftwm/panel.sh
     ~/dev/c/herbstluftwm/share/restartpanels.sh $panel
 fi
 
