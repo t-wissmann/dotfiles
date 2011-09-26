@@ -11,14 +11,18 @@ font="-*-fixed-medium-*-*-*-12-*-*-*-*-*-*-*"
 bgcolor='#242424'
 icondir=~/.config/herbstluftwm/icons/
 
+function uniq_linebuffered() {
+    awk '$0 != l { print ; l=$0 ; fflush(); }' "$@"
+}
+
 herbstclient pad $monitor $height
 (
     # events:
     #mpc idleloop player &
     while true ; do
         date +'date ^fg(#efefef)%H:%M^fg(#909090), %Y-%m-^fg(#efefef)%d'
-        sleep 1 || break
-    done &
+        sleep 2 || break
+    done | uniq_linebuffered &
     herbstclient --idle
 )|(
     TAGS=( $(herbstclient tag_status $monitor) )
@@ -34,6 +38,9 @@ herbstclient pad $monitor $height
                 '#')
                     echo -n "^fg(#9fbc00)"
                     ;;
+                ':')
+                    echo -n "^fg(#efefef)"
+                    ;;
                 '+')
                     echo -n "^fg(#CAFFAD)"
                     ;;
@@ -41,8 +48,10 @@ herbstclient pad $monitor $height
                     echo -n "^fg(#676767)"
                     ;;
             esac
-            echo -n " ^pa(;2)^i($icondir/${i:1})^pa(;0) "
-            echo -n "$separator"
+            icon="$icondir/${i:1}"
+            echo -n "^ca(1,herbstclient focus_monitor $monitor && herbstclient use ${i:1})"
+            [ -f "$icon" ] && echo -n " ^pa(;2)^i($icon)^pa(;0) " || echo -n " ${i:1} "
+            echo -n "^ca()$separator"
         done
         echo -n "^bg()^p(_CENTER)"
         # small adjustments
