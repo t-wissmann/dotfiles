@@ -4,7 +4,7 @@ hc() {
     herbstclient "$@"
 }
 
-panelcmd=${panelcmd:-~/.config/herbstluftwm/cippanel.sh}
+panelcmd=${panelcmd:-~/.config/herbstluftwm/panel.sh}
 restartpanelcmd=${restartpanelcmd:-~/git/herbstluftwm/share/restartpanels.sh}
 
 resolution=$(
