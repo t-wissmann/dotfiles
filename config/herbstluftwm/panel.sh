@@ -85,7 +85,6 @@ herbstclient pad $monitor $height
                 echo "^togglehide()"
                 ;;
             quit_panel)
-                echo "^exit()"
                 exit
                 ;;
             #player)
