@@ -688,12 +688,12 @@ function hex2bin() {
 
 function publish-screenshot() {
     local fullres="$1"
-    local thumb="${1%.*}-thumb.${1##*.}"
+    local thumb="${1%.*}-thumb.png"
     local targetdir="cip:.www/screenshots/"
     local url="http://wwwcip.cs.fau.de/~re06huxa/screenshots/"
     echo ":: creating thumbnail ..."
-    cp "$fullres" "$thumb"
-    mogrify -resize "x250" "$thumb"
+    convert "$fullres" "${thumb}"
+    mogrify -resize "150x" "$thumb"
     echo ":: copying files ..."
     scp "$fullres" "$thumb" "$targetdir"
     local src="[url=$url${fullres##*/}][img]$url${thumb##*/}[/img][/url]"
