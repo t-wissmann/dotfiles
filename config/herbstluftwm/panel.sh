@@ -58,7 +58,9 @@ herbstclient pad $monitor $height
         done
         echo -n "^bg()^p(_CENTER)"
         # small adjustments
-        right="$separator^bg($hintcolor) $date $separator"
+        calclick="^ca(1,$HOME/.config/herbstluftwm/calendar.sh)"
+        calclick+="^ca(2,killall calendar.sh)"
+        right="$separator^bg($hintcolor)$calclick $date ^ca()^ca()$separator"
         right_text_only=$(echo -n "$right"|sed 's.\^[^(]*([^)]*)..g')
         # get width of right aligned text.. and add some space..
         rightwidth=$(textwidth "$font" "$right_text_only  ")
@@ -79,11 +81,18 @@ herbstclient pad $monitor $height
                 #echo "reseting date" >&2
                 date="${cmd[@]:1}"
                 ;;
+            togglehidepanel)
+                echo "^togglehide()"
+                ;;
+            quit_panel)
+                echo "^exit()"
+                exit
+                ;;
             #player)
             #    ;;
         esac
         done
-) |dzen2 -w $width -x $x -y $y -fn "$font" -h $height \
+) |dzen2 -e '' -w $width -x $x -y $y -fn "$font" -h $height \
     -ta l -bg "$bgcolor" -fg '#efefef'
 
 
