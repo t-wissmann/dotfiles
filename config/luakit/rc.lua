@@ -117,14 +117,6 @@ end
 local key, buf, but = lousy.bind.key, lousy.bind.buf, lousy.bind.but
 
 add_binds("normal", {
-    lousy.bind.buf("^yy$", function (w)
-        luakit.set_selection(w:get_current().uri)
-        luakit.set_selection("clipboard", w:get_current().uri)
-        w:notify("Yanked: " .. w:get_current().uri)
-    end)
-}, true) -- true: overwrite already existing
-
-add_binds("normal", {
     key({}, "b", function (w, m)
         w:enter_cmd(":bopen ")
     end)
