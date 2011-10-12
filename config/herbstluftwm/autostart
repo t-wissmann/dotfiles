@@ -237,6 +237,8 @@ else
     [[ "$HOSTNAME" =~ towi04|ghul ]] &&
         panel=~/.config/herbstluftwm/panel.sh
     ~/dev/c/herbstluftwm/share/restartpanels.sh $panel
+
+    hc focus_monitor 1
 fi
 
 # nice tree styles:
