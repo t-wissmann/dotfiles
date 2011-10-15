@@ -12,19 +12,21 @@ bgcolor='#242424'
 icondir=~/.config/herbstluftwm/icons/
 
 function uniq_linebuffered() {
-    awk '$0 != l { print ; l=$0 ; fflush(); }' "$@"
+    exec awk '$0 != l { print ; l=$0 ; fflush(); }' "$@"
 }
 
 herbstclient pad $monitor $height
-(
+{
     # events:
     #mpc idleloop player &
     while true ; do
         date +'date ^fg(#efefef)%H:%M^fg(#909090), %Y-%m-^fg(#efefef)%d'
         sleep 2 || break
-    done | uniq_linebuffered &
+    done > >(uniq_linebuffered) &
+    child="$!"
     herbstclient --idle
-)|(
+    kill "$child"
+}|{
     TAGS=( $(herbstclient tag_status $monitor) )
     date=""
     while true ; do
@@ -91,7 +93,7 @@ herbstclient pad $monitor $height
             #    ;;
         esac
         done
-) |dzen2 -e '' -w $width -x $x -y $y -fn "$font" -h $height \
+} |dzen2 -e '' -w $width -x $x -y $y -fn "$font" -h $height \
     -ta l -bg "$bgcolor" -fg '#efefef'
 
 
