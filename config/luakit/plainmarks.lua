@@ -94,7 +94,7 @@ new_mode("bmarkcomp", {
 
 
 add_cmds({cmd("bmark", function (w, param)
-        local uri = w:get_current().uri
+        local uri = w.view.uri
         if not param or param == "" then
             w:error(string.format("No bookmark name given"))
         else
