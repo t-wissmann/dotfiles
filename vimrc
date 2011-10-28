@@ -25,8 +25,14 @@ set foldmethod=indent
 set nofoldenable
 " show statusbar with current row,col
 set modeline
-" create backupfiles
-set backup
+
+let hostname = substitute(system('hostname'), '\n', '', '')
+if hostname == "mephisto"
+    set nobackup
+else
+    " create backupfiles
+    set backup
+endif
 
 " highlight whitespaces and trailing spaces
 set list
