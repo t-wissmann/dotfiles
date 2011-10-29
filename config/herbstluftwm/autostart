@@ -180,8 +180,21 @@ hc keybind XF86AudioRaiseVolume spawn amixer -q sset Master 2+
 hc set ignore_class 'Xfce4-notifyd|Conky'
 hc set focus_follows_mouse 1
 
-# new colors
-if [ "$HOSTNAME" = ghul ] ; then
+### COLORS ###
+colors_thin_red() {
+    hc set frame_border_active_color '#b20000'
+    hc set frame_border_normal_color 'black'
+    hc set frame_bg_normal_color '#141414'
+    hc set frame_bg_active_color '#580000'
+    hc set always_show_frame 0
+    hc set frame_border_width 1
+    hc set frame_bg_transparent 1
+    hc set window_border_width 1
+    hc set window_border_normal_color '#242424'
+    hc set window_border_active_color '#b20000'
+}
+
+colors_thick_brown() {
     hc set frame_border_active_color '#49351D'
     hc set frame_border_normal_color '#73532D'
     hc set frame_bg_normal_color '#BD9768'
@@ -190,19 +203,9 @@ if [ "$HOSTNAME" = ghul ] ; then
     hc set window_border_width 3
     hc set window_border_normal_color '#AE8451'
     hc set window_border_active_color '#F6FF00'
-elif [[ "$HOSTNAME" =~ x40|faui* ]] ; then
-    hc set frame_border_active_color '#b20000'
-    hc set frame_border_normal_color 'black'
-    hc set frame_bg_normal_color '#141414'
-    hc set frame_bg_active_color '#580000'
-    hc set always_show_frame 1
-    hc set frame_border_width 1
-    hc set frame_bg_transparent 1
-    hc set window_border_width 1
-    hc set window_border_normal_color '#242424'
-    hc set window_border_active_color '#b20000'
-    hc keybind $Mod-q quit
-else
+}
+
+colors_pwmt_green() {
     hc set frame_border_active_color '#222222'
     hc set frame_border_normal_color '#101010'
     hc set frame_bg_normal_color '#565656'
@@ -211,7 +214,17 @@ else
     hc set window_border_width 2
     hc set window_border_normal_color '#454545'
     hc set window_border_active_color '#9fbc00'
-fi
+    hc set always_show_frame 0
+}
+
+
+# new colors
+case "$HOSTNAME" in
+    ghul)   colors_pwmt_green ;;
+    x40)    colors_thin_red ;;
+    faui*)  colors_thin_red ;;
+    *)      colors_pwmt_green ;;
+esac
 
 SCRIPTSDIR=$HOME/dev/c/herbstluftwm/scripts/
 
@@ -222,29 +235,33 @@ if [ -d "$SCRIPTSDIR" ] ; then
         ~/.bash_settings $SCRIPTSDIR/dmenu.sh move
 fi
 
-if [[ "$HOSTNAME" == faui* ]] ;then
-    ~/git/herbstluftwm/share/restartpanels.sh ~/.config/herbstluftwm/panel.sh
-    hc keybind $Mod-x spawn ~/scripts/menu.sh
-    hc keybind $Mod-F1 spawn ~/scripts/lock.sh
-    hc keybind $Mod-Shift-q quit
-    hc keybind $Mod-Control-q quit
-    xset -b
-elif [[ "$HOSTNAME" =~ x40 ]] ;then
-    killall cippanel.sh || true
-    ~/.config/herbstluftwm/cippanel.sh &
-elif [[ "$HOSTNAME" =~ dachs ]] ;then
-    killall cippanel.sh || true
-    ~/.config/herbstluftwm/cippanel.sh &
-    hc keybind $Mod-x spawn ~/build/dwm-samoht/dmenu_run
-    hc keybind $Mod-q quit
-else
-    panel=
-    [[ "$HOSTNAME" =~ towi04|ghul ]] &&
-        panel=~/.config/herbstluftwm/panel.sh
-    ~/dev/c/herbstluftwm/share/restartpanels.sh $panel
-
-    hc focus_monitor 1
-fi
+case "$HOSTNAME" in
+    faui*)
+        ~/git/herbstluftwm/share/restartpanels.sh ~/.config/herbstluftwm/panel.sh
+        hc keybind $Mod-x spawn ~/scripts/menu.sh
+        hc keybind $Mod-F1 spawn ~/scripts/lock.sh
+        hc keybind $Mod-Shift-q quit
+        hc keybind $Mod-Control-q quit
+        xset -b
+        ;;
+    x40)
+        killall cippanel.sh || true
+        ~/.config/herbstluftwm/cippanel.sh &
+        ;;
+    dachs)
+        killall cippanel.sh || true
+        ~/.config/herbstluftwm/cippanel.sh &
+        hc keybind $Mod-x spawn ~/build/dwm-samoht/dmenu_run
+        hc keybind $Mod-q quit
+        ;;
+    *)
+        panel=
+        [[ "$HOSTNAME" =~ towi04|ghul ]] &&
+            panel=~/.config/herbstluftwm/panel.sh
+        ~/dev/c/herbstluftwm/share/restartpanels.sh $panel
+        hc focus_monitor 1
+    ;;
+esac
 
 # nice tree styles:
 #herbstclient set tree_style '╾│ ├└╼─┐'
