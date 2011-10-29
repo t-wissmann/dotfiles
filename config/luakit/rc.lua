@@ -83,7 +83,7 @@ function cmd_toggle_plugins(w, param)
                 value = false
             end
         end
-        domain_props["all"]["enable-plugins"] = value
+        domain_props["all"].enable_plugins = value
         w:notify(string.format("Plugins are "..
                 (value and "enabled" or "disabled")))
 end
@@ -99,7 +99,7 @@ function cmd_toggle_javascript(w, param)
                 value = false
             end
         end
-        domain_props["all"]["enable-scripts"] = value
+        domain_props["all"].enable_scripts = value
         w:notify(string.format("Javascript is "..
                 (value and "enabled" or "disabled")))
 end
