@@ -74,7 +74,7 @@ require "cookies"
 require "plainmarks"
 
 function cmd_toggle_plugins(w, param)
-        local value = not domain_props["all"]["enable-plugins"]
+        local value = not domain_props["all"]["enable_plugins"]
         if param then
             if (param == "true" or param == "on") then
                 value = true
@@ -90,7 +90,7 @@ end
 
 
 function cmd_toggle_javascript(w, param)
-        local value = not domain_props["all"]["enable-scripts"]
+        local value = not domain_props["all"]["enable_scripts"]
         if param then
             if (param == "true" or param == "on") then
                 value = true
