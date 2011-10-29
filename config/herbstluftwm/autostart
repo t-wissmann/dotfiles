@@ -252,13 +252,28 @@ herbstclient set tree_style '╾│ ├╰╼─╮'
 #herbstclient set tree_style '*| +`>-.'
 #herbstclient set tree_style '*| +`-->'
 
+### RULES ###
+hc unrule -F
+hc rule focus=on
+hc rule class=Vlc tag=video
+
+hc load float \
+   "(split vertical:0.800000:1
+        (clients max:0)
+        (split horizontal:0.500000:0
+            (clients horizontal:0)
+            (clients horizontal:0)))"
+hc rule class=Xephyr tag=float pseudotile=on index=0 focus=off
+
 STATEFILE=~/.config/herbstluftwm/state
 
-# config dir
+### SCRIPTS ###
 c=~/.config/herbstluftwm/
 hc keybind $Mod-F10         spawn $c/fastterminal.sh -t
 hc keybind $Mod-Shift-F10   spawn $c/fastterminal.sh -b
 hc keybind $Mod-F12         spawn $c/toggledualhead.sh
 
 [ -f "$STATEFILE" ] && ~/dev/c/herbstluftwm/scripts/loadstate.sh < "$STATEFILE"
+rm -f "$STATEFILE"
+
 
