@@ -108,7 +108,8 @@ esac
 hc keybind $Mod-i toggle always_show_frame
 hc keybind $Mod-r remove
 hc keybind $Mod-s floating toggle
-hc keybind Mod4-f fullscreen toggle
+hc keybind $Mod-f fullscreen toggle
+hc keybind $Mod-p pseudotile toggle
 hc keybind $Mod-u split vertical 0.5
 hc keybind $Mod-o split horizontal 0.5
 hc keybind $Mod-space cycle_layout 1
@@ -273,6 +274,7 @@ herbstclient set tree_style '╾│ ├╰╼─╮'
 hc unrule -F
 hc rule focus=on
 hc rule class=Vlc tag=video
+hc rule class=Totem tag=video
 
 hc load float \
    "(split vertical:0.800000:1
