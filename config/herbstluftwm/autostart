@@ -36,15 +36,20 @@ hc keybind $Mod-x spawn ~/scripts/menu/custommenu.sh apps
 hc keybind $Mod-F2 spawn gmrun
 hc keybind $Mod-e spawn thunar
 
-# tags
-hc rename default 1 || true # just try it
-for i in {1..9} ; do
-    hc add "$i"
-    hc keybind "$Mod-$i" use "$i"
-    hc keybind "$Mod-Shift-$i" move "$i"
-done
 
-hc floating 4 on # always float on tag 4
+# tags
+TAG_NAMES=( cip vim video float music web im irc mail xn )
+TAG_KEYS=( {1..9} 0 )
+
+hc rename default "${TAG_NAMES[0]}" || true
+for i in ${!TAG_NAMES[@]} ; do
+    hc add "${TAG_NAMES[$i]}"
+    key="${TAG_KEYS[$i]}"
+    if ! [ -z "$key" ] ; then
+        hc keybind "$Mod-$key" use "${TAG_NAMES[$i]}"
+        hc keybind "$Mod-Shift-$key" move "${TAG_NAMES[$i]}"
+    fi
+done
 
 function dualhead() {
     width="$1"
@@ -53,8 +58,8 @@ function dualhead() {
     hc focus_monitor 0
     hc remove_monitor 1
     hc move_monitor 0 $((width/2))x$((height))+0+0 $pad
-    hc use 1
-    hc add_monitor $((width/2))x$((height))+$((width/2))+0 2 $pad
+    hc use "${TAG_NAMES[0]}"
+    hc add_monitor $((width/2))x$((height))+$((width/2))+0 "${TAG_NAMES[1]}" $pad
 }
 
 function singlehead() {
