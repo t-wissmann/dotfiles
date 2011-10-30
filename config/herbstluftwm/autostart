@@ -18,7 +18,7 @@ hc set window_gap 8
 #feh --bg-center ~/Documents/wallpaper/water/rain.jpg
 case "$HOSTNAME" in
     ghul)
-        feh --bg-scale ~/Documents/wallpaper/flowers/DSC02801.jpg
+        feh --bg-fill ~/Documents/wallpaper/flowers/DSC02801.jpg
         ;;
     towi04)
         nitrogen --restore
