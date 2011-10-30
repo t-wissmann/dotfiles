@@ -590,7 +590,7 @@ function urxvtsetfontsize() {
 
 function ccmloop() {
     while sleep 1 ; do
-        fetchmail && echo -e '\aNeue Mails' && mutt
+        fetchmail && echo -e '\aNeue Mails' && mutt -Z
         sleep 3m
     done
 }
