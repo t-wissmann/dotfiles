@@ -18,7 +18,7 @@ hc set window_gap 8
 #feh --bg-center ~/Documents/wallpaper/water/rain.jpg
 case "$HOSTNAME" in
     ghul)
-        feh --bg-scale ~/Documents/wallpaper/nature/02154_standalonecleanwallpaper_2560x1600.jpg
+        feh --bg-scale ~/Documents/wallpaper/flowers/DSC02801.jpg
         ;;
     towi04)
         nitrogen --restore
@@ -276,6 +276,7 @@ hc unrule -F
 hc rule focus=on
 hc rule class=Vlc tag=video
 hc rule class=Totem tag=video
+hc rule class=Gmrun pseudotile=on focus=on
 
 hc load float \
    "(split vertical:0.800000:1
