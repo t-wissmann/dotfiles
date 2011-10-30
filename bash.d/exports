@@ -98,7 +98,7 @@ export OOO_FORCE_DESKTOP='gnome'
 
 ### BASH OPTIONS ###
 shopt -s histappend
-export HISTIGNORE='&:ls:cd ~:cd ..:[bf]g:exit:h:history'
+export HISTIGNORE='&:ls:cd ~:cd ..:[bf]g:exit:h:history:rm *'
 export HISTSIZE='100000'
 export HISTCONTROL=erasedups
 

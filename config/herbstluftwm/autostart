@@ -283,6 +283,7 @@ hc load float \
             (clients horizontal:0)
             (clients horizontal:0)))"
 hc rule class=Xephyr tag=float pseudotile=on index=0 focus=off
+hc rule class=MPlayer tag=float index=0 focus=off
 
 STATEFILE=~/.config/herbstluftwm/state
 
