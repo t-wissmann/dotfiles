@@ -40,7 +40,7 @@ trysource ~/dev/c/herbstluftwm/share/herbstclient-completion
 trysource ~/git/herbstluftwm/share/herbstclient-completion
 
 case `hostname` in
-    faui*) trysource ~/.bash.d/cip ;;
+    faui0*) trysource ~/.bash.d/cip ;;
     mephisto) trysource ~/.bash.d/mephisto ;;
 esac
 

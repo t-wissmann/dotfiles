@@ -22,8 +22,11 @@ function dualhead() {
     hc focus_monitor 0
     hc remove_monitor 1
     hc move_monitor 0 $((width/2))x$((height))+0+0 $pad
-    hc use 1
-    hc add_monitor $((width/2))x$((height))+$((width/2))+0 2 $pad
+    local unused_tag=$(herbstclient tag_status |
+        grep -oE "$(echo -ne \\t)"'[^+#'"$(echo -ne \\t)"'][^'"$(echo -ne \\t)"']*'|
+        head -n 1|
+        tail -c +3)
+    hc add_monitor $((width/2))x$((height))+$((width/2))+0 "$unused_tag" $pad
 }
 
 function singlehead() {

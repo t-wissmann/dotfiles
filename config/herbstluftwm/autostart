@@ -224,7 +224,7 @@ colors_pwmt_green() {
 case "$HOSTNAME" in
     ghul)   colors_pwmt_green ;;
     x40)    colors_thin_red ;;
-    faui*)  colors_thin_red ;;
+    faui0*) colors_thin_red ;;
     *)      colors_pwmt_green ;;
 esac
 
@@ -238,7 +238,7 @@ if [ -d "$SCRIPTSDIR" ] ; then
 fi
 
 case "$HOSTNAME" in
-    faui*)
+    faui0*)
         ~/git/herbstluftwm/share/restartpanels.sh ~/.config/herbstluftwm/panel.sh
         hc keybind $Mod-x spawn ~/scripts/menu.sh
         hc keybind $Mod-F1 spawn ~/scripts/lock.sh
