@@ -285,6 +285,9 @@ hc load float \
             (clients horizontal:0)))"
 hc rule class=Xephyr tag=float pseudotile=on index=0 focus=off
 hc rule class=MPlayer tag=float index=0 focus=off
+hc rule instance=irc tag=irc
+hc rule instance=finch tag=im
+hc rule instance=mutt tag=mail
 
 STATEFILE=~/.config/herbstluftwm/state
 
