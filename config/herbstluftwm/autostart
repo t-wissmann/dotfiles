@@ -277,6 +277,9 @@ hc rule focus=on
 hc rule class=Vlc tag=video
 hc rule class=Totem tag=video
 hc rule class=Gmrun pseudotile=on focus=on
+hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on
+hc rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on
+hc rule windowtype='_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK)' manage=off
 
 hc load float \
    "(split vertical:0.800000:1
