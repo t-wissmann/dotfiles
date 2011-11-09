@@ -44,7 +44,7 @@ herbstclient pad $monitor $height
                     echo -n "^fg(#efefef)"
                     ;;
                 '+')
-                    echo -n "^fg(#CAFFAD)"
+                    echo -n "^fg(#FFBB00)"
                     ;;
                 '!')
                     echo -n "^fg(#FF0675)"
