@@ -246,6 +246,9 @@ case "$HOSTNAME" in
         hc keybind $Mod-Control-q quit
         xset -b
         ;;
+    faui4*)
+        hc keybind $Mod-x spawn ~/scripts/menu.sh
+        ;;
     x40)
         killall cippanel.sh || true
         ~/.config/herbstluftwm/cippanel.sh &
@@ -255,6 +258,10 @@ case "$HOSTNAME" in
         ~/.config/herbstluftwm/cippanel.sh &
         hc keybind $Mod-x spawn ~/build/dwm-samoht/dmenu_run
         hc keybind $Mod-q quit
+        ;;
+    faui4*)
+        panel=~/.config/herbstluftwm/panel.sh
+        ~/build/herbstluftwm/share/restartpanels.sh $panel
         ;;
     *)
         panel=
