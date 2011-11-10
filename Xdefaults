@@ -12,21 +12,21 @@ Xcursor*theme: Vanilla-DMZ
 !xterm*background: #404040
 ! theme created from roxterm color-scheme
 !xterm*background: black
-!urxvt*background: #202020
-!urxvt*foreground: #EDEDED
-urxvt*background: #1e1e1e
+!URxvt.background: #202020
+!URxvt.foreground: #EDEDED
+URxvt.background: #1e1e1e
 !! brown
-!urxvt*background: #221C16
+!URxvt.background: #221C16
 !! green
-!urxvt*background: #1E3526
-urxvt*foreground: #EFEFEF
-urxvt*cursorColor: #FF9900
+!URxvt.background: #1E3526
+URxvt.foreground: #EFEFEF
+URxvt.cursorColor: #FF9900
 ! Black (not tango) + DarkGrey
 xterm*background: #202020
 xterm*foreground: #EDEDED
 ! Black (not tango) + DarkGrey
-!urxvt*color0:  #596569
-urxvt*color0:  black
+!URxvt.color0:  #596569
+URxvt.color0:  black
 !xterm*color0:  #596569
 xterm*color0:  #202020
 *color8:  #505050
@@ -66,12 +66,12 @@ xterm*color0:  #202020
 XTerm*veryBoldColors: 2
 
 ! disable bold font
-urxvt*cursorBlink: true
+URxvt.cursorBlink: true
 ! size=8 looks quite cool but is not handy...
-!urxvt*font: xft:ProFont:size=11
-!urxvt*boldFont: xft:ProFont:size=11
-urxvt*font: xft:Bitstream Vera Sans Mono:bold:size=9
-urxvt*boldFont: xft:Bitstream Vera Sans Mono:bold:size=9
+!URxvt.font: xft:ProFont:size=11
+!URxvt.boldFont: xft:ProFont:size=11
+URxvt.font: xft:Bitstream Vera Sans Mono:bold:size=9
+URxvt.boldFont: xft:Bitstream Vera Sans Mono:bold:size=9
 URxvt.keysym.C-1: command:\033]710;xft:Bitstream Vera Sans Mono:bold:size=9\007\033]711;xft:Bitstream Vera Sans Mono:bold:size=9\007
 URxvt.keysym.C-2: command:\033]710;xft:Bitstream Vera Sans Mono:bold:size=10\007\033]711;xft:Bitstream Vera Sans Mono:bold:size=10\007
 URxvt.keysym.C-3: command:\033]710;xft:Bitstream Vera Sans Mono:bold:size=11\007\033]711;xft:Bitstream Vera Sans Mono:bold:size=11\007
@@ -83,17 +83,17 @@ URxvt.keysym.C-8: command:\033]710;xft:Bitstream Vera Sans Mono:bold:size=16\007
 URxvt.keysym.C-9: command:\033]710;xft:Bitstream Vera Sans Mono:bold:size=17\007\033]711;xft:Bitstream Vera Sans Mono:bold:size=17\007
 URxvt.keysym.C-0: command:\033]710;xft:Bitstream Vera Sans Mono:bold:size=19\007\033]711;xft:Bitstream Vera Sans Mono:bold:size=19\007
 
-urxvt*scrollBar: false
-urxvt*scrollstyle: plain
-urxvt*scrollColor: #E2BD09
+URxvt.scrollBar: false
+URxvt.scrollstyle: plain
+URxvt.scrollColor: #E2BD09
 ! scrollbar width
-urxvt*thickness: 5
-urxvt*urgentOnBell: true
+URxvt.thickness: 5
+URxvt.urgentOnBell: true
 
 
-!urxvt*fading: 30
-!urxvt*fadeColor: #233B12
-!urxvt*borderColor: red
+!URxvt.fading: 30
+!URxvt.fadeColor: #233B12
+!URxvt.borderColor: red
 ! for yanking urls
 ! if you change M-y... you probably need to change the on_key_released()
 ! function in per script... remove all lines, that are setting or reading yanking_allowed
@@ -108,14 +108,14 @@ URxvt.underlineURLs:    false
 !URxvt.perl-ext: selection
 !URxvt.perl-ext: mark-yank-urls
 ! for fake transparency
-!urxvt*transparent: true
-!urxvt*shading: 30
+!URxvt.transparent: true
+!URxvt.shading: 30
 ! for real transparency
-!urxvt*background: rgba:2020/2020/2020/eeee
-!urxvt*foreground: #EDEDED
-!urxvt*depth: 32
-!urxvt*inheritPixmap: true
-!urxvt*reverseVideo: false
+!URxvt.background: rgba:2020/2020/2020/eeee
+!URxvt.foreground: #EDEDED
+!URxvt.depth: 32
+!URxvt.inheritPixmap: true
+!URxvt.reverseVideo: false
 
 xclock*background: #b4b4b4
 

@@ -9,8 +9,8 @@
 ! xset +fp ~/.fonts/
 ! xset fp rehash
 
-urxvt*font: -*-montecarlo-medium-*-*-*-*-*-*-*-*-*-*-*
-urxvt*boldFont: -*-montecarlo-medium-*-*-*-*-*-*-*-*-*-*-*
+URxvt.font: -*-montecarlo-medium-*-*-*-*-*-*-*-*-*-*-*
+URxvt.boldFont: -*-montecarlo-medium-*-*-*-*-*-*-*-*-*-*-*
 URxvt.keysym.C-1: command:\033]710;-*-montecarlo-medium-*-*-*-*-*-*-*-*-*-*-*\007\033]711;-*-montecarlo-medium-*-*-*-*-*-*-*-*-*-*-*\007
 URxvt.keysym.C-2: command:\033]710;-*-montecarlo-medium-*-*-*-*-*-*-*-*-*-*-*\007\033]711;-*-montecarlo-medium-*-*-*-*-*-*-*-*-*-*-*\007
 
