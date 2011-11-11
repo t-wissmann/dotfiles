@@ -29,6 +29,9 @@ esac
 
 # keybindings
 Mod=Mod4
+if [ $HOSTNAME = faui03a ] ; then
+    Mod=Mod1
+fi
 hc keybind $Mod-Shift-r reload
 hc keybind $Mod-Shift-c close
 hc keybind $Mod-Return spawn urxvt
