@@ -224,7 +224,7 @@ colors_pwmt_green() {
 case "$HOSTNAME" in
     ghul)   colors_pwmt_green ;;
     x40)    colors_thin_red ;;
-    faui*)  colors_thin_red ;;
+    faui0*) colors_thin_red ;;
     *)      colors_pwmt_green ;;
 esac
 
@@ -238,13 +238,16 @@ if [ -d "$SCRIPTSDIR" ] ; then
 fi
 
 case "$HOSTNAME" in
-    faui*)
+    faui0*)
         ~/git/herbstluftwm/share/restartpanels.sh ~/.config/herbstluftwm/panel.sh
         hc keybind $Mod-x spawn ~/scripts/menu.sh
         hc keybind $Mod-F1 spawn ~/scripts/lock.sh
         hc keybind $Mod-Shift-q quit
         hc keybind $Mod-Control-q quit
         xset -b
+        ;;
+    faui4*)
+        hc keybind $Mod-x spawn ~/scripts/menu.sh
         ;;
     x40)
         killall cippanel.sh || true
@@ -255,6 +258,10 @@ case "$HOSTNAME" in
         ~/.config/herbstluftwm/cippanel.sh &
         hc keybind $Mod-x spawn ~/build/dwm-samoht/dmenu_run
         hc keybind $Mod-q quit
+        ;;
+    faui4*)
+        panel=~/.config/herbstluftwm/panel.sh
+        ~/build/herbstluftwm/share/restartpanels.sh $panel
         ;;
     *)
         panel=
@@ -277,6 +284,9 @@ hc rule focus=on
 hc rule class=Vlc tag=video
 hc rule class=Totem tag=video
 hc rule class=Gmrun pseudotile=on focus=on
+hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on
+hc rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on
+hc rule windowtype='_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK)' manage=off
 
 hc load float \
    "(split vertical:0.800000:1
@@ -286,6 +296,10 @@ hc load float \
             (clients horizontal:0)))"
 hc rule class=Xephyr tag=float pseudotile=on index=0 focus=off
 hc rule class=MPlayer tag=float index=0 focus=off
+hc rule class='logout-dialog' pseudotile=on focus=on
+hc rule instance=irc tag=irc
+hc rule instance=finch tag=im
+hc rule instance=mutt tag=mail
 
 STATEFILE=~/.config/herbstluftwm/state
 
