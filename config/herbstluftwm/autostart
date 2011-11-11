@@ -147,7 +147,7 @@ if [ "$HOSTNAME" = ghul ] ;then
     hc keybind $Mod-q quit
     # TODO: why are there problems with XGrabKey for XF86ScreenSaver;
     hc keybind XF86ScreenSaver spawn ~/bin/lock.sh
-    hc keybind XF86Launch1 spawn ~/bin/suspend.sh
+    hc keybind XF86Launch1 spawn ~/bin/suspend.sh --lock
     hc set frame_bg_transparent 1
 fi
 if [ "$HOSTNAME" = towi04 ] ; then
