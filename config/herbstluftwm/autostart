@@ -284,8 +284,8 @@ herbstclient set tree_style '╾│ ├╰╼─╮'
 ### RULES ###
 hc unrule -F
 hc rule focus=on
-hc rule class=Vlc tag=video
-hc rule class=Totem tag=video
+hc rule class=Vlc tag=video index=/ focus=off
+hc rule class=Totem tag=video index=/ focus=off
 hc rule class=Gmrun pseudotile=on focus=on
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on
 hc rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on
