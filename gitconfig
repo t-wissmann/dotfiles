@@ -8,6 +8,5 @@
 	tree = log --graph --oneline --all
 	wdiff = diff --color-words
 	bdiff = diff --color-words=.
-	tree = log --graph --oneline --all
 [merge]
 	tool = vimdiff
