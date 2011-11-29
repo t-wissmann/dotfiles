@@ -46,10 +46,13 @@ BOOKMARKS=(
    herbstluftwm ~/dev/c/herbstluftwm/
    #matheuebung  ~/uni/10WS/mathec3/uebungsblaetter/
    bfs          ~/uni/10WS/bfs/uebungsblaetter/
-   algoks       ~/uni/11SS/algoks/uebungsblaetter/
+   #algoks       ~/uni/11SS/algoks/uebungsblaetter/
    haskell      ~/uni/current/haskell/uebungsblaetter
    kompalg      ~/uni/current/kompalg/uebungsblaetter
    rk           ~/uni/current/rk/uebungsblaetter
+   wavelet      ~/uni/current/wavelet
+   algebra      ~/uni/current/algebra/vorlesung/
+   algebrauebung ~/uni/current/algebra/uebungsblaetter/
    #${BOOKMARKS[@]}
    )
 
