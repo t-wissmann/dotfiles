@@ -150,7 +150,7 @@ if [ "$HOSTNAME" = ghul ] ;then
     hc keybind $Mod-q quit
     # TODO: why are there problems with XGrabKey for XF86ScreenSaver;
     hc keybind XF86ScreenSaver spawn ~/bin/lock.sh
-    hc keybind XF86Launch1 spawn ~/bin/suspend.sh
+    hc keybind XF86Launch1 spawn ~/bin/suspend.sh --lock
     hc set frame_bg_transparent 1
 fi
 if [ "$HOSTNAME" = towi04 ] ; then
@@ -305,6 +305,23 @@ hc rule instance=finch tag=im
 hc rule instance=mutt tag=mail
 
 STATEFILE=~/.config/herbstluftwm/state
+
+# GIMP
+# ensure there is a gimp tag
+hc add gimp
+hc load gimp '
+(split horizontal:0.850000:0
+  (split horizontal:0.200000:1
+    (clients vertical:0)
+    (clients grid:0))
+  (clients vertical:0))
+'               # load predefined layout
+# center all other gimp windows on gimp tag
+hc rule class=Gimp tag=gimp index=01 pseudotile=on
+hc rule class=Gimp windowrole~'gimp-(image-window|toolbox|dock)' \
+    pseudotile=off
+hc rule class=Gimp windowrole=gimp-toolbox focus=off index=00
+hc rule class=Gimp windowrole=gimp-dock focus=off index=1
 
 ### SCRIPTS ###
 c=~/.config/herbstluftwm/

@@ -2,6 +2,7 @@
 " enforce 8 colors
 set t_Co=8
 
+set hidden
 " show line numbers
 set number
 " always do syntaxhighlighting
