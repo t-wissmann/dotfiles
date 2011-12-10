@@ -12,6 +12,8 @@ function hc() {
 }
 [[ "$HOSTNAME" == faui* ]] && hc() { ~/bin/herbstclient "$@" ; }
 
+hc emit_hook reload
+
 #xsetroot -solid '#D47A55'
 hc set window_gap 8
 # raindrops
@@ -29,6 +31,9 @@ esac
 
 # keybindings
 Mod=Mod4
+if [ $HOSTNAME = faui03a ] ; then
+    Mod=Mod1
+fi
 hc keybind $Mod-Shift-r reload
 hc keybind $Mod-Shift-c close
 hc keybind $Mod-Return spawn urxvt
@@ -147,7 +152,7 @@ if [ "$HOSTNAME" = ghul ] ;then
     hc keybind $Mod-q quit
     # TODO: why are there problems with XGrabKey for XF86ScreenSaver;
     hc keybind XF86ScreenSaver spawn ~/bin/lock.sh
-    hc keybind XF86Launch1 spawn ~/bin/suspend.sh
+    hc keybind XF86Launch1 spawn ~/bin/suspend.sh --lock
     hc set frame_bg_transparent 1
 fi
 if [ "$HOSTNAME" = towi04 ] ; then
@@ -281,8 +286,8 @@ herbstclient set tree_style '╾│ ├╰╼─╮'
 ### RULES ###
 hc unrule -F
 hc rule focus=on
-hc rule class=Vlc tag=video
-hc rule class=Totem tag=video
+hc rule class=Vlc tag=video index=/ focus=off
+hc rule class=Totem tag=video index=/ focus=off
 hc rule class=Gmrun pseudotile=on focus=on
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on
 hc rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on
@@ -303,11 +308,29 @@ hc rule instance=mutt tag=mail
 
 STATEFILE=~/.config/herbstluftwm/state
 
+# GIMP
+# ensure there is a gimp tag
+hc add gimp
+hc load gimp '
+(split horizontal:0.850000:0
+  (split horizontal:0.200000:1
+    (clients vertical:0)
+    (clients grid:0))
+  (clients vertical:0))
+'               # load predefined layout
+# center all other gimp windows on gimp tag
+hc rule class=Gimp tag=gimp index=01 pseudotile=on
+hc rule class=Gimp windowrole~'gimp-(image-window|toolbox|dock)' \
+    pseudotile=off
+hc rule class=Gimp windowrole=gimp-toolbox focus=off index=00
+hc rule class=Gimp windowrole=gimp-dock focus=off index=1
+
 ### SCRIPTS ###
 c=~/.config/herbstluftwm/
 hc keybind $Mod-F10         spawn $c/fastterminal.sh -t
 hc keybind $Mod-Shift-F10   spawn $c/fastterminal.sh -b
 hc keybind $Mod-F12         spawn $c/toggledualhead.sh
+hc keybind $Mod-F9          emit_hook togglehidepanel
 
 [ -f "$STATEFILE" ] && ~/dev/c/herbstluftwm/scripts/loadstate.sh < "$STATEFILE"
 rm -f "$STATEFILE"

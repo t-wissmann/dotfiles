@@ -28,6 +28,7 @@ herbstclient pad $monitor $height
     kill "$child"
 }|{
     TAGS=( $(herbstclient tag_status $monitor) )
+    visible=true
     date=""
     while true ; do
         bordercolor="#26221C"
@@ -85,8 +86,18 @@ herbstclient pad $monitor $height
                 ;;
             togglehidepanel)
                 echo "^togglehide()"
+                if $visible ; then
+                    visible=false
+                    herbstclient pad $monitor 0
+                else
+                    visible=true
+                    herbstclient pad $monitor $height
+                fi
                 ;;
             quit_panel)
+                exit
+                ;;
+            reload)
                 exit
                 ;;
             #player)
