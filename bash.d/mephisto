@@ -5,6 +5,7 @@ alias cds='cd `date +/local.stand/adm/syslog/%Y/%m/%d/`'
 alias cdcf="cd /var/cfengine"
 alias cds='cd `date +/local.stand/adm/syslog/%Y/%m/%d/`'
 alias cdyp="cd /local/adm/yp/informatik.uni-erlangen.de-master"
+alias cdldap="cd /local/adm/ldap/data"
 alias ppkeys="rm -f /var/cfengine/ppkeys/root-* && ssh faui02 'rm -f /var/cfengine/ppkeys/root-*'"
 export LOGNAME="re06huxa"
 ### PATH
