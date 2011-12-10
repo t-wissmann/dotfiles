@@ -12,6 +12,8 @@ function hc() {
 }
 [[ "$HOSTNAME" == faui* ]] && hc() { ~/bin/herbstclient "$@" ; }
 
+hc emit_hook reload
+
 #xsetroot -solid '#D47A55'
 hc set window_gap 8
 # raindrops
