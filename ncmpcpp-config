@@ -20,7 +20,8 @@ user_interface = "alternative"
 alternative_ui_separator_color = "yellow"
 
 #progressbar_look = "»> "
-progressbar_look = "─╼·"
+progressbar_look = "-+ "
+#progressbar_look = "�>>� "
 
 
 progressbar_color = "green"
