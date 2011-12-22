@@ -224,12 +224,24 @@ colors_pwmt_green() {
     hc set always_show_frame 0
 }
 
+colors_snow() {
+    hc set frame_border_active_color '#00182F'
+    hc set window_border_active_color '#1361AD'
+    hc set frame_border_width 1
+    hc set frame_bg_transparent 0
+    hc set frame_bg_active_color '#103462'
+    hc set window_border_width 2
+    hc set frame_border_normal_color 'black'
+    hc set frame_bg_normal_color '#141414'
+    hc set window_border_normal_color '#242424'
+}
+
 
 # new colors
 case "$HOSTNAME" in
     ghul)   colors_pwmt_green ;;
     x40)    colors_thin_red ;;
-    faui0*) colors_thin_red ;;
+    faui0*) colors_snow ;;
     *)      colors_pwmt_green ;;
 esac
 
