@@ -242,6 +242,7 @@ case "$HOSTNAME" in
     ghul)   colors_pwmt_green ;;
     x40)    colors_thin_red ;;
     faui0*) colors_snow ;;
+    dachs)  colors_snow ;;
     *)      colors_pwmt_green ;;
 esac
 
@@ -271,8 +272,8 @@ case "$HOSTNAME" in
         ~/.config/herbstluftwm/cippanel.sh &
         ;;
     dachs)
-        killall cippanel.sh || true
-        ~/.config/herbstluftwm/cippanel.sh &
+        hc emit_hook quit_panel
+        ~/.config/herbstluftwm/panel.sh &
         hc keybind $Mod-x spawn ~/build/dwm-samoht/dmenu_run
         hc keybind $Mod-q quit
         ;;
