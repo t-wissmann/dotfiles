@@ -291,8 +291,8 @@ case "$HOSTNAME" in
 esac
 
 # nice tree styles:
-#herbstclient set tree_style '╾│ ├└╼─┐'
-herbstclient set tree_style '╾│ ├╰╼─╮'
+herbstclient set tree_style '╾│ ├└╼─┐'
+#herbstclient set tree_style '╾│ ├╰╼─╮'
 #herbstclient set tree_style '*| +`>-.'
 #herbstclient set tree_style '*| +`-->'
 
