@@ -46,7 +46,7 @@ fi
 
  # set xterm title
  case "$TERM" in
-    rxvt-256color|xterm)
+    rxvt*-256color|xterm)
 #      XTERM_TITLE='\[\033]0;\W - Konsole (\w)\007\]'
       if ! [ -z "$SHOWUSERNAME" ] ; then
         XTERM_TITLE='\[\033]0;\u:\w - Konsole\007\]'
