@@ -29,6 +29,7 @@ herbstclient pad $monitor $height
 }|{
     TAGS=( $(herbstclient tag_status $monitor) )
     visible=true
+    windowtitle=""
     date=""
     while true ; do
         bordercolor="#26221C"
@@ -59,7 +60,7 @@ herbstclient pad $monitor $height
             [ -f "$icon" ] && echo -n " ^pa(;2)^i($icon)^pa(;0) " || echo -n " ${i:1} "
             echo -n "^ca()$separator"
         done
-        echo -n "^bg()^p(_CENTER)"
+        echo -n "^bg()${windowtitle//^/^^}^p(_CENTER)"
         # small adjustments
         calclick="^ca(1,$HOME/.config/herbstluftwm/calendar.sh)"
         calclick+="^ca(2,killall calendar.sh)"
@@ -96,6 +97,14 @@ herbstclient pad $monitor $height
                 ;;
             quit_panel)
                 exit
+                ;;
+            focus_changed)
+                winid="${cmd[1]}"
+                windowtitle=$(xprop -id "$winid" \
+                    | grep -E '^(WM_ICON_NAME|_NET_WM_NAME|_NET_WM_ICON_NAME)' \
+                    | sort \
+                    | head -n 1 \
+                    | cut -d\" -f2)
                 ;;
             reload)
                 exit
