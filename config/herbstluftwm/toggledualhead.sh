@@ -5,7 +5,12 @@ hc() {
 }
 
 panelcmd=${panelcmd:-~/.config/herbstluftwm/panel.sh}
+if [ -x ~/dev/c/herbstluftwm/share/restartpanels.sh ] ; then
+restartpanelcmd=${restartpanelcmd:-~/dev/c/herbstluftwm/share/restartpanels.sh}
+else
 restartpanelcmd=${restartpanelcmd:-~/git/herbstluftwm/share/restartpanels.sh}
+fi
+
 
 resolution=$(
      xwininfo -root |
@@ -22,11 +27,7 @@ function dualhead() {
     hc focus_monitor 0
     hc remove_monitor 1
     hc move_monitor 0 $((width/2))x$((height))+0+0 $pad
-    local unused_tag=$(herbstclient tag_status |
-        grep -oE "$(echo -ne \\t)"'[^+#'"$(echo -ne \\t)"'][^'"$(echo -ne \\t)"']*'|
-        head -n 1|
-        tail -c +3)
-    hc add_monitor $((width/2))x$((height))+$((width/2))+0 "$unused_tag" $pad
+    hc add_monitor $((width/2))x$((height))+$((width/2))+0 "" $pad
 }
 
 function singlehead() {

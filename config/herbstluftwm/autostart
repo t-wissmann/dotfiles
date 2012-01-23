@@ -292,6 +292,13 @@ case "$HOSTNAME" in
     ;;
 esac
 
+if [ -x /opt/SUNWut/bin/utaction ] ; then
+    hc keyunbind $Mod-Shift-q
+    hc keyunbind $Mod-Control-q
+    hc keybind $Mod-SunF36 spawn ~/scripts/setresolution.sh
+    hc keybind $Mod-F11 spawn ~/scripts/setresolution.sh
+fi
+
 # nice tree styles:
 herbstclient set tree_style '╾│ ├└╼─┐'
 #herbstclient set tree_style '╾│ ├╰╼─╮'
