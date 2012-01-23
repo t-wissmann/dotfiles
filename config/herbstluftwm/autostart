@@ -253,6 +253,8 @@ if [ -d "$SCRIPTSDIR" ] ; then
         ~/.bash_settings $SCRIPTSDIR/dmenu.sh use
     hc keybind $Mod-Shift-g spawn $SCRIPTSDIR/execwith.sh \
         ~/.bash_settings $SCRIPTSDIR/dmenu.sh move
+    hc keybind $Mod-Alt-space spawn $SCRIPTSDIR/execwith.sh \
+        ~/.bash_settings $SCRIPTSDIR/dmenu.sh set_layout
 fi
 
 case "$HOSTNAME" in
