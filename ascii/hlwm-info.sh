@@ -17,7 +17,7 @@ else
 fi
 
 terminal=urxvt
-font=montecarlo
+font='bitstream vera sans'
 browser=luakit
 
 b="$(tput sgr0)$(tput setaf 5)"
