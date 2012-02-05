@@ -98,13 +98,8 @@ herbstclient pad $monitor $height
             quit_panel)
                 exit
                 ;;
-            focus_changed)
-                winid="${cmd[1]}"
-                windowtitle=$(xprop -id "$winid" \
-                    | grep -E '^(WM_ICON_NAME|_NET_WM_NAME|_NET_WM_ICON_NAME)' \
-                    | sort \
-                    | head -n 1 \
-                    | cut -d\" -f2)
+            focus_changed|window_title_changed)
+                windowtitle="${cmd[@]:2}"
                 ;;
             reload)
                 exit
