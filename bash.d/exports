@@ -44,6 +44,8 @@ if [ -d "${HOME}/bin" ] ; then
 export PATH="${PATH}:${HOME}/bin"
 fi
 
+unset PROMPT_COMMAND
+
  # set xterm title
  case "$TERM" in
     rxvt*-256color|xterm)
