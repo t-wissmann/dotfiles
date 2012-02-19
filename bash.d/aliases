@@ -12,6 +12,7 @@ function :w() {
 alias :wq='exit'
 alias :r='MPD_Profile= source ~/.bashrc'
 alias sl='ls --color=auto|rev'
+alias revlines='cat -n|sort -nr|cut -f2-'
 alias beep="echo -ne '\a'"
 alias vitmp="vi ~/.tmp.text && cat ~/.tmp.text"
 alias 2ixio="curl -n -F 'f:1=<-' http://ix.io"
