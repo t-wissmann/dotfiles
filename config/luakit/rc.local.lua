@@ -31,6 +31,8 @@ search_engines.arch      = "https://wiki.archlinux.de/index.php?search=%s&go=Sei
 search_engines["arch-en"] = "http://wiki.archlinux.org/index.php/%s"
 -- requires javascript...
 --search_engines["selfhtml"] = "http://de.selfhtml.org/navigation/suche/index.htm?Suchanfrage=%s"
+--
+search_engines["tineye"] = "http://www.tineye.com/parse?url=%s"
 
 search_engines.leo = "http://dict.leo.org/ende?lp=ende&lang=de&searchLoc=0&cmpType=relaxed&sectHdr=on&spellToler=&search=%s"
 search_engines.youtube = "http://www.youtube.com/results?search_query=%s"
@@ -38,7 +40,7 @@ search_engines.gpg = "http://gpg-keyserver.de/pks/lookup?search=0x%s&op=vindex"
 search_engines["27c3-phone"] = "http://www.eventphone.de/guru2/phonebook?event=27C3&s=%s&installedonly=0&submit=Search"
 search_engines["27c3"] = "https://events.ccc.de/congress/2010/wiki/Special:Search?search=%s"
 search_engines["hoogle"] = "http://haskell.org/hoogle/?hoogle=%s"
-search_engines.default = search_engines.d
+search_engines.default = search_engines.g
 
 -- Per-domain webview properties
 domain_props = {
