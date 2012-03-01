@@ -43,7 +43,8 @@ endif
 
 " highlight whitespaces and trailing spaces
 set list
-set listchars=tab:>-,trail:-
+set listchars=tab:»\ ,trail:·,nbsp:%
+"set listchars=tab:▸\ ,eol:¬
 
 " menu and completion -> bash-like
 set wildmenu
@@ -89,6 +90,8 @@ hi VertSplit ctermbg=NONE ctermfg=red cterm=NONE
 hi Todo ctermbg=yellow ctermfg=black cterm=bold
 hi StatusLineNC ctermbg=black ctermfg=yellow cterm=bold
 hi StatusLine ctermbg=yellow ctermfg=black cterm=NONE
+" color for tabs and trailing spaces, also see: listchars
+hi SpecialKey ctermbg=NONE ctermfg=blue cterm=bold
 "
 " for tabs
 hi TabLine ctermbg=black ctermfg=white cterm=bold
