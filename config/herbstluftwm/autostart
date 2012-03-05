@@ -270,7 +270,9 @@ case "$HOSTNAME" in
         hc keybind $Mod-Control-q quit
         xset -b
         ;;
-    faui49man4*)
+    faui49man4)
+        hc keybind $Mod-Shift-q quit
+        hc keybind $Mod-Control-q quit
         ~/.config/herbstluftwm/panel.sh
         ;;
     faui4*)
