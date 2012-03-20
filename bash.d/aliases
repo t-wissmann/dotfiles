@@ -72,7 +72,7 @@ alias innenstadtmensa='w3m -dump http://www.studentenwerk.uni-erlangen.de/verpfl
 # system things
 alias df='df -h'
 alias yogurt='yaourt'
-alias pacman='pacman-color'
+which pacman-color &> /dev/null && alias pacman='pacman-color'
 alias wch='weechat-curses'
 alias rc.d.sudo='sudo /root/rc.d'
 alias loadprivatealiases='source ~/.bash_private'
