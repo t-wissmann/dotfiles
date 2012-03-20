@@ -21,6 +21,9 @@ set shiftwidth=4
 set tabstop=4
 " enable filetype specific features
 filetype plugin on
+" automagical omnicompletion
+"set ofu=syntaxcomplete#Complete
+
 " code folding
 set foldmethod=indent
 set nofoldenable
@@ -88,8 +91,8 @@ hi Folded ctermbg=0 term=NONE cterm=NONE
 " color of border in vertical split
 hi VertSplit ctermbg=NONE ctermfg=red cterm=NONE
 hi Todo ctermbg=yellow ctermfg=black cterm=bold
-hi StatusLineNC ctermbg=black ctermfg=yellow cterm=bold
-hi StatusLine ctermbg=yellow ctermfg=black cterm=NONE
+hi StatusLineNC ctermbg=black ctermfg=white cterm=bold
+hi StatusLine ctermbg=black ctermfg=yellow cterm=NONE
 " color for tabs and trailing spaces, also see: listchars
 hi SpecialKey ctermbg=NONE ctermfg=blue cterm=bold
 "
