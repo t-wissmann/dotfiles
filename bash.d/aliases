@@ -3,6 +3,8 @@
 
 alias ll='/bin/ls --color=auto -lah'
 alias ls='ls -B --color=auto'
+alias lsn='ls -t -B -h --color=always|head'
+alias lln='ls -t -lah --color=always|head'
 alias :q='exit'
 function :w() {
   echo -n "Nothing to write, you are in bash ... "
