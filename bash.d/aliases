@@ -86,7 +86,7 @@ alias testbeep='echo -n Beep in "3.. " && sleep 1 && echo -n "2.. " && sleep 1 &
 alias mplayer.console='mplayer -framedrop -really-quiet -vo caca'
 alias setwallpaper='~/scripts/bg-control/setbg.sh'
 
-alias abook='~/dev/c/abook/abook/abook'
+alias abook='~/.abook/abook.sh'
 
 # mail things
 alias cm="fetchmail && ~/scripts/mail/countmails.sh"
