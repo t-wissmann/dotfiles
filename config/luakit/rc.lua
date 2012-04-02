@@ -193,7 +193,7 @@ downloads.add_signal("download-location", function (uri, fname)
         --["www%-m10.ma.tum.de"] = os.getenv("HOME") .. "/tum/gk",
         --["www%-m11.ma.tum.de"] = os.getenv("HOME") .. "/tum/algebra",
         --["www.sec.in.tum.de"] = os.getenv("HOME") .. "/tum/its",
-        ["\.pdf$"] = os.getenv("HOME") .. "/downloads/",
+        [ ".pdf$"  ] = os.getenv("HOME") .. "/downloads/",
     }) do
         if string.match(uri, p) then
             return string.format("%s/%s", d, fname)
