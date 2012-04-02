@@ -33,9 +33,12 @@ else
     trysource ~/.bash.d/settings
 fi
 
-trysource /etc/bash_completion.d/git
-trysource /etc/bash_completion.d/mpc
-trysource /etc/bash_completion.d/tmux
+#trysource /usr/share/bash-completion/bash_completion
+for i in git mpc ; do
+    trysource /etc/bash_completion.d/$i
+    trysource /usr/share/bash-completion/completions/$i
+done
+
 trysource ~/dev/c/herbstluftwm/share/herbstclient-completion
 trysource ~/git/herbstluftwm/share/herbstclient-completion
 
