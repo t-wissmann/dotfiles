@@ -33,8 +33,15 @@ else
     trysource ~/.bash.d/settings
 fi
 
+_userland()
+{
+    local userland=$( uname -s )
+    [[ $userland == @(Linux|GNU/*) ]] && userland=GNU
+    [[ $userland == $1 ]]
+}
+
 #trysource /usr/share/bash-completion/bash_completion
-for i in git mpc ; do
+for i in git mpc man ; do
     trysource /etc/bash_completion.d/$i
     trysource /usr/share/bash-completion/completions/$i
 done
