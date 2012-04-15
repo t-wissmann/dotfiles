@@ -367,4 +367,6 @@ hc keybind $Mod-F9          emit_hook togglehidepanel
 [ -f "$STATEFILE" ] && ~/dev/c/herbstluftwm/scripts/loadstate.sh < "$STATEFILE"
 rm -f "$STATEFILE"
 
+hc unlock
+
 
