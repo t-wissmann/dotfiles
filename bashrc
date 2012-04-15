@@ -41,7 +41,8 @@ _userland()
 }
 
 #trysource /usr/share/bash-completion/bash_completion
-for i in git mpc man ; do
+#trysource /etc/bash_completion
+for i in git mpc ; do
     trysource /etc/bash_completion.d/$i
     trysource /usr/share/bash-completion/completions/$i
 done
