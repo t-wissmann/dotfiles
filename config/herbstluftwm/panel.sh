@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -f
+
 monitor=${1:-0}
 geometry="$(herbstclient list_monitors |grep "^$monitor:"|cut -d' ' -f2)"
 # geometry has the format: WxH+X+Y
