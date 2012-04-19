@@ -9,5 +9,6 @@
 	st = status
 	wdiff = diff --color-words
 	bdiff = diff --color-words=.
+	hug = push
 [merge]
 	tool = vimdiff
