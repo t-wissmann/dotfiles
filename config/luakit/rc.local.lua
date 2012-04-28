@@ -12,7 +12,7 @@ useragents = {
     ["ff2"] = "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.8.1.6) Gecko/20070725 Firefox/2.0.0.6",
 }
 
-globals.useragent = useragents["ff4"]
+globals.useragent = useragents["ff2"]
 
 --search_engines.duk = "http://duckduckgo.com/html/?q=%s"
 search_engines.d = "http://duckduckgo.com/html/?q=%s"
