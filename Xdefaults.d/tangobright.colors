@@ -4,6 +4,7 @@
 
 ! with white background
 urxvt*background: #f8f8f8
+urxvt*shading: 170
 urxvt*foreground: #2e3436
 !urxvt*background: black
 !urxvt*foreground: white
