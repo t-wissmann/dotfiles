@@ -41,7 +41,11 @@ fi
 
 # extend path-variable
 if [ -d "${HOME}/bin" ] ; then
-export PATH="${PATH}:${HOME}/bin"
+    export PATH="${PATH}:${HOME}/bin"
+fi
+# extend man-variable
+if [ -d "${HOME}/man" ] ; then
+    export MANPATH="${HOME}/man:${MANPATH}"
 fi
 
 unset PROMPT_COMMAND
