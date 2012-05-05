@@ -47,12 +47,13 @@ BOOKMARKS=(
    #matheuebung  ~/uni/10WS/mathec3/uebungsblaetter/
    bfs          ~/uni/10WS/bfs/uebungsblaetter/
    #algoks       ~/uni/11SS/algoks/uebungsblaetter/
-   haskell      ~/uni/current/haskell/uebungsblaetter
-   kompalg      ~/uni/current/kompalg/uebungsblaetter
-   rk           ~/uni/current/rk/uebungsblaetter
-   wavelet      ~/uni/current/wavelet
-   algebra      ~/uni/current/algebra/vorlesung/
-   algebrauebung ~/uni/current/algebra/uebungsblaetter/
+   haskell      ~/uni/11SS/haskell/uebungsblaetter
+   kompalg      ~/uni/11SS/kompalg/uebungsblaetter
+   rk           ~/uni/11SS/rk/uebungsblaetter
+   wavelet      ~/uni/11WS/wavelet
+   algebra      ~/uni/11WS/algebra/vorlesung/
+   algebrauebung ~/uni/11WS/algebra/uebungsblaetter/
+   funktionentheorie ~/uni/12SS/funktionentheorie/vorlesung/
    #${BOOKMARKS[@]}
    )
 
