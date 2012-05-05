@@ -20,7 +20,9 @@ hc set window_gap 8
 #feh --bg-center ~/Documents/wallpaper/water/rain.jpg
 case "$HOSTNAME" in
     ghul)
-        feh --bg-fill ~/Documents/wallpaper/flowers/DSC02801.jpg
+        #feh --bg-fill ~/Documents/wallpaper/flowers/DSC02801.jpg
+        feh --bg-fill ~/Documents/wallpaper/water/38174-theriver.jpg
+        feh --bg-fill ~/Documents/wallpaper/starwars/1255654029702.png
         ;;
     towi04)
         nitrogen --restore
