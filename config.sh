@@ -20,6 +20,7 @@ homedir=(
     screenrc
     tmux.conf
     vimrc
+    taskrc
     Xdefaults{,.d}
 )
 
