@@ -119,3 +119,5 @@ alias hlwm-info="~/dotfiles/ascii/hlwm-info.sh"
 
 alias sshmail='unison -batch mail && ssh ameise fetchmail && unison -batch mail && mutt -Zz'
 
+alias newsfetch='fetchmail --fetchmailrc ~/.fetchmailrc-news && mutt -Zz'
+
