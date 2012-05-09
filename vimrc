@@ -105,4 +105,45 @@ hi TabLineFill ctermbg=black cterm=NONE
 hi TabLineSel ctermbg=green ctermfg=black cterm=NONE
 
 
+au VimEnter *.tex :call EnterTexFile()
+au VimEnter /tmp/mutt* :call ComposeMessage()
+
+
+function! EnterTexFile()
+	"set keywordprg=dict
+	set wrap
+	"set ai " Auto indent
+	"set si " Smart indent
+	"set laststatus=2 " we want *always* a status bar even if I am not in splitscreen mode
+	"we don't because you can get filename, and stats using ctrl g
+	"iab newide <esc>:r ~/.vim/templates/newide<Cr>kdd
+	ab xenum \begin{enumerate}<return><tab>\item<return><C-U>\end{enumerate}<up><end>
+	ab xitem \begin{itemize}<return><tab>\item<return><C-U>\end{itemize}<up><end>
+	ab xdesc \begin{description}<return><tab>\item<return><C-U>\end{description}<up><end>
+	ab xi \item
+	ab xcent \begin{center}<RETURN><TAB><RETURN><C-U>\end{center}<UP><END>
+	ab xsec \section{}<left>
+	ab xsub \subsection{}<left>
+	ab xssub \subsubsection{}<left>
+	ab xframe \begin{frame}{}<RETURN><TAB><RETURN><C-U>\end{frame}<UP><UP><END><LEFT>
+	ab xblock \begin{block}{}<RETURN><TAB><RETURN><C-U>\end{block}<UP><UP><END><LEFT>
+	ab xablock \begin{alertblock}{}<RETURN><TAB><RETURN><C-U>\end{alertblock}<UP><UP><END><LEFT>
+	ab xlst \lstinputblock{}<LEFT>
+	ab dt \d t
+endfunction
+
+function! ComposeMessage()
+	set spell
+
+	iab cu Gruß,<CR>Thorsten
+	iab cuv Viele Grüße,<CR>Thorsten
+	iab cuw Viele Grüße,<CR>Thorsten Wißmann
+	iab xwe Schönes Wochenende,<CR>Thorsten
+	iab xsprech http://wwwcip.cs.fau.de/admin/index.html.en
+	iab xfaq http://wwwcip.cs.fau.de/doc/faq.html.en
+endfunction
+
+
+
+
 
