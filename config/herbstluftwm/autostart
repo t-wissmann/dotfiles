@@ -2,10 +2,10 @@
 
 # this is an simple config to herbstluftwm
 
-pad="17 0 0 0"
-if [ "$HOSTNAME" = towi04 ] ; then
-    pad="16 0 10 0"
-fi
+pad="0 0 0 0"
+#if [ "$HOSTNAME" = towi04 ] ; then
+#    pad="16 0 10 0"
+#fi
 
 function hc() {
     herbstclient "$@"

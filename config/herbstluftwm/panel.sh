@@ -104,6 +104,7 @@ herbstclient pad $monitor $height
                 fi
                 ;;
             quit_panel)
+                herbstclient pad $monitor 0
                 exit
                 ;;
             focus_changed|window_title_changed)
@@ -119,6 +120,6 @@ herbstclient pad $monitor $height
 } |dzen2 -e '' -w $width -x $x -y $y -fn "$font" -h $height \
     -ta l -bg "$bgcolor" -fg '#efefef'
 
-
+herbstclient pad $monitor 0
 
 
