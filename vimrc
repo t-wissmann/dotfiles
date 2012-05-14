@@ -121,7 +121,8 @@ function! EnterTexFile()
 	ab xitem \begin{itemize}<return><tab>\item<return><C-U>\end{itemize}<up><end>
 	ab xdesc \begin{description}<return><tab>\item<return><C-U>\end{description}<up><end>
 	ab xi \item
-	ab xcent \begin{center}<RETURN><TAB><RETURN><C-U>\end{center}<UP><END>
+	ab xcent \begin{center}<RETURN><RETURN><C-U>\end{center}<UP><END>
+	ab xalign \begin{align}<RETURN><RETURN><C-U>\end{align}<UP><END>
 	ab xsec \section{}<left>
 	ab xsub \subsection{}<left>
 	ab xssub \subsubsection{}<left>
