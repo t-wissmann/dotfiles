@@ -142,9 +142,26 @@ function! ComposeMessage()
 	iab xwe Schönes Wochenende,<CR>Thorsten
 	iab xsprech http://wwwcip.cs.fau.de/admin/index.html.en
 	iab xfaq http://wwwcip.cs.fau.de/doc/faq.html.en
+	iab xtofu -- <CR>A. Because it breaks the logical sequence of discussion<RETURN>Q. Why is top posting bad?
+
 endfunction
 
+" Spell Check
+let b:myLang=0
+let g:myLangList=["nospell","de_de","en_gb"]
+function! ToggleSpell()
+  let b:myLang=b:myLang+1
+  if b:myLang>=len(g:myLangList) | let b:myLang=0 | endif
+  if b:myLang==0
+    setlocal nospell
+  else
+    execute "setlocal spell spelllang=".get(g:myLangList, b:myLang)
+  endif
+  echo "spell checking language:" g:myLangList[b:myLang]
+endfunction
 
+map <F7> :call ToggleSpell()<CR>
+imap <F7> <ESC>:call ToggleSpell()<CR>a
 
 
 
