@@ -755,6 +755,22 @@ alias moodbar-ls='for i in * ; do [ -f "$i" ] || continue ; echo "$i:" ;  moodba
 
 alias mpc-moodbar='cdbm musik ; f=$(mpc  -f %file% current)  ; moodbar-create "$f" ; clear ; moodbar-preview256 "$f" ; moodbar-preview "$f"'
 
+function moodbar-idle() {
+    mpc idleloop player | {
+        cdbm musik
+        f=""
+        first=true
+        while $first || read i ; do
+            first=false
+            g=$(mpc  -f %file% current)
+            [ "$f" = "$g" ] && continue
+            f="$g"
+            moodbar-create "$f"
+            clear
+            moodbar-preview256 "$f"
+        done
+    }
+}
 
 complete -F _aur-build_complete aur-build
 complete -F _unison_complete unison
