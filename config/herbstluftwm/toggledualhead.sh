@@ -46,5 +46,7 @@ else
     singlehead ${resolution/x/ }
 fi
 
+herbstclient emit_hook quit_panel
+
 $restartpanelcmd $panelcmd
 
