@@ -123,6 +123,7 @@ function! EnterTexFile()
 	ab xi \item
 	ab xcent \begin{center}<RETURN><RETURN><C-U>\end{center}<UP><END>
 	ab xalign \begin{align}<RETURN><RETURN><C-U>\end{align}<UP><END>
+	ab xma \[<RETURN><RETURN><C-U>\]<UP><END>
 	ab xsec \section{}<left>
 	ab xsub \subsection{}<left>
 	ab xssub \subsubsection{}<left>
