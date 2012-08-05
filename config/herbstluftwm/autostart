@@ -232,6 +232,7 @@ colors_pwmt_green() {
     hc set window_border_active_color '#9fbc00'
     hc set always_show_frame 0
     hc set window_gap -2
+    hc set frame_padding 2
 }
 
 colors_snow() {
