@@ -71,6 +71,7 @@ domain_props = {
     ["www.spin.de"] = { enable_scripts = true, },
     ["spin.de"] = { enable_scripts = true, },
     ["energy.spin.de"] = { enable_scripts = true, },
+    ["sourceforge.net"] = { enable_scripts = true, },
     ["www.sso.uni-erlangen.de"] = { enable_scripts = true, },
     ["www.studon.uni-erlangen.de"] = { enable_scripts = true, },
     ["fits.online-reseller.at"] = { enable_scripts = true, },
