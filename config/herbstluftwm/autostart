@@ -60,8 +60,8 @@ for i in ${!TAG_NAMES[@]} ; do
     fi
 done
 
-hc keybind "$Mod-period" use_index +1
-hc keybind "$Mod-comma"  use_index -1
+hc keybind "$Mod-period" use_index +1 --skip-visible
+hc keybind "$Mod-comma"  use_index -1 --skip-visible
 
 function dualhead() {
     width="$1"

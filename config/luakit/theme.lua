@@ -200,13 +200,21 @@ function evaluate_cmd(cmd)
     return output
 end
 
+------ grey ------
+theme_grey = table.copy(theme_pwmt)
+theme_grey.selected_fg = "#242424"
+theme_grey.selected_bg = "#ffffff"
+
+
+
 --print ("hostname = "..evaluate_cmd("hostname"))
 hostname = evaluate_cmd("hostname")
 --if hostname == "towi04\n" or string.find(hostname, "^faui.*\n") then
 if false and string.find(hostname, "^faui.*\n") then
     theme = theme_blue
 else
-    theme = theme_pwmt
+    --theme = theme_pwmt
+    theme = theme_grey
 end
 
 return theme
