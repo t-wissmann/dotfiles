@@ -1,4 +1,5 @@
 
+au VimEnter *.clj set ft=clojure
 " enforce 8 colors
 set t_Co=8
 
@@ -145,6 +146,47 @@ function! ComposeMessage()
 	iab xfaq http://wwwcip.cs.fau.de/doc/faq.html.en
 	iab xtofu -- <CR>A. Because it breaks the logical sequence of discussion<RETURN>Q. Why is top posting bad?
 
+endfunction
+
+au FileType clojure filetype plugin indent on
+au FileType clojure :call EditClojure()
+
+function! EditClojure()
+    syntax on
+    set autoindent
+    set tabstop=2
+    set shiftwidth=2
+    let g:vimclojure#ParenRainbow = 1
+    " nailgun
+    let vimclojure#WantNailgun = 1
+    let vimclojure#NailgunServer = "127.0.0.1"
+    let vimclojure#NailgunPort = "2113"
+    " buffer
+    let vimclojure#SplitPos = "left"
+    let vimclojure#SplitSize = 10
+
+    vmap <C-c><C-c> "ry :call Send_to_Screen(@r)<CR>
+    nmap <C-c><C-c> vip<C-c><C-c>
+
+    let g:screen_sessionname = "clj"
+    let g:screen_windowname = "clj"
+
+    nmap <C-c>v :call Screen_Vars()<CR>
+endfunction
+
+function Screen_Vars()
+  if !exists("g:screen_sessionname") || !exists("g:screen_windowname")
+    let g:screen_sessionname = ""
+    let g:screen_windowname = "0"
+  end
+
+  let g:screen_sessionname = input("session name: ", "", "custom,Screen_Session_Names")
+  let g:screen_windowname = input("window name: ", g:screen_windowname)
+endfunction
+
+function Send_to_Screen(text)
+
+  echo system("screen -S clj -p clj -X stuff '" . substitute(a:text, "'", "'\\\\''", 'g') . "'")
 endfunction
 
 " Spell Check
