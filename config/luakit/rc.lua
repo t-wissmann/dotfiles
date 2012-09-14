@@ -73,6 +73,10 @@ require "cookies"
 -- own modules
 require "plainmarks"
 
+require "introspector"
+require "lfs"
+require "webinspector"
+
 function cmd_toggle_plugins(w, param)
         local value = not domain_props["all"]["enable_plugins"]
         if param then
@@ -176,6 +180,28 @@ require "undoclose"
 require "completion"
 require "tabhistory"
 require "taborder"
+
+follow.stylesheet = follow.stylesheet .. [[
+    #luakit_follow_overlay .hint_overlay {
+        border: 1px solid black;
+        background-color: #FCE70D;
+        opacity: 0.3;
+    }
+    #luakit_follow_overlay .hint_label {
+        border: 1px solid black;
+        color: #141414;
+        background-color: #9fbc00;
+        font-size: 11px;
+        font-family: sans;
+        opacity: 0.8;
+    }
+    #luakit_follow_overlay .hint_overlay_body {
+        background-color: red;
+    }
+    #luakit_follow_overlay .hint_selected {
+        background-color: #ff0000 !important;
+    }
+]]
 
 -- Add download support
 require "menudownloads"

@@ -72,24 +72,6 @@ theme_default.loading_bg        = "#000"
 theme_default.trust_fg          = "#0F0"
 theme_default.notrust_fg        = "#F00"
 
-follow_theme = {
-    focus_bg     = "#ff0000";
-    normal_bg    = "#FCE70D";
-    opacity      = 0.3;
-    border       = "1px solid #000000";
-    tick_fg      = "#141414";
-    tick_bg      = "#9FBC00";
-    tick_border  = "1px solid #000000";
-    tick_opacity = 0.8;
-    tick_font    = "11px monospace bold";
-    vert_offset  = 0;
-    horiz_offset = -10;
-}
-
-theme_default.follow = follow_theme
-
-
-
 ------ greenterm ------
 theme_greenterm = {}
 -- Default settings
