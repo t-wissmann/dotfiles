@@ -26,8 +26,10 @@ herbstclient pad $monitor $height
         sleep 2 || break
     done > >(uniq_linebuffered) &
     child="$!"
-    conky -c ~/.conkyrc 2> /dev/null &
-    child="$child $!"
+    if [ "$HOSTNAME" = ghul ] ; then
+        conky -c ~/.conkyrc 2> /dev/null &
+        child="$child $!"
+    fi
     herbstclient --idle
     kill "$child"
 }|{
