@@ -183,8 +183,8 @@ require "downloads_chrome"
 
 -- Init bookmarks lib
 require "bookmarks"
-bookmarks.clear()
-bookmarks.load(os.getenv("HOME").."/lbm")
+--bookmarks.clear()
+--bookmarks.load(os.getenv("HOME").."/lbm")
 --bookmarks.load()
 --bookmarks.dump_html()
 
