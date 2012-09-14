@@ -26,12 +26,15 @@ herbstclient pad $monitor $height
         sleep 2 || break
     done > >(uniq_linebuffered) &
     child="$!"
+    conky -c ~/.conkyrc 2> /dev/null &
+    child="$child $!"
     herbstclient --idle
     kill "$child"
 }|{
     TAGS=( $(herbstclient tag_status $monitor) )
     visible=true
     windowtitle=""
+    conky=""
     date=""
     while true ; do
         bordercolor="#26221C"
@@ -72,7 +75,7 @@ herbstclient pad $monitor $height
         # small adjustments
         calclick="^ca(1,$HOME/.config/herbstluftwm/calendar.sh)"
         calclick+="^ca(2,killall calendar.sh)"
-        right="$separator^bg($hintcolor)$calclick $date ^ca()^ca()$separator"
+        right="$separator$conky$separator^bg($hintcolor)$calclick $date ^ca()^ca()$separator"
         right_text_only=$(echo -n "$right"|sed 's.\^[^(]*([^)]*)..g')
         # get width of right aligned text.. and add some space..
         rightwidth=$(textwidth "$font" "$right_text_only  ")
@@ -93,7 +96,17 @@ herbstclient pad $monitor $height
                 #echo "reseting date" >&2
                 date="${cmd[@]:1}"
                 ;;
+            conky)
+                conky="${cmd[@]:1}"
+                ;;
             togglehidepanel)
+                currentmonidx=$(herbstclient list_monitors |grep ' \[FOCUS\]$'|cut -d: -f1)
+                if [ -n "${cmd[1]}" ] && [ "${cmd[1]}" -ne "$monitor" ] ; then
+                    continue
+                fi
+                if [ "${cmd[1]}" = "current" ] && [ "$currentmonidx" -ne "$monitor" ] ; then
+                    continue
+                fi
                 echo "^togglehide()"
                 echo "^raise()"
                 if $visible ; then
