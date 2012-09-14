@@ -178,8 +178,8 @@ require "tabhistory"
 require "taborder"
 
 -- Add download support
-require "downloads"
-require "downloads_chrome"
+require "menudownloads"
+--require "downloads_chrome"
 
 -- Init bookmarks lib
 require "bookmarks"
@@ -188,7 +188,7 @@ require "bookmarks"
 --bookmarks.load()
 --bookmarks.dump_html()
 
-downloads.add_signal("download-location", function (uri, fname)
+menudownloads.add_signal("download-location", function (uri, fname)
     for p, d in pairs({
         --["www%-m10.ma.tum.de"] = os.getenv("HOME") .. "/tum/gk",
         --["www%-m11.ma.tum.de"] = os.getenv("HOME") .. "/tum/algebra",
@@ -202,7 +202,7 @@ downloads.add_signal("download-location", function (uri, fname)
 end)
 
 
-downloads.add_signal("open-file", function (f, m)
+menudownloads.add_signal("open-file", function (f, m)
     local mime_types = {
         ["^text/"        ] = "gvim",
         ["^video/"       ] = "mplayer",
