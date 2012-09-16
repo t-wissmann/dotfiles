@@ -3,12 +3,14 @@
 set -f
 
 monitor=${1:-0}
-geometry="$(herbstclient list_monitors |grep "^$monitor:"|cut -d' ' -f2)"
-# geometry has the format: WxH+X+Y
-x="$(echo $geometry |cut -d'+' -f2)"
-y="${geometry##*+}"
-width="${geometry%%x*}"
-height=14
+height=15
+bottom=false
+geometry=( $(herbstclient monitor_rect $monitor) )
+# geometry has the format: X Y W H
+x=${geometry[0]}
+y=${geometry[1]}
+$bottom && y=$((${geometry[1]}+${geometry[3]}-height))
+width="${geometry[2]}"
 font="-*-fixed-medium-*-*-*-12-*-*-*-*-*-*-*"
 bgcolor='#242424'
 icondir=~/.config/herbstluftwm/icons/
@@ -17,7 +19,12 @@ function uniq_linebuffered() {
     exec awk '$0 != l { print ; l=$0 ; fflush(); }' "$@"
 }
 
-herbstclient pad $monitor $height
+update_pad() {
+    $bottom && herbstclient pad $monitor "" "" "$1" \
+            || herbstclient pad $monitor "$1"
+}
+
+update_pad $height
 {
     # events:
     #mpc idleloop player &
@@ -42,7 +49,7 @@ herbstclient pad $monitor $height
         bordercolor="#26221C"
         hintcolor="#323232"
         separator="^bg()^fg(#141414)|^fg()"
-        echo -n "^pa(0;0)"
+        #echo -n "^pa(0;0)"
         # draw tags
         for i in "${TAGS[@]}" ; do
             case ${i:0:1} in
@@ -110,13 +117,14 @@ herbstclient pad $monitor $height
                     continue
                 fi
                 echo "^togglehide()"
-                echo "^raise()"
                 if $visible ; then
                     visible=false
-                    herbstclient pad $monitor 0
+                    echo "^lower()"
+                    update_pad 0
                 else
                     visible=true
-                    herbstclient pad $monitor $height
+                    echo "^raise()"
+                    update_pad $height
                 fi
                 ;;
             quit_panel)

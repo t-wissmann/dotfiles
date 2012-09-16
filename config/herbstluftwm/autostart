@@ -44,7 +44,7 @@ hc keybind $Mod-x spawn ~/scripts/menu/custommenu.sh apps
 hc keybind $Mod-F2 spawn gmrun
 hc keybind $Mod-e spawn thunar
 hc keybind $Mod-semicolon spawn ~/.config/herbstluftwm/wselect.sh
-hc keybind $Mod-colon spawn ~/.config/herbstluftwm/wselect.sh bring
+hc keybind $Mod-Shift-semicolon spawn ~/.config/herbstluftwm/wselect.sh bring
 
 
 # tags
