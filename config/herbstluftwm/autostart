@@ -44,6 +44,7 @@ hc keybind $Mod-x spawn ~/scripts/menu/custommenu.sh apps
 hc keybind $Mod-F2 spawn gmrun
 hc keybind $Mod-e spawn thunar
 hc keybind $Mod-semicolon spawn ~/.config/herbstluftwm/wselect.sh
+hc keybind $Mod-colon spawn ~/.config/herbstluftwm/wselect.sh bring
 
 
 # tags
@@ -86,7 +87,7 @@ function singlehead() {
 # multimonitors
 case "$HOSTNAME" in
     towi04)
-        dualhead $((2*1280)) 1024
+        hc detect_monitors
         ;;
     dachs)
         hc keybind $Mod-Return spawn xterm
@@ -340,7 +341,7 @@ hc load float \
             (clients horizontal:0)
             (clients horizontal:0)))"
 hc rule class=Xephyr tag=float pseudotile=on index=0 focus=off
-hc rule class=MPlayer tag=float index=0 focus=off
+hc rule class=MPlayer tag=float index=0 focus=on ewmhrequests=off fullscreen=off
 hc rule class='logout-dialog' pseudotile=on focus=on
 hc rule instance=irc tag=irc
 hc rule instance=finch tag=im
