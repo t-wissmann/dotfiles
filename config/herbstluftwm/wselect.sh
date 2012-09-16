@@ -1,20 +1,13 @@
 #!/bin/bash
 source ~/.bash_settings
 
-case "$1" in
-    bring)
-        name=Bring:
-        action() {
-            herbstclient bring "$@"
-            xdotool windowactivate "$@"
-        }
-        ;;
-    select|*)
-        action() { xdotool windowactivate "$@" ; }
-        name=Select:
-        ;;
-esac
+f=~/dev/c/herbstluftwm/scripts/wselect.sh
+[ -x "$f" ] ||
+f=~/git/herbstluftwm/scripts/wselect.sh
+[ -x "$f" ] ||
+f=/usr/share/doc/herbstluftwm/examples/wselect.sh
+[ -x "$f" ] ||
+echo "can't find wselect.sh"
 
-id=$(wmctrl -l | $dmenu_command -l $dmenu_lines -p "$name") \
-    && action ${id%% *}
+exec "$f" "$@"
 
