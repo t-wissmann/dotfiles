@@ -1,6 +1,24 @@
 #!/bin/bash
 # this is: ~/.bash_functions
 
+printbytes_helper() {
+    local number=$1
+    local dec=$2
+    local unit=$3
+    shift 3
+    if [ "$number" -ge 1000 ] && [ -n "$1" ] ; then
+        dec=$((number%1000))
+        number=$((number/1000))
+        printbytes_helper "$number" "$dec" "$@"
+    else
+        echo -n "$number"
+        [ "$dec" -eq 0 ] || printf ".%03d" "$dec"
+        echo " $unit"
+    fi
+}
+
+printbytes() { printbytes_helper "$1" 0 B KiB MiB GiB ; }
+
 function mkcd()
 {
    mkdir "$1" && cd "$1"
@@ -23,7 +41,7 @@ function unison-sync-all-hosts() {
     local HOSTS=( towi04 ghul ameise )
     for h in ${HOSTS[@]} ; do
         echo -e "\e[0;34m==> \e[1;33mSyncing host $h\e[0m"
-        ssh $h bash -l <<EOF
+        ssh -t $h bash -l <<EOF
             source ~/.bash.d/functions FORCE
             unison-sync-all
 EOF
