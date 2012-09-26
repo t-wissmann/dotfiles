@@ -377,6 +377,7 @@ hc keybind $Mod-SunF37         spawn $c/toggledualhead.sh
 hc keybind $Mod-F9          emit_hook togglehidepanel
 
 [ -f "$STATEFILE" ] && ~/dev/c/herbstluftwm/scripts/loadstate.sh < "$STATEFILE"
+[ -f "$STATEFILE" ] && ~/git/herbstluftwm/scripts/loadstate.sh < "$STATEFILE"
 rm -f "$STATEFILE"
 
 hc unlock
