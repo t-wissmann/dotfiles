@@ -23,7 +23,8 @@ caption always
 # classic:
 #caption string "%{= y}%-w%{=b W}[%?%F%{=b G}%:%{= y}%?%n %t%{=b W}]%{= y}%+w%=%{=b W}[%{=b R}%H%{=b W}] [%{=b Y}%Y-%m-%d%{=b W}] [%{= B}%c%{=b b}:%s%{=b W}]"
 # pwmt-a bit more tabbed feeling
-caption string "%{= .kR} %H%{= d}:> %{= G}%-w%{+ dd}%{= y} (%{= r}%n %{= d}%t%{-}%{-}) %{-}%{-}%+w %= %{= kd} (%{= Y}%Y-%m-%d%{-}) (%{= b}%c%{= d}) "
+#caption string "%{= .kR} %H%{= d}:> %{= G}%-w%{+ dd}%{= y} (%{= r}%n %{= d}%t%{-}%{-}) %{-}%{-}%+w %= %{= kd} (%{= Y}%Y-%m-%d%{-}) (%{= b}%c%{= d}) "
+caption string "%{= .kg} %H %{= m}>%{= c}>%{= d} %-w%{+ y}%n%{+ r}*%{-}%t%{-}%+w%=%{= M}>%{= Y}> %{= G}%c%{= d} Uhr %{= M}>%{= C}> %{= B}%Y%{+ d}-%{-}%m%{+ d}-%{-}%d "
 
 
 # version 2.0 with round blue () brackets
