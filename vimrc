@@ -30,6 +30,7 @@ filetype plugin on
 " code folding
 set foldmethod=indent
 set nofoldenable
+map <C-l> zA
 " show statusbar with current row,col
 set modeline
 
