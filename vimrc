@@ -94,7 +94,7 @@ hi LineNr ctermbg=NONE term=NONE ctermfg=yellow cterm=bold
 hi CursorLineNr ctermbg=black term=NONE ctermfg=green cterm=NONE
 
 " colors for folded brackets
-hi Folded ctermbg=0 term=NONE cterm=NONE
+hi Folded ctermbg=0 term=NONE cterm=NONE ctermfg=gray
 " color of border in vertical split
 hi VertSplit ctermbg=NONE ctermfg=red cterm=NONE
 hi Todo ctermbg=yellow ctermfg=black cterm=bold
