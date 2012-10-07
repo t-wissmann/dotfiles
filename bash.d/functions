@@ -613,14 +613,6 @@ function ccmloop() {
     done
 }
 
-ssh.irc () {
-    ssh -t ameise "bash -l -c screen\ -p\ irc\ -x 2688"
-}
-ssh.finch () {
-    ssh -t ameise "bash -l -c screen\ -p\ finch\ -x 2688"
-}
-
-
 ###########################
 #### other completions ####
 ###########################

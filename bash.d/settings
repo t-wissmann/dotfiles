@@ -98,8 +98,8 @@ export MPD_QueueFile
 #alias sa='ssh -t ernie bash -l -c "ssh\\ -t\\ zimmer"'
 #alias irc='ssh -t ernie bash -l -c "ssh\\ -t\\ zimmer\\ bash\\ -l\\ -c\\ \\\\\\\"screen-reconnect.sh\\ irc\\\\\\\""'
 #alias finch='ssh -t ernie bash -l -c "ssh\\ -t\\ zimmer\\ bash\\ -l\\ -c\\ \\\\\\\"screen-reconnect.sh\\ finch\\\\\\\""'
-alias irc='ssh -t ameise bash -l -c "screen\\ -S\\ all\\ -x\\ -p\\ irc"'
-alias icq='ssh -t ameise bash -l -c "screen\\ -S\\ all\\ -x\\ -p\\ finch"'
+#alias irc='ssh -t ameise bash -l -c "screen\\ -S\\ all\\ -x\\ -p\\ irc"'
+#alias icq='ssh -t ameise bash -l -c "screen\\ -S\\ all\\ -x\\ -p\\ finch"'
 alias sa='ssh ameise'
 
 #if ps u|grep icewm > /dev/null ; then
