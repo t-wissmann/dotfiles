@@ -12,3 +12,5 @@
 	hug = push
 [merge]
 	tool = vimdiff
+[push]
+	default = simple

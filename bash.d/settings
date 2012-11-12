@@ -54,6 +54,7 @@ BOOKMARKS=(
    algebra      ~/uni/11WS/algebra/vorlesung/
    algebrauebung ~/uni/11WS/algebra/uebungsblaetter/
    funktionentheorie ~/uni/12SS/funktionentheorie/vorlesung/
+   verbandstheorie   ~/uni/12WS/verbandstheorie/vorlesung/
    #${BOOKMARKS[@]}
    )
 

@@ -65,7 +65,7 @@ function aur-build(){
     fi
     mkdir -p "$HOME/tmp.aur/" &&
     cd "$HOME/tmp.aur/" &&
-    wget http://aur.archlinux.org/packages/$1/$1.tar.gz -O $1.tar.gz &&
+    wget http://aur.archlinux.org/packages/${1:0:2}/$1/$1.tar.gz -O $1.tar.gz &&
     tar -xvf $1.tar.gz && cd $1 && 
     (
         [ -f PKGBUILD ] && vim PKGBUILD
