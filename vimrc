@@ -90,7 +90,7 @@ set foldmethod=indent
 set cursorline
 hi CursorLine ctermbg=black term=NONE cterm=NONE
 " yellow line numbers
-hi LineNr ctermbg=NONE term=NONE ctermfg=yellow cterm=bold
+hi LineNr ctermbg=NONE term=NONE ctermfg=black cterm=bold
 hi CursorLineNr ctermbg=black term=NONE ctermfg=green cterm=NONE
 
 " colors for folded brackets
