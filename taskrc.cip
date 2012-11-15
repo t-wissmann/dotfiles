@@ -1,0 +1,34 @@
+# [Created by task 1.9.2 3/30/2012 1:48:27]
+# vim: nowrap
+# Task program configuration file.
+# For more documentation, see http://taskwarrior.org or try 'man task', 'man task-faq',
+# 'man task-tutorial', 'man task-color' or 'man taskrc'
+
+# Here is an example of entries that use the default, override and blank values
+#   variable=foo   -- By specifying a value, this overrides the default
+#   variable=      -- By specifying no value, this means no default
+#   #variable=foo  -- By commenting out the line, this uses the default
+
+# Files
+data.location=/home/cip/adm/re06huxa/.task
+locking=on                                    # Use file-level locking
+
+include /usr/share/task/dark-256.theme
+#include /proj/ciptmp/re06huxa/git/task/doc/rc/dark-256.theme
+#include /proj/ciptmp/re06huxa/git/task/doc/rc/dark-yellow-green.theme
+
+
+color.tagged=color7
+color.tag.hlwm=black on color6
+color.tag.fsi=bold white on rgb004
+color.tag.cip=bold white on rgb030
+color.tag.esg=black on yellow
+
+# Aliases - alternate names for commands
+alias.rm=delete                               # Alias for the delete command
+alias.a=add                               # Alias for the delete command
+alias.history=history.monthly                 # Prefer monthly over annual history reports
+alias.ghistory=ghistory.monthly               # Prefer monthly graphical over annual history reports
+alias.export=export.csv                       # Prefer CSV over iCal export
+alias.export.vcalendar=export.ical            # They are the same
+

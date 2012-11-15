@@ -10,6 +10,17 @@ function array2str() {
     done
 }
 
+is_cip() {
+    case "$HOSTNAME" in
+        faui0*)
+            return 0
+            ;;
+        *)
+            return 1
+            ;;
+    esac
+}
+
 homedir=(
     bash.d
     bashrc
@@ -20,7 +31,7 @@ homedir=(
     screenrc
     tmux.conf
     vimrc
-    taskrc
+    $(is_cip && echo taskrc.cip || echo taskrc)
     Xdefaults{,.d}
 )
 
@@ -34,6 +45,7 @@ files=(
 
 relpath2target=(
     # just a list of sed commands
+    "s#taskrc\.cip#$HOME/.taskrc#"
     "s#^\($(array2str homedir)\)\$#$HOME/.\1#"
     "s#^config/\(.*\)\$#$HOME/.config/\1#"
     "s#^ncmpcpp-config#$HOME/.ncmpcpp/config#"
