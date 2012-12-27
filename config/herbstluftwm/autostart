@@ -148,10 +148,10 @@ hc keybind Alt-Tab          cycle_all 1
 hc keybind Alt-Shift-Tab    cycle_all -1
 hc keybind $Mod-c cycle
 hc keybind $Mod-y cycle -1
-hc keybind $Mod-h focus left
-hc keybind $Mod-j focus down
-hc keybind $Mod-k focus up
-hc keybind $Mod-l focus right
+hc keybind $Mod-h or / focus left   / chain , focus_monitor -1 , focus_edge right
+hc keybind $Mod-j or / focus down   / chain , focus_monitor +1 , focus_edge up
+hc keybind $Mod-k or / focus up     / chain , focus_monitor -1 , focus_edge down
+hc keybind $Mod-l or / focus right  / chain , focus_monitor +1 , focus_edge left
 hc keybind $Mod-Shift-h shift left
 hc keybind $Mod-Shift-j shift down
 hc keybind $Mod-Shift-k shift up
