@@ -38,7 +38,7 @@ update_pad $height
         child="$child $!"
     fi
     herbstclient --idle
-    kill "$child"
+    kill $child
 }|{
     TAGS=( $(herbstclient tag_status $monitor) )
     visible=true
