@@ -27,6 +27,9 @@ filetype plugin on
 " automagical omnicompletion
 "set ofu=syntaxcomplete#Complete
 
+" show a readable Beep! e.g. if finding a char via fx fails
+set debug=beep
+
 " code folding
 set foldmethod=indent
 set nofoldenable
