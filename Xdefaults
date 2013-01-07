@@ -103,6 +103,11 @@ URxvt.perl-ext-common: default,url-select
 URxvt.keysym.M-u:      perl:url-select:select_next
 URxvt.urlLauncher:     luakit
 URxvt.underlineURLs:    false
+!URxvt.perl-ext-common: default,url-select,tabbed
+!URxvt.tabbed.tabbar-fg: 40
+!URxvt.tabbed.tabbar-bg: 0
+!URxvt.tabbed.tab-fg: 3
+!URxvt.tabbed.tab-bg: -1
 !URxvt.reverseVideo: true
 !URxvt.perl-lib: /home/thorsten/.urxvt/
 !URxvt.perl-ext: selection

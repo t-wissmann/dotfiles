@@ -20,12 +20,12 @@ hc set frame_gap 8
 #feh --bg-center ~/Documents/wallpaper/water/rain.jpg
 case "$HOSTNAME" in
     ghul)
-        #feh --bg-fill ~/Documents/wallpaper/flowers/DSC02801.jpg
+        feh --bg-fill ~/Documents/wallpaper/flowers/DSC02801.jpg
         #feh --bg-fill ~/Documents/wallpaper/water/38174-theriver.jpg
         #feh --bg-fill ~/Documents/wallpaper/starwars/1255654029702.png
         #feh --bg-fill ~/Documents/wallpaper/landscape/landscape-keltern-1_wall.jpg
         #feh --bg-fill ~/Documents/wallpaper/landscape/lonely_tree_by_gheias-d319736.jpg
-        feh --bg-fill ~/Documents/wallpaper/nature/coloured_bush_1920x1200.jpg
+        #feh --bg-fill ~/Documents/wallpaper/nature/coloured_bush_1920x1200.jpg
         ;;
     towi04)
         nitrogen --restore
@@ -65,6 +65,7 @@ done
 
 hc keybind "$Mod-period" use_index +1 --skip-visible
 hc keybind "$Mod-comma"  use_index -1 --skip-visible
+hc keybind $Mod-grave use_previous
 
 function dualhead() {
     width="$1"
@@ -152,10 +153,14 @@ hc keybind $Mod-h or / focus left   / chain , focus_monitor -1 , focus_edge righ
 hc keybind $Mod-j or / focus down   / chain , focus_monitor +1 , focus_edge up
 hc keybind $Mod-k or / focus up     / chain , focus_monitor -1 , focus_edge down
 hc keybind $Mod-l or / focus right  / chain , focus_monitor +1 , focus_edge left
-hc keybind $Mod-Shift-h shift left
-hc keybind $Mod-Shift-j shift down
-hc keybind $Mod-Shift-k shift up
-hc keybind $Mod-Shift-l shift right
+hc keybind $Mod-Shift-h or / shift left / \
+    chain , lock , shift_to_monitor -1 , focus_monitor -1 , shift_edge right , unlock
+hc keybind $Mod-Shift-j or / shift down / \
+    chain , lock , shift_to_monitor +1 , focus_monitor +1 , shift_edge up , unlock
+hc keybind $Mod-Shift-k or / shift up / \
+    chain , lock , shift_to_monitor -1 , focus_monitor -1 , shift_edge down , unlock
+hc keybind $Mod-Shift-l or / shift right / \
+    chain , lock , shift_to_monitor +1 , focus_monitor +1 , shift_edge left , unlock
 
 ## other things
 if [ "$HOSTNAME" = ghul ] ;then
@@ -264,6 +269,10 @@ esac
 
 SCRIPTSDIR=$HOME/dev/c/herbstluftwm/scripts/
 
+if ! [ -d "$SCRIPTSDIR" ] ; then
+    SCRIPTSDIR=$HOME/git/herbstluftwm/scripts/
+fi
+
 if [ -d "$SCRIPTSDIR" ] ; then
     hc keybind $Mod-g spawn $SCRIPTSDIR/execwith.sh \
         ~/.bash_settings $SCRIPTSDIR/dmenu.sh use
@@ -271,6 +280,7 @@ if [ -d "$SCRIPTSDIR" ] ; then
         ~/.bash_settings $SCRIPTSDIR/dmenu.sh move
     hc keybind $Mod-Alt-space spawn $SCRIPTSDIR/execwith.sh \
         ~/.bash_settings $SCRIPTSDIR/dmenu.sh set_layout
+    hc keybind $Mod-F8 spawn $SCRIPTSDIR/q3terminal.sh
 fi
 
 case "$HOSTNAME" in
