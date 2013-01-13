@@ -213,4 +213,17 @@ map <F7> :call ToggleSpell()<CR>
 imap <F7> <ESC>:call ToggleSpell()<CR>a
 
 
+" minibufexplorer options
+map <F9> :TMiniBufExplorer<CR>
+map <C-J> :bn<CR>
+map <C-K> :bp<CR>
+let g:miniBufExplVSplit = 1
+let g:miniBufExplMinSize = 10
+let g:miniBufExplMaxSize = 50
+
+hi MBENormal ctermbg=None term=None cterm=None ctermfg=Gray
+hi MBEChanged ctermbg=None term=None cterm=None ctermfg=DarkYellow
+hi MBEVisibleNormal ctermbg=None term=None cterm=None ctermfg=DarkGreen
+hi MBEVisibleChanged ctermbg=None term=None cterm=None ctermfg=DarkGreen
+
 
