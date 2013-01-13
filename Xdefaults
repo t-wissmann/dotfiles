@@ -85,7 +85,7 @@ URxvt.keysym.C-0: command:\033]710;xft:Bitstream Vera Sans Mono:bold:size=19\007
 
 URxvt.scrollBar: false
 URxvt.scrollstyle: plain
-URxvt.scrollColor: #E2BD09
+URxvt.scrollColor: #444444
 ! scrollbar width
 URxvt.thickness: 5
 URxvt.urgentOnBell: true
