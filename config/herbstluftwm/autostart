@@ -149,10 +149,10 @@ hc keybind Alt-Tab          cycle_all 1
 hc keybind Alt-Shift-Tab    cycle_all -1
 hc keybind $Mod-c cycle
 hc keybind $Mod-y cycle -1
-hc keybind $Mod-h or / focus left   / chain , focus_monitor -1 , focus_edge right
-hc keybind $Mod-j or / focus down   / chain , focus_monitor +1 , focus_edge up
-hc keybind $Mod-k or / focus up     / chain , focus_monitor -1 , focus_edge down
-hc keybind $Mod-l or / focus right  / chain , focus_monitor +1 , focus_edge left
+hc keybind $Mod-h or / focus left   #/ chain , focus_monitor -1 , focus_edge right
+hc keybind $Mod-j or / focus down   #/ chain , focus_monitor +1 , focus_edge up
+hc keybind $Mod-k or / focus up     #/ chain , focus_monitor -1 , focus_edge down
+hc keybind $Mod-l or / focus right  #/ chain , focus_monitor +1 , focus_edge left
 hc keybind $Mod-Shift-h or / shift left / \
     chain , lock , shift_to_monitor -1 , focus_monitor -1 , shift_edge right , unlock
 hc keybind $Mod-Shift-j or / shift down / \
@@ -167,8 +167,8 @@ if [ "$HOSTNAME" = ghul ] ;then
     hc keybind $Mod-q quit
     # TODO: why are there problems with XGrabKey for XF86ScreenSaver;
     hc keybind XF86ScreenSaver spawn ~/bin/lock.sh
-    hc keybind XF86Launch1 spawn ~/bin/suspend.sh --lock
-    #hc keybind XF86Launch1 spawn ~/bin/suspend.sh
+    hc keybind       XF86Launch1 spawn ~/bin/suspend.sh --lock
+    hc keybind Shift-XF86Launch1 spawn ~/bin/suspend.sh
     hc set frame_bg_transparent 1
 fi
 if [ "$HOSTNAME" = towi04 ] ; then
