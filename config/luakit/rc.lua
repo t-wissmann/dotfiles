@@ -232,11 +232,11 @@ menudownloads.add_signal("open-file", function (f, m)
     local mime_types = {
         ["^text/"        ] = "gvim",
         ["^video/"       ] = "mplayer",
-        ["/pdf$"         ] = "zathura",
+        ["/pdf$"         ] = "katarakt",
     }
     local extensions = {
         ["mp3"           ] = "totem --enqueue",
-        ["pdf"           ] = "zathura",
+        ["pdf"           ] = "katarakt",
     }
 
     if m then

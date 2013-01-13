@@ -190,6 +190,7 @@ if [[ "$HOSTNAME" =~ ^(towi04|ghul|x40|eule)$ ]] ; then
     hc keybind Mod1+Mod4+u spawn ~/scripts/mpd/mpc.sh prev
     hc keybind Mod1+Mod4+i spawn ~/scripts/mpd/mpc.sh toggle
     hc keybind Mod1+Mod4+o spawn ~/scripts/mpd/mpc.sh next
+    hc keybind Help spawn ~/scripts/mpd/mpc.sh next
 fi
 
 hc keybind Mod4+n spawn ~/scripts/utils/utf8select.sh
