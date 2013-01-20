@@ -184,6 +184,7 @@ if [[ "$HOSTNAME" =~ ^(towi04|ghul|x40|eule)$ ]] ; then
     hc keybind Pause spawn ~/scripts/mpd/mpc.sh toggle
     hc keybind Mod4+q spawn ~/scripts/mpd/dmenu.sh play
     hc keybind XF86Stop spawn ~/scripts/mpd/mpc.sh toggle
+    hc keybind XF86PowerOff spawn xset dpms force off
     hc keybind Mod4+w spawn ~/scripts/mpd/dmenu.sh totem
     hc keybind Mod4+t spawn ~/scripts/utils/iptv/watch-dmenu.sh
     hc keybind Mod1+Mod4+y spawn ~/scripts/mpd/mpc.sh random

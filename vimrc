@@ -22,6 +22,9 @@ set showmatch
 set et
 set shiftwidth=4
 set tabstop=4
+" only insert real tabs at the beginning of a line
+inoremap <expr> <tab> getline('.')[0:col('.')-2] =~ '^\t*$' ? "\<Tab>" : repeat(" ", &sw - ((virtcol('.')-1) % &sw))
+
 " enable filetype specific features
 filetype plugin on
 " automagical omnicompletion
