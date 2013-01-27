@@ -1,0 +1,16 @@
+! --------------------------------------------------
+! vim: nu:ai:si:et:ts=4:sw=4:ft=xdefaults
+! --------------------------------------------------
+
+! a brown setup
+!urxvt*background: #423323
+!xterm*background: #423323
+!urxvt*color0:  #282015
+
+!urxvt*cursorBlink: false
+!URxvt.transparent: true
+!URxvt.shading: 20
+
+!#include "tango.colors"
+URxvt.color0:  #222222
+URxvt.background: #101010
