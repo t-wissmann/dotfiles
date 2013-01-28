@@ -1,0 +1,55 @@
+! --------------------------------------------------
+! file: ~/.Xdefaults
+! author: thorsten wssman
+! modified: February 2009
+! vim: nu:ai:si:et:ts=4:sw=4:ft=xdefaults
+! --------------------------------------------------
+
+*dpi: 96
+URxvt.perl-lib: /home/cip/adm/re06huxa/.urxvt/
+
+! probably needs this in your .xinitrc:
+! xset +fp ~/.fonts/
+! xset fp rehash
+
+urxvt*font: -*-montecarlo-medium-*-*-*-*-*-*-*-*-*-*-*
+urxvt*boldFont: -*-montecarlo-medium-*-*-*-*-*-*-*-*-*-*-*
+!URxvt.keysym.C-1: command:\033]710;-*-montecarlo-medium-*-*-*-*-*-*-*-*-*-*-*\007\033]711;-*-montecarlo-medium-*-*-*-*-*-*-*-*-*-*-*\007
+URxvt.keysym.C-2: command:\033]710;-*-montecarlo-medium-*-*-*-*-*-*-*-*-*-*-*\007\033]711;-*-montecarlo-medium-*-*-*-*-*-*-*-*-*-*-*\007
+
+*foreground: #ebebeb
+*background: #151515
+
+!URxvt.background: #0D1621
+
+!black
+*color0: #393939
+*color8: #474747
+
+!red
+*color1:     #FE005F
+*color9:     #FE6767
+
+!green
+*color2:     #AED600
+*color10:    #8BE15D
+
+!yellow
+*color3:  #FE8E00
+*color11: #FEB345
+
+!blue
+*color4: #1165E8
+*color12: #5495FE
+
+!magenta
+*color5: #FF5825
+*color13: #FF00EC
+
+!cyan
+*color6: #FF3824
+*color14: #D3F80A
+
+!white
+*color7: #D1D1D1
+*color15: #fefefe
