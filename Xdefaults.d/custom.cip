@@ -51,5 +51,5 @@ URxvt.keysym.C-2: command:\033]710;-*-montecarlo-medium-*-*-*-*-*-*-*-*-*-*-*\00
 *color14: #D3F80A
 
 !white
-*color7: #D1D1D1
-*color15: #fefefe
+*color7: #9d9d9d
+*color15: #ffffff

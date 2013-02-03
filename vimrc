@@ -62,6 +62,7 @@ set listchars=tab:»\ ,trail:·,nbsp:%
 " menu and completion -> bash-like
 set wildmenu
 set wildmode=longest:full
+set wildignorecase
 
 set visualbell t_vb=
 
