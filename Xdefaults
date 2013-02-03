@@ -136,8 +136,6 @@ lal*color: #CFCFCF
 lal*width:  80
 lal*format: %H:%M:%S
 
-#include ".Xdefaults.d/custom"
-
 !#include ".Xdefaults.d/win"
 
 !Ctrl <KeyPress> Insert:insert-selection(CLIPBOARD, PRIMARY)\n\
@@ -167,6 +165,8 @@ XTerm*cursorOnTime: 1000
 XTerm*cursorOffTime: 500
 XTerm*cursorColor: #ff9900
 
+
+#include ".Xdefaults.d/custom"
 
 
 
