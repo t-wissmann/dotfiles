@@ -2,3 +2,5 @@
 *~
 # ignore swap files
 .*.swp
+# ignore some special annoying files
+config/zathura/bookmarks
