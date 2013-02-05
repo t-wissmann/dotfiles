@@ -178,6 +178,12 @@ if [ "$HOSTNAME" = towi04 ] ; then
     hc keybind Redo spawn ~/scripts/mpd/mpc.sh seek 0
     hc keybind Mod4+F1 spawn ~/scripts/utils/lock.sh
     hc keybind $Mod-F3 spawn mygtkmenu ~/.config/mygtkmenu.conf
+    hc keybind $Mod-XF86Cut spawn ~/.screenlayout/pivot-right.sh
+    hc keybind $Mod-Find    spawn bash -c \
+    'xrandr \
+        --output DVI-I-1 --right-of VGA-0 --rotate normal
+        --output DVI-I-1 --right-of DVI-I-1 --rotate normal
+     herbstclient reload'
     hc set frame_bg_transparent 1
 fi
 if [[ "$HOSTNAME" =~ ^(towi04|ghul|x40|eule)$ ]] ; then
