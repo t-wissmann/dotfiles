@@ -5,6 +5,7 @@ mkdir -p ~/.vim/plugin
 
 fetch() {
     if ! [ -f "$1" ] ; then
+        mkdir -p "${1%/*}"
         wget -O "$1" "$2"
     else
         echo "$1 already exists"
