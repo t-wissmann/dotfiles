@@ -31,6 +31,7 @@ homedir=(
     screenrc
     tmux.conf
     vimrc
+    gvimrc
     $(is_cip && echo taskrc.cip || echo taskrc)
     Xdefaults{,.d}
 )

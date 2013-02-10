@@ -13,3 +13,8 @@ fetch() {
 
 fetch ~/.vim/plugin/minibufexpl.vim \
     'http://www.vim.org/scripts/download_script.php?src_id=3640'
+fetch ~/.vim/colors/jellybeans.vim \
+    'http://www.vim.org/scripts/download_script.php?src_id=17225'
+
+fetch ~/.vim/colors/solarized.vim \
+    'https://github.com/altercation/vim-colors-solarized/raw/master/colors/solarized.vim'
