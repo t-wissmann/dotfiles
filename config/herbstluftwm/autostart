@@ -181,8 +181,8 @@ if [ "$HOSTNAME" = towi04 ] ; then
     hc keybind $Mod-XF86Cut spawn ~/.screenlayout/pivot-right.sh
     hc keybind $Mod-Find    spawn bash -c \
     'xrandr \
-        --output DVI-I-1 --right-of VGA-0 --rotate normal
-        --output DVI-I-1 --right-of DVI-I-1 --rotate normal
+        --output DVI-I-1 --mode 1280x1024 --pos 0x0 --rotate normal \
+        --output VGA-0   --mode 1280x1024 --right-of DVI-I-1 --rotate normal
      herbstclient reload'
     hc set frame_bg_transparent 1
 fi
@@ -327,7 +327,6 @@ case "$HOSTNAME" in
         [[ "$HOSTNAME" =~ towi04|ghul ]] &&
             panel=~/.config/herbstluftwm/panel.sh
         ~/dev/c/herbstluftwm/share/restartpanels.sh $panel
-        hc focus_monitor 1
     ;;
 esac
 
