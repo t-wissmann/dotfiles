@@ -3,9 +3,6 @@
 # this is an simple config to herbstluftwm
 
 pad="0 0 0 0"
-#if [ "$HOSTNAME" = towi04 ] ; then
-#    pad="16 0 10 0"
-#fi
 
 function hc() {
     herbstclient "$@"
@@ -27,7 +24,7 @@ case "$HOSTNAME" in
         #feh --bg-fill ~/Documents/wallpaper/landscape/lonely_tree_by_gheias-d319736.jpg
         #feh --bg-fill ~/Documents/wallpaper/nature/coloured_bush_1920x1200.jpg
         ;;
-    towi04)
+    hoth|towi04)
         nitrogen --restore
         ;;
     *)
@@ -89,7 +86,7 @@ function singlehead() {
 
 # multimonitors
 case "$HOSTNAME" in
-    towi04)
+    hoth|towi04)
         hc detect_monitors
         ;;
     dachs)
@@ -171,8 +168,8 @@ if [ "$HOSTNAME" = ghul ] ;then
     hc keybind Shift-XF86Launch1 spawn ~/bin/suspend.sh
     hc set frame_bg_transparent 1
 fi
-if [ "$HOSTNAME" = towi04 ] ; then
-    hc keybind $Mod-Control-q spawn ~/scripts/logout-dialog.sh
+if [ "$HOSTNAME" = towi04 -o "$HOSTNAME" = hoth ] ; then
+    hc keybind $Mod-Control-q chain , quit , spawn killall foosession
     hc keybind $Mod-Shift-q spawn ~/scripts/logout-dialog.sh
     hc keybind $Mod-Control-Shift-q quit
     hc keybind Redo spawn ~/scripts/mpd/mpc.sh seek 0
@@ -186,7 +183,7 @@ if [ "$HOSTNAME" = towi04 ] ; then
      herbstclient reload'
     hc set frame_bg_transparent 1
 fi
-if [[ "$HOSTNAME" =~ ^(towi04|ghul|x40|eule)$ ]] ; then
+if [[ "$HOSTNAME" =~ ^(towi04|ghul|x40|eule|hoth)$ ]] ; then
     hc keybind Pause spawn ~/scripts/mpd/mpc.sh toggle
     hc keybind Mod4+q spawn ~/scripts/mpd/dmenu.sh play
     hc keybind XF86Stop spawn ~/scripts/mpd/mpc.sh toggle

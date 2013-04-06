@@ -25,7 +25,8 @@ progressbar_look = "─╼·"
 
 progressbar_color = "green"
 
-song_columns_list_format = "(7f)[green]{l:Dauer} (25)[cyan]{a|D:Künstler} (40)[]{t|f:Titel} (30)[red]{b}"
+song_columns_list_format = "(7f)[green]{l:Dauer} │ (25)[cyan]{a|D:Künstler} (40)[yellow]{t|f:Titel} (30)[red]{b}"
+main_window_color = "default"
 
 
 #song_list_format = "%l %a %t %b %y"

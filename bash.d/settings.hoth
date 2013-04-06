@@ -12,7 +12,8 @@ export dmenu_command="dmenu -i -nb #202020 -nf #d4d4d4 -sb #D0EEB1 -sf #202020 -
 #export dmenu_command="dmenu -i -r -x 17 -w $((1280-16-17)) -c -rs -nb #222222 -nf #DAFF30 -sb #181818 -sf #FA2D4D -fn 'xft:BitstreamVeraSans:bold:pixelsize=11' -ni"
 # theme: pwmt
 # with options for awesome: -x 17 -w $((1280-16-17)) 
-export dmenu_command="dmenu -i -r -c -rs -nb #000000 -nf #efefef -sb #9FBC00 -sf #232323 -fn 'xft:BitstreamVeraSans:bold:pixelsize=11' -ni"
+#export dmenu_command="dmenu -i -r -c -rs -nb #000000 -nf #efefef -sb #9FBC00 -sf #232323 -fn 'xft:BitstreamVeraSans:bold:pixelsize=11' -ni"
+export dmenu_command="dmenu -i -nb #000000 -nf #efefef -sb #9FBC00 -sf #232323 -fn 'xft:BitstreamVeraSans:bold:pixelsize=11'"
 export dzen2_command='dzen2_font'
 function dzen2_font() {
     dzen2  -xs 1 -fn "Bitstream Vera Sans Mono:bold:size=9" -bg '#141414'
@@ -23,12 +24,7 @@ export -f dzen2_font
 export dmenu_lines="20"
 
 # flv-video dir
-export flv_video_dir="/home/unterhaltung/video/Mus/flv"
-
-function luakit() {
-    LD_PRELOAD=$HOME/dev/c/libnounlink/libnounlink.so.1.0.1 "$(which luakit)" $* 2> /dev/null
-}
-export -f luakit
+export flv_video_dir="/mnt/unterhaltung/video/Mus/flv"
 
 export BROWSER="luakit"
 export DOTREMINDERS="$HOME/.reminders.d/master"
@@ -44,7 +40,7 @@ BOOKMARKS=(
 # mpd profiles
 MPD_Profile="$(cat ~/.mpd_profile)"
 MPD_QueuePort="23233"
-MPD_AvailableProfiles=(ameise pyxis towi04)
+MPD_AvailableProfiles=(ameise pyxis towi04 hoth)
 
 case "$MPD_Profile"  in
     eule)
@@ -72,6 +68,10 @@ case "$MPD_Profile"  in
         function MPD_QueueSet() { echo "var MPD_Queue = \"$*\"" \
                     |console-send $MPD_HOST $MPD_QueuePort ; }
         function MPD_QueuePushBack() { MPD_QueueSet $(MPD_QueueGet) $* ; }
+        ;;
+    hoth)
+        MPD_HOST=Gn7Nn9Z5@172.17.29.12
+        MPD_PORT=6600
         ;;
 esac
 # export it

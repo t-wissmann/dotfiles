@@ -231,4 +231,17 @@ hi MBEChanged ctermbg=None term=None cterm=None ctermfg=DarkYellow
 hi MBEVisibleNormal ctermbg=None term=None cterm=None ctermfg=DarkGreen
 hi MBEVisibleChanged ctermbg=None term=None cterm=None ctermfg=DarkGreen
 
+if has("autocmd")
+	augroup GPGASCII
+		au!
+		au BufReadPre *.gpg set viminfo=
+		au BufReadPre *.gpg set noswapfile
+		au BufReadPost *.gpg  :%!gpg -q -d 2> /dev/null
+		au BufReadPost *.gpg  |redraw
+		au BufWritePre *.gpg  :%!gpg -q -e -a -r 1caff810
+		au BufWritePre *.gpg  let @f=expand("%:t")
+		au BufWritePre *.gpg  1 s/^/\=@f ."\r\r"/
+		au BufWritePost *.gpg u
+	augroup END
+endif " has ("autocmd")
 
