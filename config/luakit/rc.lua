@@ -220,6 +220,7 @@ menudownloads.add_signal("download-location", function (uri, fname)
         --["www%-m11.ma.tum.de"] = os.getenv("HOME") .. "/tum/algebra",
         --["www.sec.in.tum.de"] = os.getenv("HOME") .. "/tum/its",
         [ ".pdf$"  ] = os.getenv("HOME") .. "/downloads/",
+        [ ".owl$"  ] = os.getenv("HOME") .. "/ontologies/",
     }) do
         if string.match(uri, p) then
             return string.format("%s/%s", d, fname)

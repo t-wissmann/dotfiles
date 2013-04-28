@@ -71,7 +71,7 @@ URxvt.cursorBlink: true
 !URxvt.font: xft:ProFont:size=11
 !URxvt.boldFont: xft:ProFont:size=11
 URxvt.font: xft:Bitstream Vera Sans Mono:bold:size=9,xft:Bitstream Vera Sans Mono:size=8
-URxvt.boldFont: xft:Bitstream Vera Sans Mono:bold:size=9,xft:Bitstream Vera Sans Mono:size=8
+URxvt.boldFont: xft:Bitstream Vera Sans Mono:size=9,xft:Bitstream Vera Sans Mono:size=8
 URxvt.keysym.C-1: command:\033]710;xft:Bitstream Vera Sans Mono:bold:size=9\007\033]711;xft:Bitstream Vera Sans Mono:bold:size=9\007
 URxvt.keysym.C-2: command:\033]710;xft:Bitstream Vera Sans Mono:bold:size=10\007\033]711;xft:Bitstream Vera Sans Mono:bold:size=10\007
 URxvt.keysym.C-3: command:\033]710;xft:Bitstream Vera Sans Mono:bold:size=11\007\033]711;xft:Bitstream Vera Sans Mono:bold:size=11\007

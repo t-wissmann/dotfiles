@@ -2,6 +2,7 @@
 au VimEnter *.clj set ft=clojure
 au VimEnter *.fr set ft=haskell
 au VimEnter *.scala set ft=scala
+au BufRead,BufNewFile *.v set ft=coq
 " enforce 8 colors
 set t_Co=8
 

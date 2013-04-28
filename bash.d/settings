@@ -9,7 +9,8 @@
 # theme: greenterm
 #export dmenu_command="dmenu -i -r -x 16 -w $((1366-2*17)) -c -rs -nb #222222 -nf #DAFF30 -sb #181818 -sf #FA2D4D -fn 'xft:BitstreamVeraSans:bold:pixelsize=11' -ni"
 # theme: pwmt
-export dmenu_command="dmenu -i -r -c -rs -nb #141414 -nf #9fbc00 -sb #141414 -sf #d6516c -fn 'xft:BitstreamVeraSansMono:bold:pixelsize=11' -ni"
+#export dmenu_command="dmenu -i -r -c -rs -nb #141414 -nf #9fbc00 -sb #141414 -sf #d6516c -fn 'xft:BitstreamVeraSansMono:bold:pixelsize=11' -ni"
+export dmenu_command="dmenu -i -nb #141414 -nf #9fbc00 -sb #141414 -sf #d6516c -fn 'xft:BitstreamVeraSansMono:bold:pixelsize=11'"
 # for glassy white/green
 #export dmenu_command="dmenu -i -x 23 -w $((1366-2*23)) -c -rs -nb #7C7978 -nf #efefef -sb #9AFF36 -sf #202020 -fn 'xft:BitstreamVeraSans:bold:pixelsize=11' -ni"
 export dmenu_lines="10"
@@ -43,7 +44,7 @@ BOOKMARKS=(
    flv          /mnt/unterhaltung/flv
    nose         ~/dev/c/nose/
    matheskript  ~/uni/10WS/mathec3/vorlesung/faui2k9_mathc3/
-   herbstluftwm ~/dev/c/herbstluftwm/
+   herbstluftwm ~/git/herbstluftwm/
    #matheuebung  ~/uni/10WS/mathec3/uebungsblaetter/
    bfs          ~/uni/10WS/bfs/uebungsblaetter/
    #algoks       ~/uni/11SS/algoks/uebungsblaetter/
@@ -55,6 +56,7 @@ BOOKMARKS=(
    algebrauebung ~/uni/11WS/algebra/uebungsblaetter/
    funktionentheorie ~/uni/12SS/funktionentheorie/vorlesung/
    verbandstheorie   ~/uni/12WS/verbandstheorie/vorlesung/
+   oc              ~/uni/13SS/oc/vorlesung
    #${BOOKMARKS[@]}
    )
 

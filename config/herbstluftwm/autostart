@@ -176,18 +176,19 @@ if [ "$HOSTNAME" = towi04 -o "$HOSTNAME" = hoth ] ; then
     hc keybind Mod4+F1 spawn ~/scripts/utils/lock.sh
     hc keybind $Mod-F3 spawn mygtkmenu ~/.config/mygtkmenu.conf
     hc keybind $Mod-XF86Cut spawn ~/.screenlayout/pivot-right.sh
+    hc keybind $Mod-SunF37         spawn $c/toggledualhead.sh
     hc keybind $Mod-Find    spawn bash -c \
     'xrandr \
         --output DVI-I-1 --mode 1280x1024 --pos 0x0 --rotate normal \
         --output VGA-0   --mode 1280x1024 --right-of DVI-I-1 --rotate normal
      herbstclient reload'
     hc set frame_bg_transparent 1
+    hc keybind XF86Stop spawn ~/scripts/mpd/mpc.sh toggle
+    hc keybind XF86PowerOff spawn xset dpms force off
 fi
 if [[ "$HOSTNAME" =~ ^(towi04|ghul|x40|eule|hoth)$ ]] ; then
     hc keybind Pause spawn ~/scripts/mpd/mpc.sh toggle
     hc keybind Mod4+q spawn ~/scripts/mpd/dmenu.sh play
-    hc keybind XF86Stop spawn ~/scripts/mpd/mpc.sh toggle
-    hc keybind XF86PowerOff spawn xset dpms force off
     hc keybind Mod4+w spawn ~/scripts/mpd/dmenu.sh totem
     hc keybind Mod4+t spawn ~/scripts/utils/iptv/watch-dmenu.sh
     hc keybind Mod1+Mod4+y spawn ~/scripts/mpd/mpc.sh random
@@ -205,7 +206,6 @@ hc keybind XF86AudioLowerVolume spawn amixer -q sset Master 2-
 hc keybind XF86AudioRaiseVolume spawn amixer -q sset Master 2+
 
 # some settings
-hc set ignore_class 'Xfce4-notifyd|Conky'
 hc set focus_follows_mouse 1
 
 ### COLORS ###
@@ -400,7 +400,6 @@ c=~/.config/herbstluftwm/
 hc keybind $Mod-F10         spawn $c/fastterminal.sh -t
 hc keybind $Mod-Shift-F10   spawn $c/fastterminal.sh -b
 hc keybind $Mod-F12         spawn $c/toggledualhead.sh
-hc keybind $Mod-SunF37         spawn $c/toggledualhead.sh
 hc keybind $Mod-F9          emit_hook togglehidepanel
 
 [ -f "$STATEFILE" ] && ~/dev/c/herbstluftwm/scripts/loadstate.sh < "$STATEFILE"
