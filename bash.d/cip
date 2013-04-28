@@ -199,6 +199,8 @@ alias ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
 # addpackage:
 addpackage luakit-develop-git
 addpackage cipadm
+addpackage katarakt
+addpackage haskell-platform-2011
 
 function q() {
     local quotesfile="$HOME/wwwcip/quotes"

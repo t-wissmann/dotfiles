@@ -52,6 +52,7 @@ trysource ~/git/herbstluftwm/share/herbstclient-completion
 
 case `hostname` in
     faui0*) trysource ~/.bash.d/cip ;;
+    ircbox) trysource ~/.bash.d/cip ;;
     mephisto) trysource ~/.bash.d/mephisto ;;
 esac
 
