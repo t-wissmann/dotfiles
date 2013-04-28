@@ -52,6 +52,7 @@ update-git() {
     fi
     shopt -s nullglob
     for subdir in indent plugin doc syntax ftplugin ftdetect ; do
+        mkdir -p "$subdir"/
         for file in "$dir/$subdir/"* ; do
             cp -v "$file" "$subdir"/
         done
