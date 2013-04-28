@@ -50,27 +50,19 @@ update-git() {
     else
         git clone "$url" "$dir"
     fi
+    shopt -s nullglob
+    for subdir in indent plugin doc syntax ftplugin ftdetect ; do
+        for file in "$dir/$subdir/"* ; do
+            cp -v "$file" "$subdir"/
+        done
+    done
 }
 
 (
     cd ~/.vim/
+
     update-git https://github.com/jesboat/CoqIDE/ CoqIDE
     update-git https://github.com/jvoorhis/coq.vim coq
-    mkdir -p indent
-    pushd indent
-        ln -sf ../coq/indent/coq.vim .
-    popd
-    mkdir -p plugin
-    pushd plugin
-        ln -sf ../CoqIDE/plugin/coq_IDE.vim .
-    popd
-    mkdir -p doc
-    pushd doc
-        ln -sf ../CoqIDE/doc/CeCILL-C_V1.txt .
-    popd
-    mkdir -p syntax
-    pushd syntax
-        ln -sf ../coq/syntax/coq.vim .
-    popd
+    update-git git://github.com/chrisbra/csv.vim.git csv
 )
 
