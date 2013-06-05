@@ -117,10 +117,24 @@ hi TabLine ctermbg=black ctermfg=white cterm=bold
 hi TabLineFill ctermbg=black cterm=NONE
 hi TabLineSel ctermbg=green ctermfg=black cterm=NONE
 
-
 au VimEnter *.tex :call EnterTexFile()
+au VimEnter *.csv :call EnterCSVFile()
+au VimEnter *.hs  :call EnterHsFile()
 au VimEnter /tmp/mutt* :call ComposeMessage()
 
+
+function! EnterCSVFile()
+    hi CSVColumnEven cterm=bold ctermbg=NONE guibg=NONE ctermfg=7
+    hi CSVColumnOdd  cterm=NONE ctermbg=NONE guibg=NONE ctermfg=7
+    hi CSVColumnHeaderEven cterm=bold,underline ctermbg=NONE guibg=NONE ctermfg=3
+    hi CSVColumnHeaderOdd  cterm=underline ctermbg=NONE guibg=NONE ctermfg=3
+endfunction
+
+function! EnterHsFile()
+    set et
+    set shiftwidth=2
+    set tabstop=2
+endfunction
 
 function! EnterTexFile()
 	"set keywordprg=dict

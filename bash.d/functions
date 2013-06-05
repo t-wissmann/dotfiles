@@ -888,3 +888,9 @@ function repeat() {
     done
 }
 
+paccols() {
+    pacman "$@" | sed '$!N;s/\n/\t/' \
+        | sed 's,^[^/]*/,,;s, [^\t]*\t,\t,' \
+        | column -t -s $'\t'
+}
+
