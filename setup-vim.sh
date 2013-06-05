@@ -62,8 +62,25 @@ update-git() {
 (
     cd ~/.vim/
 
-    update-git https://github.com/jesboat/CoqIDE/ CoqIDE
     update-git https://github.com/jvoorhis/coq.vim coq
     update-git git://github.com/chrisbra/csv.vim.git csv
+    # update-git https://github.com/jesboat/CoqIDE/ CoqIDE
+    update-git https://github.com/eagletmt/coqtop-vim coqtop
+    mkdir -p indent
+    pushd indent
+        ln -sf ../coq/indent/coq.vim .
+    popd
+    #mkdir -p plugin
+    #pushd plugin
+    #    ln -sf ../coqtop/plugin/coqtop.vim .
+    #popd
+    #mkdir -p autoload
+    #pushd autoload
+    #    ln -sf ../coqtop/autoload/coqtop.vim .
+    #popd
+    mkdir -p syntax
+    pushd syntax
+        ln -sf ../coq/syntax/coq.vim .
+    popd
 )
 

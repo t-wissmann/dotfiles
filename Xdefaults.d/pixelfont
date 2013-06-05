@@ -9,8 +9,19 @@
 ! xset +fp ~/.fonts/
 ! xset fp rehash
 
-URxvt.font: -*-montecarlo-medium-*-*-*-*-*-*-*-*-*-*-*
-URxvt.boldFont: -*-montecarlo-medium-*-*-*-*-*-*-*-*-*-*-*
-URxvt.keysym.C-1: command:\033]710;-*-montecarlo-medium-*-*-*-*-*-*-*-*-*-*-*\007\033]711;-*-montecarlo-medium-*-*-*-*-*-*-*-*-*-*-*\007
-URxvt.keysym.C-2: command:\033]710;-*-montecarlo-medium-*-*-*-*-*-*-*-*-*-*-*\007\033]711;-*-montecarlo-medium-*-*-*-*-*-*-*-*-*-*-*\007
+!URxvt.font: -*-montecarlo-medium-*-*-*-*-*-*-*-*-*-*-*
+!URxvt.boldFont: -*-montecarlo-medium-*-*-*-*-*-*-*-*-*-*-*
+!URxvt.keysym.C-1: command:\033]710;-*-montecarlo-medium-*-*-*-*-*-*-*-*-*-*-*\007\033]711;-*-montecarlo-medium-*-*-*-*-*-*-*-*-*-*-*\007
+!URxvt.keysym.C-2: command:\033]710;-*-montecarlo-medium-*-*-*-*-*-*-*-*-*-*-*\007\033]711;-*-montecarlo-medium-*-*-*-*-*-*-*-*-*-*-*\007
+
+!urxvt*font:	 6x13
+URxvt.font: -*-terminus-bold-r-normal-*-12-*-*-*-*-*-iso10646-1
+URxvt.boldFont: -*-terminus-bold-r-normal-*-12-*-*-*-*-*-iso10646-1
+URxvt.keysym.C-1: command:\033]710;xft:Terminus:size=8\007\033]711;xft:Terminus:size=8\007
+URxvt.keysym.C-2: command:\033]710;xft:Terminus:bold:size=10\007\033]711;xft:Terminus:bold:size=10\007
+URxvt.keysym.C-3: command:\033]710;xft:Terminus:bold:size=12\007\033]711;xft:Terminus:bold:size=12\007
+URxvt.keysym.C-4: command:\033]710;xft:Terminus:bold:size=14\007\033]711;xft:Terminus:bold:size=14\007
+URxvt.keysym.C-5: command:\033]710;xft:Terminus:bold:size=18\007\033]711;xft:Terminus:bold:size=18\007
+URxvt.keysym.C-6: command:\033]710;xft:Terminus:bold:size=20\007\033]711;xft:Terminus:bold:size=20\007
+
 
