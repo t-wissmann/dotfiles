@@ -27,6 +27,8 @@ homedir=(
     calcrc
     gitconfig
     tigrc
+    emacs
+    emacs.d
     pinforc
     screenrc
     tmux.conf
