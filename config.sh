@@ -43,6 +43,7 @@ files=(
     finch-gntrc
     ${homedir[@]}
     ncmpcpp-config
+    gpg.conf
 )
 
 
@@ -52,6 +53,7 @@ relpath2target=(
     "s#^\($(array2str homedir)\)\$#$HOME/.\1#"
     "s#^config/\(.*\)\$#$HOME/.config/\1#"
     "s#^ncmpcpp-config#$HOME/.ncmpcpp/config#"
+    "s#^gpg.conf#$HOME/.gnupg/gpg.conf#"
     "s#^finch-gntrc#$HOME/.gntrc#"
 )
 
