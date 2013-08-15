@@ -6,6 +6,12 @@
 !urxvt*background: #423323
 !xterm*background: #423323
 !urxvt*color0:  #282015
+!
+!
+! fixed font:
+!URxvt.font: -misc-fixed-medium-r-semicondensed-*-13-*-*-*-*-*-iso10646-1
+!URxvt.boldFont: -misc-fixed-bold-r-semicondensed-*-13-*-*-*-*-*-iso10646-1
+!URxvt.keysym.C-1: command:\033]710;-misc-fixed-medium-r-semicondensed-*-13-*-*-*-*-*-iso10646-1\007\033]711;-misc-fixed-bold-r-semicondensed-*-13-*-*-*-*-*-iso10646-1\007
 
 !urxvt*cursorBlink: false
 !URxvt.transparent: true
