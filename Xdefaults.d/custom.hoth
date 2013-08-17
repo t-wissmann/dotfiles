@@ -1,0 +1,28 @@
+
+!xterm*faceName: 'xft:Bitstream Vera Sans Mono:style=pixelsize=12'
+!xterm*faceName: 'xft:GohuFont:pixelsize=12'
+xterm*faceName: 'xft:Bitstream Vera Sans Mono:pixelsize=12'
+
+!#include "pixelfont"
+URxvt.color0:  #222222
+URxvt.background: #101010
+URxvt.color3:  #FFC630
+!URxvt.color11: #99FF5F
+
+
+! for fake transparency
+!URxvt.transparent: true
+!URxvt.shading: 20
+
+!URxvt.font: xft:terminus:12
+!URxvt.boldFont: xft:terminus:12
+
+URxvt.font: -misc-fixed-medium-r-semicondensed-*-13-*-*-*-*-*-iso10646-1
+URxvt.boldFont: -misc-fixed-bold-r-semicondensed-*-13-*-*-*-*-*-iso10646-1
+
+!#include "neon.colors"
+!#include "tangobright.colors"
+urxvt*background: black
+!urxvt*background: #1E0F05
+!urxvt*foreground: white
+*color2: #7FD1DA
