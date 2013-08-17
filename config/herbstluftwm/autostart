@@ -170,7 +170,8 @@ if [ "$HOSTNAME" = ghul ] ;then
     hc set frame_bg_transparent 1
 fi
 if [ "$HOSTNAME" = towi04 -o "$HOSTNAME" = hoth ] ; then
-    hc keybind $Mod-Control-q chain , quit , spawn killall foosession
+    #hc keybind $Mod-Control-q chain , quit , spawn killall foosession
+    hc keybind $Mod-Ctrl-q spawn ~/scripts/logout-dialog.sh
     hc keybind $Mod-Shift-q spawn ~/scripts/logout-dialog.sh
     hc keybind $Mod-Control-Shift-q quit
     hc keybind Redo spawn ~/scripts/mpd/mpc.sh seek 0
@@ -266,11 +267,13 @@ colors_snow() {
     hc set frame_border_active_color '#00182F'
     hc set window_border_active_color '#1361AD'
     hc set frame_border_width 1
-    hc set frame_bg_transparent 0
+    hc set frame_bg_transparent 1
     hc set frame_bg_active_color '#103462'
     hc set window_border_width 2
     hc set frame_border_normal_color 'black'
     hc set frame_bg_normal_color '#141414'
+    hc set window_border_width 3
+    hc set window_border_inner_color '#2b2b2b'
     hc set window_border_normal_color '#242424'
 }
 
@@ -283,7 +286,7 @@ case "$HOSTNAME" in
     x40)    colors_thin_red ;;
     faui0*) colors_thin_purple ;;
     dachs)  colors_snow ;;
-    *)      colors_pwmt_green ;;
+    *)      colors_snow ;;
 esac
 
 SCRIPTSDIR=$HOME/dev/c/herbstluftwm/scripts/
@@ -395,6 +398,16 @@ hc rule class=Gimp windowrole~'gimp-(image-window|toolbox|dock)' \
     pseudotile=off
 hc rule class=Gimp windowrole=gimp-toolbox focus=off index=00
 hc rule class=Gimp windowrole=gimp-dock focus=off index=1
+
+# Instant messenger
+
+imtag=im
+hc add "$imtag"
+hc load "$imtag" \
+    '(split horizontal:0.800000:0 (clients grid:0) (clients vertical:0))'
+hc rule class=Pidgin   windowrole=buddy_list tag=$imtag focus=off index=1
+hc rule class=Pidgin ! windowrole=buddy_list tag=$imtag focus=on  index=0
+
 
 ### SCRIPTS ###
 c=~/.config/herbstluftwm/
