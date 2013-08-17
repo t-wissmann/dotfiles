@@ -2,7 +2,7 @@
 
 # set dmenu-command
 # musca-like
-export dmenu_command="dmenu -i -nb #202020 -nf #d4d4d4 -sb #D0EEB1 -sf #202020 -fn -*-profont-*-*-*-*-12-*-*-*-*-*-*-*"
+#export dmenu_command="dmenu -i -nb #202020 -nf #d4d4d4 -sb #D0EEB1 -sf #202020 -fn -*-profont-*-*-*-*-12-*-*-*-*-*-*-*"
 # scrotwm - white background
 #export dmenu_command="dmenu -i -r -c -rs -nb #efefef -nf #272727 -sb #adc0ea -sf #202020 -fn -*-profont-*-*-*-*-12-*-*-*-*-*-*-* -ni"
 # for an dmenu-conky-feeling:
@@ -14,6 +14,8 @@ export dmenu_command="dmenu -i -nb #202020 -nf #d4d4d4 -sb #D0EEB1 -sf #202020 -
 # with options for awesome: -x 17 -w $((1280-16-17)) 
 #export dmenu_command="dmenu -i -r -c -rs -nb #000000 -nf #efefef -sb #9FBC00 -sf #232323 -fn 'xft:BitstreamVeraSans:bold:pixelsize=11' -ni"
 export dmenu_command="dmenu -i -nb #000000 -nf #efefef -sb #9FBC00 -sf #232323 -fn 'xft:BitstreamVeraSans:bold:pixelsize=11'"
+# blue
+export dmenu_command="dmenu -i -nb white -nf #121212 -sb #1361AD -sf #232323 -fn -*-profont-*-*-*-*-12-*-*-*-*-*-*-"
 export dzen2_command='dzen2_font'
 function dzen2_font() {
     dzen2  -xs 1 -fn "Bitstream Vera Sans Mono:bold:size=9" -bg '#141414'

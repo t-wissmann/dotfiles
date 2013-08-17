@@ -57,6 +57,8 @@ xterm*color0:  #202020
 !*color7:  #E8E8E8
 *color7:  #a0a0a0
 *color15: #ffffff
+URxvt.highlightColor: #FFFE40
+URxvt.highlightTextColor: black
 
 !#include ".Xdefaults.d/tango.colors"
 !#include ".Xdefaults.d/tangobright.colors"
@@ -86,6 +88,8 @@ URxvt.keysym.C-0: command:\033]710;xft:Bitstream Vera Sans Mono:bold:size=19\007
 URxvt.scrollBar: false
 URxvt.scrollstyle: plain
 URxvt.scrollColor: #444444
+URxvt.scrollBar_floating: true
+URxvt.scrollBar_right: true
 ! scrollbar width
 URxvt.thickness: 5
 URxvt.urgentOnBell: true
