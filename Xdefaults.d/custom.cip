@@ -7,6 +7,9 @@
 
 *dpi: 96
 URxvt.perl-lib: /home/cip/adm/re06huxa/.urxvt/
+URxvt.fading: 5
+!URxvt.fadeColor: #AE00CB
+URxvt.fadeColor: #9fbc00
 
 ! probably needs this in your .xinitrc:
 ! xset +fp ~/.fonts/
@@ -16,6 +19,8 @@ URxvt.perl-lib: /home/cip/adm/re06huxa/.urxvt/
 !urxvt*boldFont: -*-montecarlo-medium-*-*-*-*-*-*-*-*-*-*-*
 !!URxvt.keysym.C-1: command:\033]710;-*-montecarlo-medium-*-*-*-*-*-*-*-*-*-*-*\007\033]711;-*-montecarlo-medium-*-*-*-*-*-*-*-*-*-*-*\007
 !URxvt.keysym.C-2: command:\033]710;-*-montecarlo-medium-*-*-*-*-*-*-*-*-*-*-*\007\033]711;-*-montecarlo-medium-*-*-*-*-*-*-*-*-*-*-*\007
+
+#include "pixelfont"
 
 !#include "neon.colors"
 URxvt.color0:  #222222

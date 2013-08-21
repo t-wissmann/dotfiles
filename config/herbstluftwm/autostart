@@ -436,6 +436,30 @@ rm -f "$STATEFILE"
 #    kill ${pids[@]}
 #} &
 
+## custom settings per workspace
+#{
+#    layout=
+#    herbstclient --idle '(tag_changed|reload)' |
+#    while read line ; do
+#        cmd=${line%%	*} # notice that this is a real tab character
+#        line=${line#*	}  # same here
+#        arg1=${line%%	*} # and here
+#        case "$cmd" in
+#            reload) break ;;
+#            tag_changed)
+#                lastlayout="$layout"
+#                case "$arg1" in
+#                    vim) layout=2 ;;
+#                    *)   layout=0 ;;
+#                esac
+#                # only update if the setting really changes
+#                [ "$lastlayout" = "$layout" ] \
+#                    || herbstclient set default_frame_layout "$layout"
+#            ;;
+#        esac
+#    done
+#} &
+
 hc unlock
 
 
