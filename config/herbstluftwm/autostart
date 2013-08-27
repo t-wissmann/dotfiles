@@ -283,7 +283,7 @@ hc set smart_frame_surroundings 1
 # new colors
 case "$HOSTNAME" in
     x40)    colors_thin_red ;;
-    faui0*) colors_thin_purple ;;
+    #faui0*) colors_thin_purple ;;
     dachs)  colors_snow ;;
     *)      colors_snow ;;
 esac
