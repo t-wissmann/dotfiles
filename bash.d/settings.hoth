@@ -15,7 +15,7 @@
 #export dmenu_command="dmenu -i -r -c -rs -nb #000000 -nf #efefef -sb #9FBC00 -sf #232323 -fn 'xft:BitstreamVeraSans:bold:pixelsize=11' -ni"
 export dmenu_command="dmenu -i -nb #000000 -nf #efefef -sb #9FBC00 -sf #232323 -fn 'xft:BitstreamVeraSans:bold:pixelsize=11'"
 # blue
-export dmenu_command="dmenu -i -nb white -nf #121212 -sb #1361AD -sf #232323 -fn -*-profont-*-*-*-*-12-*-*-*-*-*-*-"
+export dmenu_command="dmenu -i -nb white -nf #121212 -sb #1361AD -sf #232323 -fn fixed-10:pixelsize=11"
 export dzen2_command='dzen2_font'
 function dzen2_font() {
     dzen2  -xs 1 -fn "Bitstream Vera Sans Mono:bold:size=9" -bg '#141414'
