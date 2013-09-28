@@ -68,13 +68,13 @@ printexitstat() {
     local status=$?
     local l=$(printf "%${COLUMNS}s" " ")
     l=${l// /─}
-    l="${l:12}( \e[38;5;214m\t\e[1;30m )"
+    l="${l:12}( \e[0;38;5;214m\t\e[1;30m )"
     #printf '\e[1;30m$l\r┌─( '
     [ "$status" = 0 ] \
-        && exitstatus="\e[38;5;82m:)" \
-        || exitstatus="\e[38;5;196m:("
+        && exitstatus="\e[0;38;5;82m:)" \
+        || exitstatus="\e[0;38;5;196m:("
     promptline="$l"$'\r┌─'
-    PS1="\e[1;30m$promptline-( \e[38;5;227m\u\e[0;30m@\e[38;5;82m\h\e[1;30m )-( \e[38;5;199m\w\e[1;30m )-( $exitstatus\e[1;30m )\n\[\e[1;30m\]└─╼ \[\e[0m\]$XTERM_TITLE"
+    PS1="\e[1;30m$promptline-( \e[0;38;5;227m\u\e[0;30m@\e[0;38;5;82m\h\e[1;30m )-( \e[0;38;5;199m\w\e[1;30m )-( $exitstatus\e[1;30m )\n\[\e[1;30m\]└─╼ \[\e[0m\]$XTERM_TITLE"
 
 }
 
