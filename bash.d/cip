@@ -86,7 +86,7 @@ alias cm=~/scripts/checkmail.sh
 
 promptline='\[\e[0;33m\]'
 promptinput='\[\e[0m\]'
-PS1=$promptline'┌─(\[\e[0;31m\]\u'$promptline')─(\[\e[0;34m\]\w'$promptline')─(\[\e[0;32m\]\h'$promptline')\n'$promptline'└╼ '$promptinput$XTERM_TITLE
+#PS1=$promptline'┌─(\[\e[0;31m\]\u'$promptline')─(\[\e[0;34m\]\w'$promptline')─(\[\e[0;32m\]\h'$promptline')\n'$promptline'└╼ '$promptinput$XTERM_TITLE
 
 
 PATH="$PATH:/local/cipadm/bin:/local/adm/bin:/opt/SUNWut/bin:/opt/SUNWut/sbin:/opt/SUNWut/lib"
