@@ -32,7 +32,7 @@ export PAGER="less -i"
 if ! [ -z "$SHOWUSERNAME" ] ; then
 PS1='\[\e[1;3$((3+$?*2))m\](\[\e[1;36m\]\h: \[\e[1;31m\]\u\[\e[1;33m\]:\[\e[1;34m\]\w\[\e[1;33m\])\[\e[0;0m\] '
 else
-PS1='\[\e[1;3$((5+(0**$?)*-2))m\](\[\e[1;36m\]\h: \[\e[1;34m\]\w\[\e[1;3$((5+(0**$?)*-2))m\])\[\e[0;0m\] '
+PS1='\[\e[1;3$((5+(0**$?)*(-2)))m\](\[\e[1;36m\]\h: \[\e[1;34m\]\w\[\e[1;3$((5+(0**$?)*(-2)))m\])\[\e[0;0m\] '
 fi
 
 # TIP:
@@ -59,19 +59,25 @@ unset PROMPT_COMMAND
       else
         XTERM_TITLE='\[\033]0;\W (\w)\007\]'
       fi
-	  PS1="${PS1}${XTERM_TITLE}"
-	;;
+      #PS1="${PS1}${XTERM_TITLE}"
+      ;;
  esac;
 
 
 printexitstat() {
-    [ "$?" = 0 ] \
-        && echo -ne "\e[0;32m :)\e[0m " \
-        || echo -ne "\e[1;31m :(\e[0m "
-    # also set window title
-    [ "$1" = 1 ] && echo -ne "\e]0;${PWD##*/} ($PWD) $USER@$HOSTNAME\007";
-# always set window title to current command:
+    local status=$?
+    local l=$(printf "%${COLUMNS}s" " ")
+    l=${l// /─}
+    l="${l:12}( \e[38;5;214m\t\e[1;30m )"
+    #printf '\e[1;30m$l\r┌─( '
+    [ "$status" = 0 ] \
+        && exitstatus="\e[38;5;82m:)" \
+        || exitstatus="\e[38;5;196m:("
+    promptline="$l"$'\r┌─'
+    PS1="\e[1;30m$promptline-( \e[38;5;227m\u\e[0;30m@\e[38;5;82m\h\e[1;30m )-( \e[38;5;199m\w\e[1;30m )-( $exitstatus\e[1;30m )\n\[\e[1;30m\]└─╼ \[\e[0m\]$XTERM_TITLE"
+
 }
+
 hasgui=0
 case $TERM in
     *rxvt*|xterm)
@@ -80,8 +86,7 @@ case $TERM in
     *)
         ;;
 esac
-#PROMPT_COMMAND="printexitstat $hasgui"
-
+PROMPT_COMMAND="printexitstat $hasgui"
 
 # activate bash-comple(ti)tion
 
