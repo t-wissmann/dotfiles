@@ -74,7 +74,8 @@ printexitstat() {
         && exitstatus="\e[0;38;5;82m:)" \
         || exitstatus="\e[0;38;5;196m:("
     promptline="$l"$'\r┌─'
-    PS1="\e[1;30m$promptline-( \e[0;38;5;227m\u\e[0;30m@\e[0;38;5;82m\h\e[1;30m )-( \e[0;38;5;199m\w\e[1;30m )-( $exitstatus\e[1;30m )\n\[\e[1;30m\]└─╼ \[\e[0m\]$XTERM_TITLE"
+    hasjobs=$(jobs -p)
+    PS1="\e[1;30m$promptline─( \e[0;38;5;227m\u\e[0;30m@\e[0;38;5;82m\h\e[1;30m )─( \e[0;38;5;199m\w\e[1;30m )─( $exitstatus \e[1;31m${hasjobs:+\j }\e[1;30m)\n\[\e[1;30m\]└─╼ \[\e[0m\]$XTERM_TITLE"
 
 }
 
@@ -95,7 +96,7 @@ PROMPT_COMMAND="printexitstat $hasgui"
 #fi
 
 # add colors for less when viewing manpages
-export LESS_TERMCAP_mb=$'\e[01;31m' # for what is this line good for ?^^
+export LESS_TERMCAP_mb=$'\e[01;31m' # for what is this line good for ?
 export LESS_TERMCAP_md=$'\e[0;36m' # syntax and keywords
 export LESS_TERMCAP_us=$'\e[1;35m' # "variables"
 export LESS_TERMCAP_me=$'\e[0m' # some rows
