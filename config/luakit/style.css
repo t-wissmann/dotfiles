@@ -4,10 +4,60 @@ body {
     /*font-family: "Bitstream Vera Sans Mono";*/
 }
 html {
-	-webkit-font-smoothing: antialiased;
+	//-webkit-font-smoothing: antialiased;
 }
 a {
     color: #6099DD;
 }
+
+// stackoverflow
+.adzerk-vote { display: none !important; }
+
+// last.fm styles
+.adform-adbox   { display: none !important; }
+.LastAd         { display: none !important; }
+.ad-leaderboard { display: none !important; }
+
+.hidden-menu, .masthead {
+    background-image: -webkit-linear-gradient(#434D08, #829709) !important;
+    border: 1px solid #363F00 !important;
+}
+
+.site-search .search-box, .btn--header {
+    box-shadow: inset #333 0 -5px 5px,
+                inset #131313 0 1px 5px,
+                #9fbc00 0 1px 0 !important;
+    border: 1px solid #363F00 !important;
+}
+
+.user-dropdown-divider-bottom,.user-dropdown-divider-top {
+    border-color: #363F00 !important;
+}
+
+.user-dropdown {
+    box-shadow: none !important;
+}
+
+.btn--header {
+    background-color: #8FA126 !important;
+    background-image: none !important;
+    border: 1px solid #363F00 !important;
+}
+
+.dropdown-btn-menu-item:hover, .dropdown-btn-menu-item:focus {
+    background-color: #515E08 !important;
+}
+
+.masthead {
+    background-image: -webkit-linear-gradient(#81902C, #515E08) !important;
+    border: 1px solid #363F00 !important;
+}
+
+#page h2.heading,
+.h2Wrapper a {
+    color: #9fbc00 !important;
+}
+
+
 
 

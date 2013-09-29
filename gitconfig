@@ -6,10 +6,14 @@
 [alias]
 	lastpatch = log  -p HEAD^1..HEAD
 	tree = log --graph --oneline --all --decorate=short
+	t = log --graph --oneline --all --decorate=short
 	st = status
 	wdiff = diff --color-words
 	bdiff = diff --color-words=.
 	hug = push
+	ca = commit -av
+	c = commit -v
+	ap = add -p
 [merge]
 	tool = vimdiff
 [push]
