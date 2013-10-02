@@ -15,6 +15,7 @@ a {
 
 // last.fm styles
 .adform-adbox   { display: none !important; }
+.adform-adbox-static { display: none !important; }
 .LastAd         { display: none !important; }
 .ad-leaderboard { display: none !important; }
 
