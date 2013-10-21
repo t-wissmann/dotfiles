@@ -255,8 +255,8 @@ colors_pwmt_green() {
     hc set frame_bg_normal_color '#565656'
     hc set frame_bg_active_color '#345F0C'
     hc set frame_border_width 1
-    hc set window_border_width 3
-    hc set window_border_inner_width 1
+    hc set window_border_width 2
+    hc set window_border_inner_width 0
     hc set window_border_normal_color '#454545'
     hc set window_border_active_color '#9fbc00'
     hc set always_show_frame 0
@@ -286,7 +286,7 @@ case "$HOSTNAME" in
     x40)    colors_thin_red ;;
     #faui0*) colors_thin_purple ;;
     dachs)  colors_snow ;;
-    *)      colors_snow ;;
+    *)      colors_pwmt_green ;;
 esac
 
 SCRIPTSDIR=$HOME/dev/c/herbstluftwm/scripts/

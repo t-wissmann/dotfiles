@@ -13,7 +13,10 @@
 	hug = push
 	ca = commit -av
 	c = commit -v
+	cv = commit -v
+	co = commit -v
 	ap = add -p
+	deltalog = log --oneline origin/master..HEAD
 [merge]
 	tool = vimdiff
 [push]

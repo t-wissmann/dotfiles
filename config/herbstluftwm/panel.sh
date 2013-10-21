@@ -3,7 +3,7 @@
 set -f
 
 monitor=${1:-0}
-height=15
+height=14
 bottom=false
 geometry=( $(herbstclient monitor_rect $monitor) )
 # geometry has the format: X Y W H
@@ -12,7 +12,7 @@ y=${geometry[1]}
 $bottom && y=$((${geometry[1]}+${geometry[3]}-height))
 width="${geometry[2]}"
 font="-*-fixed-medium-*-*-*-12-*-*-*-*-*-*-*"
-bgcolor='#fefefe'
+bgcolor='#0a0a0a'
 icondir=~/.config/herbstluftwm/icons/
 
 function uniq_linebuffered() {
@@ -29,7 +29,7 @@ update_pad $height
     # events:
     #mpc idleloop player &
     while true ; do
-        date +'date ^fg(#414141)%H:%M^fg(#090909), %Y-%m-^fg(#414141)%d'
+        date +'date ^fg(#454545)%H:%M^fg(#242424), %Y-%m-^fg(#454545)%d'
         sleep 2 || break
     done > >(uniq_linebuffered) &
     child="$!"
@@ -48,19 +48,19 @@ update_pad $height
     yoffset=0
     $bottom && yoffset=2
     while true ; do
-        hintcolor="#dedede"
+        hintcolor="#0f0f0f"
         #separator="^bg()^fg(#141414)|^fg()"
         separator=""
         #echo -n "^pa(0;0)"
         # draw tags
-        echo -n '^bg(#dedede)'
+        echo -n "^bg($hintcolor)"
         for i in "${TAGS[@]}" ; do
             case ${i:0:1} in
                 '#') #echo -n "^fg(#9fbc00)"
-                     echo -n "^bg(#1361AD)^fg(#000000)" ;;
-                '.') echo -n "^bg(#dedede)^fg(#878787)" ;;
+                     echo -n "^bg(#9fbc00)^fg(#000000)" ;;
+                '.') echo -n "^bg($hintcolor)^fg(black)" ;;
                 '!') echo -n "^bg(#FF7386)^fg(black)" ;;
-                *) echo -n "^bg(#dedede)^fg(black)" ;;
+                *) echo -n "^bg(#454545)^fg(black)" ;;
                 #':')
                 #    echo -n "^fg(#efefef)"
                 #    ;;
@@ -86,7 +86,7 @@ update_pad $height
                             || echo -n " ${i:1} "
             echo -n "^ca()$separator"
         done
-        echo -n "^bg()^fg(black) ${windowtitle//^/^^}^p(_CENTER)"
+        echo -n "^bg()^fg(white) ${windowtitle//^/^^}^p(_CENTER)"
         # small adjustments
         calclick="^ca(1,$HOME/.config/herbstluftwm/calendar.sh)"
         calclick+="^ca(2,killall calendar.sh)"
@@ -96,11 +96,11 @@ update_pad $height
         rightwidth=$(textwidth "$font" "$right_text_only  ")
         echo -n "^p(_RIGHT)^p(-$rightwidth)$right"
         # some nice bars
-        if $bottom ; then
-          echo -n "^ib(1)^fg(#141414)^pa(0;0)^ro(${width}x1)"
-        else
-          echo -n "^ib(1)^fg(#141414)^pa(0;$((height-1)))^ro(${width}x1)"
-        fi
+        #if $bottom ; then
+        #  echo -n "^ib(1)^fg(#141414)^pa(0;0)^ro(${width}x1)"
+        #else
+        #  echo -n "^ib(1)^fg(#141414)^pa(0;$((height-1)))^ro(${width}x1)"
+        #fi
         echo
         # wait for next event
         read line || break

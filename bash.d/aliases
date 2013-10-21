@@ -121,4 +121,5 @@ alias sshmail='unison -batch mail && ssh ameise fetchmail && unison -batch mail 
 
 alias newsfetch='fetchmail --fetchmailrc ~/.fetchmailrc-news && mutt -Zz'
 alias irc='ssh -t ameise bash -l -c bin/screen-reconnect.sh\\ irc'
+alias np='mpc  -f "♪♬ %artist% — %title% (%album%) ♫♪" current'
 

@@ -19,10 +19,11 @@ URxvt.color3:  #FFC630
 
 URxvt.font: -misc-fixed-medium-r-semicondensed-*-13-*-*-*-*-*-iso10646-1
 URxvt.boldFont: -misc-fixed-bold-r-semicondensed-*-13-*-*-*-*-*-iso10646-1
+URxvt.keysym.C-2: command:\033]710;-misc-fixed-medium-r-semicondensed-*-13-*-*-*-*-*-iso10646-1\007\033]711;-misc-fixed-bold-r-semicondensed-*-13-*-*-*-*-*-iso10646-1\007
 
 !#include "neon.colors"
 !#include "tangobright.colors"
 urxvt*background: black
 !urxvt*background: #1E0F05
 !urxvt*foreground: white
-*color2: #7FD1DA
+!*color2: #7FD1DA
