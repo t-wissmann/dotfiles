@@ -22,9 +22,10 @@ case "$HOSTNAME" in
         #feh --bg-fill ~/Documents/wallpaper/water/38174-theriver.jpg
         #feh --bg-fill ~/Documents/wallpaper/starwars/1255654029702.png
         #feh --bg-fill ~/Documents/wallpaper/landscape/landscape-keltern-1_wall.jpg
-        #feh --bg-fill ~/Documents/wallpaper/landscape/lonely_tree_by_gheias-d319736.jpg
+        feh --bg-fill ~/Documents/wallpaper/landscape/lonely_tree_by_gheias-d319736.jpg
+        #feh --bg-fill ~/Documents/wallpaper/landscape/naboo.jpg
         #feh --bg-fill ~/Documents/wallpaper/nature/coloured_bush_1920x1200.jpg
-        feh --bg-tile ~/Documents/wallpaper/patterns/blue-pattern-ob.png
+        #feh --bg-tile ~/Documents/wallpaper/patterns/green-dia.png
         ;;
     hoth|towi04)
         nitrogen --restore
