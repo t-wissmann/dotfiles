@@ -144,12 +144,15 @@ function! EnterTexFile()
 	"set laststatus=2 " we want *always* a status bar even if I am not in splitscreen mode
 	"we don't because you can get filename, and stats using ctrl g
 	"iab newide <esc>:r ~/.vim/templates/newide<Cr>kdd
-	ab xenum \begin{enumerate}<return><tab>\item<return><C-U>\end{enumerate}<up><end>
-	ab xitem \begin{itemize}<return><tab>\item<return><C-U>\end{itemize}<up><end>
+	"ab xenum \begin{enumerate}<return><tab>\item<return><C-U>\end{enumerate}<up><end>
+	ab xenum \begin{enumerate}<return>\item<return>\end{enumerate}<up><end>
+	ab xitem \begin{itemize}<return>\item<return>\end{itemize}<up><end>
 	ab xdesc \begin{description}<return><tab>\item<return><C-U>\end{description}<up><end>
+	ab xdia \begin{diagram}<return>\end{diagram}<up><end>
 	ab xi \item
 	ab xcent \begin{center}<RETURN><RETURN><C-U>\end{center}<UP><END>
-	ab xalign \begin{align}<RETURN><RETURN><C-U>\end{align}<UP><END>
+	ab xalign \begin{align}<RETURN><C-U>\end{align}<UP><END>
+	ab xals \begin{align*}<RETURN><C-U>\end{align*}<UP><END>
 	ab xma \[\]<LEFT><LEFT><RETURN><UP><END>
 	ab xsec \section{}<left>
 	ab xsub \subsection{}<left>
