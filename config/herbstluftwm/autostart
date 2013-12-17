@@ -128,6 +128,7 @@ hc keybind $Mod-f fullscreen toggle
 hc keybind $Mod-p pseudotile toggle
 hc keybind $Mod-u split vertical 0.5
 hc keybind $Mod-o split horizontal 0.5
+hc keybind $Mod-Control-space split explode
 hc keybind $Mod-space cycle_layout 1
 hc keybind $Mod-Shift-space cycle_layout -1
 
