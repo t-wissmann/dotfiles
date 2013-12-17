@@ -1,10 +1,15 @@
 body {
     /* background-color: #141414; */
     /*color: #efefef; */
-    /*font-family: "Bitstream Vera Sans Mono";*/
+    //font-family: "Bitstream Vera Sans Mono";
 }
+
+// * {
+//     font-family: normal;
+// }
+
 html {
-	//-webkit-font-smoothing: antialiased;
+	//-webkit-font-smoothing: subpixel-antialiased;
 }
 a {
     color: #6099DD;

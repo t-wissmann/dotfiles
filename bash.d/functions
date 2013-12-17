@@ -894,3 +894,14 @@ paccols() {
         | column -t -s $'\t'
 }
 
+odeclgrep() {
+    needle="${1//\//\\\/}"
+    shift
+    for i in "$@" ; do
+        ocamlc -i "$i" \
+            | sed -n "/$needle/,\$p" \
+            | sed -n '2,${/^val/,${q}};p'
+        grep -H -A4 --color=auto -n "let[ \n\t]*$needle" "$i"
+    done
+}
+
