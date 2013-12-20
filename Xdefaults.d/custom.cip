@@ -10,7 +10,7 @@ URxvt.perl-lib: /home/cip/adm/re06huxa/.urxvt/
 URxvt.fading: 5
 !URxvt.fadeColor: #AE00CB
 !URxvt.fadeColor: #9fbc00
-URxvt.fadeColor: blue
+URxvt.fadeColor: #9fbc00
 
 ! probably needs this in your .xinitrc:
 ! xset +fp ~/.fonts/
