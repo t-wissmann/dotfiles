@@ -422,7 +422,24 @@ hc keybind $Mod-F9          emit_hook togglehidepanel
 [ -f "$STATEFILE" ] && ~/git/herbstluftwm/scripts/loadstate.sh < "$STATEFILE"
 rm -f "$STATEFILE"
 
-## add a external panel
+mpc -q current -f '' > /dev/null && # if we can connect to a mpd
+{
+    f=$(mpc -f %file% current)
+    {
+        pids=( )
+        mpc idleloop player &
+        pids+=( $! )
+        hc -w 'reload' > /dev/null
+        # stopp all started processes
+        kill ${pids[@]}
+    } | while read line ; do
+            f2=$(mpc -f %file% current)
+            [[ "$f" != "$f2" ]] && ~/scripts/mpd/showosd.sh
+            f="$f2"
+    done
+} &
+
+# add an external panel
 #{
 #    pids=( )
 #    # reserve some space for the panel on monitor 0

@@ -24,7 +24,8 @@ set et
 set shiftwidth=4
 set tabstop=4
 set nojoinspaces
-" only insert real tabs at the beginning of a line
+" only insert real tabs at the beginning of a line and fill with spaces
+" otherwise
 inoremap <expr> <tab> getline('.')[0:col('.')-2] =~ '^\t*$' ? "\<Tab>" : repeat(" ", &sw - ((virtcol('.')-1) % &sw))
 
 " enable filetype specific features
