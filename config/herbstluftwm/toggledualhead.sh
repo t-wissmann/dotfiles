@@ -11,34 +11,51 @@ else
 restartpanelcmd=${restartpanelcmd:-~/git/herbstluftwm/share/restartpanels.sh}
 fi
 
+array2rect() {
+    printf "%dx%d%+d%+d" $3 $4 $1 $2
+}
 
-resolution=$(
-     xwininfo -root |
-        grep --binary-files=text -E ' Width: | Height: ' |  # only get width and height
-        sort -r |                       # width first
-        cut -d' ' -f4 |                 # only print values
-        sed '1 s/$/x/' |                # append x to first line
-        tr -d '\n'                      # join lines
+idx=$(hc get_attr monitors.focus.index)
+
+if orig=$(hc get_attr monitors.${idx}.my_orig_rect 2> /dev/null ) ; then
+    # give original size and remove all other monitors without the leader flag
+    rect=$(array2rect $orig)
+    mon_cnt=$(hc get_attr monitors.count)
+    cmd=(
+        chain
+            X move_monitor $idx "$rect"
+            X remove_attr monitors.${idx}.my_orig_rect
+            X or
     )
-
-function dualhead() {
-    width="$1"
-    height="$2"
-    hc set_monitors $((width/2))x$((height))+{0,$((width/2))}+0
-}
-
-function singlehead() {
-    width="$1"
-    height="$2"
-    hc set_monitors $((width))x$((height))+0+0
-}
-
-cur_monitor_count=$(herbstclient list_monitors | wc -l)
-
-if [ "$cur_monitor_count" -eq 1 ] ; then
-    dualhead ${resolution/x/ }
+    for i in $(seq 0 $((mon_cnt - 1))) ; do
+        # find the other monitor half and remove it
+        [ $i != $idx ] &&
+        cmd+=( v and
+                    ∧ compare monitors.${i}.my_orig_rect = "${orig[*]}"
+                    ∧ remove_monitor $i
+        )
+    done
+    hc "${cmd[@]}" > /dev/null 2> /dev/null
 else
-    singlehead ${resolution/x/ }
+    # split original rectangle of the monitor into a left and a right half
+    orig=( $(hc monitor_rect $i) ) || exit 1
+    left=( ${orig[0]} ${orig[1]} $((${orig[2]} / 2)) ${orig[3]} )
+    x=$(( ${left[0]} + ${left[2]} ))
+    rightwidth=$((${orig[2]} - ${left[2]}))
+    right=( $x ${orig[1]} $rightwidth ${orig[3]} )
+    leftrect=$(array2rect ${left[@]})
+    rightrect=$(array2rect ${right[@]})
+    hc chain \
+        , lock                                                      \
+        , new_attr string monitors.${idx}.my_orig_rect              \
+        , set_attr monitors.${idx}.my_orig_rect "${orig[*]}"        \
+        , move_monitor ${idx} "$leftrect"                           \
+        , sprintf ATTR "monitors.%s.my_orig_rect" monitors.count    \
+            chain                                                   \
+            . add_monitor "$rightrect"                              \
+            . new_attr string ATTR                                  \
+            . set_attr ATTR "${orig[*]}"                            \
+        , unlock
 fi
 
 herbstclient emit_hook quit_panel

@@ -43,6 +43,10 @@ fi
 if [ -d "${HOME}/bin" ] ; then
     export PATH="${HOME}/bin:${PATH}"
 fi
+if [ -d "${HOME}/.cabal/bin" ] ;then
+    export PATH="${HOME}/.cabal/bin:${PATH}"
+fi
+
 # extend man-variable
 if [ -d "${HOME}/man" ] ; then
     export MANPATH="${HOME}/man:${MANPATH}"

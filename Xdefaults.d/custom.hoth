@@ -27,3 +27,9 @@ urxvt*background: black
 !urxvt*background: #1E0F05
 !urxvt*foreground: white
 !*color2: #7FD1DA
+
+
+
+urxvt*background:rgba:0000/0000/0000/cccc
+urxvt*depth: 32
+!urxvt*inheritPixmap: true
