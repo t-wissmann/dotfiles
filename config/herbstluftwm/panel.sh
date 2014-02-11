@@ -58,7 +58,8 @@ update_pad $height
             case ${i:0:1} in
                 '#') #echo -n "^fg(#9fbc00)"
                      echo -n "^bg(#9fbc00)^fg(#000000)" ;;
-                '.') echo -n "^bg($hintcolor)^fg(black)" ;;
+                #'.') echo -n "^bg($hintcolor)^fg(black)" ;;
+                '.') continue ;;
                 '!') echo -n "^bg(#FF7386)^fg(black)" ;;
                 *) echo -n "^bg(#454545)^fg(black)" ;;
                 #':')
