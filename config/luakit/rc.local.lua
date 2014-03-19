@@ -49,9 +49,15 @@ domain_props = {
     ["all"] = {
         enable_scripts          = false,
         enable_plugins          = false,
-        enable_private_browsing = false,
+        enable_private_browsing = true,
         user_stylesheet_uri     = "file://"..os.getenv("HOME").."/.config/luakit/style.css",
-        --accept_policy           = cookie_policy.no_third_party,
+        accept_policy           = cookie_policy.no_third_party,
+    },
+    ["facebook.com"] = {
+        enable_scripts = true,
+    },
+    ["tex.stackexchange.com"] = {
+        enable_scripts = true,
     },
     ["youtube.com"] = {
         enable_scripts = true,
