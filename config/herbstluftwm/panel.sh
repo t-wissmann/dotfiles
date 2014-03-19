@@ -24,6 +24,8 @@ update_pad() {
             || herbstclient pad $monitor "$1"
 }
 
+activecolor="$(herbstclient attr theme.tiling.active.color)"
+
 update_pad $height
 {
     # events:
@@ -57,7 +59,7 @@ update_pad $height
         for i in "${TAGS[@]}" ; do
             case ${i:0:1} in
                 '#') #echo -n "^fg(#9fbc00)"
-                     echo -n "^bg(#9fbc00)^fg(#000000)" ;;
+                     echo -n "^bg($activecolor)^fg(#000000)" ;;
                 #'.') echo -n "^bg($hintcolor)^fg(black)" ;;
                 '.') continue ;;
                 '!') echo -n "^bg(#FF7386)^fg(black)" ;;
