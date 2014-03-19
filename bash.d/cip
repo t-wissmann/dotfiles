@@ -202,6 +202,7 @@ addpackage cipadm
 addpackage katarakt
 addpackage ghc-7.6.3
 addpackage haskell-platform-2012
+PATH="$HOME/.cabal/bin:$PATH"
 
 function q() {
     local quotesfile="$HOME/wwwcip/quotes"
