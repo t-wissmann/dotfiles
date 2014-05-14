@@ -26,6 +26,7 @@ search_engines["wiki-en"] = "http://en.wikipedia.org/wiki/Special:Search?search=
 search_engines["tab"] = "http://www.guitaretab.com/fetch/?type=tab&query=%s"
 search_engines["latein"] = "http://www.frag-caesar.de/lateinwoerterbuch/%s-uebersetzung.html"
 search_engines["dict"] = "http://www.dict.cc/?s=%s"
+search_engines["nlab"] = "http://ncatlab.org/nlab/search?&query=%s"
 
 
 search_engines.aur = "http://aur.archlinux.org/packages.php?K=%s&do_Search=Go"

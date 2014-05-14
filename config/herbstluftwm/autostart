@@ -22,10 +22,12 @@ case "$HOSTNAME" in
         #feh --bg-fill ~/Documents/wallpaper/water/38174-theriver.jpg
         #feh --bg-fill ~/Documents/wallpaper/starwars/1255654029702.png
         #feh --bg-fill ~/Documents/wallpaper/landscape/landscape-keltern-1_wall.jpg
-        feh --bg-fill ~/Documents/wallpaper/landscape/lonely_tree_by_gheias-d319736.jpg
+        #feh --bg-fill ~/Documents/wallpaper/landscape/lonely_tree_by_gheias-d319736.jpg
+        #feh --bg-fill ~/Documents/wallpaper/nature/spring fog--0
         #feh --bg-fill ~/Documents/wallpaper/landscape/naboo.jpg
         #feh --bg-fill ~/Documents/wallpaper/nature/coloured_bush_1920x1200.jpg
-        #feh --bg-tile ~/Documents/wallpaper/patterns/green-dia.png
+        #feh --bg-tile ~/Documents/wallpaper/patterns/black-mosaic.png
+        feh --bg-tile ~/Documents/wallpaper/patterns/strawberry-tile.jpg
         ;;
     hoth|towi04)
         nitrogen --restore
@@ -204,6 +206,11 @@ if [[ "$HOSTNAME" =~ ^(towi04|ghul|x40|eule|hoth)$ ]] ; then
     hc keybind Mod1+Mod4+i spawn ~/scripts/mpd/mpc.sh toggle
     hc keybind Mod1+Mod4+o spawn ~/scripts/mpd/mpc.sh next
     hc keybind Help spawn ~/scripts/mpd/mpc.sh next
+
+    hc keybind XF86AudioStop spawn ~/scripts/mpd/mpc.sh random
+    hc keybind XF86AudioPrev spawn ~/scripts/mpd/mpc.sh prev
+    hc keybind XF86AudioPlay spawn ~/scripts/mpd/mpc.sh toggle
+    hc keybind XF86AudioNext spawn ~/scripts/mpd/mpc.sh next
 fi
 
 hc keybind Mod4+n spawn ~/scripts/utils/utf8select.sh
