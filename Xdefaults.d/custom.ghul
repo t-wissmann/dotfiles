@@ -27,6 +27,11 @@ URxvt.background: #101010
 URxvt.color3:  #FFC630
 URxvt.font: -misc-fixed-medium-r-semicondensed-*-13-*-*-*-*-*-iso10646-1
 URxvt.boldFont: -misc-fixed-bold-r-semicondensed-*-13-*-*-*-*-*-iso10646-1
+!
+!URxvt.font: xft:Terminus:medium:size=10
+!URxvt.boldFont: xft:Terminus:bold:medium:size=10
+URxvt.keysym.C-2: command:\033]710;-misc-fixed-medium-r-semicondensed-*-13-*-*-*-*-*-iso10646-1\007\033]711;-misc-fixed-bold-r-semicondensed-*-13-*-*-*-*-*-iso10646-1\007
+
 URxvt.keysym.C-2: command:\033]710;-misc-fixed-medium-r-semicondensed-*-13-*-*-*-*-*-iso10646-1\007\033]711;-misc-fixed-bold-r-semicondensed-*-13-*-*-*-*-*-iso10646-1\007
 
 !*color2: #7FD1DA

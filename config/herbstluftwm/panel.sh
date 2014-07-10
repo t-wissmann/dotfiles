@@ -38,6 +38,8 @@ case "$HOSTNAME" in
         buttons=""
 esac
 
+#[ $monitor = 0 ] && width=$((width-100))
+
 update_pad $height
 {
     # events:
@@ -49,8 +51,13 @@ update_pad $height
     child="$!"
     if [ "$HOSTNAME" = ghul ] ; then
         conky -c ~/.conkyrc 2> /dev/null &
-        child="$child $!"
+        child+=" $!"
     fi
+    #if [ $monitor = 0 ] ; then
+        #stalonetray --geometry "1x1+${geometry[0]}+$((${geometry[1]}+${geometry[3]}-100))" &
+        #stalonetray --geometry '1x1+0+0' --skip-taskbar --sticky | cat &
+        #child+=" $!"
+    #fi
     herbstclient --idle
     kill $child
 }|{

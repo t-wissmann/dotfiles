@@ -25,9 +25,9 @@ case "$HOSTNAME" in
         #feh --bg-fill ~/Documents/wallpaper/landscape/lonely_tree_by_gheias-d319736.jpg
         #feh --bg-fill ~/Documents/wallpaper/nature/spring fog--0
         #feh --bg-fill ~/Documents/wallpaper/landscape/naboo.jpg
-        #feh --bg-fill ~/Documents/wallpaper/nature/coloured_bush_1920x1200.jpg
+        feh --bg-fill ~/Documents/wallpaper/nature/coloured_bush_1920x1200.jpg
         #feh --bg-tile ~/Documents/wallpaper/patterns/black-mosaic.png
-        feh --bg-tile ~/Documents/wallpaper/patterns/strawberry-tile.jpg
+        #feh --bg-tile ~/Documents/wallpaper/patterns/strawberry-tile.jpg
         ;;
     hoth|towi04)
         nitrogen --restore
@@ -216,9 +216,9 @@ fi
 hc keybind Mod4+n spawn ~/scripts/utils/utf8select.sh
 
 hc keybind Shift+XF86AudioMute spawn amixer -q sset PCM toggle
-hc keybind XF86AudioMute spawn amixer -q sset Master toggle
-hc keybind XF86AudioLowerVolume spawn amixer -q sset Master 2-
-hc keybind XF86AudioRaiseVolume spawn amixer -q sset Master 2+
+hc keybind XF86AudioMute spawn bash -c 'amixer -q sset Master toggle || amixer -q sset Speaker toggle'
+hc keybind XF86AudioLowerVolume spawn bash -c 'amixer -q sset Master 1- || amixer -q sset Speaker 1-'
+hc keybind XF86AudioRaiseVolume spawn bash -c 'amixer -q sset Master 1+ || amixer -q sset Speaker 1+'
 
 # some settings
 hc set focus_follows_mouse 1
