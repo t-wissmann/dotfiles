@@ -26,12 +26,24 @@ update_pad() {
 
 activecolor="$(herbstclient attr theme.tiling.active.color)"
 
+separator="^bg()^fg(#F3602C)|^fg()"
+case "$HOSTNAME" in
+    hoth)
+        suspend="^ca(1,systemctl suspend)s2r^ca()"
+        en="^ca(1,setxkbmap us && xmodmap ~/.xmodmaprc)EN^ca()"
+        de="^ca(1,setxkbmap de && xmodmap ~/.xmodmaprc)DE^ca()"
+        buttons="$suspend$separator$en$separator$de"
+    ;;
+    *)
+        buttons=""
+esac
+
 update_pad $height
 {
     # events:
     #mpc idleloop player &
     while true ; do
-        date +'date ^fg(#454545)%H:%M^fg(#242424), %Y-%m-^fg(#454545)%d'
+        date +'date ^fg(#898989)%H:%M, %Y-%m-%d'
         sleep 2 || break
     done > >(uniq_linebuffered) &
     child="$!"
@@ -51,8 +63,7 @@ update_pad $height
     $bottom && yoffset=2
     while true ; do
         hintcolor="#0f0f0f"
-        #separator="^bg()^fg(#141414)|^fg()"
-        separator=""
+        #separator=""
         #echo -n "^pa(0;0)"
         # draw tags
         echo -n "^bg($hintcolor)"
@@ -87,13 +98,14 @@ update_pad $height
             echo -n "^ca(1,herbstclient focus_monitor $monitor && herbstclient use ${i:1})"
             [ -f "$icon" ] && echo -n " ^pa(;$((yoffset+2)))^i($icon)^pa(;$yoffset) " \
                             || echo -n " ${i:1} "
-            echo -n "^ca()$separator"
+            #echo -n "^ca()$separator"
+            echo -n "^ca()"
         done
         echo -n "^bg()^fg(white) ${windowtitle//^/^^}^p(_CENTER)"
         # small adjustments
         calclick="^ca(1,$HOME/.config/herbstluftwm/calendar.sh)"
         calclick+="^ca(2,killall calendar.sh)"
-        right="$separator$conky$separator^bg($hintcolor)$calclick $date ^ca()^ca()$separator"
+        right="$conky$separator$buttons$separator^bg($hintcolor)$calclick $date ^ca()^ca()$separator"
         right_text_only=$(echo -n "$right"|sed 's.\^[^(]*([^)]*)..g')
         # get width of right aligned text.. and add some space..
         rightwidth=$(textwidth "$font" "$right_text_only  ")

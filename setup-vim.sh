@@ -50,11 +50,17 @@ update-git() {
     else
         git clone "$url" "$dir"
     fi
+}
+
+install-git() {
+    local url="$1"
+    local dir="$2"
+    update-git "$url" "$dir"
     shopt -s nullglob
     for subdir in indent plugin doc syntax ftplugin ftdetect ; do
         mkdir -p "$subdir"/
         for file in "$dir/$subdir/"* ; do
-            cp -v "$file" "$subdir"/
+            cp -v "$file" "$subdir"/ || true
         done
     done
 }
@@ -62,10 +68,15 @@ update-git() {
 (
     cd ~/.vim/
 
-    update-git https://github.com/jvoorhis/coq.vim coq
-    update-git git://github.com/chrisbra/csv.vim.git csv
-    # update-git https://github.com/jesboat/CoqIDE/ CoqIDE
-    update-git https://github.com/eagletmt/coqtop-vim coqtop
+    update-git https://github.com/kien/ctrlp.vim.git bundle/ctrlp.vim
+    # update help tags for it
+    vim --cmd 'helptags ~/.vim/bundle/ctrlp.vim/doc' --cmd 'q'
+
+
+    install-git https://github.com/jvoorhis/coq.vim coq
+    install-git git://github.com/chrisbra/csv.vim.git csv
+    # install-git https://github.com/jesboat/CoqIDE/ CoqIDE
+    install-git https://github.com/eagletmt/coqtop-vim coqtop
     mkdir -p indent
     pushd indent
         ln -sf ../coq/indent/coq.vim .
@@ -82,5 +93,6 @@ update-git() {
     pushd syntax
         ln -sf ../coq/syntax/coq.vim .
     popd
+
 )
 

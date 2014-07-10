@@ -83,7 +83,7 @@ endif
 " selecting links
 nmap - <C-]>
 nmap <F5> <ESC>:e<CR>
-map t <ESC>:tabnew 
+"map t <ESC>:tabnew 
 
 " line and column-numbers on bottom right
 set ruler
@@ -263,4 +263,8 @@ if has("autocmd")
 		au BufWritePost *.gpg u
 	augroup END
 endif " has ("autocmd")
+
+" CTRLP configuration
+set runtimepath^=~/.vim/bundle/ctrlp.vim
+nmap <C-O> :CtrlPBuffer<CR>
 
