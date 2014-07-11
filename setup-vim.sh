@@ -33,6 +33,10 @@ fetch ~/.vim/colors/solarized.vim \
 fetch ~/.vim/autoload/togglebg.vim \
     'https://github.com/altercation/vim-colors-solarized/raw/master/autoload/togglebg.vim'
 
+# for switching between header<->implementation
+fetch ~/.vim/plugin/a.vim \
+    'http://www.vim.org/scripts/download_script.php?src_id=7218'
+
 fetch ~/.vim/colors/molokai.vim \
     'http://www.vim.org/scripts/download_script.php?src_id=9750'
 
