@@ -215,10 +215,21 @@ fi
 
 hc keybind Mod4+n spawn ~/scripts/utils/utf8select.sh
 
+audioaction() {
+    # example for $1: toggle
+cat <<EOF
+amixer -q sset Master $1 \
+    || amixer -c 1 -q sset Master $1 \
+    || amixer -q sset Speaker $1
+EOF
+}
 hc keybind Shift+XF86AudioMute spawn amixer -q sset PCM toggle
-hc keybind XF86AudioMute spawn bash -c 'amixer -q sset Master toggle || amixer -q sset Speaker toggle'
-hc keybind XF86AudioLowerVolume spawn bash -c 'amixer -q sset Master 1- || amixer -q sset Speaker 1-'
-hc keybind XF86AudioRaiseVolume spawn bash -c 'amixer -q sset Master 1+ || amixer -q sset Speaker 1+'
+hc keybind XF86AudioMute spawn \
+    bash -c "$(audioaction toggle)"
+hc keybind XF86AudioLowerVolume spawn \
+    bash -c "$(audioaction 1- )"
+hc keybind XF86AudioRaiseVolume spawn \
+    bash -c "$(audioaction 1+ )"
 
 # some settings
 hc set focus_follows_mouse 1
@@ -516,6 +527,8 @@ mpc -q current -f '' > /dev/null && # if we can connect to a mpd
 #        esac
 #    done
 #} &
+
+hc keybind Mod4-v spawn xrandr --output VGA-0 --mode 1360x768
 
 hc unlock
 

@@ -906,3 +906,6 @@ odeclgrep() {
     done
 }
 
+ocolor() {
+    ~/bin/color red '^File \|^Warning \|^Error: \| line \| characters '
+}
