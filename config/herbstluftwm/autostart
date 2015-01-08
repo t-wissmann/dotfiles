@@ -200,7 +200,7 @@ if [[ "$HOSTNAME" =~ ^(towi04|ghul|x40|eule|hoth)$ ]] ; then
     hc keybind Pause spawn ~/scripts/mpd/mpc.sh toggle
     hc keybind Mod4+q spawn ~/scripts/mpd/dmenu.sh play
     hc keybind Mod4+w spawn ~/scripts/mpd/dmenu.sh totem
-    hc keybind Mod4+t spawn ~/scripts/utils/iptv/watch-dmenu.sh
+    #hc keybind Mod4+t spawn ~/scripts/utils/iptv/watch-dmenu.sh
     hc keybind Mod1+Mod4+y spawn ~/scripts/mpd/mpc.sh random
     hc keybind Mod1+Mod4+u spawn ~/scripts/mpd/mpc.sh prev
     hc keybind Mod1+Mod4+i spawn ~/scripts/mpd/mpc.sh toggle
@@ -354,7 +354,7 @@ if [ -d "$SCRIPTSDIR" ] ; then
         ~/.bash_settings $SCRIPTSDIR/dmenu.sh move
     hc keybind $Mod-Alt-space spawn $SCRIPTSDIR/execwith.sh \
         ~/.bash_settings $SCRIPTSDIR/dmenu.sh set_layout
-    hc keybind $Mod-F8 spawn $SCRIPTSDIR/q3terminal.sh
+    hc keybind $Mod-t spawn $SCRIPTSDIR/q3terminal.sh
 fi
 
 case "$HOSTNAME" in

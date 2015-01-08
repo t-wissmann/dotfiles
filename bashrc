@@ -42,7 +42,7 @@ _userland()
 
 #trysource /usr/share/bash-completion/bash_completion
 #trysource /etc/bash_completion
-for i in git mpc ; do
+for i in git mpc netctl systemctl ; do
     trysource /etc/bash_completion.d/$i
     trysource /usr/share/bash-completion/completions/$i
 done
