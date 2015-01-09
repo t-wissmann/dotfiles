@@ -177,6 +177,10 @@ if [ "$HOSTNAME" = ghul ] ;then
     hc keybind       XF86Launch1 spawn ~/bin/suspend.sh --lock
     hc keybind Shift-XF86Launch1 spawn ~/bin/suspend.sh
 fi
+if [ "$HOSTNAME" = parker ] ;then
+    hc keybind $Mod-Ctrl-q quit
+    hc keybind $Mod-F1 spawn i3lock --color=242424
+fi
 if [ "$HOSTNAME" = towi04 -o "$HOSTNAME" = hoth ] ; then
     #hc keybind $Mod-Control-q chain , quit , spawn killall foosession
     hc keybind $Mod-Ctrl-q spawn ~/scripts/logout-dialog.sh
@@ -338,6 +342,10 @@ case "$HOSTNAME" in
     #faui0*) colors_thin_purple ;;
     dachs)  colors_snow ;;
     #hoth)   new_theme ;;
+    parker)
+        new_theme
+        hc attr theme.normal.color '#2D2D2D'
+        ;;
     *)      new_theme ;;
 esac
 
@@ -389,10 +397,8 @@ case "$HOSTNAME" in
         ~/build/herbstluftwm/share/restartpanels.sh $panel
         ;;
     *)
-        panel=
-        [[ "$HOSTNAME" =~ towi04|ghul ]] &&
-            panel=~/.config/herbstluftwm/panel.sh
-        ~/dev/c/herbstluftwm/share/restartpanels.sh $panel
+        panel=~/.config/herbstluftwm/panel.sh
+        ~/git/herbstluftwm/share/restartpanels.sh $panel
     ;;
 esac
 

@@ -1,0 +1,70 @@
+# packages required on arch installations
+
+# groups
+base-devel
+#xorg
+#xfce4
+
+
+# packages of daily use
+alsa-utils
+asciidoc
+dmenu
+feh
+ghc
+git
+gnu-netcat
+gvim
+gpicview
+ghostscript
+herbstluftwm
+imagemagick
+mutt
+net-tools
+openssh
+pidgin
+rubber
+rxvt-unicode
+screen
+thunar
+tmux
+ttf-bitstream-vera
+ttf-dejavu
+urxvt-perls
+w3m
+zathura
+gcolor2
+
+# theming
+gtk-engine-murrine
+tangerine-icon-theme
+elementary-icon-theme
+faenza-icon-theme
+xcursor-vanilla-dmz
+xcursor-vanilla-dmz-aa
+
+# from the aur
+katarakt-git
+
+#maybe:
+#sudo
+
+# tex packages
+texlive-bibtexextra
+texlive-bin
+texlive-core
+texlive-fontsextra
+texlive-formatsextra
+texlive-genericextra
+texlive-htmlxml
+texlive-humanities
+texlive-latexextra
+texlive-music
+texlive-pictures
+texlive-plainextra
+texlive-pstricks
+texlive-publishers
+texlive-science
+
+
+
