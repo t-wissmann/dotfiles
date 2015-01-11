@@ -6,3 +6,55 @@
 }
 
 
+/* Structure of the error-page:
+<div id="errorContainer">
+    <div id="errorTitle">
+        <p id="errorTitleText">Unable to load page</p>
+    </div>
+    <div id="errorMessage">
+        <p>Problem occurred while loading the URL qute://help/lksdflsdflkjsdf</p>
+        <p id="errorMessageText">[Errno 2] Datei oder Verzeichnis nicht gefunden: '/home/thorsten/git/qutebrowser/qutebrowser/html/doc/lksdflsdflkjsdf'</p>
+    <p></p>
+    </div>
+
+    <form name="bl">
+        <input type="button" value="Try again" onclick="javascript:tryagain()">
+        <!--<input type="button" value="Search" style="visibility:%s" onclick="javascript:searchFor('%s')" />-->
+    </form>
+</div>
+*/
+
+
+#errorTitleText {
+    background-color: #ab0000 !important;
+    margin: 3px -7px -7px !important;
+    border-radius: 4px 4px 4px 4px !important;
+    padding: 4px;
+}
+
+/*
+#errorTitleText:after {
+    content: "" !important;
+}
+*/
+
+#errorContainer {
+    border: 3px solid #980000 !important;
+    background-color: #ce0000 !important;
+    color: #efefef !important;
+    padding-top: 0px !important;
+    position: relative !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    left: 0px !important;
+    right: 0px !important;
+    box-shadow: 0px 0px 10px 8px #454545;
+}
+
+#errorMessage {
+}
+#errorMessageText {
+    font-family: monospace !important;
+    font-size: 1.0em !important;
+    color: white;
+}
