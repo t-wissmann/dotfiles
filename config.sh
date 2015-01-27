@@ -25,6 +25,7 @@ homedir=(
     bash.d
     bashrc
     calcrc
+    dialogrc
     gitconfig
     tigrc
     emacs
