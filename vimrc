@@ -58,9 +58,9 @@ else
 endif
 
 " highlight whitespaces and trailing spaces
-"set list
+set list
 "set listchars=tab:>,trail:·,nbs
-set listchars=tab:▸\ ,eol:¬
+"set listchars=tab:▸\ ,eol:¬
 
 " menu and completion -> bash-like
 set wildmenu

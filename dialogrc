@@ -97,13 +97,13 @@ item_selected_color = button_active_color
 tag_color = (WHITE,DEFAULT,OFF)
 
 # Selected tag color
-tag_selected_color = (GREEN,BLACK,ON)
+tag_selected_color = (YELLOW,BLACK,ON)
 
 # Tag key color
 tag_key_color = button_key_inactive_color
 
 # Selected tag key color
-tag_key_selected_color = (GREEN,BLACK,ON)
+tag_key_selected_color = tag_selected_color
 
 # Check box color
 check_color = dialog_color
