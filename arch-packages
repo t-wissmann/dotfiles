@@ -34,6 +34,10 @@ urxvt-perls
 w3m
 zathura
 gcolor2
+rsync
+zip
+p7zip
+unzip
 
 # theming
 gtk-engine-murrine
