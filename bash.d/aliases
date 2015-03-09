@@ -96,6 +96,8 @@ alias plan="vim ~/uni/current/stundenplan/tabelle"
 alias newmail='unison -batch mail && mutt -Z'
 alias mutt='setWindowTitle mutt && mutt'
 alias mailtree='find ~/Mail -type d |grep -v "\.d"|sort|sed "s#^$HOME/Mail[/]*##"|grep -vx ""|path2tree'
+alias rot13="tr '[A-Za-z]' '[N-ZA-Mn-za-m]'"
+alias rot1="tr '[A-Za-z]' '[B-ZAb-za]'"
 
 # cip stuff
 alias sm='ssh -i ~/.ssh/id_rsa_mephisto mephisto'
