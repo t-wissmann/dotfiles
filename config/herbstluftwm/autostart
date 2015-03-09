@@ -93,7 +93,7 @@ function singlehead() {
 case "$HOSTNAME" in
     hoth|towi04)
         hc detect_monitors
-        hc focus_monitor 1
+        # hc focus_monitor 1
         ;;
     dachs)
         hc keybind $Mod-Return spawn xterm
