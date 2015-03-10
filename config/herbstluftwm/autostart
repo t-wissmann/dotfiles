@@ -7,7 +7,7 @@ pad="0 0 0 0"
 function hc() {
     herbstclient "$@"
 }
-[[ "$HOSTNAME" == faui* ]] && hc() { ~/bin/herbstclient "$@" ; }
+#[[ "$HOSTNAME" == faui* ]] && hc() { ~/bin/herbstclient "$@" ; }
 
 hc emit_hook reload
 
@@ -60,7 +60,7 @@ for i in ${!TAG_NAMES[@]} ; do
     hc add "${TAG_NAMES[$i]}"
     key="${TAG_KEYS[$i]}"
     if ! [ -z "$key" ] ; then
-        hc keybind "$Mod-$key" use_index "$i"
+        hc keybind "$Mod-$key" or . and , compare tags.focus.index = "$i" , try use_previous . use_index "$i"
         hc keybind "$Mod-Shift-$key" move_index "$i"
     fi
 done

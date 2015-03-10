@@ -7,10 +7,10 @@
 
 *dpi: 96
 URxvt.perl-lib: /home/cip/adm/re06huxa/.urxvt/
-URxvt.fading: 5
+!URxvt.fading: 5
 !URxvt.fadeColor: #AE00CB
 !URxvt.fadeColor: #9fbc00
-URxvt.fadeColor: #9fbc00
+!URxvt.fadeColor: #9fbc00
 
 ! probably needs this in your .xinitrc:
 ! xset +fp ~/.fonts/
@@ -26,6 +26,9 @@ URxvt.fadeColor: #9fbc00
 !#include "neon.colors"
 URxvt.color0:  #222222
 URxvt.background: #101010
+URxvt.background: rgba:1010/1010/1010/eeee
+URxvt.foreground: #EDEDED
+URxvt.depth: 32
 
 !white
 *color7: #9d9d9d
