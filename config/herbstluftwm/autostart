@@ -174,6 +174,7 @@ if [ "$HOSTNAME" = ghul ] ;then
     hc keybind $Mod-q quit
     # TODO: why are there problems with XGrabKey for XF86ScreenSaver;
     hc keybind XF86ScreenSaver spawn ~/bin/lock.sh
+    hc keybind $Mod-F1 spawn ~/bin/lock.sh
     hc keybind       XF86Launch1 spawn ~/bin/suspend.sh --lock
     hc keybind Shift-XF86Launch1 spawn ~/bin/suspend.sh
 fi
@@ -470,6 +471,8 @@ c=~/.config/herbstluftwm/
 hc keybind $Mod-F10         spawn $c/fastterminal.sh -t
 hc keybind $Mod-Shift-F10   spawn $c/fastterminal.sh -b
 hc keybind $Mod-F12         spawn $c/toggledualhead.sh
+hc keybind $Mod-bracketright spawn $c/toggledualhead.sh
+hc keybind XF86Display      spawn $c/toggleexternalmonitor.sh
 hc keybind $Mod-F9          emit_hook togglehidepanel
 
 [ -f "$STATEFILE" ] && ~/dev/c/herbstluftwm/scripts/loadstate.sh < "$STATEFILE"
