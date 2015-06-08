@@ -337,18 +337,24 @@ hc unlock
 
 }
 
+
 # new colors
 case "$HOSTNAME" in
     x40)    colors_thin_red ;;
     #faui0*) colors_thin_purple ;;
     dachs)  colors_snow ;;
-    #hoth)   new_theme ;;
+    hoth)
+        new_theme
+        hc attr theme.active.color '#9fbc00'
+        hc set frame_bg_active_color '#9fbc00'
+        ;;
     parker)
         new_theme
         hc attr theme.normal.color '#2D2D2D'
         ;;
     *)      new_theme ;;
 esac
+
 
 SCRIPTSDIR=$HOME/dev/c/herbstluftwm/scripts/
 

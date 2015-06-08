@@ -138,6 +138,20 @@ add_binds("normal", {
     end)
 }, true) -- true: overwrite already existing
 
+add_binds("all", {
+    but({}, 2, "Open link in new tab",
+        function (w, m)
+            -- Ignore button 2 clicks in form fields
+            if not m.context.editable then
+                -- Open hovered uri in new tab
+                local uri = w.view.hovered_uri
+                if uri then
+                    w:new_tab(uri, false)
+                end
+            end
+        end),
+}, true) -- true: overwrite already existing
+
 
 add_binds("command", {
     -- Start completion

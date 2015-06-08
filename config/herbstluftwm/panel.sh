@@ -81,7 +81,7 @@ update_pad $height
                 #'.') echo -n "^bg($hintcolor)^fg(black)" ;;
                 '.') continue ;;
                 '!') echo -n "^bg(#FF7386)^fg(black)" ;;
-                *) echo -n "^bg(#454545)^fg(black)" ;;
+                *) echo -n "^bg(#232323)^fg(black)" ;;
                 #':')
                 #    echo -n "^fg(#efefef)"
                 #    ;;
