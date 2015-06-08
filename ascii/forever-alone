@@ -1,0 +1,41 @@
+#!/bin/bash
+
+mirror() {
+    rev | tr '/\\()' '\\/)('
+}
+
+#   y,x,color
+colors=(
+    0,0,32
+    2,3,31
+)
+
+# construct color replacement
+
+sedparam=''
+
+for i in "${colors[@]}" ; do
+    [ -z "$sedparam" ] || sedparam+=';'
+    i=( $(tr , ' ' <<< "$i") )
+    y=$((1+${i[0]})) ; x=${i[1]} ; c=${i[2]}
+    sedparam+="$y,${y}s#^\(.\{$x\}\)#\1$(echo -ne \\e[${c}m)#"
+done
+
+colorize() {
+    #cat | sed 's/\(.*\)/\1\1\1\1\1/'
+    sed "$sedparam"
+}
+
+cat <<EOF | colorize
+   _.--._         
+  /,     \\        
+ /' o \\ o_\\_      
+ |  "'-=='  \\     
+ \\ ) \\  ' /  )    
+  \\ \\_  )_  /     
+   '------"'      
+     /|\\          
+      |           
+     / \\          
+EOF
+
