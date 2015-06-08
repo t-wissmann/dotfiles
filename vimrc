@@ -155,6 +155,7 @@ function! EnterTexFile()
 	ab xalign \begin{align}<RETURN><C-U>\end{align}<UP><END>
 	ab xals \begin{align*}<RETURN><C-U>\end{align*}<UP><END>
 	ab xma \[\]<LEFT><LEFT><RETURN><UP><END>
+	ab xtcd \begin{tikzcd}[compactcd]\end{tikzcd}<LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><RETURN><UP><END>
 	ab xsec \section{}<left>
 	ab xsub \subsection{}<left>
 	ab xssub \subsubsection{}<left>
@@ -270,6 +271,5 @@ nmap <C-O> :CtrlPBuffer<CR>
 
 noremap  <buffer> <silent> k gk
 noremap  <buffer> <silent> j gj
-noremap  <buffer> <silent> 0 g0
-noremap  <buffer> <silent> $ g$
+
 
