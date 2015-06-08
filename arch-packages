@@ -4,6 +4,11 @@
 base-devel
 #xorg
 #xfce4
+#
+## basic system
+xorg-xinit
+arandr
+ntp
 
 
 # packages of daily use
@@ -11,14 +16,18 @@ alsa-utils
 asciidoc
 dmenu
 feh
+nitrogen
+transset-df
 ghc
 git
 gnu-netcat
 gvim
 gpicview
+lxappearance
 ghostscript
 herbstluftwm
 imagemagick
+i3lock
 mutt
 net-tools
 openssh
@@ -38,6 +47,11 @@ rsync
 zip
 p7zip
 unzip
+wget
+htop
+xclip
+wmctrl
+
 
 # theming
 gtk-engine-murrine
@@ -47,8 +61,14 @@ faenza-icon-theme
 xcursor-vanilla-dmz
 xcursor-vanilla-dmz-aa
 
+qt4
+qt5
+poppler-qt4
+poppler-qt5
+
 # from the aur
-katarakt-git
+#katarakt-git
+#compton
 
 #maybe:
 #sudo

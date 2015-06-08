@@ -1,8 +1,5 @@
 #!/bin/bash
-source ~/.bash_settings
 
-f=~/dev/c/herbstluftwm/scripts/wselect.sh
-[ -x "$f" ] ||
 f=~/git/herbstluftwm/scripts/wselect.sh
 [ -x "$f" ] ||
 f=/usr/share/doc/herbstluftwm/examples/wselect.sh

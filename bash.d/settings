@@ -12,7 +12,8 @@
 #export dmenu_command="dmenu -i -r -c -rs -nb #141414 -nf #9fbc00 -sb #141414 -sf #d6516c -fn 'xft:BitstreamVeraSansMono:bold:pixelsize=11' -ni"
 #export dmenu_command="dmenu -i -nb #141414 -nf #9fbc00 -sb #141414 -sf #d6516c -fn 'xft:BitstreamVeraSansMono:bold:pixelsize=11'"
 #export dmenu_command="dmenu -i -nb white -nf #121212 -sb #1361AD -sf #232323 -fn -*-fixed-*-*-*-*-12-*-*-*-*-*-*-"
-export dmenu_command="dmenu -i -nb #607900 -nf white -sb #FBFFE6 -sf black -fn fixed-10:pixelsize=11"
+dmenu_command=(dmenu -i -nb \#607900 -nf white -sb \#FBFFE6 -sf black -fn fixed-10:pixelsize=11)
+export dmenu_command
 # for glassy white/green
 #export dmenu_command="dmenu -i -x 23 -w $((1366-2*23)) -c -rs -nb #7C7978 -nf #efefef -sb #9AFF36 -sf #202020 -fn 'xft:BitstreamVeraSans:bold:pixelsize=11' -ni"
 export dmenu_lines="10"

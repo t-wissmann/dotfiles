@@ -52,17 +52,17 @@ hc keybind $Mod-Shift-semicolon spawn ~/.config/herbstluftwm/wselect.sh bring
 
 
 # tags
-TAG_NAMES=( cip vim video float music web im irc mail xn )
+TAG_NAMES=( irc vim web mail a b c d e f g h i j k )
 TAG_KEYS=( {1..9} 0 )
 
 hc rename default "${TAG_NAMES[0]}" || true
 for i in ${!TAG_NAMES[@]} ; do
     hc add "${TAG_NAMES[$i]}"
+done
+for i in "${!TAG_KEYS[@]}" ; do
     key="${TAG_KEYS[$i]}"
-    if ! [ -z "$key" ] ; then
-        hc keybind "$Mod-$key" or . and , compare tags.focus.index = "$i" , try use_previous . use_index "$i"
-        hc keybind "$Mod-Shift-$key" move_index "$i"
-    fi
+    hc keybind "$Mod-$key" or . and , compare tags.focus.index = "$i" , try use_previous . use_index "$i"
+    hc keybind "$Mod-Shift-$key" move_index "$i"
 done
 
 hc keybind "$Mod-period" use_index +1 --skip-visible
@@ -447,14 +447,14 @@ STATEFILE=~/.config/herbstluftwm/state
 
 # GIMP
 # ensure there is a gimp tag
-hc add gimp
-hc load gimp '
-(split horizontal:0.850000:0
-  (split horizontal:0.200000:1
-    (clients vertical:0)
-    (clients grid:0))
-  (clients vertical:0))
-'               # load predefined layout
+#hc add gimp
+#hc load gimp '
+#(split horizontal:0.850000:0
+#  (split horizontal:0.200000:1
+#    (clients vertical:0)
+#    (clients grid:0))
+#  (clients vertical:0))
+#'               # load predefined layout
 # center all other gimp windows on gimp tag
 hc rule class=Gimp tag=gimp index=01 pseudotile=on
 hc rule class=Gimp windowrole~'gimp-(image-window|toolbox|dock)' \
@@ -464,12 +464,12 @@ hc rule class=Gimp windowrole=gimp-dock focus=off index=1
 
 # Instant messenger
 
-imtag=im
-hc add "$imtag"
-hc load "$imtag" \
-    '(split horizontal:0.800000:0 (clients grid:0) (clients vertical:0))'
-hc rule class=Pidgin   windowrole=buddy_list tag=$imtag focus=off index=1
-hc rule class=Pidgin ! windowrole=buddy_list tag=$imtag focus=on  index=0
+#imtag=im
+#hc add "$imtag"
+#hc load "$imtag" \
+#    '(split horizontal:0.800000:0 (clients grid:0) (clients vertical:0))'
+#hc rule class=Pidgin   windowrole=buddy_list tag=$imtag focus=off index=1
+#hc rule class=Pidgin ! windowrole=buddy_list tag=$imtag focus=on  index=0
 
 
 ### SCRIPTS ###
