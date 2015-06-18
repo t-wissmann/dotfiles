@@ -46,14 +46,14 @@ hc keybind $Mod-Shift-c close
 hc keybind $Mod-Return spawn urxvt
 hc keybind $Mod-x spawn ~/scripts/menu/custommenu.sh apps
 hc keybind $Mod-F2 spawn gmrun
-hc keybind $Mod-e spawn thunar
+#hc keybind $Mod-e spawn thunar
 hc keybind $Mod-semicolon spawn ~/.config/herbstluftwm/wselect.sh
 hc keybind $Mod-Shift-semicolon spawn ~/.config/herbstluftwm/wselect.sh bring
 
 
 # tags
-TAG_NAMES=( irc vim web mail a b c d e f g h i j k )
-TAG_KEYS=( {1..9} 0 )
+TAG_NAMES=( irc vim web mail )
+TAG_KEYS=( {1..9} 0 q w e)
 
 hc rename default "${TAG_NAMES[0]}" || true
 for i in ${!TAG_NAMES[@]} ; do
@@ -61,6 +61,9 @@ for i in ${!TAG_NAMES[@]} ; do
 done
 for i in "${!TAG_KEYS[@]}" ; do
     key="${TAG_KEYS[$i]}"
+    if [ -z "${TAG_NAMES[$i]}" ] ; then
+        hc add "${TAG_KEYS[$i]}"
+    fi
     hc keybind "$Mod-$key" or . and , compare tags.focus.index = "$i" , try use_previous . use_index "$i"
     hc keybind "$Mod-Shift-$key" move_index "$i"
 done
@@ -171,12 +174,15 @@ hc keybind $Mod-Shift-l or / shift right / \
 
 ## other things
 if [ "$HOSTNAME" = ghul ] ;then
-    hc keybind $Mod-q quit
     # TODO: why are there problems with XGrabKey for XF86ScreenSaver;
     hc keybind XF86ScreenSaver spawn ~/bin/lock.sh
     hc keybind $Mod-F1 spawn ~/bin/lock.sh
     hc keybind       XF86Launch1 spawn ~/bin/suspend.sh --lock
     hc keybind Shift-XF86Launch1 spawn ~/bin/suspend.sh
+fi
+if [ "$HOSTNAME" = faui8279 ] ;then
+    hc keybind $Mod-F1 spawn bash -c ' i3lock -i ~/wallpaper/patterns/strawberry-tile.png -t && systemctl suspend'
+    hc keybind $Mod-F2 spawn bash -c ' i3lock -i ~/wallpaper/patterns/strawberry-tile.png -t'
 fi
 if [ "$HOSTNAME" = parker ] ;then
     hc keybind $Mod-Ctrl-q quit
@@ -203,9 +209,9 @@ if [ "$HOSTNAME" = towi04 -o "$HOSTNAME" = hoth ] ; then
 fi
 if [[ "$HOSTNAME" =~ ^(towi04|ghul|x40|eule|hoth)$ ]] ; then
     hc keybind Pause spawn ~/scripts/mpd/mpc.sh toggle
-    hc keybind Mod4+q spawn ~/scripts/mpd/dmenu.sh play
-    hc keybind Mod4+w spawn ~/scripts/mpd/dmenu.sh totem
-    #hc keybind Mod4+t spawn ~/scripts/utils/iptv/watch-dmenu.sh
+    #hc keybind Mod4-q spawn ~/scripts/mpd/dmenu.sh play
+    #hc keybind Mod4-w spawn ~/scripts/mpd/dmenu.sh totem
+    #hc keybind Mod4-t spawn ~/scripts/utils/iptv/watch-dmenu.sh
     hc keybind Mod1+Mod4+y spawn ~/scripts/mpd/mpc.sh random
     hc keybind Mod1+Mod4+u spawn ~/scripts/mpd/mpc.sh prev
     hc keybind Mod1+Mod4+i spawn ~/scripts/mpd/mpc.sh toggle
@@ -348,8 +354,9 @@ case "$HOSTNAME" in
         hc attr theme.active.color '#9fbc00'
         hc set frame_bg_active_color '#9fbc00'
         ;;
-    parker)
+    parker|faui8*)
         new_theme
+        hc attr theme.active.color '#9fbc00'
         hc attr theme.normal.color '#2D2D2D'
         ;;
     *)      new_theme ;;
@@ -404,17 +411,10 @@ case "$HOSTNAME" in
         ~/build/herbstluftwm/share/restartpanels.sh $panel
         ;;
     *)
-        panel=~/.config/herbstluftwm/panel.sh
+        panel=~/.config/herbstluftwm/panel-lemonbar.sh
         ~/git/herbstluftwm/share/restartpanels.sh $panel
     ;;
 esac
-
-if [ -x /opt/SUNWut/bin/utaction ] ; then
-    hc keyunbind $Mod-Shift-q
-    hc keyunbind $Mod-Control-q
-    hc keybind $Mod-SunF36 spawn ~/scripts/setresolution.sh
-    hc keybind $Mod-F11 spawn ~/scripts/setresolution.sh
-fi
 
 # nice tree styles:
 herbstclient set tree_style '╾│ ├└╼─┐'

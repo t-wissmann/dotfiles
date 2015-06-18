@@ -16,6 +16,7 @@ alsa-utils
 asciidoc
 dmenu
 feh
+calc
 nitrogen
 transset-df
 ghc
@@ -51,6 +52,10 @@ wget
 htop
 xclip
 wmctrl
+youtube-dl
+mpv
+inkscape
+sshfs
 
 
 # theming

@@ -54,6 +54,9 @@ update_pad $height
             date)
                 date="${cmd[@]:1}"
                 ;;
+            quit_panel)
+                exit 0
+                ;;
             *)
                 ;;
         esac
@@ -80,7 +83,7 @@ update_pad $height
                 ':') visible=false ;;
             esac
             tag=""
-            $here     && tag+="%{B#232323}" || tag+="%{B-}"
+            $here     && tag+="%{B#323232}" || tag+="%{B-}"
             $visible  && tag+="%{+o}" || tag+="%{-o}"
             $occupied && tag+="%{F-}" || tag+="%{F#909090}"
             $focused  && tag+="%{Fwhite}%{U$activecolor}" \
@@ -95,7 +98,7 @@ update_pad $height
         echo -n "%{r} %{+o}%{U#909090}%{B#232323} $date %{B-}"
         echo "%{B-}%{-o}%{-u}"
     done
-} | lemonbar \
+} | lemonbar -d \
     -g "$(printf '%dx%d%+d%+d' $width $height $x $y)" \
     -u 2 -f "$font" -B '#121212'
 
