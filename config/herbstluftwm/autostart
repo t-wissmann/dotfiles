@@ -329,16 +329,19 @@ hc attr theme.active.color
 hc attr theme.padding_top 8
 hc attr theme.inner_width 0
 hc attr theme.normal.color '#222222'
-hc attr theme.active.color '#F3602C'
+hc attr theme.active.color '#9fbc00'
 hc attr theme.urgent.color 'white'
 
 hc set frame_border_active_color '#222222'
 hc set frame_border_normal_color '#101010'
 hc set frame_bg_normal_color '#565656'
-hc set frame_bg_active_color 'orange'
+hc set frame_bg_active_color '#9fbc00'
 hc set frame_border_width 1
 hc set frame_bg_transparent 1
 hc set frame_transparent_width 3
+
+hc set smart_frame_surroundings 1
+
 hc unlock
 
 }
@@ -349,12 +352,10 @@ case "$HOSTNAME" in
     x40)    colors_thin_red ;;
     #faui0*) colors_thin_purple ;;
     dachs)  colors_snow ;;
-    hoth)
+    hoth|faui8*)
         new_theme
-        hc attr theme.active.color '#9fbc00'
-        hc set frame_bg_active_color '#9fbc00'
         ;;
-    parker|faui8*)
+    parker)
         new_theme
         hc attr theme.active.color '#9fbc00'
         hc attr theme.normal.color '#2D2D2D'
