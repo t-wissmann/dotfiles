@@ -358,6 +358,7 @@ case "$HOSTNAME" in
         new_theme
         hc attr theme.active.color '#9fbc00'
         hc attr theme.normal.color '#2D2D2D'
+        hc set frame_bg_active_color '#9fbc00'
         ;;
     *)      new_theme ;;
 esac
