@@ -93,9 +93,9 @@ update_pad $height
         done
         echo -n "%{F-}%{B-}%{-o}"
         [[ -n "$windowtitle" ]] \
-            && echo -n "%{c} %{+o}%{U#9fbc00}%{B#232323} ${windowtitle:0:50} %{-o}%{B-}" \
+            && echo -n "%{c} %{-o}%{U#9fbc00}%{B#232323} ${windowtitle:0:50} %{-o}%{B-}" \
             || echo -n "%{c} "
-        echo -n "%{r} %{+o}%{U#909090}%{B#232323} $date %{B-}"
+        echo -n "%{r} %{-o}%{U#909090}%{B#232323} $date %{B-}"
         echo "%{B-}%{-o}%{-u}"
     done
 } | lemonbar -d \
