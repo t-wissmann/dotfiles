@@ -86,6 +86,7 @@ update_pad $height
             $here     && tag+="%{B#323232}" || tag+="%{B-}"
             $visible  && tag+="%{+o}" || tag+="%{-o}"
             $occupied && tag+="%{F-}" || tag+="%{F#909090}"
+            $urgent   && tag+="%{B#D6156C}%{-o}"
             $focused  && tag+="%{Fwhite}%{U$activecolor}" \
                       || tag+="%{U#454545}"
             tag+=" ${i:1} "

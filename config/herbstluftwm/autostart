@@ -25,8 +25,9 @@ case "$HOSTNAME" in
         #feh --bg-fill ~/Documents/wallpaper/landscape/lonely_tree_by_gheias-d319736.jpg
         #feh --bg-fill ~/Documents/wallpaper/nature/spring fog--0
         #feh --bg-fill ~/Documents/wallpaper/landscape/naboo.jpg
-        feh --bg-fill ~/Documents/wallpaper/nature/coloured_bush_1920x1200.jpg
+        #feh --bg-fill ~/Documents/wallpaper/nature/coloured_bush_1920x1200.jpg
         #feh --bg-tile ~/Documents/wallpaper/patterns/black-mosaic.png
+        feh --bg-tile ~/Documents/wallpaper/patterns/pattern-ob-9fbc00.png
         #feh --bg-tile ~/Documents/wallpaper/patterns/strawberry-tile.jpg
         ;;
     hoth|towi04)
