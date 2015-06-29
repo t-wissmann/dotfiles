@@ -16,6 +16,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-(load-file "~/.emacs.d/color-theme/themes/zenburn-theme.el")
-(zenburn)
+(add-to-list 'custom-theme-load-path "~/.emacs.d/color-theme/themes/")
+(load-theme 'zenburn t)
+;;(require 'color-theme-zenburn)
+;;(color-theme-zenburn)
 (setq scroll-step 1)
