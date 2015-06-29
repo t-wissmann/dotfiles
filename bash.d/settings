@@ -18,7 +18,7 @@
 
 dmenu_custom() {
     local sb=$(herbstclient attr theme.tiling.active.color)
-    `which dmenu` -i -nf white -sb $sb -sf black -fn fixed-13:pixelsize=11 "$@"
+    `which dmenu` -i -nf white -sb $sb -sf black -fn -*-fixed-*-*-*-*-12-*-*-*-*-*-*- "$@"
 }
 export dmenu_lines=30
 export dmenu_command=dmenu_custom

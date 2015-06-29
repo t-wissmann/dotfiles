@@ -181,7 +181,7 @@ if [ "$HOSTNAME" = ghul ] ;then
     hc keybind       XF86Launch1 spawn ~/bin/suspend.sh --lock
     hc keybind Shift-XF86Launch1 spawn ~/bin/suspend.sh
 fi
-if [ "$HOSTNAME" = faui8279 ] ;then
+if [[ "$HOSTNAME" =~ ^faui8.*$ ]] ; then
     hc keybind $Mod-F1 spawn bash -c ' i3lock -i ~/wallpaper/patterns/strawberry-tile.png -t && systemctl suspend'
     hc keybind $Mod-F2 spawn bash -c ' i3lock -i ~/wallpaper/patterns/strawberry-tile.png -t'
 fi
