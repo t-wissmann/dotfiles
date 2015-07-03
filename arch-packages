@@ -35,6 +35,7 @@ openssh
 pidgin
 rubber
 rxvt-unicode
+xdotool
 screen
 thunar
 tmux
