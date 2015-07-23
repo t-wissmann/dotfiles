@@ -27,6 +27,7 @@ search_engines["tab"] = "http://www.guitaretab.com/fetch/?type=tab&query=%s"
 search_engines["latein"] = "http://www.frag-caesar.de/lateinwoerterbuch/%s-uebersetzung.html"
 search_engines["dict"] = "http://www.dict.cc/?s=%s"
 search_engines["nlab"] = "http://ncatlab.org/nlab/search?&query=%s"
+search_engines["wetter"] = "http://www.wetter.de/suche.html?search=%s"
 
 
 search_engines.aur = "http://aur.archlinux.org/packages.php?K=%s&do_Search=Go"
@@ -43,12 +44,12 @@ search_engines.gpg = "http://gpg-keyserver.de/pks/lookup?search=0x%s&op=vindex"
 search_engines["27c3-phone"] = "http://www.eventphone.de/guru2/phonebook?event=27C3&s=%s&installedonly=0&submit=Search"
 search_engines["27c3"] = "https://events.ccc.de/congress/2010/wiki/Special:Search?search=%s"
 search_engines["hoogle"] = "http://haskell.org/hoogle/?hoogle=%s"
-search_engines.default = search_engines.g
+search_engines.default = "%s"
 
 -- Per-domain webview properties
 domain_props = {
     ["all"] = {
-        enable_scripts          = false,
+        enable_scripts          = true,
         enable_plugins          = false,
         enable_private_browsing = true,
         user_stylesheet_uri     = "file://"..os.getenv("HOME").."/.config/luakit/style.css",
