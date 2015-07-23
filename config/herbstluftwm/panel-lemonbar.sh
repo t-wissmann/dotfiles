@@ -86,7 +86,7 @@ update_pad $height
             $here     && tag+="%{B#323232}" || tag+="%{B-}"
             $visible  && tag+="%{+o}" || tag+="%{-o}"
             $occupied && tag+="%{F-}" || tag+="%{F#909090}"
-            $urgent   && tag+="%{B#D6156C}%{-o}"
+            $urgent   && tag+="%{B#eeD6156C}%{-o}"
             $focused  && tag+="%{Fwhite}%{U$activecolor}" \
                       || tag+="%{U#454545}"
             tag+=" ${i:1} "
@@ -101,7 +101,7 @@ update_pad $height
     done
 } | lemonbar -d \
     -g "$(printf '%dx%d%+d%+d' $width $height $x $y)" \
-    -u 2 -f "$font" -B '#121212'
+    -u 2 -f "$font" -B '#ee121212'
 
 #herbstclient pad $monitor 0
 
