@@ -910,6 +910,10 @@ ocolor() {
     ~/bin/color red '^File \|^Warning \|^Error: \| line \| characters '
 }
 
+o() {
+    xdg-open "$@" &
+}
+
 
 ::() {
     echo -e "\e[0;31m:: \e[0;32m$*\e[0m"
