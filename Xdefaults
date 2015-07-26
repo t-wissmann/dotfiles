@@ -199,8 +199,15 @@ rofi.terminal:                       urxvt
 rofi.sidebar-mode:                   true
 rofi.fixed-num-lines:                false
 rofi.bw:                             1
+!             1 2 3
+!             8 0 4
+!             7 6 5
 rofi.location:                       0
-rofi.padding:                        2
+rofi.padding:                        3
+rofi.yoffset:                        0
+rofi.xoffset:                        0
+rofi.eh:                             1
+
 
 
 #include ".Xdefaults.d/custom"
