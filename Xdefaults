@@ -172,17 +172,17 @@ XTerm*cursorColor: #ff9900
 
 rofi.modi:                           window,run,ssh,combi
 rofi.opacity:                        100
-rofi.width:                          -50
-rofi.lines:                          30
+rofi.width:                          -80
+rofi.lines:                          20
 rofi.columns:                        1
 rofi.font:                           Bitstream Vera Sans Mono bold 8
 rofi.fg:                             #efefef
-rofi.bg:                             #232323
 rofi.color-enabled:                  true
-rofi.color-normal:                   #191919,#cecece,#191919,black,#FFE352
-rofi.color-urgent:                   #D6156C,white,#D6156C,#dc322f,#FFE352
-rofi.color-active:                   #191919,white,#191919,black,#FFE352
-rofi.color-window:                   #232323,#9fbc00
+!    STATE                           BG         FG        BGALT     HLBG      HLFG
+rofi.color-normal:                   #101010,   #cecece,  #101010,  #9fbc00,  black
+rofi.color-urgent:                   #D6156C,   white,    #D6156C,  #dc322f,  #9fbc00
+rofi.color-active:                   #101010,   #FFE352,  #101010,  #9fbc00,  black
+rofi.color-window:                   #242424,black
 !rofi.fg-active:                      #268BD2
 !rofi.fg-urgent:                      #DC322F
 !rofi.hlfg-active:                    #FDF6E3
@@ -200,7 +200,7 @@ rofi.sidebar-mode:                   true
 rofi.fixed-num-lines:                false
 rofi.bw:                             1
 rofi.location:                       0
-rofi.padding:                        5
+rofi.padding:                        2
 
 
 #include ".Xdefaults.d/custom"
