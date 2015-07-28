@@ -1,4 +1,46 @@
 #!/bin/bash -e
 
+IFS=$'\n'
+stop_all='[ STOP ALL PROFILES ]'
+profiles=(
+    '  '"$stop_all"
+    $(netctl list)
+)
 
-echo "$selection selected"
+i=0
+active=""
+for p in "${profiles[@]}" ; do
+    if [ "${p#\* }" != "$p" ] ; then
+        active="$i"
+    fi
+    profiles[$i]="${p:2}"
+    i=$((i+1))
+done
+
+selection=$(printf "%s\n" "${profiles[@]}" \
+    | rofi \
+      -dmenu \
+      -a "0,$active" \
+      -no-custom \
+      -p "netctl enable ")
+
+if [ "$selection" = "$stop_all" ] ; then
+    sudo netctl stop-all
+else
+    connect() {
+        ::() { echo -e "\e[1;32m::\e[1;37m $*" ; }
+        :: sudo journalctl -f  --unit='system-netctl.slice' '&'
+        sudo journalctl -f  --unit='system-netctl.slice' &
+        journalctl_pid=$!
+        :: sudo netctl start "$selection"
+        sudo netctl start "$selection"
+        :: Press any key to close… | tr -d '\n'
+        read -n 1
+        kill "$journalctl_pid"
+    }
+    export selection
+    export -f connect
+    urxvt -e bash -c connect
+fi
+
+
