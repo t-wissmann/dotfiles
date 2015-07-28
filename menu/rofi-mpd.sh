@@ -9,10 +9,13 @@ args="$*"
 
 switcher_titles=( )
 switcher_ids=( )
+switchers=""
+rofimpd="$0"
 
 add_switcher() {
-    switcher_titles+=( "$1" )
-    switcher_ids+=( "$2" )
+    switcher_titles+=( "$2" )
+    switcher_ids+=( "$1" )
+    switchers+="$2: $rofimpd $1,"
 }
 
 playlist() {
@@ -64,12 +67,6 @@ addalbum() {
 add_switcher playlist   Playlist
 add_switcher addalbum   "Add album"
 add_switcher addsong    "Add song"
-
-# compose switcher specification
-switchers=""
-for i in "${!switcher_ids[@]}" ; do
-    switchers+="${switcher_titles[$i]}:$0 ${switcher_ids[$i]},"
-done
 
 if [ -z "$switcher" ] ; then
     rofi  -no-levenshtein-sort \
