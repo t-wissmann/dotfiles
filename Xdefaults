@@ -207,6 +207,8 @@ rofi.padding:                        3
 rofi.yoffset:                        0
 rofi.xoffset:                        0
 rofi.eh:                             1
+rofi.levenshtein-sort:               false
+
 
 
 

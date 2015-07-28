@@ -1,12 +1,23 @@
 #!/bin/bash -e
+# written by Thorsten Wißmann, 2015
+#
+# dependencies:
+#
+#  - rofi
+#  - mpc
+#  - bash
+#  - standard unix utils (sed, column, grep, uniq,…)
 
-#song_format="%position%) [[[%artist% - ]%title%[ (%album%)]]|[%file%]]"
+# settings:
 song_format="[[%title%\t[(by %artist%[ on %album%])]]|[%file%]]"
 
+
+# argument parsing
 switcher="$1"
 shift || true
 args="$*"
 
+# some utilities for gathering the switcher implementations
 switcher_titles=( )
 switcher_ids=( )
 switchers=""
@@ -18,11 +29,12 @@ add_switcher() {
     switchers+="$2: $rofimpd $1,"
 }
 
+# switcher implementations
 playlist() {
     print() {
         mpc --format "%position%\t$song_format" playlist \
             | sed 's,^\([^\t]*\t[^\t]\{40\}\)[^\t]*,\1…,' \
-            | column -s $'\t' -t
+            | column -o ' ' -s $'\t' -t
     }
     execute() {
         pos="${*%% *}"
@@ -34,10 +46,11 @@ addsong() {
     print() {
         mpc --format "$song_format\t%file%" search filename '' \
             | sed 's,^\([^\t]\{40\}\)[^\t]*,\1…,' \
-            | column -s $'\t' -t
+            | column -o $'\t' -s $'\t' -t
     }
     execute() {
-        echo "add $*" >&2
+        file="${*##*$'\t'}"
+        mpc -q add "$file"
     }
 }
 
@@ -64,12 +77,16 @@ addalbum() {
     }
 }
 
+# switcher ordering + registration
 add_switcher playlist   Playlist
 add_switcher addalbum   "Add album"
 add_switcher addsong    "Add song"
 
 if [ -z "$switcher" ] ; then
-    rofi  -no-levenshtein-sort \
+    # if no switcher given, initiate rofi
+    # also crop last comma added by last add_switcher call
+    # first switcher automatically is activated
+    rofi \
         -switchers "${switchers%,}" \
         -show "${switcher_titles[0]}"
 else
