@@ -6,11 +6,11 @@
 #  - rofi
 #  - mpc
 #  - bash
-#  - standard unix utils (sed, column, grep, uniq,…)
+#  - standard unix utils (sed, column, grep, uniq,mkdir,tee,…)
 
 # settings:
 song_format="[[%title%\t[(by %artist%[ on %album%])]]|[%file%]]"
-
+cachedir="$HOME/.cache/rofi-mpd"
 
 # argument parsing
 switcher="$1"
@@ -29,6 +29,26 @@ add_switcher() {
     switchers+="$2: $rofimpd $1,"
 }
 
+# caching behaviour
+do_cached() {
+    # execute the given command, but cache its output in a file named
+    # $1 in $cachedir
+    local cachename="$1"
+    shift
+    mkdir -p "$cachedir"
+    date=$(mpc stats | grep 'DB Updated: ')
+    file="$cachedir/$cachename"
+    if [ "$(< $file.date)" = "$date" ] && [ -f "$file" ] ; then
+        cat "$file"
+    else
+        "$@" | tee "$file"
+        echo "$date" > $file.date
+    fi
+}
+
+# to disable caching, just enable the following line
+#do_cached() { shift; "$@" ; }
+
 # switcher implementations
 playlist() {
     print() {
@@ -43,10 +63,13 @@ playlist() {
 }
 
 addsong() {
-    print() {
+    uncached_print() {
         mpc --format "$song_format\t%file%" search filename '' \
             | sed 's,^\([^\t]\{40\}\)[^\t]*,\1…,' \
             | column -o $'\t' -s $'\t' -t
+    }
+    print() {
+        do_cached addsong uncached_print
     }
     execute() {
         file="${*##*$'\t'}"
@@ -55,12 +78,15 @@ addsong() {
 }
 
 addalbum() {
-    print() {
+    uncached_print() {
         mpc --format '[%albumartist%|%artist%] — %album%' \
             search filename '' \
             | grep -v '^ — ' \
             | grep -v ' — $' \
             | uniq
+    }
+    print() {
+        do_cached addalbum uncached_print
     }
     execute() {
         artist="${args%% — *}"
