@@ -64,6 +64,12 @@ graphviz
 dot2tex
 aspell-en
 rlwrap
+pinfo
+unison
+abook
+elinks
+fetchmail
+procmail
 
 # development
 xorg-server-xephyr
@@ -73,6 +79,7 @@ python-dbus
 python-gobject2
 python-yaml
 mercurial
+abs
 
 # multimedia
 gstreamer0.1-base-plugins
