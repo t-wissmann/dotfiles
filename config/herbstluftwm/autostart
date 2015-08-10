@@ -11,6 +11,8 @@ function hc() {
 
 hc emit_hook reload
 
+xrdb -cpp cpp -merge ~/.Xdefaults
+
 #xsetroot -solid '#D47A55'
 hc set frame_gap 8
 # raindrops

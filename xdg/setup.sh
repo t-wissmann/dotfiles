@@ -3,6 +3,9 @@
 ::() {
     echo -e "\e[1;32m:: \e[1;37m$*\e[0m" >&2
 }
+warning() {
+    echo -e "\e[1;31mWarning: \e[01;33m$*\e[0m" >&2
+}
 
 
 config() {
@@ -16,6 +19,11 @@ EOF
 desktop_entry() {
     local exe="$1"
     local terminal="$2"
+    prefix=""
+    if [ "$terminal" = true ] ; then
+        prefix="urxvt -e "
+        terminal=false
+    fi
     local name="${3:-${1%% *}}"
     cat <<EOF
 [Desktop Entry]
@@ -23,7 +31,7 @@ Encoding=UTF-8
 Version=1.0
 Name=$name
 Comment=
-Exec=$exe
+Exec=$prefix$exe
 Icon=
 Terminal=$terminal
 Type=Application
@@ -42,24 +50,59 @@ app() {
     :: Creating desktop file "$desktop_file"
     desktop_entry "$cmd" "$terminal" > "$desktop_file"
     for mimetype in "$@" ; do
-        :: Link "${cmd_name}" '<-' "$mimetype" 
-        xdg-mime default "${cmd_name}".desktop "$mimetype"
+        case "$mimetype" in
+        /*)
+            # mime-types custom for this script
+            case "${mimetype#/}" in
+                web-browser)
+                    :: New default web browser: "${cmd_name}"
+                    xdg-settings set default-web-browser "${cmd_name}".desktop
+                    ;;
+                url-scheme-handler)
+                    :: New default url scheme handler: "${cmd_name}"
+                    xdg-settings set default-url-scheme-handler "${cmd_name}".desktop
+                    ;;
+            esac
+            ;;
+        .*)
+            # link silently
+            xdg-mime default "${cmd_name}".desktop "${mimetype#.}"
+            ;;
+        *)
+            # ordinary mime-types
+            #if ! grep -xm 1 "$mimetype" /usr/share/mime/types > /dev/null ; then
+            #    warning "Mimetype $mimetype unknown. Linking anyway."
+            #fi
+            :: Link "${cmd_name}" '<-' "$mimetype" 
+            xdg-mime default "${cmd_name}".desktop "$mimetype"
+            ;;
+        esac
     done
 }
 
 gui_app() { app false "$@" ; }
 cli_app() { app true "$@" ; }
-default-web-browser() {
-    xdg-settings set default-web-browser "$1".desktop
-}
-default-url-scheme-handler() {
-    xdg-settings set default-url-scheme-handler "$1".desktop
-}
+mimes() { grep -xE "$1" /usr/share/mime/types | sed 's,^,.,'; }
 
 gui_app qutebrowser \
     x-scheme-handler/{http,https} \
+    /default-{web-browser,url-scheme-handler} \
     text/html
 
+cli_app vim \
+    $(mimes 'text/.*') \
+    text/x-shellscript \
+    application/x-shellscript \
+    application/ecmascript \
+    application/javascript
 
+gui_app katarakt            \
+    application/pdf         \
+    application/x-bzpdf     \
+    application/x-gzpdf     \
+    application/x-xzpdf     \
+    application/x-pdf       \
+    x-unknown/pdf           \
+    text/pdf                \
 
 
