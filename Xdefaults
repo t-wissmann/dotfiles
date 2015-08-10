@@ -204,6 +204,8 @@ rofi.bw:                             1
 !             7 6 5
 rofi.location:                       0
 rofi.padding:                        3
+rofi.line-margin:                    2
+rofi.m:                              -1
 rofi.yoffset:                        0
 rofi.xoffset:                        0
 rofi.eh:                             1
