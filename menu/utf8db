@@ -1,0 +1,248 @@
+Implikation Rightarrow ⇒
+rightto rightarrow →
+equivalent ≡
+
+# arrows
+about rightwards squiggle arrow ⇝
+about leftwards squiggle arrow ⇝⇜
+
+# logical
+not neg ¬
+wedge ∧
+cdot •
+vel ∨
+xor ⊕
+tautology tee ⊤
+contradition rum ⊥
+forall ∀
+exists ∃
+Leftrightarrow ⇔
+vdash inference ⊢
+not exists nexists ∄
+models ⊧
+True ⊨
+nicht ableitbar  ⊬
+nand ⊼
+nor ⊽
+neq not equal ≠
+le lower equal ≤
+ge greater equal ≥
+Reduzierbar ≺
+proportional  ∝
+times kreuzprodukt mal ×
+division ÷
+pm plusminus ±
+mp minusplus ±
+ungefähr about ≈
+approximately equal isomorphic ≅
+integral ⨓
+sqrt √
+llbracket ⟦
+rrbracket ⟧
+
+# relations
+subgroup ◅
+subseteq ⊆
+not subseteq ⊈
+subset ⊂
+overset ⊃
+overseteq ⊇
+not overseteq ⊉
+cup union ∪
+cap intersection ∩
+map arrow ↦
+circ composed scalar ∘
+
+# special sets
+emptyset ∅
+Z ℤ
+Projective space ℙ
+Q rational ℚ
+R real ℝ
+N natural ℕ
+C complex ℂ
+infty infinity ∞
+
+# units / constants
+ohm Ω
+tm ™
+L script chomsky ℒ
+euler e ℯ
+
+# brackets / operators
+lfloor ⌊
+rfloor ⌋
+lceil ⌈
+rceil ⌉
+scalar product left ⟨
+scalar product right ⟩
+integral ∫
+nabla gradient ∇
+partial derivative ∂
+in element ∈
+not in not element ∉
+goedel left ⟨
+goedel right ⟩
+
+# greek alphabet
+alpha α
+Alpha Α
+beta β
+Beta Β
+gamma γ
+Gamma Γ
+delta δ
+Delta Δ
+epsilon ε
+Epsilon Ε
+digamma ϝ
+Digamma Ϝ
+zeta ζ
+Zeta Ζ
+eta η
+Eta Η
+theta θ
+Theta Θ
+iota ι
+Iota Ι
+kappa κ
+Kappa Κ
+lambda λ
+Lambda Λ
+mu μ
+Mu Μ
+nu ν
+Nu Ν
+xi ξ
+Xi Ξ
+omicron ο
+Omicron Ο
+pi π
+Pi Π
+rho ρ
+Rho Ρ
+sigma σ
+Sigma Σ
+tau τ
+Tau Τ
+upsilon υ
+Upsilon Υ
+chi χ
+Chi Χ
+psi ψ
+Psi Ψ
+omega ω
+Omega Ω
+phi φ
+Phi Φ
+# dinbats
+flugzeug plane ✈
+schere ✂
+checked haken ✓
+checked haken ✔
+checked cross ✕
+checked cross ✗
+box checked ☑
+box marked ☒
+cross christ ✝
+cross christ ✞
+cross christ sabbath ✟
+star ✰
+star ✭
+star ✮
+star ✯
+snowflake ✳
+steam ♨
+heart ♥
+heart ❤
+heart rotated ❥
+phone ✆
+atomic ✇
+letter ✉
+peace hand ✌
+hand edit ✍
+stern ✡
+umbrella schirm ☔
+klee ☘
+death ☠
+atomic radioactive ☢
+biohazard ☣
+christ chi rho ☧
+islam ☪
+hammer and sickle kommunism ☭
+ying and yang ☯
+peace ☮
+smiley ☺
+smiley black ☻
+frowny ☹
+white sun ☼
+moon quarter ☽
+moon quarter ☾
+female venus ♀
+earth symbol ♁
+male ♂
+king chess ♔
+queen chess ♕
+rook turm chess ♖
+bishop läufer chess ♗
+snowman ☃
+warning dreieck ⚠
+keyboard ⌨
+compose mac ⌘
+return enter ⏎
+eject ⏏
+# TODO: http://en.wikipedia.org/wiki/Miscellaneous_Symbols
+recycling ♲
+(C) ©
+(R) ®
+note music sechzentel ♫
+note music sechzentel ♬
+note music achtel ♪
+
+# blocks
+Block lower half block ▄
+Block upper half block ▀
+Block UPPER HALF BLOCK ▀
+Block LOWER ONE EIGHTH BLOCK ▁
+Block LOWER ONE QUARTER BLOCK ▂
+Block LOWER THREE EIGHTHS BLOCK ▃
+Block LOWER HALF BLOCK ▄
+Block LOWER FIVE EIGHTHS BLOCK ▅
+Block LOWER THREE QUARTERS BLOCK ▆
+Block LOWER SEVEN EIGHTHS BLOCK ▇
+Block FULL BLOCK █
+Block LEFT SEVEN EIGHTHS BLOCK ▉
+Block LEFT THREE QUARTERS BLOCK ▊
+Block LEFT FIVE EIGHTHS BLOCK ▋
+Block LEFT HALF BLOCK ▌
+Block LEFT THREE EIGHTHS BLOCK ▍
+Block LEFT ONE QUARTER BLOCK ▎
+Block LEFT ONE EIGHTH BLOCK ▏
+Block RIGHT HALF BLOCK ▐
+Block LIGHT SHADE ░
+Block MEDIUM SHADE ▒
+Block DARK SHADE ▓
+Block UPPER ONE EIGHTH BLOCK ▔
+Block RIGHT ONE EIGHTH BLOCK ▕
+Block QUADRANT LOWER LEFT ▖
+Block QUADRANT LOWER RIGHT ▗
+Block QUADRANT UPPER LEFT ▘
+Block QUADRANT UPPER LEFT AND LOWER LEFT AND LOWER RIGHT ▙
+Block QUADRANT UPPER LEFT AND LOWER RIGHT ▚
+Block QUADRANT UPPER LEFT AND UPPER RIGHT AND LOWER LEFT ▛
+Block QUADRANT UPPER LEFT AND UPPER RIGHT AND LOWER RIGHT ▜
+Block QUADRANT UPPER RIGHT ▝
+Block QUADRANT UPPER RIGHT AND LOWER LEFT ▞
+Block QUADRANT UPPER RIGHT AND LOWER LEFT AND LOWER RIGHT ▟
+
+
+# fancy font
+^i superscript ⁱ
+_i subscript ᵢ
+_0 ₀
+^2 ²
+^3 ³
+1/4 ¼
+1/2 ½
+degree °
+

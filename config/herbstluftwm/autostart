@@ -228,7 +228,7 @@ if [[ "$HOSTNAME" =~ ^(towi04|ghul|x40|eule|hoth)$ ]] ; then
     hc keybind XF86AudioNext spawn ~/scripts/mpd/mpc.sh next
 fi
 
-hc keybind Mod4+n spawn ~/scripts/utils/utf8select.sh
+hc keybind Mod4+n spawn ~/dotfiles/menu/utf8select.sh
 
 audioaction() {
     # example for $1: toggle
