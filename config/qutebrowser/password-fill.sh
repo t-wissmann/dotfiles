@@ -58,8 +58,8 @@ reset_backend() {
 # backend: PASS
 
 # configuration options:
-match_filename=0 # whether filepath has to contain the simplified url
-match_line=1
+match_filename=1 # whether allowing entry match by filepath
+match_line=1     # whether allowing entry match by URL-Pattern in file
 match_line_pattern='^url: .*' # applied using grep -iE
 user_pattern='^(user|username): '
 
@@ -76,26 +76,29 @@ pass_backend() {
             die "Can not open password store dir »$PREFIX«"
         fi
     }
-    filter_filenames() {
-        if ((match_filename)) ; then
-            grep "$1"
-        else
-            cat
-        fi
-    }
     query_entries() {
         local url="$1"
-        while read -r -d "" passfile ; do
-            if ! ((match_line)) ||
-               $GPG "${GPG_OPTS}" -d "$passfile" \
-                    | grep --max-count=1 -iE "${match_line_pattern}${url}" > /dev/null
-            then
-               passfile="${passfile#$PREFIX}"
-               passfile="${passfile#/}"
-               files+=( "${passfile%.gpg}" )
-            fi
-        done < <(find -L "$PREFIX" -iname '*.gpg' -print0 \
-                 | filter_filenames "$url")
+
+        if ((match_line)) ; then
+            # add entries with matching URL-tag
+            while read -r -d "" passfile ; do
+                if $GPG "${GPG_OPTS}" -d "$passfile" \
+                     | grep --max-count=1 -iE "${match_line_pattern}${url}" > /dev/null
+                then
+                    passfile="${passfile#$PREFIX}"
+                    passfile="${passfile#/}"
+                    files+=( "${passfile%.gpg}" )
+                fi
+            done < <(find -L "$PREFIX" -iname '*.gpg' -print0)
+        fi
+        if ((match_filename)) ; then
+            # add entries wth matching filepath
+            while read -r passfile ; do
+                passfile="${passfile#$PREFIX}"
+                passfile="${passfile#/}"
+                files+=( "${passfile%.gpg}" )
+            done < <(find -L "$PREFIX" -iname '*.gpg' | grep "$url")
+        fi
     }
     open_entry() {
         local path="$PREFIX/${1}.gpg"
@@ -124,7 +127,7 @@ pass_backend
 init
 
 query_entries "$simple_url"
-file=$(printf "%s\n" "${files[@]}"| sort -R | head -n 1)
+file=$(printf "%s\n" "${files[@]}" | sort | uniq | sort -R | head -n 1)
 if [ -z "$file" ] ; then
     die "No entry found for »$simple_url«"
 fi
