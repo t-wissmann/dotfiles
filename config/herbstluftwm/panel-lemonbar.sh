@@ -4,31 +4,44 @@ set -f
 
 monitor=${1:-0}
 height=16
-bottom=false
+padding_top=0
+padding_bottom=0
+padding_left=8
+padding_right=${padding_left}
+bottom=0
 geometry=( $(herbstclient monitor_rect $monitor) )
 # geometry has the format: X Y W H
 x=${geometry[0]}
 y=${geometry[1]}
-$bottom && y=$((${geometry[1]}+${geometry[3]}-height))
+((bottom)) && y=$((${geometry[1]}+${geometry[3]}-height))
 width="${geometry[2]}"
-font="-*-fixed-medium-*-*-*-12-*-*-*-*-*-*-*"
-bgcolor='#0a0a0a'
 
+x=$((x + padding_left))
+width=$((width - padding_left - padding_right))
+y=$((y + padding_top))
+
+font="-*-fixed-medium-*-*-*-12-*-*-*-*-*-*-*"
+printf '%dx%d%+d%+d' $width $height $x $y
 function uniq_linebuffered() {
     exec awk '$0 != l { print ; l=$0 ; fflush(); }' "$@"
 }
 
 update_pad() {
-    herbstclient pad $monitor "$1"
+    ((bottom)) && herbstclient pad $monitor 0 0 "$1" \
+               || herbstclient pad $monitor "$1"
 }
 debug() {
     echo "DEBUG: $*" >&2
 }
 
+keyboard_layouts=( us de )
+
 #activecolor="$(herbstclient attr theme.tiling.active.color)"
 activecolor="#9fbc00"
 
-update_pad $height
+emphbg="#303030" #emphasized background color
+
+update_pad $((height + padding_top + padding_bottom))
 {
     # events:
     #mpc idleloop player &
@@ -42,6 +55,8 @@ update_pad $height
 }|{
     TAGS=( $(herbstclient tag_status $monitor) )
     date=""
+    layout="$(setxkbmap -query | grep ^layout:)"
+    layout=${layout##* }
     while true ; do
         IFS=$'\t' read -ra cmd || break
         case "${cmd[0]}" in
@@ -57,12 +72,15 @@ update_pad $height
             quit_panel)
                 exit 0
                 ;;
+            keyboard_layout)
+                layout="${cmd[1]}"
+                ;;
             *)
                 ;;
         esac
 
         hintcolor="#0f0f0f"
-        echo -n "%{l}"
+        echo -n "%{l}%{A4:next:}%{A5:prev:}"
         for i in "${TAGS[@]}" ; do
             occupied=true
             focused=false
@@ -83,25 +101,50 @@ update_pad $height
                 ':') visible=false ;;
             esac
             tag=""
-            $here     && tag+="%{B#323232}" || tag+="%{B-}"
+            $here     && tag+="%{B$emphbg}" || tag+="%{B-}"
             $visible  && tag+="%{+o}" || tag+="%{-o}"
             $occupied && tag+="%{F-}" || tag+="%{F#909090}"
             $urgent   && tag+="%{B#eeD6156C}%{-o}"
             $focused  && tag+="%{Fwhite}%{U$activecolor}" \
                       || tag+="%{U#454545}"
-            tag+=" ${i:1} "
+            tag+="%{A1:use_${i:1}:} ${i:1} %{A}"
             echo -n "$tag"
         done
-        echo -n "%{F-}%{B-}%{-o}"
+        echo -n "%{A}%{A}%{F-}%{B-}%{-o}"
         [[ -n "$windowtitle" ]] \
-            && echo -n "%{c} %{-o}%{U#9fbc00}%{B#232323} ${windowtitle:0:50} %{-o}%{B-}" \
+            && echo -n "%{c} %{-o}%{U#9fbc00}%{B$emphbg} ${windowtitle:0:50} %{-o}%{B-}" \
             || echo -n "%{c} "
-        echo -n "%{r} %{-o}%{U#909090}%{B#232323} $date %{B-}"
+        echo -n "%{r}"
+        echo -n "%{B$emphbg}%{U$emphbg}%{+o}%{+u} "
+        for l in "${keyboard_layouts[@]}" ; do
+            if [[ "$l" == "$layout" ]] ; then
+                flags="%{B#9fbc00}%{Fblack}"
+            else
+                flags="%{B$emphbg}%{F-}"
+            fi
+            echo -n "%{A1:layout_$l:}$flags $l %{B$emphbg}%{A}"
+        done
+        echo -n " %{B-}%{-o}%{-u}%{F-} "
+        echo -n "%{-o}%{U#909090}%{B$emphbg} $date %{B-}"
         echo "%{B-}%{-o}%{-u}"
     done
 } | lemonbar -d \
     -g "$(printf '%dx%d%+d%+d' $width $height $x $y)" \
-    -u 2 -f "$font" -B '#ee121212'
+    -u 2 -f "$font" -B '#ee121212' | while read line ; do
+    case "$line" in
+        layout_*)
+                layout="${line#layout_}"
+                herbstclient emit_hook keyboard_layout "$layout"
+                FLAGS=( -variant altgr-intl
+                        -option compose:menu -option ctrl:nocaps
+                        -option compose:ralt -option compose:rctrl )
+                setxkbmap "${FLAGS[@]}" "$layout" 
+            ;;
+        use_*) herbstclient use "${line#use_}" ;;
+        next)  herbstclient use_index +1 --skip-visible ;;
+        prev)  herbstclient use_index -1 --skip-visible ;;
+    esac
+done
 
 #herbstclient pad $monitor 0
 
