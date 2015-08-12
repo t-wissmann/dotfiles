@@ -135,9 +135,12 @@ update_pad $((height + padding_top + padding_bottom))
         layout_*)
                 layout="${line#layout_}"
                 herbstclient emit_hook keyboard_layout "$layout"
-                FLAGS=( -variant altgr-intl
-                        -option compose:menu -option ctrl:nocaps
+                FLAGS=( -option compose:menu -option ctrl:nocaps
                         -option compose:ralt -option compose:rctrl )
+                case "$layout" in
+                    us) FLAGS+=( -variant altgr-intl ) ;;
+                    *) ;;
+                esac
                 setxkbmap "${FLAGS[@]}" "$layout" 
             ;;
         use_*) herbstclient use "${line#use_}" ;;
