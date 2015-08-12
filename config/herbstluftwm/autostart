@@ -156,6 +156,10 @@ hc mousebind $Mod-Button2 zoom
 hc mousebind $Mod-Button3 resize
 hc mousebind $Mod-B4 call substitute WID clients.dragged.winid spawn transset-df --inc -i WID 0.05
 hc mousebind $Mod-B5 call substitute WID clients.dragged.winid spawn transset-df --dec -i WID -m 0.2 0.05
+frame_gap_steps=( 0 1 2 3 $(seq 4 4 100) )
+i=${#frame_gap_steps[@]} ; for x in "${frame_gap_steps[@]}" ; do reversed_frame_gap_steps[--i]=$x ; done
+hc mousebind $Mod-Control-B4 call cycle_value frame_gap "${frame_gap_steps[@]}" "${reversed_frame_gap_steps[0]}"
+hc mousebind $Mod-Control-B5 call cycle_value frame_gap "${reversed_frame_gap_steps[@]}" "${frame_gap_steps[0]}" 
 
 # focus
 hc keybind $Mod-Tab cycle_monitor
@@ -344,7 +348,7 @@ hc set frame_border_width 1
 hc set frame_bg_transparent 1
 hc set frame_transparent_width 3
 
-hc set smart_frame_surroundings 1
+hc set smart_frame_surroundings 0
 
 hc unlock
 
