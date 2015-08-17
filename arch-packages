@@ -22,6 +22,7 @@ transset-df
 curl
 ghc
 git
+tig
 gnu-netcat
 gvim
 gpicview
