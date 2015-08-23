@@ -70,7 +70,7 @@ unset PROMPT_COMMAND
       ;;
  esac;
 
-
+source /usr/share/git/git-prompt.sh || __git_ps1() { true; }
 printexitstat() {
     local status=$?
     local l=$(printf "%${COLUMNS}s" " ")
@@ -82,8 +82,8 @@ printexitstat() {
         || exitstatus="\e[0;38;5;196m:("
     promptline="$l"$'\r┌─'
     hasjobs=$(jobs -p)
-    PS1="\e[1;30m$promptline─( \e[0;38;5;227m\u\e[0;30m@\e[0;38;5;82m\h\e[1;30m )─( \e[0;38;5;199m\w\e[1;30m )─( $exitstatus \e[1;31m${hasjobs:+\j }\e[1;30m)\n\[\e[1;30m\]└─╼ \[\e[0m\]$XTERM_TITLE"
-
+    git=$(__git_ps1 "\e[1;30m)─( \e[0;31m%s\e[1;30m")
+    PS1="\e[1;30m$promptline─( \e[0;38;5;227m\u\e[0;30m@\e[0;38;5;82m\h\e[1;30m )─( \e[0;38;5;199m\w $git\e[1;30m )─( $exitstatus \e[1;31m${hasjobs:+\j }\e[1;30m)\n\[\e[1;30m\]└─╼ \[\e[0m\]$XTERM_TITLE"
 }
 
 hasgui=0
