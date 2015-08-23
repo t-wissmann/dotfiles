@@ -143,9 +143,9 @@ update_pad $((height + padding_top + padding_bottom))
                 esac
                 setxkbmap "${FLAGS[@]}" "$layout" 
             ;;
-        use_*) herbstclient use "${line#use_}" ;;
-        next)  herbstclient use_index +1 --skip-visible ;;
-        prev)  herbstclient use_index -1 --skip-visible ;;
+        use_*) herbstclient chain , focus_monitor "$monitor" , use "${line#use_}" ;;
+        next)  herbstclient chain , focus_monitor "$monitor" , use_index +1 --skip-visible ;;
+        prev)  herbstclient chain , focus_monitor "$monitor" , use_index -1 --skip-visible ;;
     esac
 done
 
