@@ -72,10 +72,15 @@ URxvt.cursorBlink: true
 ! size=8 looks quite cool but is not handy...
 !URxvt.font: xft:ProFont:size=11
 !URxvt.boldFont: xft:ProFont:size=11
-URxvt.font: xft:Bitstream Vera Sans Mono:bold:size=9,xft:Bitstream Vera Sans Mono:size=8
-URxvt.boldFont: xft:Bitstream Vera Sans Mono:size=9,xft:Bitstream Vera Sans Mono:size=8
+
+#define FONT     -misc-fixed-medium-r-semicondensed-*-13-*-*-*-*-*-iso10646-1
+#define BOLDFONT -misc-fixed-bold-r-semicondensed-*-13-*-*-*-*-*-iso10646-1
+URxvt.font: FONT
+URxvt.boldFont: BOLDFONT
+!URxvt.font: xft:Monospace:size=9,xft:Bitstream Vera Sans Mono:size=8
+!URxvt.boldFont: xft:Bitstream Vera Sans Mono:size=9,xft:Bitstream Vera Sans Mono:size=8
 URxvt.keysym.C-1: command:\033]710;xft:Bitstream Vera Sans Mono:bold:size=9\007\033]711;xft:Bitstream Vera Sans Mono:bold:size=9\007
-URxvt.keysym.C-2: command:\033]710;xft:Bitstream Vera Sans Mono:bold:size=10\007\033]711;xft:Bitstream Vera Sans Mono:bold:size=10\007
+URxvt.keysym.C-2: command:\033]710;FONT\007\033]711;BOLDFONT\007
 URxvt.keysym.C-3: command:\033]710;xft:Bitstream Vera Sans Mono:bold:size=11\007\033]711;xft:Bitstream Vera Sans Mono:bold:size=11\007
 URxvt.keysym.C-4: command:\033]710;xft:Bitstream Vera Sans Mono:bold:size=12\007\033]711;xft:Bitstream Vera Sans Mono:bold:size=12\007
 URxvt.keysym.C-5: command:\033]710;xft:Bitstream Vera Sans Mono:bold:size=13\007\033]711;xft:Bitstream Vera Sans Mono:bold:size=13\007
