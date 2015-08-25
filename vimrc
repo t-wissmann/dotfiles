@@ -272,4 +272,5 @@ nmap <C-O> :CtrlPBuffer<CR>
 noremap  <buffer> <silent> k gk
 noremap  <buffer> <silent> j gj
 
+set showcmd
 
