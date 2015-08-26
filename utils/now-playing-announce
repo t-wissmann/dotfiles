@@ -1,0 +1,23 @@
+#!/bin/bash -e
+# announce currently played track in mpd to some irc channel in weechat
+# requirements: mpc
+
+notes=( ♩ ♪ ♬ ♫ )
+put_notes() {
+    echo -n "${notes[$((RANDOM % ${#notes[@]}))]}"
+    echo -n "${notes[$((RANDOM % ${#notes[@]}))]}"
+}
+
+channel=${channel:-irc.uni-erl.#faui2k6bot}
+msg_prefix=${msg_prefix:-/me np: $(put_notes) }
+msg_suffix=${msg_suffix:- $(put_notes)}
+format="%artist% — %title% (%album%)"
+np=$(mpc -f "$format" current)
+weechat_host=${weechat_host:-uber}
+pipe_cmd=${pipe_cmd:-ssh "${weechat_host}" tee '~/.weechat/weechat_fifo_*'}
+
+msg="${msg_prefix}${np}${msg_suffix}"
+#echo "Announcing »${msg}« to ${channel} via ${pipe_cmd} …"
+echo "${channel} *${msg}" | ${pipe_cmd}
+
+
