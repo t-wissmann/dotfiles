@@ -188,7 +188,7 @@ rofi.color-enabled:                  true
 rofi.color-normal:                   itembg,    #cecece,  itembg,   #9fbc00,  black
 rofi.color-urgent:                   #D6156C,   white,    #D6156C,  #dc322f,  #9fbc00
 rofi.color-active:                   #101010,   #FFE352,  #101010,  #9fbc00,  black
-rofi.color-window:                   argb:EE242424,black
+rofi.color-window:                   argb:EE242424,black,argb:EE242424,
 !rofi.fg-active:                      #268BD2
 !rofi.fg-urgent:                      #DC322F
 !rofi.hlfg-active:                    #FDF6E3
@@ -210,7 +210,8 @@ rofi.bw:                             1
 !             7 6 5
 rofi.location:                       0
 rofi.padding:                        3
-rofi.line-margin:                    2
+rofi.line-margin:                    3
+rofi.separator-style:                solid
 rofi.m:                              -2
 rofi.yoffset:                        0
 rofi.xoffset:                        0
