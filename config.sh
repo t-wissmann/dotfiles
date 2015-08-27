@@ -38,6 +38,7 @@ homedir=(
     gvimrc
     $(is_cip && echo taskrc.cip || echo taskrc)
     Xdefaults{,.d}
+    abcde.conf
 )
 
 files=(
