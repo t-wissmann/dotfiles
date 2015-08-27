@@ -8,7 +8,7 @@ put_notes() {
     echo -n "${notes[$((RANDOM % ${#notes[@]}))]}"
 }
 
-channel=${channel:-irc.uni-erl.#faui2k6bot}
+channel=${channel:-irc.uni-erl.#fauinp}
 msg_prefix=${msg_prefix:-/me np: $(put_notes) }
 msg_suffix=${msg_suffix:- $(put_notes)}
 format="%artist% — %title% (%album%)"
