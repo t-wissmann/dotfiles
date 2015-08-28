@@ -1,0 +1,18 @@
+#!/bin/bash -e
+# views the $QUTE_URL in mpv using sensible mpv-flags
+#mpv --force-window --no-terminal --keep-open=yes --ytdl "$QUTE_URL" &
+#zenity --info --text "$QUTE_URL"
+
+msg() {
+    local cmd="$1"
+    shift
+    local msg="$*"
+    if [ -z "$QUTE_FIFO" ] ; then
+        echo "$cmd: $msg" >&2
+    else
+        echo "message-$cmd '${msg//\'/\\\'}'" >> "$QUTE_FIFO"
+    fi
+}
+
+msg info "Openning $QUTE_URL with mpv"
+mpv --force-window --no-terminal --keep-open=yes --ytdl "$QUTE_URL"
