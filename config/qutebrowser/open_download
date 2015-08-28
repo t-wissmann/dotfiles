@@ -1,0 +1,65 @@
+#!/bin/bash -e
+# qutebrowser userscript that opens a rofi menu with all
+# files from the download director and opens the selected file
+#
+# suggested keybinding (for "show downloads"):
+# spawn --userscript ~/.config/qutebrowser/open_download
+#     sd
+
+# open a file from the download directory using rofi
+DOWNLOAD_DIR=${DOWNLOAD_DIR:-$HOME/downloads}
+
+msg() {
+    local cmd="$1"
+    shift
+    local msg="$*"
+    if [ -z "$QUTE_FIFO" ] ; then
+        echo "$cmd: $msg" >&2
+    else
+        echo "message-$cmd '${msg//\'/\\\'}'" >> "$QUTE_FIFO"
+    fi
+}
+
+rofi_args=(
+        -monitor -2 # place above window
+        -location 6 # aligned at the bottom
+        -width 100  # use full window width
+        -i
+        -no-custom
+        -format i   # make rofi return the index
+        -l 10
+    )
+
+ls-files() {
+    ls -Q --quoting-style escape    -h  -o -1 -A -t "${DOWNLOAD_DIR}" \
+        | grep '^[-]' \
+        | cut -d' ' -f3- \
+        | sed 's,^\(.*[^\]\) \(.*\)$,\2\t\1,' \
+        | sed 's,\\\(.\),\1,g'
+}
+
+mapfile -t entries < <(ls-files)
+
+line=$(printf "%s\n" "${entries[@]}"  \
+       | column -s $'\t' -t \
+       | rofi -p 'Open download:' -dmenu "${rofi_args[@]}") || true
+if [ -z "$line" ];  then
+    exit 0
+fi
+
+file="${entries[$line]}"
+file="${file%%$'\t'*}"
+path="$DOWNLOAD_DIR/$file"
+filetype=$(xdg-mime query filetype "$path")
+application=$(xdg-mime query default "$filetype")
+
+if [ -z "$application" ] ; then
+    msg error "Do not know how to open $file of type $filetype"
+    exit 0
+fi
+
+msg info "Opening $file (of type $filetype) with ${application%.desktop}"
+
+xdg-open "$path" &
+
+
