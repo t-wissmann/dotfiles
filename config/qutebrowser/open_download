@@ -30,6 +30,12 @@ rofi_args=(
         -l 10
     )
 
+crop-first-column() {
+    local maxlength=${1:-40}
+    local expression='s|^\([^\t]\{0,'"$maxlength"'\}\)[^\t]*\t|\1\t|'
+    sed "$expression"
+}
+
 ls-files() {
     ls -Q --quoting-style escape    -h  -o -1 -A -t "${DOWNLOAD_DIR}" \
         | grep '^[-]' \
@@ -41,6 +47,7 @@ ls-files() {
 mapfile -t entries < <(ls-files)
 
 line=$(printf "%s\n" "${entries[@]}"  \
+       | crop-first-column 55 \
        | column -s $'\t' -t \
        | rofi -p 'Open download:' -dmenu "${rofi_args[@]}") || true
 if [ -z "$line" ];  then
