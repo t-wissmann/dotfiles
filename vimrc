@@ -106,12 +106,13 @@ hi CursorLineNr ctermbg=black term=NONE ctermfg=green cterm=bold
 " colors for folded brackets
 hi Folded ctermbg=0 term=NONE cterm=NONE ctermfg=gray
 " color of border in vertical split
-hi VertSplit ctermbg=NONE ctermfg=red cterm=NONE
+hi VertSplit ctermbg=NONE ctermfg=black cterm=NONE
+set fillchars+=vert:│
 hi Todo ctermbg=yellow ctermfg=black cterm=bold
-hi StatusLineNC ctermbg=black ctermfg=white cterm=bold
-hi StatusLine ctermbg=black ctermfg=yellow cterm=NONE
+hi StatusLineNC ctermbg=black ctermfg=white cterm=NONE
+hi StatusLine ctermbg=black ctermfg=yellow cterm=bold
 " color for tabs and trailing spaces, also see: listchars
-hi SpecialKey ctermbg=NONE ctermfg=blue cterm=bold
+hi SpecialKey ctermbg=NONE ctermfg=blue cterm=NONE
 "
 " for tabs
 hi TabLine ctermbg=black ctermfg=white cterm=bold
@@ -268,6 +269,9 @@ endif " has ("autocmd")
 " CTRLP configuration
 set runtimepath^=~/.vim/bundle/ctrlp.vim
 nmap <C-O> :CtrlPBuffer<CR>
+
+" vim-airline
+set runtimepath^=~/.vim/bundle/vim-airline/
 
 noremap  <buffer> <silent> k gk
 noremap  <buffer> <silent> j gj

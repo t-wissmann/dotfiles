@@ -1,5 +1,6 @@
 #!/bin/bash -e
 
+# utilities
 fetch() {
     if ! [ -f "$1" ] ; then
         mkdir -p "${1%/*}"
@@ -19,30 +20,8 @@ fetch() {
 
 auto-colorscheme() {
     file="${1##*/}"
-    fetch ~/.vim/colors/"$file" "$1"
+    fetch ~/.vim/colors/"${2:-$file}" "$1"
 }
-
-
-fetch ~/.vim/plugin/minibufexpl.vim \
-    'http://www.vim.org/scripts/download_script.php?src_id=3640'
-fetch ~/.vim/colors/jellybeans.vim \
-    'http://www.vim.org/scripts/download_script.php?src_id=17225'
-
-fetch ~/.vim/colors/solarized.vim \
-    'https://github.com/altercation/vim-colors-solarized/raw/master/colors/solarized.vim'
-fetch ~/.vim/autoload/togglebg.vim \
-    'https://github.com/altercation/vim-colors-solarized/raw/master/autoload/togglebg.vim'
-
-# for switching between header<->implementation
-fetch ~/.vim/plugin/a.vim \
-    'http://www.vim.org/scripts/download_script.php?src_id=7218'
-
-fetch ~/.vim/colors/molokai.vim \
-    'http://www.vim.org/scripts/download_script.php?src_id=9750'
-
-auto-colorscheme 'http://vimcolorschemetest.googlecode.com/svn/colors/autumnleaf.vim'
-auto-colorscheme 'http://vimcolorschemetest.googlecode.com/svn/colors/kate.vim'
-auto-colorscheme 'http://vimcolorschemetest.googlecode.com/svn/colors/tcsoft.vim'
 
 update-git() {
     local url="$1"
@@ -56,47 +35,36 @@ update-git() {
     fi
 }
 
-install-git() {
-    local url="$1"
-    local dir="$2"
-    update-git "$url" "$dir"
-    shopt -s nullglob
-    for subdir in indent plugin doc syntax ftplugin ftdetect ; do
-        mkdir -p "$subdir"/
-        for file in "$dir/$subdir/"* ; do
-            cp -v "$file" "$subdir"/ || true
-        done
-    done
-}
-
-(
-    cd ~/.vim/
-
-    update-git https://github.com/kien/ctrlp.vim.git bundle/ctrlp.vim
-    # update help tags for it
-    vim --cmd 'helptags ~/.vim/bundle/ctrlp.vim/doc' --cmd 'q'
+#######################
+##### colorthemes #####
+#######################
+auto-colorscheme 'http://www.vim.org/scripts/download_script.php?src_id=17225' jellybeans.vim
+auto-colorscheme 'http://vimcolorschemetest.googlecode.com/svn/colors/autumnleaf.vim'
+auto-colorscheme 'http://vimcolorschemetest.googlecode.com/svn/colors/kate.vim'
+auto-colorscheme 'http://vimcolorschemetest.googlecode.com/svn/colors/tcsoft.vim'
+auto-colorscheme 'https://github.com/altercation/vim-colors-solarized/raw/master/colors/solarized.vim'
+auto-colorscheme 'http://www.vim.org/scripts/download_script.php?src_id=9750' molokai.vim 
 
 
-    install-git https://github.com/jvoorhis/coq.vim coq
-    install-git git://github.com/chrisbra/csv.vim.git csv
-    # install-git https://github.com/jesboat/CoqIDE/ CoqIDE
-    install-git https://github.com/eagletmt/coqtop-vim coqtop
-    mkdir -p indent
-    pushd indent
-        ln -sf ../coq/indent/coq.vim .
-    popd
-    #mkdir -p plugin
-    #pushd plugin
-    #    ln -sf ../coqtop/plugin/coqtop.vim .
-    #popd
-    #mkdir -p autoload
-    #pushd autoload
-    #    ln -sf ../coqtop/autoload/coqtop.vim .
-    #popd
-    mkdir -p syntax
-    pushd syntax
-        ln -sf ../coq/syntax/coq.vim .
-    popd
+###################
+##### plugins #####
+###################
+fetch ~/.vim/plugin/minibufexpl.vim \
+    'http://www.vim.org/scripts/download_script.php?src_id=3640'
 
-)
+fetch ~/.vim/autoload/togglebg.vim \
+    'https://github.com/altercation/vim-colors-solarized/raw/master/autoload/togglebg.vim'
+
+# for switching between header<->implementation
+fetch ~/.vim/plugin/a.vim \
+    'http://www.vim.org/scripts/download_script.php?src_id=7218'
+
+update-git https://github.com/kien/ctrlp.vim.git ~/.vim/bundle/ctrlp.vim
+# update help tags for it
+vim --cmd 'helptags ~/.vim/bundle/ctrlp.vim/doc' --cmd 'q'
+
+update-git https://github.com/bling/vim-airline ~/.vim/bundle/vim-airline
+# update help tags for it
+vim --cmd 'helptags ~/.vim/bundle/vim-airline/doc' --cmd 'q'
+
 
