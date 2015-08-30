@@ -1,4 +1,4 @@
-
+! vim: nu:ai:si:et:ts=4:sw=4:ft=xdefaults
 !xterm*faceName: 'xft:Bitstream Vera Sans Mono:style=pixelsize=12'
 !xterm*faceName: 'xft:GohuFont:pixelsize=12'
 xterm*faceName: 'xft:Bitstream Vera Sans Mono:pixelsize=12'

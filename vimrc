@@ -6,6 +6,9 @@ au BufRead,BufNewFile *.v set ft=coq
 " enforce 8 colors
 set t_Co=8
 
+set encoding=utf-8
+set ttimeoutlen=50
+
 set hidden
 " show line numbers
 set number
@@ -269,9 +272,6 @@ endif " has ("autocmd")
 " CTRLP configuration
 set runtimepath^=~/.vim/bundle/ctrlp.vim
 nmap <C-O> :CtrlPBuffer<CR>
-
-" vim-airline
-set runtimepath^=~/.vim/bundle/vim-airline/
 
 noremap  <buffer> <silent> k gk
 noremap  <buffer> <silent> j gj

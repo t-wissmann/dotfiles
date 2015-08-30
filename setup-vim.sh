@@ -63,8 +63,8 @@ update-git https://github.com/kien/ctrlp.vim.git ~/.vim/bundle/ctrlp.vim
 # update help tags for it
 vim --cmd 'helptags ~/.vim/bundle/ctrlp.vim/doc' --cmd 'q'
 
-update-git https://github.com/bling/vim-airline ~/.vim/bundle/vim-airline
-# update help tags for it
-vim --cmd 'helptags ~/.vim/bundle/vim-airline/doc' --cmd 'q'
+#update-git https://github.com/bling/vim-airline ~/.vim/bundle/vim-airline
+## update help tags for it
+#vim --cmd 'helptags ~/.vim/bundle/vim-airline/doc' --cmd 'q'
 
 

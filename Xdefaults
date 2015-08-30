@@ -75,6 +75,10 @@ URxvt.cursorBlink: true
 
 #define FONT     -misc-fixed-medium-r-semicondensed-*-13-*-*-*-*-*-iso10646-1
 #define BOLDFONT -misc-fixed-bold-r-semicondensed-*-13-*-*-*-*-*-iso10646-1
+! warning, the following doesnt work
+#define POWERLINE xft:PowerlineSymbols:pixelsize=11
+!URxvt.font: FONT
+!xft:PowerlineSymbols:pixelsize=11:minspace=False
 URxvt.font: FONT
 URxvt.boldFont: BOLDFONT
 !URxvt.font: xft:Monospace:size=9,xft:Bitstream Vera Sans Mono:size=8
