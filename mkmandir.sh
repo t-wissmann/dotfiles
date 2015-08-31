@@ -20,6 +20,7 @@ searchdir=(
     ~/git/herbstluftwm/doc/
     ~/git/qutebrowser/doc/
     ~/git/rofi/doc/
+    ~/git/katarakt/doc/
 )
 
 for d in "${searchdir[@]}" ; do
