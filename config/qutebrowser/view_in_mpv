@@ -14,5 +14,70 @@ msg() {
     fi
 }
 
+video_command=( mpv --force-window --no-terminal --keep-open=yes --ytdl )
+
+js() {
+cat <<EOF
+
+    var App = {};
+
+    var all_videos = document.getElementsByTagName("video");
+    App.backup_videos = Array();
+    App.all_replacements = Array();
+    for (i = 0; i < all_videos.length; i++) {
+        var video = all_videos[i];
+        var replacement = document.createElement("div");
+        replacement.innerHTML = "
+            <p style=\\"margin-bottom: 0.5em\\">
+            Opening page with:
+            <span style=\\"font-family: monospace;\\">${video_command[*]}</span>
+            </p>
+            <p>
+            In order to restore this particular video
+            <a style=\\"font-weight: bold;
+                        color: white;
+                     \\"
+               onClick=\\"restore_video(this, " + i + ");\\"
+               href=\\"javascript: restore_video(this, " + i + ")\\"
+              >click here</a>.
+            </p>
+        ";
+        replacement.style.fontSize = "1rem";
+        replacement.style.textAlign = "center";
+        replacement.style.verticalAlign = "middle";
+        replacement.style.height = "100%";
+        replacement.style.background = "#101010";
+        replacement.style.color = "white";
+        replacement.style.border = "4px dashed #545454";
+        replacement.style.padding = "2em";
+        replacement.style.margin = "auto";
+        App.all_replacements[i] = replacement;
+        App.backup_videos[i] = video;
+        video.parentNode.replaceChild(replacement, video);
+    }
+
+    function restore_video(obj, index) {
+        obj = App.all_replacements[index];
+        video = App.backup_videos[index];
+        console.log(video);
+        obj.parentNode.replaceChild(video, obj);
+    }
+
+    /** force repainting the video, thanks to:
+     * http://martinwolf.org/2014/06/10/force-repaint-of-an-element-with-javascript/
+     */
+    var siteHeader = document.getElementById('header');
+    siteHeader.style.display='none';
+    siteHeader.offsetHeight; // no need to store this anywhere, the reference is enough
+    siteHeader.style.display='block';
+
+EOF
+}
+
+printjs() {
+    js | sed 's,//.*$,,' | tr '\n' ' '
+}
+echo "jseval -q $(printjs)" >> "$QUTE_FIFO"
+
 msg info "Openning $QUTE_URL with mpv"
-mpv --force-window --no-terminal --keep-open=yes --ytdl "$QUTE_URL"
+"${video_command[@]}" "$QUTE_URL"
