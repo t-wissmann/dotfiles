@@ -173,13 +173,13 @@ hc keybind $Mod-j or / focus down   #/ chain , focus_monitor +1 , focus_edge up
 hc keybind $Mod-k or / focus up     #/ chain , focus_monitor -1 , focus_edge down
 hc keybind $Mod-l or / focus right  #/ chain , focus_monitor +1 , focus_edge left
 hc keybind $Mod-Shift-h or / shift left / \
-    chain , lock , shift_to_monitor -1 , focus_monitor -1 , shift_edge right , unlock
+    chain , lock , shift_to_monitor -l , focus_monitor -l , unlock
 hc keybind $Mod-Shift-j or / shift down / \
-    chain , lock , shift_to_monitor +1 , focus_monitor +1 , shift_edge up , unlock
+    chain , lock , shift_to_monitor -d , focus_monitor -d , unlock
 hc keybind $Mod-Shift-k or / shift up / \
-    chain , lock , shift_to_monitor -1 , focus_monitor -1 , shift_edge down , unlock
+    chain , lock , shift_to_monitor -u , focus_monitor -u , unlock
 hc keybind $Mod-Shift-l or / shift right / \
-    chain , lock , shift_to_monitor +1 , focus_monitor +1 , shift_edge left , unlock
+    chain , lock , shift_to_monitor -r , focus_monitor -r , unlock
 
 ## other things
 if [ "$HOSTNAME" = ghul ] ;then
