@@ -42,6 +42,8 @@ cat <<EOF
               >click here</a>.
             </p>
         ";
+        replacement.style.position = "relative";
+        replacement.style.zIndex = "1000";
         replacement.style.fontSize = "1rem";
         replacement.style.textAlign = "center";
         replacement.style.verticalAlign = "middle";
