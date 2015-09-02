@@ -1,7 +1,28 @@
 #!/bin/bash -e
-# views the $QUTE_URL in mpv using sensible mpv-flags
-#mpv --force-window --no-terminal --keep-open=yes --ytdl "$QUTE_URL" &
-#zenity --info --text "$QUTE_URL"
+#
+# Behaviour:
+#   Userscript for qutebrowser which views the current web page in mpv using
+#   sensible mpv-flags. While viewing the page in MPV, all <video>-tags in the
+#   original page are temporarily removed. By clicking on such a removed video
+#   restores the respective video.
+#
+#   In order to use this script, just start it using `spawn --userscript` from
+#   qutebrowser. I recommend using an alias, e.g. put this in the
+#   [alias]-section of qutebrowser.conf:
+#
+#     mpv = spawn --userscript /path/to/view_in_mpv
+#
+# Background:
+#   Most of my machines are to slow to play youtube videos using html5, but
+#   they work fine in mpv (and mpv has further advantages like video scaling,
+#   etc). Of course, I don't want the video to be played (or even to be
+#   downloaded) twice — in MPV and in qwebkit. So I often clos the tab after
+#   opening it in mpv. However, I actually want to keep the rest of the page
+#   (comments and video suggestions), i.e. only the videos should disappear
+#   when mpv us started. And that's precisely what the present script does.
+#
+# Thorsten Wißmann, 2015 (thorsten` on freenode)
+# Any feedback is welcome!
 
 msg() {
     local cmd="$1"
@@ -14,7 +35,10 @@ msg() {
     fi
 }
 
-video_command=( mpv --force-window --no-terminal --keep-open=yes --ytdl )
+MPV_COMMAND=${MPV_COMMAND:-mpv}
+# Warning: spaces in single flags are not supported
+MPV_FLAGS=${MPV_FLAGS:- --force-window --no-terminal --keep-open=yes --ytdl }
+video_command=( "$MPV_COMMAND"  $MPV_FLAGS )
 
 js() {
 cat <<EOF
