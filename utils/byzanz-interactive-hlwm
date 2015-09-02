@@ -1,0 +1,35 @@
+#!/bin/bash
+
+msg() {
+    echo ":: $*"
+}
+
+key=Mod4-Control-s
+
+get-mouse-location() {
+    herbstclient --wait byzanz_stop
+    eval `xdotool getmouselocation --shell`
+}
+herbstclient keybind Mod4-Control-s emit_hook byzanz_stop
+
+msg "Move mouse to top left corner of the recording area,<br/>Then press $key"
+get-mouse-location
+
+tl_x=$X
+tl_y=$Y
+
+msg "Move mouse to bottom right corner of the recording area,<br/>Then press $key"
+get-mouse-location
+
+br_x=$X
+br_y=$Y
+
+msg "Starting in 3…"
+sleep 1
+msg "Starting in 2…"
+sleep 1
+msg "Starting in 1…"
+sleep 1
+msg  "GO!"
+byzanz-record --exec 'herbstclient --wait byzanz_stop' -x "$tl_x" -y "$tl_y" -w "$((br_x - tl_x))" -h "$((br_y - tl_y))" "$@"
+
