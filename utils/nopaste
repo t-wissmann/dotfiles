@@ -21,6 +21,8 @@ folder="html/p/"
 urlprefix="http://thorsten-wissmann.de/p/"
 remote="uber"
 remotefolder="$remote:$folder/"
+color=0
+colorizer=( cat )
 
 # cmdlineoptions
 case "$1" in
@@ -52,10 +54,22 @@ EOF
         ;;
     -h|--help)
         echo "usage: $0 [FILE...]"
-        echo "  copies all given FILEe to your $folder and prints the url to stderr for each FILE"
+        echo "  copies all given FILEs to your $folder and prints the url to stdout for each FILE"
         echo "  if no FILE is given, file-content is read from stdin"
         echo "  -h --help   prints this help"
+        echo "  -c --color  convert ansii escape codes to colorized html (only works when pasting from stdin"
         echo "  --setup     creates the folder with specified permissions - you should do this at first"
+        exit 0
+        ;;
+    -c|--color)
+        if [ -x "$(which ansi2html)" ] ; then
+            color=1
+            # possible ansi2html options:    --bg=dark --palette=linux|solarized|tango|xterm
+            colorizer=( ansi2html --bg=dark --palette=tango)
+        else
+            echo "No executable ansiihtml found in \$PATH, so ignoring --color" >&2
+        fi
+        shift
         ;;
     -*)
         echo "unknown option \"$1\"" >&2
@@ -64,15 +78,18 @@ EOF
 esac
 
 
-function filename() {
+filename() {
     echo "$RANDOM:$USER:$folder:$*:$remote:$urlprefix:$RANDOM:$(date)"|md5sum|cut -d' ' -f1
 }
 
 
 if [ -z "$1" ] ; then
     filename=$(filename)
+    if ((color)) ; then
+        filename+=".html"
+    fi
     # reading from stdin
-    ssh "$remote" tee "$folder/$filename" > /dev/null || exit 1
+    "${colorizer[@]}" | ssh "$remote" tee "$folder/$filename" > /dev/null || exit 1
     # print url to stderr
     echo "$urlprefix/$filename" >&2
 else
