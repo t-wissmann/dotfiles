@@ -1,0 +1,92 @@
+#!/bin/bash
+################################################
+##       _  _     ___         _               ##
+##      | \| |___| _ \__ _ __| |_ ___         ##
+##      | .` / _ \  _/ _` (_-<  _/ -_)        ##
+##      |_|\_\___/_| \__,_/__/\__\___|        ##
+## for wwwcip/$randomapacheserverwithsshacces ##
+################################################
+
+# last change on:
+#Do 23. Jun 19:49:42 CEST 2011
+
+##################################################
+## you should setup these settings first        ##
+## probably it is enough to change login/folder ##
+## then you can run nopaste --setup             ##
+##################################################
+
+# settings
+folder="html/p/"
+urlprefix="http://thorsten-wissmann.de/p/"
+remote="uber"
+remotefolder="$remote:$folder/"
+
+# cmdlineoptions
+case "$1" in
+    --setup)
+        echo ":: running \"ssh $remote bash -e\""
+        # Create a reasonable .htaccess
+        # In future one could also add more advanced rules using
+        # <FilesMatch "^$">
+        # </FilesMatch>
+        ssh "$remote" bash -e << EOF
+            echo "creating $folder"
+            mkdir -p "$folder"
+            echo "chmod 711 $folder"
+            chmod 711 "$folder"
+            if ! [ -e "$folder/.htaccess" ] ; then
+                tee "$folder/.htaccess" <<HTACCESSEND
+# disable directory listing
+Options +Indexes
+# setting default charset to UTF-8 in .htaccess
+AddDefaultCharset UTF-8
+#setting default type to text/plain
+DefaultType text/plain
+HTACCESSEND
+            else
+                echo ".htaccess already exists"
+            fi
+EOF
+        exit 1
+        ;;
+    -h|--help)
+        echo "usage: $0 [FILE...]"
+        echo "  copies all given FILEe to your $folder and prints the url to stderr for each FILE"
+        echo "  if no FILE is given, file-content is read from stdin"
+        echo "  -h --help   prints this help"
+        echo "  --setup     creates the folder with specified permissions - you should do this at first"
+        ;;
+    -*)
+        echo "unknown option \"$1\"" >&2
+        exit 1
+        ;;
+esac
+
+
+function filename() {
+    echo "$RANDOM:$USER:$folder:$*:$remote:$urlprefix:$RANDOM:$(date)"|md5sum|cut -d' ' -f1
+}
+
+
+if [ -z "$1" ] ; then
+    filename=$(filename)
+    # reading from stdin
+    ssh "$remote" tee "$folder/$filename" > /dev/null || exit 1
+    # print url to stderr
+    echo "$urlprefix/$filename" >&2
+else
+    # just copy files to pastebin
+    for i in "$@" ; do
+        # use the same fileextension, because most browser need it.. and apache too
+        ext=""
+        # but only if it has an extension
+        [ "${i##*.}" != "${i}" ] && ext=".${i##*.}"
+        filename=$(filename "$i")"$ext"
+        scp "$i" "$remotefolder/$filename" || continue
+        echo "$urlprefix/$filename"
+    done
+fi
+
+
+# vim: nobackup
