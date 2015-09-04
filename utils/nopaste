@@ -91,7 +91,7 @@ if [ -z "$1" ] ; then
     # reading from stdin
     "${colorizer[@]}" | ssh "$remote" tee "$folder/$filename" > /dev/null || exit 1
     # print url to stderr
-    echo "$urlprefix/$filename" >&2
+    echo "${urlprefix%/}/$filename" >&2
 else
     # just copy files to pastebin
     for i in "$@" ; do
@@ -101,7 +101,7 @@ else
         [ "${i##*.}" != "${i}" ] && ext=".${i##*.}"
         filename=$(filename "$i")"$ext"
         scp "$i" "$remotefolder/$filename" || continue
-        echo "$urlprefix/$filename"
+        echo "${urlprefix%/}/$filename"
     done
 fi
 
