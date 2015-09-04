@@ -215,7 +215,7 @@ rofi.lazy-filter-limit:              5000000
 !             7 6 5
 rofi.location:                       0
 rofi.padding:                        3
-rofi.line-margin:                    3
+rofi.line-margin:                    1
 rofi.separator-style:                solid
 rofi.m:                              -2
 rofi.yoffset:                        0
