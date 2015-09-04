@@ -216,22 +216,20 @@ if [ "$HOSTNAME" = towi04 -o "$HOSTNAME" = hoth ] ; then
     hc keybind XF86Stop spawn ~/scripts/mpd/mpc.sh toggle
     hc keybind XF86PowerOff spawn xset dpms force off
 fi
-if [[ "$HOSTNAME" =~ ^(towi04|ghul|x40|eule|hoth)$ ]] ; then
-    hc keybind Pause spawn ~/scripts/mpd/mpc.sh toggle
-    #hc keybind Mod4-q spawn ~/scripts/mpd/dmenu.sh play
-    #hc keybind Mod4-w spawn ~/scripts/mpd/dmenu.sh totem
-    #hc keybind Mod4-t spawn ~/scripts/utils/iptv/watch-dmenu.sh
-    hc keybind Mod1+Mod4+y spawn ~/scripts/mpd/mpc.sh random
-    hc keybind Mod1+Mod4+u spawn ~/scripts/mpd/mpc.sh prev
-    hc keybind Mod1+Mod4+i spawn ~/scripts/mpd/mpc.sh toggle
-    hc keybind Mod1+Mod4+o spawn ~/scripts/mpd/mpc.sh next
-    hc keybind Help spawn ~/scripts/mpd/mpc.sh next
 
-    hc keybind XF86AudioStop spawn ~/scripts/mpd/mpc.sh random
-    hc keybind XF86AudioPrev spawn ~/scripts/mpd/mpc.sh prev
-    hc keybind XF86AudioPlay spawn ~/scripts/mpd/mpc.sh toggle
-    hc keybind XF86AudioNext spawn ~/scripts/mpd/mpc.sh next
-fi
+hc keybind Pause spawn mpc -q toggle
+#hc keybind Mod4-q spawn ~/scripts/mpd/dmenu.sh play
+#hc keybind Mod4-w spawn ~/scripts/mpd/dmenu.sh totem
+#hc keybind Mod4-t spawn ~/scripts/utils/iptv/watch-dmenu.sh
+hc keybind Mod1+Mod4+y spawn mpc -q random
+hc keybind Mod1+Mod4+u spawn mpc -q prev
+hc keybind Mod1+Mod4+i spawn mpc -q toggle
+hc keybind Mod1+Mod4+o spawn mpc -q next
+
+hc keybind XF86AudioStop spawn mpc -q random
+hc keybind XF86AudioPrev spawn mpc -q prev
+hc keybind XF86AudioPlay spawn mpc -q toggle
+hc keybind XF86AudioNext spawn mpc -q next
 
 hc keybind Mod4+n spawn ~/dotfiles/menu/utf8select.sh
 
