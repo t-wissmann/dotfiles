@@ -30,6 +30,7 @@ urxvt*background: black
 !*color2: #7FD1DA
 
 
+rofi.width:                          80
 
 urxvt*background:rgba:0000/0000/0000/cccc
 urxvt*depth: 32
