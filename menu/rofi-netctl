@@ -20,6 +20,7 @@ done
 selection=$(printf "%s\n" "${profiles[@]}" \
     | rofi \
       -dmenu \
+      -i \
       -a "0,$active" \
       -no-custom \
       -p "netctl enable ")
@@ -28,7 +29,7 @@ if [ "$selection" = "$stop_all" ] ; then
     sudo netctl stop-all
 else
     connect() {
-        ::() { echo -e "\e[1;32m::\e[1;37m $*" ; }
+        ::() { echo -e "\e[1;32m::\e[1;37m $*\e[0m" ; }
         :: sudo journalctl -f  --unit='system-netctl.slice' '&'
         sudo journalctl -f  --unit='system-netctl.slice' &
         journalctl_pid=$!
