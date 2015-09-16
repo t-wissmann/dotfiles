@@ -192,7 +192,8 @@ rofi.color-enabled:                  true
 rofi.color-normal:                   itembg,    #cecece,  itembg,   #9fbc00,  black
 rofi.color-urgent:                   #D6156C,   white,    #D6156C,  #dc322f,  #9fbc00
 rofi.color-active:                   #101010,   #FFE352,  #101010,  #9fbc00,  black
-rofi.color-window:                   argb:EE242424,black,argb:EE242424,
+rofi.color-window:                   argb:EE242424,black,argb:EE242424
+rofi.hide-scrollbar:                 true
 !rofi.fg-active:                      #268BD2
 !rofi.fg-urgent:                      #DC322F
 !rofi.hlfg-active:                    #FDF6E3
