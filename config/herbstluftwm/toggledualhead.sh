@@ -4,13 +4,6 @@ hc() {
     herbstclient "$@"
 }
 
-panelcmd=${panelcmd:-~/.config/herbstluftwm/panel.sh}
-if [ -x ~/dev/c/herbstluftwm/share/restartpanels.sh ] ; then
-restartpanelcmd=${restartpanelcmd:-~/dev/c/herbstluftwm/share/restartpanels.sh}
-else
-restartpanelcmd=${restartpanelcmd:-~/git/herbstluftwm/share/restartpanels.sh}
-fi
-
 array2rect() {
     printf "%dx%d%+d%+d" $3 $4 $1 $2
 }
@@ -58,7 +51,18 @@ else
         , unlock
 fi
 
+# restart the panels
 herbstclient emit_hook quit_panel
 
-$restartpanelcmd $panelcmd
+panelcmd=${panelcmd:-~/.config/herbstluftwm/panel.sh}
+if ! [ "$panelcmd" ] ; then
+    # fall back to global panel if there is no user-specific panel
+    panelcmd=/etc/xdg/herbstluftwm/panel.sh
+fi
+
+for monitor in $(herbstclient list_monitors | cut -d: -f1) ; do
+    # start it on each monitor
+    "$panelcmd" $monitor &
+done
+
 
