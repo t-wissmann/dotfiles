@@ -11,6 +11,7 @@
 # settings:
 song_format="[[%title%\t[(by %artist%[ on %album%])]]|[%file%]]"
 cachedir="$HOME/.cache/rofi-mpd"
+config_file=${config_file:-$HOME/.config/rofi-mpdrc}
 
 # argument parsing
 switcher="$1"
@@ -22,6 +23,11 @@ switcher_titles=( )
 switcher_ids=( )
 switchers=""
 rofimpd="$0"
+rofimpd_file="$0"
+if ! [[ "$rofimpd_file" =~ / ]] ; then
+    # if $0 does not contain a slash, than $0 must have been found in $PATH
+    rofimpd_file=$(which "$rofimpd")
+fi
 
 add_switcher() {
     switcher_titles+=( "$2" )
@@ -80,9 +86,15 @@ do_cached() {
     mkdir -p "$cachedir"
     date=$(mpc stats | grep 'DB Updated: ')
     file="$cachedir/$cachename"
-    if [ "$(< $file.date)" = "$date" ] && [ -f "$file" ] ; then
+    # only use cached output if it was saved more recently than the
+    # present script and the config file
+    if [ "$(< $file.date)" = "$date" ] && [ -f "$file" ] \
+        && [ "$file" -nt "$rofimpd_file" ] \
+        && { ! [ -f "$config_file" ] || [ "$file" -nt "$config_file" ] ; }
+    then
         cat "$file"
     else
+        echo "$0: Updating cache…" >&2
         "$@" | tee "$file"
         echo "$date" > $file.date
     fi
@@ -131,7 +143,7 @@ addalbum() {
     uncached_print() {
         # number of fields in the sort key
         fieldcount=$(grep -o $'\t' <<< "$ALBUM_SORT_KEY" | wc -l)
-        mpc --format "$ALBUM_SORT_KEY"'[%albumartist%|%artist%] — %album%[ (%date%)]' \
+        mpc --format "$ALBUM_SORT_KEY"'[%albumartist%|%artist%] — %album%' \
             search filename '' \
             | pre_sort_filter \
             | sort $ALBUM_SORT_FLAGS \
@@ -220,7 +232,9 @@ register_switchers() {
 }
 # =======================================================
 
-# TODO: load user's configuration here.
+if [ -f "$config_file" ] ; then
+    source "$config_file"
+fi
 
 register_switchers
 
