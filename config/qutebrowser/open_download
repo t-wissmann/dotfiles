@@ -19,7 +19,7 @@
 # Any feedback is welcome!
 
 # open a file from the download directory using rofi
-DOWNLOAD_DIR=${DOWNLOAD_DIR:-$HOME/downloads}
+DOWNLOAD_DIR=${DOWNLOAD_DIR:-$HOME/Downloads}
 # the name of the rofi command
 ROFI_CMD=${ROFI_CMD:-rofi}
 ROFI_ARGS=${ROFI_ARGS:-}
@@ -71,7 +71,9 @@ crop-first-column() {
 }
 
 ls-files() {
-    ls -Q --quoting-style escape    -h  -o -1 -A -t "${DOWNLOAD_DIR}" \
+    # add the slash at the end of the download dir enforces to follow the
+    # symlink, if the DOWNLOAD_DIR itself is a symlink
+    ls -Q --quoting-style escape    -h  -o -1 -A -t "${DOWNLOAD_DIR}/" \
         | grep '^[-]' \
         | cut -d' ' -f3- \
         | sed 's,^\(.*[^\]\) \(.*\)$,\2\t\1,' \
@@ -79,6 +81,12 @@ ls-files() {
 }
 
 mapfile -t entries < <(ls-files)
+
+# we need to manually check that there are items, because rofi doesn't show up
+# if there are no items and -no-custom is passed to rofi.
+if [ "${#entries[@]}" -eq 0 ] ; then
+    die "Download directory »${DOWNLOAD_DIR}« empty"
+fi
 
 line=$(printf "%s\n" "${entries[@]}"  \
        | crop-first-column 55 \
