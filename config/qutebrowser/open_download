@@ -38,8 +38,8 @@ die() {
     msg error "$*"
     if [ -n "$QUTE_FIFO" ] ; then
         # when run as a userscript, the above error message already informs the
-        # user about the failure, not additional "userscript exited with status
-        # 0" needed.
+        # user about the failure, and no additional "userscript exited with status
+        # 1" is needed.
         exit 0;
     else
         exit 1;

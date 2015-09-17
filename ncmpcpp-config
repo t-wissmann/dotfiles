@@ -10,23 +10,32 @@ external_editor = "roxterm -e vim"
 
 autocenter_mode = "yes"
 
+song_window_title_format = "{%a — }{%t}|{%f} — mpd"
+
 # some visual options
 clock_display_seconds = "yes"
 playlist_display_mode = "columns"
+browser_display_mode = "columns"
+search_engine_display_mode = "columns"
 
 alternative_header_first_line_format = "{$4%t$9 von $7%a$9}|{$4%f$9} ($3%l$9)"
 alternative_header_second_line_format = "auf $2{%b}|{%D}$9"
 user_interface = "alternative"
-alternative_ui_separator_color = "yellow"
+alternative_ui_separator_color = "black"
 
 #progressbar_look = "»> "
 progressbar_look = "─╼·"
 
 
-progressbar_color = "green"
+progressbar_elapsed_color = "green"
+progressbar_color = "black"
 
-song_columns_list_format = "(7f)[green]{l:Dauer} │ (25)[cyan]{a|D:Künstler} (40)[yellow]{t|f:Titel} (30)[red]{b}"
+song_columns_list_format = "(7f)[green]{l:Dauer} │ (25f)[cyan]{a|D:Künstler} (43)[yellow]{t|f:Titel} (30)[red]{b}"
+playlist_separate_albums = no
 main_window_color = "default"
+active_column_color = "red"
+window_border_color = "black"
+active_window_border = "black"
 
 
 #song_list_format = "%l %a %t %b %y"
