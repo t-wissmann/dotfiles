@@ -1,0 +1,2 @@
+builddir=$HOME/tmp.aur/
+clean=false
