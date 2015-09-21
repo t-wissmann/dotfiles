@@ -181,13 +181,13 @@ XTerm*cursorColor: #ff9900
 
 rofi.modi:                           window,run,ssh,combi
 rofi.opacity:                        100
-rofi.width:                          -80
+rofi.width:                          80
 rofi.lines:                          20
 rofi.columns:                        1
 rofi.font:                           Bitstream Vera Sans Mono bold 8
 rofi.fg:                             #efefef
 rofi.color-enabled:                  true
-#define itembg argb:EE101010
+#define itembg argb:EF101010
 !    STATE                           BG         FG        BGALT     HLBG      HLFG
 rofi.color-normal:                   itembg,    #cecece,  itembg,   #9fbc00,  black
 rofi.color-urgent:                   #D6156C,   white,    #D6156C,  #dc322f,  #9fbc00
