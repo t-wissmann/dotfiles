@@ -2,10 +2,10 @@
 
 "colorscheme wombat
 "let g:solarized_visibility="high"    "default value is normal
-set bg=dark
+"set bg=dark
 "colorscheme solarized
 "colorscheme molokai
-colorscheme desert
+"colorscheme desert
 " remove all guielements
 "set guioptions+=m
 "set guioptions-=T

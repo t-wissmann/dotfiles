@@ -1,0 +1,32 @@
+#!/bin/bash -e
+
+colornames=(
+    default
+    red
+    green
+    yellow
+    blue
+    magenta
+    cyan
+    white
+    )
+
+printcol() {
+    printf "%-10s" "$1"
+}
+
+# print header
+header=$( printcol Color ; \
+        printcol \ FG ; \
+        printcol \ BG ; \
+        printcol \ Bold )
+echo "$header"
+echo "$header" | sed 's/./─/g'
+for i in "${!colornames[@]}" ; do
+    name=${colornames[$i]}
+    printcol "$name"
+    echo -n -e "\e[0m\e[3${i}m$(printcol \ $name)\e[0m"
+    echo -n -e "\e[0m\e[4${i}m$(printcol \ $name)\e[0m"
+    echo -n -e "\e[1m\e[3${i}m$(printcol \ $name)\e[0m"
+    echo
+done

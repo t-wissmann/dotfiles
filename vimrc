@@ -101,9 +101,10 @@ set foldmethod=indent
 
 " hi folds ctermbg=0
 set cursorline
+hi Normal ctermbg=NONE term=NONE cterm=NONE
 hi CursorLine ctermbg=black term=NONE cterm=NONE
 " yellow line numbers
-hi LineNr ctermbg=NONE term=bold ctermfg=black cterm=bold
+hi LineNr ctermbg=NONE term=NONE ctermfg=gray cterm=NONE
 hi CursorLineNr ctermbg=black term=NONE ctermfg=green cterm=bold
 
 " colors for folded brackets
@@ -121,6 +122,10 @@ hi SpecialKey ctermbg=NONE ctermfg=blue cterm=NONE
 hi TabLine ctermbg=black ctermfg=white cterm=bold
 hi TabLineFill ctermbg=black cterm=NONE
 hi TabLineSel ctermbg=green ctermfg=black cterm=NONE
+" somehow, these hi lines are overwritten somewhere later
+"hi Constant ctermfg=blue ctermbg=blue cterm=NONE
+"hi Statement ctermfg=green ctermbg=NONE cterm=NONE
+"hi Comment ctermfg=brown ctermbg=NONE cterm=NONE
 
 au VimEnter *.tex :call EnterTexFile()
 au VimEnter *.csv :call EnterCSVFile()
@@ -159,7 +164,7 @@ function! EnterTexFile()
 	ab xalign \begin{align}<RETURN><C-U>\end{align}<UP><END>
 	ab xals \begin{align*}<RETURN><C-U>\end{align*}<UP><END>
 	ab xma \[\]<LEFT><LEFT><RETURN><UP><END>
-	ab xtcd \begin{tikzcd}[compactcd]\end{tikzcd}<LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><RETURN><UP><END>
+	ab xtcd \begin{tikzcd}\end{tikzcd}<LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><RETURN><UP><END>
 	ab xsec \section{}<left>
 	ab xsub \subsection{}<left>
 	ab xssub \subsubsection{}<left>
