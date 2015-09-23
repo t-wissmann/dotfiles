@@ -1,0 +1,10 @@
+QLineEdit {
+    background: rgba(0,0,0,85%);
+    color: white;
+    selection-color: black;
+    selection-background-color: #9fbc00;
+    margin: 0px;
+    padding: 4px;
+    border-top-right-radius: 6px;
+    opacity: 200;
+}
