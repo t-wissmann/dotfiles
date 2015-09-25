@@ -531,6 +531,10 @@ function file2wwwcip() { (
     else
         scp -r "$infile" "$username@$server:.www/$outfile"
     fi
+    if [ "${outfile%/}" != "${outfile}" ] ; then
+        # if outfile ends with a /, i.e. was a directory, add input filename
+        outfile+="${1##*/}"
+    fi
     echo "http://wwwcip.cs.fau.de/~$username/$outfile" >&2
 ) }
 

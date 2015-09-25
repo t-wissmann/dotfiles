@@ -42,7 +42,7 @@ homedir=(
 )
 
 files=(
-    config/*
+    config/*[^~]
     finch-gntrc
     ${homedir[@]}
     ncmpcpp-config
