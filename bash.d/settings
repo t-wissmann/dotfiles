@@ -51,28 +51,6 @@ BROWSER="luakit"
 
 MPD_AvailableProfiles=(ameise ghul eule towi04)
 
-BOOKMARKS=(
-   unterhaltung /mnt/unterhaltung
-   musik        /mnt/unterhaltung/musik
-   flv          /mnt/unterhaltung/flv
-   nose         ~/dev/c/nose/
-   matheskript  ~/uni/10WS/mathec3/vorlesung/faui2k9_mathc3/
-   herbstluftwm ~/git/herbstluftwm/
-   #matheuebung  ~/uni/10WS/mathec3/uebungsblaetter/
-   bfs          ~/uni/10WS/bfs/uebungsblaetter/
-   #algoks       ~/uni/11SS/algoks/uebungsblaetter/
-   haskell      ~/uni/11SS/haskell/uebungsblaetter
-   kompalg      ~/uni/11SS/kompalg/uebungsblaetter
-   rk           ~/uni/11SS/rk/uebungsblaetter
-   wavelet      ~/uni/11WS/wavelet
-   algebra      ~/uni/11WS/algebra/vorlesung/
-   algebrauebung ~/uni/11WS/algebra/uebungsblaetter/
-   funktionentheorie ~/uni/12SS/funktionentheorie/vorlesung/
-   verbandstheorie   ~/uni/12WS/verbandstheorie/vorlesung/
-   oc              ~/uni/13SS/oc/vorlesung
-   #${BOOKMARKS[@]}
-   )
-
 case "$MPD_Profile"  in
     eule)
         MPD_HOST=localhost

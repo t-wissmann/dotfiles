@@ -204,22 +204,24 @@ function extract () {
 # It's something like the bookmark-sidebar in many gtk-file-managary like thunar, nautilus, etc.
 BOOKMARKS=(
    home         $HOME
-   unterhaltung /mnt/unterhaltung
-   herbstluftwm ~/dev/c/herbstluftwm/
+   #unterhaltung /mnt/unterhaltung
+   #herbstluftwm ~/dev/c/herbstluftwm/
    tv           /mnt/unterhaltung/TV
    flv          /mnt/unterhaltung/video/Mus/flv
-   deb-tw       /mnt/home/thorsten
+   #deb-tw       /mnt/home/thorsten
    digicam      /mnt/home/thorsten/Documents/digicam
-   debian       /mnt/debian
+   #debian       /mnt/debian
    remotecons   $HOME/dev/c/k8055/remote-console/src
-   toych        $HOME/dev/c/sdl/toychallenge
+   #toych        $HOME/dev/c/sdl/toychallenge
 #  dev          /mnt/home/thorsten/dev
    musik        /mnt/unterhaltung/musik
-   sw           /mnt/unterhaltung/SW
-   SW           /mnt/unterhaltung/SW
+   #sw           /mnt/unterhaltung/SW
+   #SW           /mnt/unterhaltung/SW
    hw           $HOME/uni/10SS/HalloWelt
    sosy3        $HOME/uni/10WS/sosy3/
    lgrudat        $HOME/uni/13WS/lgrudat/vorlesung
+   lff             ~/git/papers/COAX/LocallyFiniteFixpoint/
+   bars            ~/git/papers/Bars/
   )
 function cdbm(){
     if [ -z "$1" ] ; then
