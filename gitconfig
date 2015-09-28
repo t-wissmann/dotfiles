@@ -17,8 +17,8 @@
 	co = commit -v
 	ap = add -p
 	deltalog = log --oneline origin/master..HEAD
-	pff = pull --ff
-	ff = merge --ff
+	pff = pull --ff-only
+	ff = merge --ff-only
 [merge]
 	tool = vimdiff
 [push]

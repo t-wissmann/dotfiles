@@ -222,6 +222,8 @@ BOOKMARKS=(
    lgrudat        $HOME/uni/13WS/lgrudat/vorlesung
    lff             ~/git/papers/COAX/LocallyFiniteFixpoint/
    bars            ~/git/papers/Bars/
+   literatur       ~/uni/literatur/
+   ratlambda       ~/git/papers/RATIONAL_LAMBDA/
   )
 function cdbm(){
     if [ -z "$1" ] ; then
