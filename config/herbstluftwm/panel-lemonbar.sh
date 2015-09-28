@@ -45,7 +45,6 @@ update_pad $((height + padding_top + padding_bottom))
 {
     # events:
     #mpc idleloop player &
-    conky &
     child+=" $!"
     while true ; do
         date +$'date\t%H:%M, %Y-%m-%d'
@@ -77,9 +76,6 @@ update_pad $((height + padding_top + padding_bottom))
                 ;;
             keyboard_layout)
                 layout="${cmd[1]}"
-                ;;
-            conky)
-                conky="${cmd[@]:1}"
                 ;;
             *)
                 ;;
@@ -121,7 +117,6 @@ update_pad $((height + padding_top + padding_bottom))
             && echo -n "%{c} %{-o}%{U#9fbc00}%{B$emphbg} ${windowtitle:0:50} %{-o}%{B-}" \
             || echo -n "%{c} "
         echo -n "%{r}"
-        echo -n "%{B$emphbg}%{U$emphbg} $conky %{B-}%{-o}%{-u}%{F-} "
         echo -n "%{B$emphbg}%{U$emphbg}%{+o}%{+u} "
         for l in "${keyboard_layouts[@]}" ; do
             if [[ "$l" == "$layout" ]] ; then
