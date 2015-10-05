@@ -36,8 +36,8 @@ debug() {
 
 keyboard_layouts=( us de )
 
-#activecolor="$(herbstclient attr theme.tiling.active.color)"
-activecolor="#9fbc00"
+activecolor="$(herbstclient attr theme.tiling.active.color)"
+#activecolor="#9fbc00"
 
 emphbg="#303030" #emphasized background color
 
@@ -114,13 +114,16 @@ update_pad $((height + padding_top + padding_bottom))
         done
         echo -n "%{A}%{A}%{F-}%{B-}%{-o}"
         [[ -n "$windowtitle" ]] \
-            && echo -n "%{c} %{-o}%{U#9fbc00}%{B$emphbg} ${windowtitle:0:50} %{-o}%{B-}" \
+            && echo -n "%{c} %{-o}%{U$activecolor}%{B$emphbg} ${windowtitle:0:50} %{-o}%{B-}" \
             || echo -n "%{c} "
         echo -n "%{r}"
         echo -n "%{B$emphbg}%{U$emphbg}%{+o}%{+u} "
+        echo -n "%{A1:switchuser:}->[]%{A}"
+        echo -n " %{B-}%{-o}%{-u}%{F-} "
+        echo -n "%{B$emphbg}%{U$emphbg}%{+o}%{+u} "
         for l in "${keyboard_layouts[@]}" ; do
             if [[ "$l" == "$layout" ]] ; then
-                flags="%{B#9fbc00}%{Fblack}"
+                flags="%{B$activecolor}%{Fblack}"
             else
                 flags="%{B$emphbg}%{F-}"
             fi
@@ -148,6 +151,7 @@ update_pad $((height + padding_top + padding_bottom))
         use_*) herbstclient chain , focus_monitor "$monitor" , use "${line#use_}" ;;
         next)  herbstclient chain , focus_monitor "$monitor" , use_index +1 --skip-visible ;;
         prev)  herbstclient chain , focus_monitor "$monitor" , use_index -1 --skip-visible ;;
+        switchuser) gdmflexiserver switch-to-greeter
     esac
 done
 

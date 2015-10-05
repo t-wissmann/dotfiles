@@ -188,12 +188,13 @@ rofi.font:                           Bitstream Vera Sans Mono bold 8
 rofi.fg:                             #efefef
 rofi.color-enabled:                  true
 #define itembg argb:EF101010
-!    STATE                           BG         FG        BGALT     HLBG      HLFG
-rofi.color-normal:                   itembg,    #cecece,  itembg,   #9fbc00,  black
-rofi.color-urgent:                   #D6156C,   white,    #D6156C,  #dc322f,  #9fbc00
-rofi.color-active:                   #101010,   #FFE352,  #101010,  #9fbc00,  black
-rofi.color-window:                   argb:EE242424,black,argb:EE242424
-rofi.hide-scrollbar:                 true
+#define selbg #9fbc00
+!    STATE             BG         FG        BGALT     HLBG      HLFG
+rofi.color-normal:     itembg,    #cecece,  itembg,   selbg,  black
+rofi.color-urgent:     #D6156C,   white,    #D6156C,  #dc322f,  selbg
+rofi.color-active:     #101010,   #FFE352,  #101010,  selbg,  black
+rofi.color-window:     argb:EE242424,black,argb:EE242424
+rofi.hide-scrollbar:   true
 !rofi.fg-active:                      #268BD2
 !rofi.fg-urgent:                      #DC322F
 !rofi.hlfg-active:                    #FDF6E3

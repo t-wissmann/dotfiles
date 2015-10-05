@@ -75,7 +75,7 @@ case "$MPD_Profile"  in
         ;;
     hoth)
         #MPD_HOST=Gn7Nn9Z5@172.17.29.12
-        MPD_HOST=Gn7Nn9Z5@127.0.0.1
+        #MPD_HOST=Gn7Nn9Z5@127.0.0.1
         MPD_PORT=6600
         ;;
 esac

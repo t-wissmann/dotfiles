@@ -13,8 +13,14 @@ hc emit_hook reload
 
 xrdb -cpp cpp -merge ~/.Xdefaults
 
+# extend path
+if ! echo "$PATH"|tr ':' '\n'|grep -x "$HOME/bin" > /dev/null ; then
+    hc setenv PATH "$HOME/bin:$PATH"
+fi
+
 #xsetroot -solid '#D47A55'
 hc set frame_gap 8
+hc set snap_gap 8
 # raindrops
 #feh --bg-center ~/Documents/wallpaper/water/rain.jpg
 case "$HOSTNAME" in
@@ -351,7 +357,37 @@ hc set frame_transparent_width 3
 hc set smart_frame_surroundings 0
 
 hc unlock
+}
 
+new_theme_autumn() {
+# use hlwm decorations
+hc lock
+hc attr theme.tiling.reset 1
+hc attr theme.floating.reset 1
+
+hc attr theme.outer_width 0
+hc attr theme.border_width 2
+hc attr theme.floating.border_width 3
+hc attr theme.floating.outer_width 1
+hc attr theme.outer_color '#4B2D22'
+hc attr theme.active.color
+hc attr theme.padding_top 0
+hc attr theme.inner_width 0
+hc attr theme.normal.color '#5A3111'
+hc attr theme.active.color '#E26910'
+hc attr theme.urgent.color '#CD1B00'
+
+hc set frame_border_active_color '#222222'
+hc set frame_border_normal_color '#101010'
+hc set frame_bg_normal_color '#565656'
+hc set frame_bg_active_color '#E26910'
+hc set frame_border_width 1
+hc set frame_bg_transparent 1
+hc set frame_transparent_width 3
+
+hc set smart_frame_surroundings 0
+
+hc unlock
 }
 
 
@@ -361,7 +397,7 @@ case "$HOSTNAME" in
     #faui0*) colors_thin_purple ;;
     dachs)  colors_snow ;;
     hoth|faui8*)
-        new_theme
+        new_theme_autumn
         ;;
     parker)
         new_theme
