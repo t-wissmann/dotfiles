@@ -149,6 +149,7 @@ hc keybind $Mod-o split horizontal 0.5
 hc keybind $Mod-Control-space split explode
 hc keybind $Mod-space cycle_layout 1
 hc keybind $Mod-Shift-space cycle_layout -1
+hc keybind $Mod-m spawn ~/git/herbstluftwm/scripts/maximize.sh
 
 # resizing
 RESIZESTEP=0.05

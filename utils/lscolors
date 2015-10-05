@@ -16,7 +16,8 @@ printcol() {
 }
 
 # print header
-header=$( printcol Color ; \
+header=$( printcol Number ; \
+        printcol Color ; \
         printcol \ FG ; \
         printcol \ BG ; \
         printcol \ Bold )
@@ -24,6 +25,7 @@ echo "$header"
 echo "$header" | sed 's/./─/g'
 for i in "${!colornames[@]}" ; do
     name=${colornames[$i]}
+    printcol "$i"
     printcol "$name"
     echo -n -e "\e[0m\e[3${i}m$(printcol \ $name)\e[0m"
     echo -n -e "\e[0m\e[4${i}m$(printcol \ $name)\e[0m"
