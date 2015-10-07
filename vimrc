@@ -42,7 +42,7 @@ set debug=beep
 " code folding
 set foldmethod=indent
 set nofoldenable
-map <C-l> zA
+"map <C-l> zA
 " show statusbar with current row,col
 set modeline
 
@@ -67,7 +67,7 @@ set listchars=tab:>\ ,trail:·,nbsp:_
 
 " menu and completion -> bash-like
 set wildmenu
-set wildmode=longest:full
+set wildmode=longest,list
 set wildignorecase
 
 set visualbell t_vb=
@@ -273,6 +273,8 @@ if has("autocmd")
 		au BufWritePost *.gpg u
 	augroup END
 endif " has ("autocmd")
+
+au VimEnter *.tex execute "nmap ZE :! VIM_KEY='ZE' synctex-katarakt-vim " . v:servername . " 2>/dev/null >/dev/null &<LEFT><LEFT>"
 
 " CTRLP configuration
 set runtimepath^=~/.vim/bundle/ctrlp.vim
