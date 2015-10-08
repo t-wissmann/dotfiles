@@ -4,13 +4,13 @@ msg() {
     echo ":: $*"
 }
 
-key=Mod4-Control-s
+key="${key:-Mod4-Control-s}"
 
 get-mouse-location() {
     herbstclient --wait byzanz_stop
     eval `xdotool getmouselocation --shell`
 }
-herbstclient keybind Mod4-Control-s emit_hook byzanz_stop
+herbstclient keybind "$key" emit_hook byzanz_stop
 
 msg "Move mouse to top left corner of the recording area,<br/>Then press $key"
 get-mouse-location
