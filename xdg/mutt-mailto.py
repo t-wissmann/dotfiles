@@ -11,14 +11,17 @@ import urllib.parse
 o     = urllib.parse.urlparse(sys.argv[1])
 query = urllib.parse.parse_qs(o.query)
 
-proc = [ "mutt" ]
+proc = [ ]
+#proc += [ "urxvt", "-e" ]
+proc += [ "mutt" ]
 if 'subject' in query:
     proc += [ '-s', query['subject'][0] ]
 #proc += [ '-H', '-' ] # read message body from stdin
 proc += [ '--', o.path ]
 
-print (proc)
+#print (proc)
 mutt = subprocess.Popen(proc) #, stdin=subprocess.PIPE)
+mutt.wait()
 #if 'body' in query:
 #mutt.stdin.write(b'test');
 #mutt.stdin.close()
