@@ -14,6 +14,8 @@ ntp
 # packages of daily use
 alsa-utils
 asciidoc
+cowsay
+figlet
 dmenu
 feh
 calc
