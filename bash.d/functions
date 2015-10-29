@@ -224,6 +224,7 @@ BOOKMARKS=(
    bars            ~/git/papers/Bars/
    literatur       ~/uni/literatur/
    ratlambda       ~/git/papers/RATIONAL_LAMBDA/
+   apcs            ~/git/papers/NomLiftings/apcs/
   )
 function cdbm(){
     if [ -z "$1" ] ; then
