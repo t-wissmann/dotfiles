@@ -10,7 +10,8 @@ about leftwards squiggle arrow ⇝⇜
 # logical
 not neg ¬
 wedge ∧
-cdot •
+cdot ·
+bigcdot •
 vel ∨
 xor ⊕
 tautology tee ⊤
@@ -90,6 +91,8 @@ goedel right ⟩
 # greek alphabet
 alpha α
 Alpha Α
+eta η
+Eta Η
 beta β
 Beta Β
 gamma γ
@@ -102,8 +105,6 @@ digamma ϝ
 Digamma Ϝ
 zeta ζ
 Zeta Ζ
-eta η
-Eta Η
 theta θ
 Theta Θ
 iota ι
