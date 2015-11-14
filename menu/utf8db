@@ -14,8 +14,8 @@ cdot ·
 bigcdot •
 vel ∨
 xor ⊕
-tautology tee ⊤
-contradition rum ⊥
+top tautology tee ⊤
+bot contradition rum ⊥
 forall ∀
 exists ∃
 Leftrightarrow ⇔
@@ -36,7 +36,7 @@ division ÷
 pm plusminus ±
 mp minusplus ±
 ungefähr about ≈
-approximately equal isomorphic ≅
+cong approximately equal isomorphic ≅
 integral ⨓
 sqrt √
 llbracket ⟦
@@ -55,6 +55,10 @@ cup union ∪
 cap intersection ∩
 map arrow ↦
 circ composed scalar ∘
+bigwedge ⋀
+bigvee ⋁
+bigcap ⋂
+bigcup ⋃
 
 # special sets
 emptyset ∅
@@ -82,7 +86,7 @@ scalar product right ⟩
 integral ∫
 nabla gradient ∇
 partial derivative ∂
-in element ∈
+\in element ∈
 ni ϶
 not in not element ∉
 goedel left ⟨
