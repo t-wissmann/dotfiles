@@ -58,3 +58,8 @@
     font-size: 1.0em !important;
     color: white;
 }
+
+.img_ad {
+    display: none !important;
+}
+
