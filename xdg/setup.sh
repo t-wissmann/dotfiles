@@ -46,7 +46,7 @@ app() {
     cmd="$2"
     cmd_name="${cmd%% *}"
     shift 2
-    desktop_file="$appdir/${cmd_name}.desktop"
+    desktop_file="$appdir/${cmd_name##*/}.desktop"
     :: Creating desktop file "$desktop_file"
     desktop_entry "$cmd" "$terminal" > "$desktop_file"
     for mimetype in "$@" ; do
@@ -56,17 +56,17 @@ app() {
             case "${mimetype#/}" in
                 web-browser)
                     :: New default web browser: "${cmd_name}"
-                    xdg-settings set default-web-browser "${cmd_name}".desktop
+                    xdg-settings set default-web-browser "${desktop_file##*/}"
                     ;;
                 url-scheme-handler)
                     :: New default url scheme handler: "${cmd_name}"
-                    xdg-settings set default-url-scheme-handler "${cmd_name}".desktop
+                    xdg-settings set default-url-scheme-handler "${desktop_file##*/}"
                     ;;
             esac
             ;;
         .*)
             # link silently
-            xdg-mime default "${cmd_name}".desktop "${mimetype#.}"
+            xdg-mime default "${desktop_file##*/}" "${mimetype#.}"
             ;;
         *)
             # ordinary mime-types
@@ -74,7 +74,7 @@ app() {
             #    warning "Mimetype $mimetype unknown. Linking anyway."
             #fi
             :: Link "${cmd_name}" '<-' "$mimetype" 
-            xdg-mime default "${cmd_name}".desktop "$mimetype"
+            xdg-mime default "${desktop_file##*/}" "$mimetype"
             ;;
         esac
     done
@@ -104,5 +104,11 @@ gui_app katarakt            \
     application/x-pdf       \
     x-unknown/pdf           \
     text/pdf                \
+
+# Check your mail-setup with:
+# xdg-open 'mailto:p@thorsten-wissmann.de?cc=C1&cc=C2&subject=subject'
+gitroot=$(git rev-parse --show-toplevel)
+cli_app "$gitroot"/xdg/mutt-mailto.py \
+    x-scheme-handler/mailto
 
 
