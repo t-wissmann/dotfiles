@@ -24,7 +24,7 @@ address = o.netloc + o.path # one of them is empty
 
 draft = tempfile.NamedTemporaryFile(mode='w',delete=False)
 if 'body' in query:
-    draft.write(query['body'][0] + '\n')
+    draft.write(query['body'][0].replace("\r","") + '\n')
 draft.close()
 
 
