@@ -27,7 +27,8 @@ git
 tig
 gnu-netcat
 gvim
-gpicview
+#gpicview
+viewnior
 lxappearance
 ghostscript
 herbstluftwm

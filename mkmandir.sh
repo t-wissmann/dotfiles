@@ -21,6 +21,7 @@ searchdir=(
     ~/git/qutebrowser/doc/
     ~/git/rofi/doc/
     ~/git/katarakt/doc/
+    ~/git/git-remote-hg/doc/
 )
 
 for d in "${searchdir[@]}" ; do

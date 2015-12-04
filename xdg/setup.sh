@@ -105,6 +105,11 @@ gui_app katarakt            \
     x-unknown/pdf           \
     text/pdf                \
 
+gui_app viewnior            \
+    image/{x-,}{tiff,sun-raster} \
+    image/{gif,jpeg,png} \
+    image/{svg+xml,svg-xml}
+
 # Check your mail-setup with:
 # xdg-open 'mailto:p@thorsten-wissmann.de?cc=C1&cc=C2&subject=subject'
 gitroot=$(git rev-parse --show-toplevel)
