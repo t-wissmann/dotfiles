@@ -1,0 +1,128 @@
+#!/bin/bash -e
+
+# default options:
+metaflac_cmd() {
+    metaflac --preserve-modtime
+}
+
+# utilities
+perror() {
+    echo "$0: $*" >&2
+}
+
+warning() {
+    echo "Warning: $*" >&2
+}
+
+shell_escape() {
+    # print the first argument in a escaped way, such that it can savely
+    # be used within quotes $'somestring'
+    sed "s,[\\\'],\\\&,g" <<< "$1"
+    # the agressive way: also escape " and $
+    #sed "s,[\\\'\"\\\$],\\\&,g" <<< "$1"
+}
+
+# checks whether the first argument appears twice
+is_in() {
+    needle="$1"
+    shift
+    for i in "$@" ; do
+        if [[ "$i" = $needle ]] ; then
+            return 0
+        fi
+    done
+    return 1
+}
+
+
+# subcommands
+
+# apply the metadata from the variables to a concrete file
+env2metadata() {
+    file="$1"
+    title="$2"
+}
+
+# apply the metadata from a profile file to a list of music files
+applymetadata() {
+    profile="$1"
+    shift
+    files=( "$@" )
+    title() {
+        true;
+    }
+}
+
+tag_names=(
+    ARTIST ALBUM ALBUMARTIST TITLE DATE GENRE TRACKNUMBER TRACKTOTAL CDDB
+    )
+
+metadata2env() {
+    file="$1"
+    # first read a line up to the first "="
+    while read -d = tag  ; do
+        if is_in "$tag" "${tag_names[@]}" ; then
+            # and if it's a valid tag name, read it into the right variable
+            read $tag
+        else
+            warning "Unknown tag $tag in $file"
+            # otherwise just discard the line
+            read trash_variable
+        fi
+    done < <( metaflac --export-tags-to=- "$file" )
+}
+
+read2var() {
+    eval "$2=\"\$$1\""
+}
+
+extractmetadata() {
+    for tag in "${tag_names[@]}" ; do
+        # clear $tag
+        read "$tag" <<< ""
+    done
+    for i in "$@" ; do
+        # backup values
+        for tag in "${tag_names[@]}" ; do
+            read2var $tag old_$tag
+        done
+        metadata2env "$i"
+        echo \#----------------------------------------
+        # print differences
+        for tag in "${tag_names[@]}" ; do
+            if [[ $tag = TITLE ]] ; then
+                continue
+            fi
+            read2var old_$tag old_value
+            read2var $tag value
+            if [[ $value != $old_value ]] ; then
+                cat <<EOF
+$tag=\$'$(shell_escape "$value")'
+EOF
+            fi
+        done
+        cat <<EOF
+song \$'$(shell_escape "$TITLE")'
+EOF
+    done
+}
+
+main() {
+    subcmd="$1"
+    shift
+    case "$subcmd" in
+        apply)
+            applymetadata "$@"
+            ;;
+        extract)
+            extractmetadata "$@"
+            ;;
+        *)
+            perror "Unknown subcommand \"$subcmd\""
+            exit 1
+            ;;
+    esac
+}
+
+main "$@"
+
