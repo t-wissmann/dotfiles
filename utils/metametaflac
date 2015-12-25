@@ -1,9 +1,51 @@
 #!/bin/bash -e
 
+print_help() {
+cat <<EOF
+Usage: $0 SUBCOMMAND ARGS
+
+where SUBCOMMAND is one of the following:
+
+    extract FLACFILES
+        Extracts all the commonly used tags from the list of given FLACFILES
+        and prints it to stdout.
+
+    apply PROFILE FLACFILES
+        Applies the tags specified in the PROFILE to the list of given
+        FLACFILES.
+
+    --help
+    -h
+    help
+        Prints this help text.
+
+Common scenarios:
+
+    1. Change tags of a number of flac files:
+        \$ metametaflac extract *.flac > metadata.sh
+        \$ $EDITOR metadata.sh # (or use some other editor)
+        \$ metametaflac apply metadata.sh *.flac
+
+EOF
+}
+
+set -o pipefail
+
+::() {
+    echo -e "\e[31m:: \e[32m$*\e[0m" >&2
+    "$@"
+}
+
 # default options:
 metaflac_cmd() {
-    metaflac --preserve-modtime
+    :: metaflac --preserve-modtime "$@"
 }
+
+tag_names=(
+    ARTIST ALBUM ALBUMARTIST
+    TITLE DATE GENRE DISC
+    TRACKNUMBER TRACKTOTAL CDDB
+)
 
 # utilities
 perror() {
@@ -12,6 +54,16 @@ perror() {
 
 warning() {
     echo "Warning: $*" >&2
+}
+
+ask() {
+    echo -en "\e[32m$* \e[34m[y/N] \e[0m" >&2
+    read -r -s -n 1 userinput
+    echo
+    if [[ $userinput =~ ^[Yy]$ ]] ; then
+        return 0
+    fi
+    return 1
 }
 
 shell_escape() {
@@ -34,13 +86,44 @@ is_in() {
     return 1
 }
 
+# gets to variable names and copies the value of the first one into the second
+# variable. so read2var x y is equivalent to $y="$x"
+read2var() {
+    eval "$2=\"\$$1\""
+}
+
+
 
 # subcommands
 
 # apply the metadata from the variables to a concrete file
+print_tag_assignments() {
+    for tag in "${tag_names[@]}" ; do
+        if eval "[[ -z \${$tag+x} ]]" ; then
+            # skip unset tags
+            continue;
+        fi
+        read2var "$tag" value
+        echo "$tag=$value"
+        tags_to_remove+=( "$tag" )
+    done
+    echo "Remove tags ${tags_to_remove[*]}" >&2
+}
 env2metadata() {
     file="$1"
-    title="$2"
+    TITLE="$2"
+    echo '------------------------------------------------------------' >&2
+    tags_to_remove=( )
+    print_tag_assignments
+    args=( )
+    for t in "${tags_to_remove[@]}" ; do
+        args+=( --remove-tag="$t" )
+    done
+    args+=( --import-tags-from=- "$file" )
+    echo "by running ${args[*]}"
+    if ask "Apply these to $file?" ; then
+        print_tag_assignments | metaflac_cmd "${args[@]}"
+    fi
 }
 
 # apply the metadata from a profile file to a list of music files
@@ -48,14 +131,15 @@ applymetadata() {
     profile="$1"
     shift
     files=( "$@" )
+    file_index=0
+    # title gets the title and adjusts the tags of the next file accordingly
     title() {
-        true;
+        env2metadata "${files[$file_index]}" "$1"
+        let ++file_index
     }
+    # now interpret the profile with our interpretation of title()
+    source "$profile"
 }
-
-tag_names=(
-    ARTIST ALBUM ALBUMARTIST TITLE DATE GENRE TRACKNUMBER TRACKTOTAL CDDB
-    )
 
 metadata2env() {
     file="$1"
@@ -65,15 +149,26 @@ metadata2env() {
             # and if it's a valid tag name, read it into the right variable
             read $tag
         else
-            warning "Unknown tag $tag in $file"
+            #warning "Unknown tag $tag in $file"
             # otherwise just discard the line
             read trash_variable
         fi
     done < <( metaflac --export-tags-to=- "$file" )
 }
 
-read2var() {
-    eval "$2=\"\$$1\""
+print_infoblock() {
+    echo '# You can use the following variables to adjust the tags:'
+    for tag in "${tag_names[@]}" ; do
+        if [[ $tag = TITLE ]] ; then
+            continue
+        fi
+        echo "#$tag=\$''"
+    done
+    echo '# if a variable is not set, then the tag will not be modified'
+    echo ''
+    echo "# the title is specified by a single line:"
+    echo "# title $'The Title Of Your Song'"
+    echo "# which will apply the tags up to now to the next file in the queue"
 }
 
 extractmetadata() {
@@ -81,6 +176,7 @@ extractmetadata() {
         # clear $tag
         read "$tag" <<< ""
     done
+    print_infoblock
     for i in "$@" ; do
         # backup values
         for tag in "${tag_names[@]}" ; do
@@ -102,7 +198,7 @@ EOF
             fi
         done
         cat <<EOF
-song \$'$(shell_escape "$TITLE")'
+title \$'$(shell_escape "$TITLE")'
 EOF
     done
 }
@@ -117,8 +213,12 @@ main() {
         extract)
             extractmetadata "$@"
             ;;
+        -h|--help|help)
+            print_help
+            ;;
         *)
-            perror "Unknown subcommand \"$subcmd\""
+            perror "Unknown subcommand \"$subcmd\"."
+            perror "Type $0 --help for help."
             exit 1
             ;;
     esac

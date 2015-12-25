@@ -1,0 +1,30 @@
+#!/bin/bash -e
+
+print_help() {
+cat <<EOF
+Usage: $0 FILES…
+
+Increases the modification time of the specified files by 1 second each.
+EOF
+}
+
+::() {
+    echo ":: $*" >&2
+    "$@"
+}
+
+inc_mtime() {
+    mtime=$(stat -c %Y "$1")
+    let mtime++
+    :: touch -d "@$mtime" "$1"
+}
+
+if [[ $# -eq 0 ]] ; then
+    print_help >&2
+    exit 1
+else
+    for file in "$@" ; do
+        inc_mtime "$file"
+    done
+fi
+
