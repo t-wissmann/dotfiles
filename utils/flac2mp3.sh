@@ -1,0 +1,51 @@
+#!/bin/bash -e
+
+copytags() {
+  eval "$(
+     metaflac "$1" --show-tag=ARTIST \
+                   --show-tag=TITLE \
+                   --show-tag=ALBUM \
+                   --show-tag=GENRE \
+                   --show-tag=TRACKNUMBER \
+                   --show-tag=DATE |
+                   sed "s,[\"\'],\\\\&,g" |
+                   sed "s,=\(.*\),=$\'\\1\'," |
+                   sed 's,^[^=]*,\U&,' # ensure upper case vars
+    )"
+  #flac -c -d "$f" | lame -m j -q 0 --vbr-new -V 0 -s 44.1 - "$outf"
+  id3v2 -t "$TITLE" -T "${TRACKNUMBER:-0}" -a "$ARTIST" -A "$ALBUM" -y "$DATE" -g "${GENRE:-12}" "$2"
+}
+
+convlocal() {
+    ffmpeg -y -loglevel warning -i "$1" -ab 196k -ac 2 -ar 48000 "$2" \
+        && copytags "$1" "$2" \
+        || rm "$2"
+}
+
+HOST=faui00u.cs.fau.de
+
+convremote() {
+    local curhost=$HOST
+    #echo ":: $1 -> $2 on $host" >&2
+    ssh "$curhost" \
+        avconv -y -loglevel warning -i - -ab 196k -f mp3 -ac 2 -ar 48000 - \
+        < "$1" > "$2" \
+        && copytags "$1" "$2" \
+        || rm "$2"
+}
+
+if [ "${1%%.flac}" = "$1" ] ; then
+    echo "ERROR: $1 is not a flac file!" >&2
+    exit 1
+fi
+
+output="$2"
+
+if [ "${output%%.mp3}" = "$output" ] ; then
+    echo "ERROR: $output is not a mp3 file!" >&2
+    exit 1
+fi
+
+convlocal "$1" "$2"
+#convremote "$1" "$2"
+
