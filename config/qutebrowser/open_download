@@ -108,6 +108,8 @@ fi
 
 msg info "Opening »$file« (of type $filetype) with ${application%.desktop}"
 
-xdg-open "$path" &
+# the following fails for the PDF from http://arxiv.org/abs/1402.0897
+# but only if I do not redirect stderr...
+xdg-open "$path" 2>/dev/null &
 
 

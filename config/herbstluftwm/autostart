@@ -398,7 +398,7 @@ case "$HOSTNAME" in
     #faui0*) colors_thin_purple ;;
     dachs)  colors_snow ;;
     hoth|faui8*)
-        new_theme_autumn
+        colors_snow
         ;;
     parker)
         new_theme

@@ -74,6 +74,7 @@ abook
 elinks
 fetchmail
 procmail
+parallel
 
 # development
 xorg-server-xephyr
@@ -100,6 +101,7 @@ gst-plugins-good
 gst-plugins-ugly
 gstreamer-vaapi
 mpc
+id3v2
 
 # theming
 gtk-engine-murrine

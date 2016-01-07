@@ -1,0 +1,108 @@
+#!/bin/bash -e
+
+fuzzyfind() {
+    find -maxdepth 2 -type f -iname "$1" -print -quit
+}
+
+::() { echo ":: $*" >&2 ; }
+ask() {
+    local answer=""
+    read -n 1 -p "$1 [YJ/n]" answer
+    case "$answer" in
+        [YyJj]|"")
+            return
+            ;;
+        *)
+            return 1
+            ;;
+    esac
+}
+
+flactags() {
+    # show the first value of some of the tags
+    local file="$1"
+    shift
+    ARGS=( )
+    for tag in "$@" ; do
+        ARGS+=( --show-tag="$tag" )
+    done
+    metaflac "${ARGS[@]}" "$file" | head -n 1 | sed 's,^[^=]*=,,'
+}
+file=$(fuzzyfind '*.flac' ) || true
+if [ -n "$file" ] ; then
+    artist=$(flactags "$file" albumartist artist)
+    album=$(flactags "$file" album)
+else
+    file=$(fuzzyfind '*.mp3')
+    if [ -z "$file" ] ; then
+        echo "$0 error: unable to find any songs in `pwd`"
+    fi
+fi
+
+
+:: "Artist: $artist"
+:: "Album: $album"
+:: "Witnessed by: $file"
+
+searchkey="$artist $album"
+xdg-open "http://google.de/search?q=$searchkey&tbm=isch" > /dev/null &
+
+:: "You were thrown into a browser. Just copy the URL of the desired cover image to the clipboard"
+# waiting for the clipboard to change:
+xclip -i -loops 0 -quiet -selection clipboard  <<< "" 2>/dev/null
+url=$(xclip -o -selection clipboard)
+
+if ask "Download $url as cover.jpg?" ; then
+    wget --user-agent 'Mozilla/5.0' "$url" -O "cover.jpg"
+fi
+
+echo ----
+
+imgdisplay() {
+    # from http://blog.z3bra.org/2014/01/images-in-terminal.html
+    # z3bra -- 2014-01-21
+
+    W3MIMGDISPLAY="/usr/lib/w3m/w3mimgdisplay"
+    FILENAME=$1
+    FONTH=14 # Size of one terminal row
+    FONTW=8  # Size of one terminal column
+    COLUMNS=`tput cols`
+    LINES=`tput lines`
+
+    read width height <<< `echo -e "5;$FILENAME" | $W3MIMGDISPLAY`
+
+    max_width=$(($FONTW * $COLUMNS))
+    max_height=$(($FONTH * $(($LINES - 2)))) # substract one line for prompt
+
+    if test $width -gt $max_width; then
+    height=$(($height * $max_width / $width))
+    width=$max_width
+    fi
+    if test $height -gt $max_height; then
+    width=$(($width * $max_height / $height))
+    height=$max_height
+    fi
+
+    w3m_command="0;1;0;0;$width;$height;;;;;$FILENAME\n4;\n3;"
+
+    tput cup $(($height/$FONTH)) 0
+    echo -e "$w3m_command"|$W3MIMGDISPLAY
+}
+clear
+imgdisplay cover.jpg
+
+#gimg-search() {
+#    local key="$1"
+#    key="${key//&/\\&}"
+#    url="www.google.de/search?q=$key&tbm=isch"
+#    :: "Querying $url ..."
+#    #wget --user-agent 'Mozilla/5.0' -qO - "$url" \
+#    #    | sed 's,<,\n<,g' | grep '<img' \
+#    #    | sed 's,.*src="\([^"]*\)".*,\1,'
+#    wget --user-agent 'Mozilla/5.0' -qO - "$url" \
+#        | grep -oE 'a href="/url\?q=[^"]*' | sed 's,^a href=",,'
+#}
+#
+#gimg-search "$searchkey"
+##imagelink=$(gimg-search "$searchkey")
+##echo "$imagelink"

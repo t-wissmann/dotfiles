@@ -1,23 +1,26 @@
 #!/bin/bash -e
 
 copytags() {
+  # copies all the tags from the flac file $1 to the mp3 file $2
   eval "$(
      metaflac "$1" --show-tag=ARTIST \
                    --show-tag=TITLE \
                    --show-tag=ALBUM \
                    --show-tag=GENRE \
                    --show-tag=TRACKNUMBER \
+                   --show-tag=DISC \
                    --show-tag=DATE |
                    sed "s,[\"\'],\\\\&,g" |
                    sed "s,=\(.*\),=$\'\\1\'," |
                    sed 's,^[^=]*,\U&,' # ensure upper case vars
     )"
   #flac -c -d "$f" | lame -m j -q 0 --vbr-new -V 0 -s 44.1 - "$outf"
-  id3v2 -t "$TITLE" -T "${TRACKNUMBER:-0}" -a "$ARTIST" -A "$ALBUM" -y "$DATE" -g "${GENRE:-12}" "$2"
+  id3v2 -t "$TITLE" -T "${TRACKNUMBER:-0}" -a "$ARTIST" -A "$ALBUM" \
+        -y "$DATE" -g "${GENRE:-12}" --TPOS "$DISC" "$2"
 }
 
 convlocal() {
-    ffmpeg -y -loglevel warning -i "$1" -ab 196k -ac 2 -ar 48000 "$2" \
+    ffmpeg -y -loglevel warning -i "$1" -ab 192k -ac 2 -ar 48000 "$2" \
         && copytags "$1" "$2" \
         || rm "$2"
 }
