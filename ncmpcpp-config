@@ -30,7 +30,7 @@ progressbar_look = "─╼·"
 progressbar_elapsed_color = "green"
 progressbar_color = "black"
 
-song_columns_list_format = "(7f)[white]{l:Dauer} │ (25f)[cyan]{a|D:Künstler} (3f)[white]{n:  }(43)[yellow]{t|f:Titel} (30)[cyan]{b} (10f)[green]{y}""
+song_columns_list_format = "(7f)[white]{l:Dauer} │ (20)[cyan]{a|D:Künstler} (3f)[white]{n:  }(43)[yellow]{t|f:Titel} (30)[cyan]{b} (10f)[green]{y}""
 playlist_separate_albums = no
 main_window_color = "default"
 active_column_color = "red"

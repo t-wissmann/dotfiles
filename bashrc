@@ -40,12 +40,12 @@ _userland()
     [[ $userland == $1 ]]
 }
 
-#trysource /usr/share/bash-completion/bash_completion
 #trysource /etc/bash_completion
-for i in git mpc netctl systemctl ; do
-    trysource /etc/bash_completion.d/$i
-    trysource /usr/share/bash-completion/completions/$i
-done
+trysource /usr/share/bash-completion/bash_completion
+#for i in git mpc netctl systemctl pass ; do
+#    trysource /etc/bash_completion.d/$i
+#    trysource /usr/share/bash-completion/completions/$i
+#done
 
 trysource ~/dev/c/herbstluftwm/share/herbstclient-completion
 trysource ~/git/herbstluftwm/share/herbstclient-completion
