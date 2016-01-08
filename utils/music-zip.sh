@@ -51,4 +51,4 @@ importfile() {
 export -f importfile
 
 
-find "$1" -type f -printf '%P\n' | parallel --halt soon,fail=1 importfile
+find "$1" -xtype f -printf '%P\n' | parallel --halt soon,fail=1 importfile
