@@ -40,7 +40,7 @@ case "$1" in
             if ! [ -e "$folder/.htaccess" ] ; then
                 tee "$folder/.htaccess" <<HTACCESSEND
 # disable directory listing
-Options +Indexes
+Options -Indexes
 # setting default charset to UTF-8 in .htaccess
 AddDefaultCharset UTF-8
 #setting default type to text/plain
