@@ -36,6 +36,11 @@ importfile() {
             return
             ;;
     esac
+    # sanitize file names by dropping characters that aren't allowed in vfat.
+    # according to wikipedia, the following are allowed in vfat:
+    # ! # $ % & ' ( ) - @ ^ _ ` { } ~
+    outfile=${outfile//\"/\'} # strangely, single quotes are allowed
+    outfile=${outfile//:/} # just drop them as there is no
     echo "$outfile"
     outfile="$destdir/$outfile"
     infile="$srcdir/$1"
