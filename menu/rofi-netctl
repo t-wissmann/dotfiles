@@ -33,6 +33,8 @@ else
         :: sudo journalctl -f  --unit='system-netctl.slice' '&'
         sudo journalctl -f  --unit='system-netctl.slice' &
         journalctl_pid=$!
+        :: sudo netctl stop-all
+        sudo netctl stop-all
         :: sudo netctl start "$selection"
         sudo netctl start "$selection"
         :: Press any key to close… | tr -d '\n'
