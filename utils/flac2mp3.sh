@@ -3,7 +3,8 @@
 copytags() {
   # copies all the tags from the flac file $1 to the mp3 file $2
   eval "$(
-     metaflac "$1" --show-tag=ARTIST \
+     metaflac "$1" --no-utf8-convert \
+                   --show-tag=ARTIST \
                    --show-tag=TITLE \
                    --show-tag=ALBUM \
                    --show-tag=GENRE \
@@ -12,6 +13,7 @@ copytags() {
                    --show-tag=DATE |
                    sed "s,[\"\'],\\\\&,g" |
                    sed "s,=\(.*\),=$\'\\1\'," |
+                   iconv -f UTF-8 -t ISO-8859-15 |
                    sed 's,^[^=]*,\U&,' # ensure upper case vars
     )"
   #flac -c -d "$f" | lame -m j -q 0 --vbr-new -V 0 -s 44.1 - "$outf"
