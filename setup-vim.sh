@@ -65,6 +65,10 @@ fetch ~/.vim/autoload/togglebg.vim \
 fetch ~/.vim/plugin/a.vim \
     'http://www.vim.org/scripts/download_script.php?src_id=7218'
 
+# for doing mutt's abook query from vim
+fetch ~/.vim/plugin/querycommandcomplete.vim \
+    'http://www.vim.org/scripts/download_script.php?src_id=20369'
+
 update-git https://github.com/kien/ctrlp.vim.git ~/.vim/bundle/ctrlp.vim
 # update help tags for it
 vim --cmd 'helptags ~/.vim/bundle/ctrlp.vim/doc' --cmd 'q'

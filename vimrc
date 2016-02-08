@@ -285,3 +285,7 @@ noremap  <buffer> <silent> j gj
 
 set showcmd
 
+" Use OmniCompletion for abook dictionary entries
+" Fire omnicompletion using ^X^O
+au BufRead /tmp/mutt* setlocal omnifunc=QueryCommandComplete
+
