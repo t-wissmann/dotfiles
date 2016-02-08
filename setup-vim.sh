@@ -70,8 +70,10 @@ fetch ~/.vim/plugin/querycommandcomplete.vim \
     'http://www.vim.org/scripts/download_script.php?src_id=20369'
 
 update-git https://github.com/kien/ctrlp.vim.git ~/.vim/bundle/ctrlp.vim
+update-git https://github.com/LaTeX-Box-Team/LaTeX-Box ~/.vim/bundle/LaTeX-Box.git
 # update help tags for it
 vim --cmd 'helptags ~/.vim/bundle/ctrlp.vim/doc' --cmd 'q'
+vim --cmd 'helptags ~/.vim/bundle/LaTeX-Box.git/doc' --cmd 'q'
 
 #update-git https://github.com/bling/vim-airline ~/.vim/bundle/vim-airline
 ## update help tags for it

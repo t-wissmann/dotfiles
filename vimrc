@@ -29,7 +29,18 @@ set tabstop=4
 set nojoinspaces
 " only insert real tabs at the beginning of a line and fill with spaces
 " otherwise
-inoremap <expr> <tab> getline('.')[0:col('.')-2] =~ '^\t*$' ? "\<Tab>" : repeat(" ", &sw - ((virtcol('.')-1) % &sw))
+function! InsertTabWrapper()
+    let col = col('.') - 1
+    if !col || getline('.')[col - 1] !~ '\k'
+        return "\<tab>"
+        "getline('.')[0:col('.')-2] =~ '^\t*$' ? "\<Tab>" : repeat(" ", &sw - ((virtcol('.')-1) % &sw))
+    else
+        return "\<c-x>\<c-o>"
+    endif
+endfunction
+
+inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+"inoremap <expr> <tab> getline('.')[0:col('.')-2] =~ '^\t*$' ? "\<Tab>" : repeat(" ", &sw - ((virtcol('.')-1) % &sw))
 
 " enable filetype specific features
 filetype plugin on
@@ -149,6 +160,8 @@ function! EnterHsFile()
     set tabstop=2
 endfunction
 
+set runtimepath^=~/.vim/bundle/LaTeX-Box.git/
+
 function! EnterTexFile()
 	"set keywordprg=dict
 	set wrap
@@ -176,6 +189,7 @@ function! EnterTexFile()
 	ab xablock \begin{alertblock}{}<RETURN><TAB><RETURN><C-U>\end{alertblock}<UP><UP><END><LEFT>
 	ab xlst \lstinputblock{}<LEFT>
 	ab dt \d t
+    let g:LatexBox_split_type="new"
 endfunction
 
 function! ComposeMessage()
