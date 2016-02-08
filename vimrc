@@ -106,6 +106,9 @@ hi CursorLine ctermbg=black term=NONE cterm=NONE
 " yellow line numbers
 hi LineNr ctermbg=NONE term=NONE ctermfg=gray cterm=NONE
 hi CursorLineNr ctermbg=black term=NONE ctermfg=green cterm=bold
+hi Pmenu ctermbg=black ctermfg=white term=NONE cterm=NONE
+hi PmenuSel ctermbg=green ctermfg=0 term=NONE cterm=NONE
+hi PmenuThumb ctermbg=red term=NONE cterm=bold
 
 " colors for folded brackets
 hi Folded ctermbg=0 term=NONE cterm=NONE ctermfg=gray
@@ -214,7 +217,7 @@ function! EditClojure()
     nmap <C-c>v :call Screen_Vars()<CR>
 endfunction
 
-function Screen_Vars()
+function! Screen_Vars()
   if !exists("g:screen_sessionname") || !exists("g:screen_windowname")
     let g:screen_sessionname = ""
     let g:screen_windowname = "0"
@@ -224,7 +227,7 @@ function Screen_Vars()
   let g:screen_windowname = input("window name: ", g:screen_windowname)
 endfunction
 
-function Send_to_Screen(text)
+function! Send_to_Screen(text)
 
   echo system("screen -S clj -p clj -X stuff '" . substitute(a:text, "'", "'\\\\''", 'g') . "'")
 endfunction
