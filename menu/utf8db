@@ -59,6 +59,24 @@ bigwedge ⋀
 bigvee ⋁
 bigcap ⋂
 bigcup ⋃
+sqsubseteq ⊑
+sqsubset ⊏
+sqsupseteq ⊒
+sqsup ⊐
+sqcup ⊔
+sqcap ⊓
+sim ∼
+simeq ≃
+simdot ⩪
+shortparallel ∥
+rtif play ▸
+prop ∝
+
+harpoonrigh partialto ⇀
+
+hookrightarrow ↪
+rightarrowtail ↣
+#doubleheadrightarrowtail ⤖
 
 # special sets
 emptyset ∅
@@ -150,6 +168,7 @@ checked haken ✓
 checked haken ✔
 checked cross ✕
 checked cross ✗
+square box qed □
 box checked ☑
 box marked ☒
 cross christ ✝
@@ -164,6 +183,7 @@ steam ♨
 heart ♥
 heart ❤
 heart rotated ❥
+spades ♠
 phone ✆
 atomic ✇
 letter ✉
