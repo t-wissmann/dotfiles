@@ -111,6 +111,10 @@ function aur-build(){
     su -c "pacman -U --noconfirm $AURBUILD_ASDEPS ""$(ls -t *.pkg.tar.xz|head -1)"
 }
 
+aur-fetch() {
+    wget http://aur.archlinux.org/cgit/aur.git/snapshot/$1.tar.gz -O - | tar xzv
+}
+
 
 function setWindowTitle(){
     echo -ne '\033]0;'$1'\007'

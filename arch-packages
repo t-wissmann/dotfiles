@@ -86,6 +86,7 @@ python-gobject2
 python-yaml
 mercurial
 abs
+devtools
 
 # multimedia
 gstreamer0.1-base-plugins

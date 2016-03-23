@@ -1,6 +1,7 @@
 #/bin/bash
 # this is: ~/.bash_aliases
 
+alias fm='fetchmail'
 alias ll='/bin/ls --color=auto -lah'
 alias ls='ls -B --color=auto'
 alias lsn='ls -t -B -h --color=always|head'

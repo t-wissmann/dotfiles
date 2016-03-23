@@ -1,0 +1,41 @@
+#!/bin/bash -e
+
+# Behaviour:
+# For each data-href-attribute on a tag, it adds a href-attribute with the same
+# value
+#
+#   In order to use this script, just start it using `spawn --userscript` from
+#   qutebrowser. I recommend using an alias, e.g. put this in the
+#   [alias]-section of qutebrowser.conf:
+#
+#     data-href = spawn --userscript /path/to/data-href
+
+
+js() {
+cat <<EOF
+
+    var all_objects = document.getElementsByTagName("*");
+    for (i = 0; i < all_objects.length; i++) {
+        var obj = all_objects[i];
+        // make each data-href attribute a href-attribute
+        if (obj.getAttribute("data-href")
+            && !obj.getAttribute("href")) {
+            obj.setAttribute("href", obj.getAttribute("data-href"));
+        }
+        if (obj.getAttribute("href") && obj.tagName == "DIV") {
+            //console.log(obj.getAttribute("href"));
+            // replace the tag name by "a" to make it clickable
+            newOuterHTML = obj.outerHTML
+                                .replace(/^<[a-z]*/i, "<a")
+                                .replace(/<\/[a-z]*>$/i,"</a>");
+            obj.outerHTML = newOuterHTML;
+        }
+    }
+
+EOF
+}
+
+printjs() {
+    js | sed 's,//.*$,,' | tr '\n' ' '
+}
+echo "jseval -q $(printjs)" >> "$QUTE_FIFO"
