@@ -76,6 +76,7 @@ elinks
 fetchmail
 procmail
 parallel
+perl-image-exiftool
 
 # development
 xorg-server-xephyr
