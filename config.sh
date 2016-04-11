@@ -43,6 +43,7 @@ homedir=(
 
 files=(
     config/*[^~]
+    config/qutebrowser/userscripts
     finch-gntrc
     ${homedir[@]}
     ncmpcpp-config
@@ -54,10 +55,11 @@ relpath2target=(
     # just a list of sed commands
     "s#taskrc\.cip#$HOME/.taskrc#"
     "s#^\($(array2str homedir)\)\$#$HOME/.\1#"
-    "s#^config/\(.*\)\$#$HOME/.config/\1#"
     "s#^ncmpcpp-config#$HOME/.ncmpcpp/config#"
     "s#^gpg.conf#$HOME/.gnupg/gpg.conf#"
     "s#^finch-gntrc#$HOME/.gntrc#"
+    "s,^config/qutebrowser/userscripts,$HOME/.local/share/qutebrowser/userscripts,"
+    "s#^config/\(.*\)\$#$HOME/.config/\1#"
 )
 
 # options
