@@ -18,7 +18,7 @@ full_group_installs() {
 #  - then substract all groups installed
 list_missing_packages() {
     grep -vE '^(#|$)' < "$file" | sort \
-        | comm -23 - <(pacman -Qq)  \
+        | pacman -T \
         | comm -23 - <(full_group_installs)
 }
 

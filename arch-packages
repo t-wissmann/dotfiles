@@ -17,7 +17,7 @@ alsa-utils
 asciidoc
 cowsay
 figlet
-dmenu
+#dmenu
 feh
 calc
 nitrogen
@@ -26,7 +26,8 @@ curl
 ghc
 git
 tig
-gnu-netcat
+#gnu-netcat
+openbsd-netcat
 gvim
 #gpicview
 viewnior
@@ -38,8 +39,8 @@ i3lock
 mutt
 net-tools
 openssh
-pidgin
-purple
+#pidgin
+#libpurple
 rubber
 rxvt-unicode
 xdotool
@@ -90,13 +91,10 @@ abs
 devtools
 
 # multimedia
-gstreamer0.1-base-plugins
-gstreamer0.1-ugly
-gstreamer0.1-ugly-plugins
 gstreamer0.10-base-plugins
 gstreamer0.10-ugly
 gstreamer0.10-ugly-plugins
-ffmpeg-compat
+ffmpeg0.10
 ffmpeg2theora
 gst-libav
 gst-plugins-bad
@@ -115,7 +113,9 @@ xcursor-vanilla-dmz
 xcursor-vanilla-dmz-aa
 
 qt4
-qt5
+qt5-doc
+qt5-gstreamer
+qt5-webengine
 poppler-qt4
 poppler-qt5
 
