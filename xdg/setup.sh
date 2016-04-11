@@ -21,7 +21,7 @@ desktop_entry() {
     local terminal="$2"
     prefix=""
     if [ "$terminal" = true ] ; then
-        prefix="urxvt -e "
+        prefix="urxvt +hold -e "
         terminal=false
     fi
     local name="${3:-${1%% *}}"
@@ -29,14 +29,20 @@ desktop_entry() {
 [Desktop Entry]
 Encoding=UTF-8
 Version=1.0
-Name=$name
+Name=${EntryName:-$name}
+GenericName=${GenericName}
 Comment=
-Exec=$prefix$exe
-Icon=
+Exec=$prefix$exe$ExecSuffix
+Icon=$Icon
 Terminal=$terminal
 Type=Application
 Categories=
 EOF
+# reset the displayed name
+EntryName=""
+GenericName=""
+Icon=""
+ExecSuffix=""
 }
 
 appdir="$HOME/.local/share/applications/"
@@ -84,11 +90,13 @@ gui_app() { app false "$@" ; }
 cli_app() { app true "$@" ; }
 mimes() { grep -xE "$1" /usr/share/mime/types | sed 's,^,.,'; }
 
+Icon=browser
 gui_app qutebrowser \
     x-scheme-handler/{http,https} \
     /default-{web-browser,url-scheme-handler} \
     text/html
 
+Icon=text-editor
 cli_app vim \
     $(mimes 'text/.*') \
     text/x-shellscript \
@@ -96,6 +104,7 @@ cli_app vim \
     application/ecmascript \
     application/javascript
 
+Icon=x-office-document
 gui_app katarakt            \
     application/pdf         \
     application/x-bzpdf     \
@@ -105,7 +114,9 @@ gui_app katarakt            \
     x-unknown/pdf           \
     text/pdf                \
 
-gui_app viewnior            \
+EntryName="SXIV"
+Icon=emblem-photos
+gui_app ~/dotfiles/utils/sxiv-helper.sh \
     image/{x-,}{tiff,sun-raster} \
     image/{gif,jpeg,png} \
     image/{svg+xml,svg-xml}
@@ -113,6 +124,9 @@ gui_app viewnior            \
 # Check your mail-setup with:
 # xdg-open 'mailto:p@thorsten-wissmann.de?cc=C1&cc=C2&subject=subject'
 gitroot=$(git rev-parse --show-toplevel)
+EntryName="Mutt"
+Icon=mail_generic
+ExecSuffix=" %u"
 cli_app "$gitroot"/xdg/mutt-mailto.py \
     x-scheme-handler/mailto
 

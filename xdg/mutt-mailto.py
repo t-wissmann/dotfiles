@@ -1,4 +1,4 @@
-#!/bin/python
+#!/bin/python3
 
 import sys
 import subprocess
@@ -11,7 +11,9 @@ import os
 # or
 # mailto://user@domain?subject=XYZ&cc=...&body=...
 
-o     = urllib.parse.urlparse(sys.argv[1])
+print(sys.argv)
+url   = sys.argv[1]
+o     = urllib.parse.urlparse(url)
 query = urllib.parse.parse_qs(o.query)
 
 address = o.netloc + o.path # one of them is empty
