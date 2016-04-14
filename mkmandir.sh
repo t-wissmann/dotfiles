@@ -34,5 +34,13 @@ for d in "${searchdir[@]}" ; do
     done
 done
 
+cat <<EOF
+# Add the following to your bash configuration:
+# extend man-variable
+if [ -d "\${HOME}/man" ] ; then
+    export MANPATH="\${HOME}/man:\${MANPATH}"
+fi
+EOF
+
 
 
