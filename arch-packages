@@ -143,6 +143,7 @@ texlive-plainextra
 texlive-pstricks
 texlive-publishers
 texlive-science
+git-latexdiff
 
 
 

@@ -17,6 +17,7 @@ presenting
         <enter-command>set pipe_decode=$my_pipe_decode<enter>"
     ```
   - [mkmandir.sh](mkmandir.sh) for having a man directory in your home file
+  - git-latexdiff
 
 
 // vim: ft=asciidoc

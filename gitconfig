@@ -19,8 +19,13 @@
 	deltalog = log --oneline origin/master..HEAD
 	pff = pull --ff-only
 	ff = merge --ff-only
+	ldiff = latexdiff --latexmk --ignore-makefile --subtree
 [merge]
 	tool = vimdiff
 [push]
 	default = simple
+[difftool.latex]
+        cmd = git-latexdiff \"$LOCAL\" \"$REMOTE\"
+[difftool]
+        prompt = false
 # vim: noet
