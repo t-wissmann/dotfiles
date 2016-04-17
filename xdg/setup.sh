@@ -121,6 +121,13 @@ gui_app ~/dotfiles/utils/sxiv-helper.sh \
     image/{gif,jpeg,png} \
     image/{svg+xml,svg-xml}
 
+EntryName="MPV (Append)"
+Icon=applications-multimedia
+gui_app ~/dotfiles/utils/mpv-append.sh \
+    $(mimes 'video/.*') \
+    $(mimes 'audio/.*')
+
+
 # Check your mail-setup with:
 # xdg-open 'mailto:p@thorsten-wissmann.de?cc=C1&cc=C2&subject=subject'
 gitroot=$(git rev-parse --show-toplevel)
