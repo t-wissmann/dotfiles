@@ -22,9 +22,18 @@ presenting
   - coverfetch
   - sxiv, sxiv filter, sxiv-helper.sh
   - dmenu, rofi
-    * rofi-netctl
-    * rofi-mpd.sh
-    * utf8select.sh
+    * [rofi-netctl](menu/rofi-netctl)
+    * [rofi-mpd.sh](menu/rofi-mpd.sh)
+    * [utf8select.sh](menu/utf8select.sh)
+  - pass + qutebrowser
+  - call mpv from browser (especially qutebrowser)
+  - [vim](vimrc):
+    * macros for common patterns: xenum, xframe, cuv
+    * Spell check toggling
+    * CtrlP
+    * OmniCompletion when composing mails
+    * `augroup GPGASCII`
+    * `set showcmd`
 
 
 // vim: ft=asciidoc
