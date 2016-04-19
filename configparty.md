@@ -18,6 +18,13 @@ presenting
     ```
   - [mkmandir.sh](mkmandir.sh) for having a man directory in your home file
   - git-latexdiff
+  - mpv single instance
+  - coverfetch
+  - sxiv, sxiv filter, sxiv-helper.sh
+  - dmenu, rofi
+    * rofi-netctl
+    * rofi-mpd.sh
+    * utf8select.sh
 
 
 // vim: ft=asciidoc

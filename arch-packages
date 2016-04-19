@@ -79,8 +79,10 @@ fetchmail
 procmail
 parallel
 perl-image-exiftool
+socat
 
 # development
+strace
 xorg-server-xephyr
 gdb
 valgrind

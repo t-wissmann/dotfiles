@@ -103,13 +103,13 @@ PROMPT_COMMAND="printexitstat $hasgui"
 #fi
 
 # add colors for less when viewing manpages
-export LESS_TERMCAP_mb=$'\e[01;31m' # for what is this line good for ?
-export LESS_TERMCAP_md=$'\e[0;36m' # syntax and keywords
-export LESS_TERMCAP_us=$'\e[1;35m' # "variables"
-export LESS_TERMCAP_me=$'\e[0m' # some rows
-export LESS_TERMCAP_se=$'\e[0m' # first and last row background
-export LESS_TERMCAP_so=$'\e[0;43;30m' # statusbar and searchhighlights
-export LESS_TERMCAP_ue=$'\e[0m' # background
+export LESS_TERMCAP_mb=$'\e[01;31m' # begin blinking - for what is this line good for ?
+export LESS_TERMCAP_md=$'\e[1;35m' # begin bold - syntax and keywords
+export LESS_TERMCAP_me=$'\e[0m' # end mode - some rows
+export LESS_TERMCAP_so=$'\e[0;43;30m' # begin standout-mode -- statusbar and searchhighlights
+export LESS_TERMCAP_se=$'\e[0m' # end standout-mode first and last row background
+export LESS_TERMCAP_us=$'\e[0;32m' # begin underline "variables"
+export LESS_TERMCAP_ue=$'\e[0m'    # end underline background
 
 # for openoffice .... -.-
 export OOO_FORCE_DESKTOP='gnome'
