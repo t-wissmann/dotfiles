@@ -6,7 +6,7 @@ monitor=${1:-0}
 height=16
 padding_top=0
 padding_bottom=0
-padding_left=8
+padding_left=0
 padding_right=${padding_left}
 bottom=0
 geometry=( $(herbstclient monitor_rect $monitor) )
@@ -45,7 +45,8 @@ update_pad $((height + padding_top + padding_bottom))
 {
     # events:
     #mpc idleloop player &
-    child+=" $!"
+    child=""
+    #child+=" $!"
     while true ; do
         date +$'date\t%H:%M, %Y-%m-%d'
         sleep 2 || break

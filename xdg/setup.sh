@@ -52,7 +52,8 @@ app() {
     cmd="$2"
     cmd_name="${cmd%% *}"
     shift 2
-    desktop_file="$appdir/${cmd_name##*/}.desktop"
+    local tmp=${cmd_name##*/}
+    desktop_file="$appdir/${tmp//./}.desktop"
     :: Creating desktop file "$desktop_file"
     desktop_entry "$cmd" "$terminal" > "$desktop_file"
     for mimetype in "$@" ; do
@@ -80,6 +81,7 @@ app() {
             #    warning "Mimetype $mimetype unknown. Linking anyway."
             #fi
             :: Link "${cmd_name}" '<-' "$mimetype" 
+            :: xdg-mime default "${desktop_file##*/}" "$mimetype"
             xdg-mime default "${desktop_file##*/}" "$mimetype"
             ;;
         esac
