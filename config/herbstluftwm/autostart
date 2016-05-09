@@ -152,7 +152,7 @@ hc keybind $Mod-Shift-space cycle_layout -1
 hc keybind $Mod-m spawn ~/git/herbstluftwm/scripts/maximize.sh
 
 # resizing
-RESIZESTEP=0.05
+RESIZESTEP=0.02
 hc keybind $Mod-Control-h resize left +$RESIZESTEP
 hc keybind $Mod-Control-j resize down +$RESIZESTEP
 hc keybind $Mod-Control-k resize up +$RESIZESTEP
@@ -199,7 +199,7 @@ if [ "$HOSTNAME" = ghul ] ;then
 fi
 if [[ "$HOSTNAME" =~ ^faui8.*$ ]] ; then
     hc keybind $Mod-F1 spawn bash -c ' i3lock -i ~/wallpaper/patterns/strawberry-tile.png -t && systemctl suspend'
-    hc keybind $Mod-F2 spawn bash -c ' i3lock -i ~/wallpaper/patterns/strawberry-tile.png -t'
+    hc keybind $Mod-F2 spawn bash -c ' sleep 0.5 ; i3lock -i ~/wallpaper/patterns/strawberry-tile.png -t -e -f -d'
 fi
 if [ "$HOSTNAME" = parker ] ;then
     hc keybind $Mod-Ctrl-q quit
