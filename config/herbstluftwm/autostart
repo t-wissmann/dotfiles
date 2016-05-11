@@ -249,13 +249,10 @@ amixer -q sset Master $1 \
     || amixer -q sset Speaker $1
 EOF
 }
-hc keybind Shift+XF86AudioMute spawn amixer -q sset PCM toggle
-hc keybind XF86AudioMute spawn \
-    bash -c "$(audioaction toggle)"
-hc keybind XF86AudioLowerVolume spawn \
-    bash -c "$(audioaction 1- )"
-hc keybind XF86AudioRaiseVolume spawn \
-    bash -c "$(audioaction 1+ )"
+#hc keybind Shift+XF86AudioMute spawn ponymix
+hc keybind XF86AudioMute spawn ponymix toggle
+hc keybind XF86AudioLowerVolume spawn ponymix decrease 5
+hc keybind XF86AudioRaiseVolume spawn ponymix increase 5
 
 # some settings
 hc set focus_follows_mouse 1
