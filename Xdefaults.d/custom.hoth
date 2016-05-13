@@ -5,7 +5,7 @@ xterm*faceName: 'xft:Bitstream Vera Sans Mono:pixelsize=12'
 
 !#include "pixelfont"
 URxvt.color0:  #101010
-URxvt.background: #101010
+urxvt*background: #080808
 URxvt.color3:  #FFC630
 !URxvt.color11: #99FF5F
 
@@ -24,23 +24,24 @@ URxvt.color3:  #FFC630
 
 !#include "neon.colors"
 !#include "tangobright.colors"
-urxvt*background: red
+!urxvt*background: red
 !urxvt*background: #1E0F05
 !urxvt*foreground: white
 !*color2: #7FD1DA
 
-#define itembg argb:EEE2CD96
-#define selbg #E26910
+
+! a brown
+!#define itembg argb:EEE2CD96
+!#define selbg #E26910
 !    STATE             BG         FG        BGALT     HLBG      HLFG
-rofi.color-normal:     itembg,    #4B2D22,  itembg,   selbg,  #1A0900
-rofi.color-urgent:     #D6156C,   white,    #D6156C,  #dc322f,  selbg
-rofi.color-active:     #101010,   #FFE352,  #101010,  selbg,  black
-rofi.color-window:     argb:EE242424,black,argb:EE242424
-rofi.hide-scrollbar:   false
-rofi.color-window:     #C4B07A,#4B2D22
+!rofi.color-normal:     itembg,    #4B2D22,  itembg,   selbg,  #1A0900
+!rofi.color-urgent:     #D6156C,   white,    #D6156C,  #dc322f,  selbg
+!rofi.color-active:     #101010,   #FFE352,  #101010,  selbg,  black
+!rofi.color-window:     argb:EE242424,black,argb:EE242424
+!rofi.hide-scrollbar:   false
+!rofi.color-window:     #C4B07A,#4B2D22
 
 rofi.width:                          80
 
-urxvt*background:rgba:0F0F/0707/0000/EEEE
-urxvt*depth: 32
-!urxvt*inheritPixmap: true
+!urxvt*background:rgba:0F0F/0707/0000/EEEE
+!urxvt*depth: 32
