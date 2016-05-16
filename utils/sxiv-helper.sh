@@ -14,7 +14,7 @@ extregexp=$(printf "|.*.%s" "${extensions[@]}")
 extregexp=${extregexp#|}
 
 readarray -t list < <(
-    find -H -maxdepth 1 -xtype f -printf '%P\n' \
+    find -H "$basedir" -maxdepth 1 -xtype f -printf '%P\n' \
         | grep -iE "$extregexp" \
         | sort -f
 )
@@ -28,14 +28,13 @@ for i in ${!list[@]} ; do
     fi
 done
 
-
 show_notifications() {
     while read line ; do
         notify-send "SXIV ${basedir##*/}" "$line"
     done
 }
 
-printf "%s\n" "${list[@]}" | sxiv -a -i -n "$((idx+1))" 2>&1 \
+printf "${basedir//%/%%}/%s\n" "${list[@]}" | sxiv -a -i -n "$((idx+1))" 2>&1 \
     | show_notifications
 
 
