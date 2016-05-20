@@ -75,7 +75,8 @@ for i in "${!TAG_KEYS[@]}" ; do
     if [ -z "${TAG_NAMES[$i]}" ] ; then
         hc add "${TAG_KEYS[$i]}"
     fi
-    hc keybind "$Mod-$key" or . and , compare tags.focus.index = "$i" , try use_previous . use_index "$i"
+    #hc keybind "$Mod-$key" or . and , compare tags.focus.index = "$i" , try use_previous . use_index "$i"
+    hc keybind "$Mod-$key" use_index "$i"
     hc keybind "$Mod-Shift-$key" move_index "$i"
 done
 
