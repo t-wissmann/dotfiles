@@ -32,6 +32,7 @@ homedir=(
     emacs.d
     pinforc
     screenrc
+    latexmkrc
     tmux.conf
     vimrc
     inputrc
