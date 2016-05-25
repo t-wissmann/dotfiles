@@ -229,6 +229,7 @@ BOOKMARKS=(
    literatur       ~/uni/literatur/
    ratlambda       ~/git/papers/RATIONAL_LAMBDA/
    apcs            ~/git/papers/NomLiftings/apcs/
+   cpt             ~/git/papers/COAX/CoalgPaigeTarjan/
   )
 function cdbm(){
     if [ -z "$1" ] ; then
