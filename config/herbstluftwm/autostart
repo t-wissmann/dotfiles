@@ -82,7 +82,7 @@ done
 
 hc keybind "$Mod-period" use_index +1 --skip-visible
 hc keybind "$Mod-comma"  use_index -1 --skip-visible
-hc keybind $Mod-grave use_previous
+hc keybind $Mod-Escape use_previous
 hc keybind XF86Eject spawn eject -T
 
 function dualhead() {
