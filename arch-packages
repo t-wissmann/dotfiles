@@ -80,6 +80,8 @@ procmail
 parallel
 perl-image-exiftool
 socat
+python-docs
+pandoc
 
 # development
 strace
