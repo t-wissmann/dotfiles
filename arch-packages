@@ -82,6 +82,7 @@ perl-image-exiftool
 socat
 python-docs
 pandoc
+vim-minibufexpl
 
 # development
 strace

@@ -33,4 +33,4 @@ echo "---------------------"
 cal `expr \( $MONTH + 1 \) % 12` $YEAR \
     | sed -e "1 s/^\s*//; 1,2 s/.*/^fg(white)&^fg()/; 3,$ s/\(.*\)/\1                    /; 3,$ s/\(.\{20\}\).*/\1/"
 ) \
-    |  dzen2 -p 60 -fn 'Monospace-9' -x $x -y 20 -w $width -l 17 -sa c -e 'onstart=uncollapse;button3=exit' -bg '#242424' 
+    |  dzen2 -p 60 -fn 'Monospace-9' -x $x -y 20 -w $width -l 17 -sa c -e 'onstart=uncollapse;button1=exit;button3=exit' -bg '#242424' 
