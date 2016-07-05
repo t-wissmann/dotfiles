@@ -1,1 +1,1 @@
-panel-lemonbar.sh
+/home/thorsten/git/barpyrus/barpyrus.py

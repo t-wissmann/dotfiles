@@ -456,7 +456,7 @@ case "$HOSTNAME" in
         ~/build/herbstluftwm/share/restartpanels.sh $panel
         ;;
     *)
-        panel=~/.config/herbstluftwm/panel-lemonbar.sh
+        panel=~/.config/herbstluftwm/panel.sh
         ~/git/herbstluftwm/share/restartpanels.sh $panel
     ;;
 esac

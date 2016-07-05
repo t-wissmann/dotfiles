@@ -94,6 +94,8 @@ python-yaml
 mercurial
 abs
 devtools
+xorg-xfontsel
+xorg-xfd
 
 # multimedia
 gstreamer0.10-base-plugins
