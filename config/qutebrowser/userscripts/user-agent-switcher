@@ -1,0 +1,49 @@
+#!/bin/bash -e
+
+fetch_user_agents() {
+    w3m -cols 1000 -dump "http://www.useragentstring.com/pages/$1/" \
+        | grep '^  • ' \
+        | sed 's,^  • ,,' \
+        | head -n 3
+}
+
+set_user_agent() {
+    echo "set --print network user-agent \"$1\"" >> "$QUTE_FIFO"
+}
+
+show_rofi_menu() {
+    res=$(tac <(echo Reset) "$USERAGENTFILE" | rofi "${rofi_default_args[@]}")
+    case "$res" in
+        "")
+            ;;
+        Reset)
+            set_user_agent ""
+            ;;
+        *)
+            set_user_agent "$res"
+            ;;
+    esac
+}
+
+QUTE_CONFIG_DIR=${QUTE_CONFIG_DIR:-$HOME/.config/qutebrowser}
+USERAGENTFILE=${USERAGENTFILE:-$QUTE_CONFIG_DIR/user_agents}
+
+rofi_default_args=(
+        -monitor -2 # place above window
+        -location 6 # aligned at the bottom
+        -width 100  # use full window width
+        -i
+        #-no-custom
+        #-format i   # make rofi return the index
+        -l 10
+        -p 'User agent:' -dmenu
+    )
+
+case "$1" in
+    fetch)
+        fetch_user_agents Chrome | tee $USERAGENTFILE
+        ;;
+    ""|*)
+        show_rofi_menu
+        ;;
+esac
