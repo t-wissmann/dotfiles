@@ -83,6 +83,7 @@ socat
 python-docs
 pandoc
 vim-minibufexpl
+xfburn
 
 # development
 strace
