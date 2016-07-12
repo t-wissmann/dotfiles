@@ -1,4 +1,4 @@
-#!/bin/bash
+!/bin/bash
 
 # this is an simple config to herbstluftwm
 
@@ -523,7 +523,8 @@ hc keybind $Mod-F10         spawn $c/fastterminal.sh -t
 hc keybind $Mod-Shift-F10   spawn $c/fastterminal.sh -b
 hc keybind $Mod-F12         spawn $c/toggledualhead.sh
 hc keybind $Mod-bracketright spawn $c/toggledualhead.sh
-hc keybind XF86Display      spawn $c/toggleexternalmonitor.sh
+#hc keybind XF86Display      spawn $c/toggleexternalmonitor.sh
+hc keybind XF86Display      spawn ~/dotfiles/menu/rofi-xrandr.sh
 hc keybind $Mod-F9          emit_hook togglehidepanel
 
 [ -f "$STATEFILE" ] && ~/dev/c/herbstluftwm/scripts/loadstate.sh < "$STATEFILE"
