@@ -15,6 +15,9 @@ monitor = sys.argv[1] if len(sys.argv) >= 2 else 0
 (x, y, monitor_w, monitor_h) = hc.monitor_rect(monitor)
 height = 16 # height of the panel
 width = monitor_w # width of the panel
+gap = int(hc(['get', 'frame_gap'])) if 0 == int(hc(['get', 'smart_frame_surroundings'])) else 0
+x += gap
+width -= 2 * gap
 hc(['pad', str(monitor), str(height)]) # get space for the panel
 
 # An example conky-section:
@@ -26,11 +29,12 @@ bat_icons = [
 # first icon: 0 percent
 # last icon: 100 percent
 bat_delta = 100 / len(bat_icons)
-conky_text = '%{F\\#9fbc00}%{T2}\ue026%{T-}%{F\\#989898}${cpu}% '
-conky_text += '%{F\\#9fbc00}%{T2}\ue021%{T-}%{F\\#989898}${memperc}% '
-conky_text += '%{F\\#9fbc00}%{T2}\ue13c%{T-}%{F\\#989898}${downspeedf}K '
-conky_text += '%{F\\#9fbc00}%{T2}\ue13b%{T-}%{F\\#989898}${upspeedf}K '
-conky_text += "${if_existing /sys/class/power_supply/BAT0}"
+conky_text_title = '%{F\\#9fbc00}%{T2}\ue026%{T-}%{F\\#989898}${cpu}% '
+conky_text_title += '%{F\\#9fbc00}%{T2}\ue021%{T-}%{F\\#989898}${memperc}% '
+conky_text_title += '%{F\\#9fbc00}%{T2}\ue13c%{T-}%{F\\#989898}${downspeedf}K '
+conky_text_title += '%{F\\#9fbc00}%{T2}\ue13b%{T-}%{F\\#989898}${upspeedf}K '
+
+conky_text = "${if_existing /sys/class/power_supply/BAT0}"
 conky_text += "%{T2}"
 conky_text += "${if_match \"$battery\" == \"discharging $battery_percent%\"}"
 conky_text += "%{F\\#FFC726}"
@@ -67,9 +71,9 @@ bar.widget = W.ListLayout([
     W.RawLabel('%{c}'),
     hlwm.HLWMMonitorFocusLayout(hc, monitor,
            # this widget is shown on the focused monitor:
-           grey_frame(hlwm.HLWMWindowTitle(hc)),
+           grey_frame(hlwm.HLWMWindowTitle(hc, maxlen = 70)),
            # this widget is shown on all unfocused monitors:
-           conky.ConkyWidget('df /: ${fs_used_perc /}%')
+           conky.ConkyWidget(conky_text_title)
                                     ),
     W.RawLabel('%{r}'),
     conky.ConkyWidget(text= conky_text),
