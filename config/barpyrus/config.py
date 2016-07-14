@@ -31,8 +31,8 @@ bat_icons = [
 bat_delta = 100 / len(bat_icons)
 conky_text_title = '%{F\\#9fbc00}%{T2}\ue026%{T-}%{F\\#989898}${cpu}% '
 conky_text_title += '%{F\\#9fbc00}%{T2}\ue021%{T-}%{F\\#989898}${memperc}% '
-conky_text_title += '%{F\\#9fbc00}%{T2}\ue13c%{T-}%{F\\#989898}${downspeedf}K '
-conky_text_title += '%{F\\#9fbc00}%{T2}\ue13b%{T-}%{F\\#989898}${upspeedf}K '
+conky_text_title += '%{F\\#9fbc00}%{T2}\ue13c%{T-}%{F\\#989898}${downspeed enp0s25} '
+conky_text_title += '%{F\\#9fbc00}%{T2}\ue13b%{T-}%{F\\#989898}${upspeed enp0s25} '
 
 conky_text = "${if_existing /sys/class/power_supply/BAT0}"
 conky_text += "%{T2}"
