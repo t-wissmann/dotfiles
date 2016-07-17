@@ -13,12 +13,13 @@ hc = hlwm.connect()
 # get the geometry of the monitor
 monitor = sys.argv[1] if len(sys.argv) >= 2 else 0
 (x, y, monitor_w, monitor_h) = hc.monitor_rect(monitor)
-height = 16 # height of the panel
+height = 18 # height of the panel
 width = monitor_w # width of the panel
 gap = int(hc(['get', 'frame_gap'])) if 0 == int(hc(['get', 'smart_frame_surroundings'])) else 0
+y += gap
 x += gap
 width -= 2 * gap
-hc(['pad', str(monitor), str(height)]) # get space for the panel
+hc(['pad', str(monitor), str(height + gap)]) # get space for the panel
 
 # An example conky-section:
 # icons
@@ -29,10 +30,11 @@ bat_icons = [
 # first icon: 0 percent
 # last icon: 100 percent
 bat_delta = 100 / len(bat_icons)
-conky_text_title = '%{F\\#9fbc00}%{T2}\ue026%{T-}%{F\\#989898}${cpu}% '
-conky_text_title += '%{F\\#9fbc00}%{T2}\ue021%{T-}%{F\\#989898}${memperc}% '
-conky_text_title += '%{F\\#9fbc00}%{T2}\ue13c%{T-}%{F\\#989898}${downspeed enp0s25} '
-conky_text_title += '%{F\\#9fbc00}%{T2}\ue13b%{T-}%{F\\#989898}${upspeed enp0s25} '
+conky_text_title  = '%{F\\#B7CE42}%{T2}\ue026%{T-}%{F\\#CDCDCD} ${cpu}% '
+conky_text_title += '%{F\\#6F99B4}%{T2}\ue021%{T-}%{F\\#CDCDCD} ${memperc}% '
+conky_text_title += '%{F\\#FEA63C}%{T2}\ue13c%{T-}%{F\\#CDCDCD} ${downspeed enp0s25} '
+conky_text_title += '%{F\\#D81860}%{T2}\ue13b%{T-}%{F\\#CDCDCD} ${upspeed enp0s25} '
+conky_text_title += '%{F-}%{B-}'
 
 conky_text = "${if_existing /sys/class/power_supply/BAT0}"
 conky_text += "%{T2}"
@@ -61,7 +63,7 @@ setxkbmap = 'setxkbmap -option compose:menu -option ctrl:nocaps'
 setxkbmap += ' -option compose:ralt -option compose:rctrl'
 
 # you can define custom themes
-grey_frame = Theme(bg = '#303030', fg = '#EFEFEF', padding = (3,3))
+grey_frame = Theme(bg = '#de101010', fg = '#EFEFEF', padding = (3,3))
 
 # Widget configuration:
 bar = lemonbar.Lemonbar(geometry = (x,y,width,height))

@@ -369,7 +369,7 @@ hc attr theme.border_width 2
 hc attr theme.floating.border_width 3
 hc attr theme.floating.outer_width 1
 hc attr theme.outer_color '#4B2D22'
-hc attr theme.active.color
+#hc attr theme.active.color
 hc attr theme.padding_top 0
 hc attr theme.inner_width 0
 hc attr theme.normal.color '#5A3111'
@@ -388,7 +388,6 @@ hc set smart_frame_surroundings 0
 
 hc unlock
 }
-
 
 # new colors
 case "$HOSTNAME" in
