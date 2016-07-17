@@ -85,6 +85,9 @@ pandoc
 vim-minibufexpl
 xfburn
 
+# for exiftran:
+fbida
+
 # development
 strace
 xorg-server-xephyr
