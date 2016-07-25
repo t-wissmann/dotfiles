@@ -40,8 +40,8 @@ conky_text_title += '%{F-}%{B-}'
 #conky_sep = '%{T3}%{F\\#FEA63C}\ue1b1%{T-}'
 conky_sep = '%{T3}%{F\\#878787}\ue1ac%{T2} %{T-}'
 conky_text = ""
-conky_text += conky_sep
 conky_text += "${if_existing /sys/class/power_supply/BAT0}"
+conky_text += conky_sep
 conky_text += "%{T2}"
 conky_text += "${if_match \"$battery\" == \"discharging $battery_percent%\"}"
 conky_text += "%{F\\#FFC726}"
@@ -72,7 +72,8 @@ setxkbmap = 'setxkbmap -option compose:menu -option ctrl:nocaps'
 setxkbmap += ' -option compose:ralt -option compose:rctrl'
 
 # you can define custom themes
-grey_frame = Theme(bg = '#de101010', fg = '#EFEFEF', padding = (3,3))
+grey_frame = Theme(fg = '#FFFFFF')
+
 conky_widget = conky.ConkyWidget(conky_text_title)
 
 def tab_renderer(self, painter):
@@ -92,9 +93,14 @@ def tab_renderer(self, painter):
 def zip_renderer(self, painter):
     painter.fg('#989898')
     if self.label == '0':
-        painter += '+'
+        painter.symbol(0xe26f)
+        painter.space(2)
     else:
-        painter += '-'
+        painter.bg('#303030')
+        painter.fg('#9fbc00')
+        painter.space(2)
+        painter.symbol(0xe26f)
+        painter.space(2)
     #painter.space(3)
 
 
@@ -104,13 +110,14 @@ bar.widget = W.ListLayout([
     W.RawLabel('%{l}'),
     hlwm.HLWMTags(hc, monitor, tag_renderer = hlwm.underlined_tags),
     W.TabbedLayout(list(enumerate([
-        hlwm.HLWMMonitorFocusLayout(hc, monitor,
-            # this widget is shown on the focused monitor:
-            hlwm.HLWMWindowTitle(hc, maxlen = 70),
-            # this widget is shown on all unfocused monitors:
-            conky_widget,
-        ),
-        conky_widget,
+        W.ListLayout([ W.RawLabel('%{c}'),
+            hlwm.HLWMMonitorFocusLayout(hc, monitor,
+                # this widget is shown on the focused monitor:
+                grey_frame(hlwm.HLWMWindowTitle(hc, maxlen = 70)),
+                # this widget is shown on all unfocused monitors:
+                conky_widget,
+            )]),
+        W.ListLayout([ W.RawLabel('%{c}'), conky_widget ]),
     ])), tab_renderer = tab_renderer),
     W.RawLabel('%{r}'),
     # something like a tabbed widget with the tab labels '>' and '<'

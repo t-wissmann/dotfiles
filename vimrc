@@ -4,7 +4,8 @@ au VimEnter *.fr set ft=haskell
 au VimEnter *.scala set ft=scala
 au BufRead,BufNewFile *.v set ft=coq
 " enforce 8 colors
-set t_Co=8
+"set t_Co=8
+"set t_Co=256
 
 set encoding=utf-8
 set ttimeoutlen=50
@@ -112,34 +113,53 @@ set foldmethod=indent
 
 " hi folds ctermbg=0
 set cursorline
-hi Normal ctermbg=NONE term=NONE cterm=NONE
-hi CursorLine ctermbg=black term=NONE cterm=NONE
-" yellow line numbers
-hi LineNr ctermbg=NONE term=NONE ctermfg=gray cterm=NONE
-hi CursorLineNr ctermbg=black term=NONE ctermfg=green cterm=bold
-hi Pmenu ctermbg=black ctermfg=white term=NONE cterm=NONE
-hi PmenuSel ctermbg=green ctermfg=0 term=NONE cterm=NONE
-hi PmenuThumb ctermbg=red term=NONE cterm=bold
 
-" colors for folded brackets
-hi Folded ctermbg=0 term=NONE cterm=NONE ctermfg=gray
-" color of border in vertical split
-hi VertSplit ctermbg=NONE ctermfg=black cterm=NONE
-set fillchars+=vert:│
-hi Todo ctermbg=yellow ctermfg=black cterm=bold
-hi StatusLineNC ctermbg=black ctermfg=white cterm=NONE
-hi StatusLine ctermbg=black ctermfg=yellow cterm=bold
-" color for tabs and trailing spaces, also see: listchars
-hi SpecialKey ctermbg=NONE ctermfg=blue cterm=NONE
-"
-" for tabs
-hi TabLine ctermbg=black ctermfg=white cterm=bold
-hi TabLineFill ctermbg=black cterm=NONE
-hi TabLineSel ctermbg=green ctermfg=black cterm=NONE
-" somehow, these hi lines are overwritten somewhere later
-"hi Constant ctermfg=blue ctermbg=blue cterm=NONE
-"hi Statement ctermfg=green ctermbg=NONE cterm=NONE
-"hi Comment ctermfg=brown ctermbg=NONE cterm=NONE
+
+set runtimepath^=~/.vim/bundle/gruvbox/
+silent !~/.vim/bundle/gruvbox/gruvbox_256palette.sh &
+colorscheme gruvbox
+let g:gruvbox_contrast_dark="hard"
+let g:gruvbox_contrast_light="hard"
+let g:gruvbox_number_column="bg3"
+
+
+set background=dark
+
+hi LineNr ctermbg=233
+hi Normal ctermbg=NONE term=NONE
+
+cnoreabbrev reload source ~/.vimrc
+
+
+""" " My colorscheme
+""" hi Normal ctermbg=NONE term=NONE cterm=NONE
+""" hi CursorLine ctermbg=black term=NONE cterm=NONE
+""" " yellow line numbers
+""" hi LineNr ctermbg=black term=NONE ctermfg=gray cterm=NONE
+""" hi CursorLineNr ctermbg=black term=NONE ctermfg=green cterm=bold
+""" hi Pmenu ctermbg=black ctermfg=white term=NONE cterm=NONE
+""" hi PmenuSel ctermbg=green ctermfg=0 term=NONE cterm=NONE
+""" hi PmenuThumb ctermbg=red term=NONE cterm=bold
+""" 
+""" " colors for folded brackets
+""" hi Folded ctermbg=0 term=NONE cterm=NONE ctermfg=gray
+""" " color of border in vertical split
+""" hi VertSplit ctermbg=NONE ctermfg=black cterm=NONE
+""" set fillchars+=vert:│
+""" hi Todo ctermbg=yellow ctermfg=black cterm=bold
+""" hi StatusLineNC ctermbg=black ctermfg=white cterm=NONE
+""" hi StatusLine ctermbg=black ctermfg=yellow cterm=bold
+""" " color for tabs and trailing spaces, also see: listchars
+""" hi SpecialKey ctermbg=NONE ctermfg=blue cterm=NONE
+""" "
+""" " for tabs
+""" hi TabLine ctermbg=black ctermfg=white cterm=bold
+""" hi TabLineFill ctermbg=black cterm=NONE
+""" hi TabLineSel ctermbg=green ctermfg=black cterm=NONE
+""" " somehow, these hi lines are overwritten somewhere later
+""" "hi Constant ctermfg=blue ctermbg=blue cterm=NONE
+""" "hi Statement ctermfg=green ctermbg=NONE cterm=NONE
+""" "hi Comment ctermfg=brown ctermbg=NONE cterm=NONE
 
 au VimEnter *.tex :call EnterTexFile()
 au VimEnter *.csv :call EnterCSVFile()

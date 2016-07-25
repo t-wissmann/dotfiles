@@ -179,7 +179,7 @@ XTerm*cursorOffTime: 500
 XTerm*cursorColor: #ff9900
 
 
-rofi.modi:                           window,run,ssh,combi
+rofi.modi:                           window,drun,ssh,combi
 rofi.opacity:                        100
 rofi.width:                          80
 rofi.lines:                          20

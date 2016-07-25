@@ -7,8 +7,8 @@
 "colorscheme molokai
 "colorscheme desert
 " remove all guielements
-"set guioptions+=m
-"set guioptions-=T
-"set guioptions-=r
-"set guioptions-=R
+set guioptions+=m
+set guioptions-=T
+set guioptions-=r
+set guioptions-=R
 

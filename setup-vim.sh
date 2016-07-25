@@ -49,6 +49,7 @@ auto-colorscheme 'https://raw.githubusercontent.com/chriskempson/base16-vim/mast
 auto-colorscheme 'http://www.vim.org/scripts/download_script.php?src_id=11274' mustang.vim
 #auto-colorscheme 'http://www.vim.org/scripts/download_script.php?src_id=8685' 256-jungle.vim
 auto-colorscheme 'https://raw.githubusercontent.com/Lokaltog/vim-distinguished/develop/colors/distinguished.vim'
+auto-colorscheme 'https://raw.githubusercontent.com/Lokaltog/vim-distinguished/develop/colors/distinguished.vim'
 
 
 
@@ -69,6 +70,7 @@ fetch ~/.vim/plugin/a.vim \
 fetch ~/.vim/plugin/querycommandcomplete.vim \
     'http://www.vim.org/scripts/download_script.php?src_id=20369'
 
+update-git https://github.com/morhetz/gruvbox ~/.vim/bundle/gruvbox
 update-git https://github.com/kien/ctrlp.vim.git ~/.vim/bundle/ctrlp.vim
 update-git https://github.com/LaTeX-Box-Team/LaTeX-Box ~/.vim/bundle/LaTeX-Box.git
 # update help tags for it
