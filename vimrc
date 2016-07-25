@@ -265,7 +265,7 @@ imap <F7> <ESC>:call ToggleSpell()<CR>a
 
 
 " minibufexplorer options
-map <F9> :TMiniBufExplorer<CR>
+map <F9> :MBEToggle<CR>
 map <C-J> :bn<CR>
 map <C-K> :bp<CR>
 let g:miniBufExplVSplit = 1

@@ -11,24 +11,29 @@ urxvt*foreground: #2e3436
 !*color0: #555753
 URxvt.color0: #dedede
 *color0: green
-*color1: #ef2929
-*color2: #4e9a06
-! yellow
-*color3: #edd400
-!*color11: #fce94f
-*color11: #C98D00
-*color3: #C98D00
-*color4: #204a87
-*color5: #5c3566
-*color6: #8f5902
-*color7: #888a85
 *color8: #babdb6
+! red
+*color1: #ef2929
 *color9: #ff0000
+! green
+*color2: #4e9a06
 *color10: #73d216
+! yellow
+!*color11: #fce94f
+*color3: #C98D00
+*color11: #C98D00
+! blue
+*color4: #204a87
 *color12: #3465a4
+! magenta
+*color5: #5c3566
 *color13: #75507b
+! brown/cyan
+*color6: #8f5902
 *color14: #c17d11
-*color15: #d3d7cf
+! grey
+*color7: #4B4D4A
+*color15: #969696
 
 
 

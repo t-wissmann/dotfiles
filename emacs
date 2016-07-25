@@ -10,6 +10,7 @@
  ;;'(coq-one-command-per-line nil)
  ;;'(proof-electric-terminator-enable t)
 ; '(proof-three-window-mode-policy (quote hybrid)))
+)
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

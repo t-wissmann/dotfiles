@@ -36,7 +36,12 @@ conky_text_title += '%{F\\#FEA63C}%{T2}\ue13c%{T-}%{F\\#CDCDCD} ${downspeed enp0
 conky_text_title += '%{F\\#D81860}%{T2}\ue13b%{T-}%{F\\#CDCDCD} ${upspeed enp0s25} '
 conky_text_title += '%{F-}%{B-}'
 
-conky_text = "${if_existing /sys/class/power_supply/BAT0}"
+#conky_sep = '%{T2}  %{T-}%{F\\#FEA63C}|%{T2} %{T-}'
+#conky_sep = '%{T3}%{F\\#FEA63C}\ue1b1%{T-}'
+conky_sep = '%{T3}%{F\\#878787}\ue1ac%{T2} %{T-}'
+conky_text = ""
+conky_text += conky_sep
+conky_text += "${if_existing /sys/class/power_supply/BAT0}"
 conky_text += "%{T2}"
 conky_text += "${if_match \"$battery\" == \"discharging $battery_percent%\"}"
 conky_text += "%{F\\#FFC726}"
@@ -50,9 +55,13 @@ for i,icon in enumerate(bat_icons[:-1]):
 conky_text += chr(bat_icons[-1]) # icon for 100 percent
 for _ in bat_icons[:-1]:
     conky_text += "${endif}"
-conky_text += "%{T-} $battery_percent% "
+conky_text += "%{T-}%{F\\#CDCDCD} $battery_percent%"
 conky_text += "${endif}"
 conky_text += "%{F-}"
+conky_text += conky_sep
+conky_text += '%{F\\#CDCDCD}${time %d. %B}'
+conky_text += conky_sep
+conky_text += '%{F\\#CDCDCD}'
 
 # example options for the hlwm.HLWMLayoutSwitcher widget
 xkblayouts = [
@@ -64,29 +73,53 @@ setxkbmap += ' -option compose:ralt -option compose:rctrl'
 
 # you can define custom themes
 grey_frame = Theme(bg = '#de101010', fg = '#EFEFEF', padding = (3,3))
+conky_widget = conky.ConkyWidget(conky_text_title)
+
+def tab_renderer(self, painter):
+    painter.fg('#989898')
+    painter.symbol(0xe1aa)
+    #painter.fg('#FEA63C')
+    #painter.symbol(0xe1b1)
+    painter.fg('#D81860')
+    painter.symbol(0xe12f)
+    #painter.fg('#FEA63C')
+    #painter.symbol(0xe1b1)
+    painter.fg('#989898')
+    painter.symbol(0xe1aa)
+    painter.fg('#CDCDCD')
+    painter.space(3)
+
+def zip_renderer(self, painter):
+    painter.fg('#989898')
+    if self.label == '0':
+        painter += '+'
+    else:
+        painter += '-'
+    #painter.space(3)
+
 
 # Widget configuration:
 bar = lemonbar.Lemonbar(geometry = (x,y,width,height))
 bar.widget = W.ListLayout([
     W.RawLabel('%{l}'),
     hlwm.HLWMTags(hc, monitor, tag_renderer = hlwm.underlined_tags),
-    W.RawLabel('%{c}'),
-    hlwm.HLWMMonitorFocusLayout(hc, monitor,
-           # this widget is shown on the focused monitor:
-           grey_frame(hlwm.HLWMWindowTitle(hc, maxlen = 70)),
-           # this widget is shown on all unfocused monitors:
-           conky.ConkyWidget(conky_text_title)
-                                    ),
+    W.TabbedLayout(list(enumerate([
+        hlwm.HLWMMonitorFocusLayout(hc, monitor,
+            # this widget is shown on the focused monitor:
+            hlwm.HLWMWindowTitle(hc, maxlen = 70),
+            # this widget is shown on all unfocused monitors:
+            conky_widget,
+        ),
+        conky_widget,
+    ])), tab_renderer = tab_renderer),
     W.RawLabel('%{r}'),
-    conky.ConkyWidget(text= conky_text),
     # something like a tabbed widget with the tab labels '>' and '<'
-    W.ShortLongLayout(
-        W.RawLabel(''),
-        W.ListLayout([
-            hlwm.HLWMLayoutSwitcher(hc, xkblayouts, command = setxkbmap.split(' ')),
-            W.RawLabel(' '),
-        ])),
-        grey_frame(W.DateTime('%d. %B, %H:%M')),
+    W.TabbedLayout([
+        ('0', W.RawLabel('')),
+        ('1', hlwm.HLWMLayoutSwitcher(hc, xkblayouts, command = setxkbmap.split(' '))),
+        ], tab_renderer = zip_renderer),
+    conky.ConkyWidget(text= conky_text),
+    W.DateTime('%H:%M '),
 ])
 
 
