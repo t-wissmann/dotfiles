@@ -9,18 +9,20 @@
 ! hard contrast: *background: #1d2021
 *background: #282828
 ! soft contrast: *background: #32302f
-*foreground: #ebdbb2
+*foreground: white
 ! Black + DarkGrey
-*color0:  #282828
+*color0:  black
 *color8:  #928374
 ! DarkRed + Red
 *color1:  #cc241d
 *color9:  #fb4934
 ! DarkGreen + Green
-*color2:  #98971a
+!*color2:  #98971a
+*color2:  #D6D533
 *color10: #b8bb26
 ! DarkYellow + Yellow
-*color3:  #d79921
+!*color3:  #d79921
+*color3:  #FACF2A
 *color11: #fabd2f
 ! DarkBlue + Blue
 *color4:  #458588

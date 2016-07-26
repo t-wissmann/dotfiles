@@ -12,7 +12,7 @@ colornames=(
     )
 
 printcol() {
-    printf "%-10s" "$1"
+    printf "%-12s" "$1"
 }
 
 # print header
@@ -30,5 +30,17 @@ for i in "${!colornames[@]}" ; do
     echo -n -e "\e[0m\e[3${i}m$(printcol \ $name)\e[0m"
     echo -n -e "\e[0m\e[4${i}m$(printcol \ $name)\e[0m"
     echo -n -e "\e[1m\e[3${i}m$(printcol \ $name)\e[0m"
+    echo
+    printcol ""
+    printcol ""
+    echo -n -e "\e[0;3${i}m"
+    printcol " \\e[0;3${i}m"
+    echo -n -e "\e[0m"
+    echo -n -e "\e[0;4${i}m"
+    printcol " \\e[0;4${i}m"
+    echo -n -e "\e[0m"
+    echo -n -e "\e[1;3${i}m"
+    printcol " \\e[1;3${i}m"
+    echo -n -e "\e[0m"
     echo
 done

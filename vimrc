@@ -127,6 +127,8 @@ set background=dark
 
 hi LineNr ctermbg=233
 hi Normal ctermbg=NONE term=NONE
+hi VertSplit ctermbg=NONE ctermfg=black cterm=NONE
+set fillchars+=vert:│
 
 cnoreabbrev reload source ~/.vimrc
 

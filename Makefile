@@ -8,8 +8,9 @@ all: install xdg man checkpackages
 
 xrdb: xdefaults
 
+#	xrdb -cpp cpp -merge ~/.Xdefaults
 xdefaults:
-	xrdb -cpp cpp -merge ~/.Xdefaults
+	xrdb -cpp cpp -load ~/.Xdefaults
 
 xdg:
 	xdg/setup.sh
