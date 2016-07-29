@@ -25,8 +25,11 @@
 *color3:  #FACF2A
 *color11: #fabd2f
 ! DarkBlue + Blue
-*color4:  #458588
-*color12: #83a598
+!*color4:  #458588
+!*color12: #83a598
+! Brownish colors for DarkBlue + Blue
+*color4:  #FE8019
+*color12: #D65D0E
 ! DarkMagenta + Magenta
 *color5:  #b16286
 *color13: #d3869b

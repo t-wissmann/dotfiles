@@ -156,5 +156,9 @@ texlive-publishers
 texlive-science
 git-latexdiff
 
+# for plugins:
+# for urxvt-config-reload
+perl-anyevent
+perl-common-sense
 
 

@@ -8,6 +8,10 @@
 ! load with: xrdb -cpp cpp -merge ~/.Xdefaults
 ! or with:   xrdb -I${HOME} -merge ~/.Xdefaults
 
+URxvt.highlightColor: #FFFE40
+URxvt.highlightTextColor: black
+URxvt.cursorColor: #FF9900
+
 !#include ".Xdefaults.d/tw-colors"
 #include ".Xdefaults.d/gruvbox-dark.xresources"
 !#include ".Xdefaults.d/gruvbox-light.xresources"
@@ -44,6 +48,7 @@ URxvt.keysym.C-7: command:\033]710;SCALEFONT(15)\007\033]711;SCALEBOLDFONT(15)\0
 URxvt.keysym.C-8: command:\033]710;SCALEFONT(16)\007\033]711;SCALEBOLDFONT(16)\007
 URxvt.keysym.C-9: command:\033]710;SCALEFONT(17)\007\033]711;SCALEBOLDFONT(17)\007
 URxvt.keysym.C-0: command:\033]710;SCALEFONT(19)\007\033]711;SCALEBOLDFONT(19)\007
+URxvt.keysym.C-0: command:\033]710;SCALEFONT(19)\007\033]711;SCALEBOLDFONT(19)\007
 
 URxvt.scrollBar: false
 URxvt.scrollstyle: plain
@@ -63,10 +68,19 @@ URxvt.urgentOnBell: true
 ! function in per script... remove all lines, that are setting or reading yanking_allowed
 ! the "yanking_allowed" was added by twi on 2009-11-27
 !URxvt.keysym.M-y: perl:mark-yank-urls:activate_mark_mode
-URxvt.perl-ext-common: default,url-select
+URxvt.perl-ext-common: default,url-select,clipboard
 URxvt.keysym.M-u:      perl:url-select:select_next
 URxvt.urlLauncher:     luakit
 URxvt.underlineURLs:    false
+
+URxvt.iso14755: False
+URxvt.iso14755_52: False
+URxvt.keysym.Mod1-Mod4-c: perl:clipboard:copy
+URxvt.keysym.Mod1-Mod4-v: perl:clipboard:paste
+URxvt.keysym.C-M-c: perl:clipboard:copy
+URxvt.keysym.C-M-v: perl:clipboard:paste
+URxvt.print-pipe: /bin/true
+
 !URxvt.perl-ext-common: default,url-select,tabbed
 !URxvt.tabbed.tabbar-fg: 40
 !URxvt.tabbed.tabbar-bg: 0

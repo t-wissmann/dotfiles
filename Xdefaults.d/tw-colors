@@ -14,7 +14,6 @@ URxvt.background: #1e1e1e
 !! green
 !URxvt.background: #1E3526
 URxvt.foreground: #EFEFEF
-URxvt.cursorColor: #FF9900
 ! Black (not tango) + DarkGrey
 xterm*background: #202020
 xterm*foreground: #EDEDED
@@ -51,6 +50,4 @@ xterm*color0:  #202020
 !*color7:  #E8E8E8
 *color7:  #a0a0a0
 *color15: #ffffff
-URxvt.highlightColor: #FFFE40
-URxvt.highlightTextColor: black
 

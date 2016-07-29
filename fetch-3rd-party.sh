@@ -31,6 +31,10 @@ fetch() {
     done
 }
 
+:: mkdir -p ~/.urxvt/ext/
+fetch urxvt-config-reload https://github.com/regnarg/urxvt-config-reload
+:: ln -sf $HOME/dotfiles/3rd-party/urxvt-config-reload/config-reload ~/.urxvt/ext/
+
 # example:
 #fetch colortrans https://gist.github.com/MicahElliott/719710 \
 #    colortrans.py
