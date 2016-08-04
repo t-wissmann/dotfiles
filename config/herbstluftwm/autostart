@@ -34,10 +34,14 @@ case "$HOSTNAME" in
         #feh --bg-fill ~/Documents/wallpaper/landscape/lonely_tree_by_gheias-d319736.jpg
         #feh --bg-fill ~/Documents/wallpaper/nature/spring fog--0
         #feh --bg-fill ~/Documents/wallpaper/landscape/naboo.jpg
-        #feh --bg-fill ~/Documents/wallpaper/nature/coloured_bush_1920x1200.jpg
+        feh --bg-fill ~/Documents/wallpaper/nature/coloured_bush_1920x1200.jpg
         #feh --bg-tile ~/Documents/wallpaper/patterns/black-mosaic.png
-        feh --bg-tile ~/Documents/wallpaper/patterns/pattern-ob-9fbc00.png
+        #feh --bg-tile ~/Documents/wallpaper/patterns/pattern-ob-9fbc00.png
         #feh --bg-tile ~/Documents/wallpaper/patterns/strawberry-tile.jpg
+        #feh --bg-tile ~/Documents/wallpaper/patterns/green-diagonals.png
+        #feh --bg-tile ~/Documents/wallpaper/patterns/white-mosaic.png
+        #feh --bg-tile ~/Documents/wallpaper/patterns/black-pattern-ob.png
+        #feh --bg-tile ~/Documents/wallpaper/patterns/rXuLc2TI.gif
         ;;
     hoth|towi04)
         nitrogen --restore
@@ -198,6 +202,7 @@ if [ "$HOSTNAME" = ghul ] ;then
     hc keybind $Mod-F1 spawn ~/bin/lock.sh
     hc keybind       XF86Launch1 spawn ~/bin/suspend.sh --lock
     hc keybind Shift-XF86Launch1 spawn ~/bin/suspend.sh
+    hc keybind XF86TouchpadToggle spawn netmenu
 fi
 if [[ "$HOSTNAME" =~ ^faui8.*$ ]] ; then
     #hc keybind $Mod-F1 spawn bash -c ' i3lock -i ~/wallpaper/patterns/strawberry-tile.png -t && systemctl suspend'

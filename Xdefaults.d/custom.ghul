@@ -22,9 +22,9 @@
 URxvt.color0:  #222222
 URxvt.background: #101010
 
-URxvt.color0:  #222222
-URxvt.background: #101010
-URxvt.color3:  #FFC630
+!URxvt.color0:  #222222
+!URxvt.background: #101010
+!URxvt.color3:  #FFC630
 URxvt.font: -misc-fixed-medium-r-semicondensed-*-13-*-*-*-*-*-iso10646-1
 URxvt.boldFont: -misc-fixed-bold-r-semicondensed-*-13-*-*-*-*-*-iso10646-1
 !
