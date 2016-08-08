@@ -10,7 +10,6 @@ function hc() {
 #[[ "$HOSTNAME" == faui* ]] && hc() { ~/bin/herbstclient "$@" ; }
 
 hc emit_hook reload
-hc set_layout max
 
 xrdb -cpp cpp -merge ~/.Xdefaults
 
@@ -85,30 +84,16 @@ for i in "${!TAG_KEYS[@]}" ; do
     hc keybind "$Mod-Shift-$key" move_index "$i"
 done
 
+hc load irc     '(clients max:0)'
+hc load vim     '(split vertical:0.700000:1 (clients max:0) (clients max:0))'
+hc load web     '(clients max:0)'
+hc load mail    '(split vertical:0.200000:1 (clients horizontal:0) (clients max:0))'
+hc load 9       '(clients max:0)'
+
 hc keybind "$Mod-period" use_index +1 --skip-visible
 hc keybind "$Mod-comma"  use_index -1 --skip-visible
 hc keybind $Mod-Escape use_previous
 hc keybind XF86Eject spawn eject -T
-
-function dualhead() {
-    width="$1"
-    height="$2"
-    # todo: rememberlast tag on monitor 1
-    hc focus_monitor 0
-    hc remove_monitor 1
-    hc move_monitor 0 $((width/2))x$((height))+0+0 $pad
-    hc use "${TAG_NAMES[0]}"
-    hc add_monitor $((width/2))x$((height))+$((width/2))+0 "${TAG_NAMES[1]}" $pad
-}
-
-function singlehead() {
-    width="$1"
-    height="$2"
-    hc focus_monitor 0
-    hc remove_monitor 1
-    hc move_monitor 0 $((width))x$((height))+0+0 $pad
-}
-
 
 # multimonitors
 case "$HOSTNAME" in
