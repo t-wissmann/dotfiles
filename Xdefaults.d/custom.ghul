@@ -19,8 +19,8 @@
 
 !#include "tango.colors"
 !#include "pixelfont"
-URxvt.color0:  #222222
-URxvt.background: #101010
+URxvt.background:       #1d1d1d
+!URxvt.color0:   #101010
 
 !URxvt.color0:  #222222
 !URxvt.background: #101010

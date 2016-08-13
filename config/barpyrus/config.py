@@ -4,6 +4,7 @@ from barpyrus.core import Theme
 from barpyrus import lemonbar
 from barpyrus import conky
 import sys
+import os
 # Copy this config to ~/.config/barpyrus/config.py
 
 # set up a connection to herbstluftwm in order to get events
@@ -27,13 +28,34 @@ bat_icons = [
     0xe242, 0xe243, 0xe244, 0xe245, 0xe246,
     0xe247, 0xe248, 0xe249, 0xe24a, 0xe24b,
 ]
+
+network_devices = os.listdir('/sys/class/net/')
+network_devices = [ n for n in network_devices if n != "lo"]
+
 # first icon: 0 percent
 # last icon: 100 percent
 bat_delta = 100 / len(bat_icons)
 conky_text_title  = '%{F\\#B7CE42}%{T2}\ue026%{T-}%{F\\#CDCDCD} ${cpu}% '
 conky_text_title += '%{F\\#6F99B4}%{T2}\ue021%{T-}%{F\\#CDCDCD} ${memperc}% '
-conky_text_title += '%{F\\#FEA63C}%{T2}\ue13c%{T-}%{F\\#CDCDCD} ${downspeed enp0s25} '
-conky_text_title += '%{F\\#D81860}%{T2}\ue13b%{T-}%{F\\#CDCDCD} ${upspeed enp0s25} '
+for net in network_devices:
+    conky_text_title += '${if_up ' + net + '}'
+    icon = ''
+    wireless_icons = [ 0xe218, 0xe219, 0xe21a ]
+    wireless_delta = 100 / len(wireless_icons)
+    if net[0] == 'w':
+        for i,wicon in enumerate(wireless_icons[:-1]):
+            icon += "${if_match ${wireless_link_qual_perc %s} < %d}" % (net,(i+1)*wireless_delta)
+            icon += chr(wicon)
+            icon += "${else}"
+        icon += chr(wireless_icons[-1]) # icon for 100 percent
+        for _ in wireless_icons[:-1]:
+            icon += "${endif}"
+    else:
+        icon = chr(0xe197)
+    conky_text_title += '%{F\\#FEA63C}%{T2}' + icon + '%{T-}%{F\\#CDCDCD}'
+    conky_text_title += '%{F\\#D81860}%{T2}\ue13c%{T-}%{F\\#CDCDCD}${downspeed ' + net + '}'
+    conky_text_title += '%{F\\#D81860}%{T2}\ue13b%{T-}%{F\\#CDCDCD}${upspeed ' + net + '}'
+    conky_text_title += '${endif}'
 conky_text_title += '%{F-}%{B-}'
 
 #conky_sep = '%{T2}  %{T-}%{F\\#FEA63C}|%{T2} %{T-}'

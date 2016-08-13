@@ -230,6 +230,7 @@ BOOKMARKS=(
    ratlambda       ~/git/papers/RATIONAL_LAMBDA/
    apcs            ~/git/papers/NomLiftings/apcs/
    cpt             ~/git/papers/COAX/CoalgPaigeTarjan/
+   rails           ~/git/puzzles/train_shunting/visualization
   )
 function cdbm(){
     if [ -z "$1" ] ; then
