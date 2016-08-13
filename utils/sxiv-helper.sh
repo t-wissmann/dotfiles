@@ -4,6 +4,10 @@
 file="$1"
 filename="${file##*/}"
 basedir="${file%/*}"
+if [[ "$basedir" == "$file" ]] ; then
+    # if file did not contain any / then basedir is pwd
+    basedir=.
+fi
 
 extensions=(
     jpg jpeg gif png
