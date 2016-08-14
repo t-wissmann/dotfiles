@@ -37,3 +37,8 @@ merge.default.uri=cip:.task/
 push.default.uri=cip:.task/
 #pull.default.uri=cip:.task/
 
+taskd.certificate=\/home\/thorsten\/.task\/thorsten_wissmann.cert.pem
+taskd.key=\/home\/thorsten\/.task\/thorsten_wissmann.key.pem
+taskd.ca=\/home\/thorsten\/.task\/ca.cert.pem
+taskd.server=apus.uberspace.de:63996
+taskd.credentials=Users\/Thorsten Wißmann\/82cf35ae-d58c-42ff-ab37-80f0ba26bf08
