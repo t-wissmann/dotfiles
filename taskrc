@@ -30,11 +30,12 @@ alias.rm=delete                               # Alias for the delete command
 alias.a=add                               # Alias for the delete command
 alias.history=history.monthly                 # Prefer monthly over annual history reports
 alias.ghistory=ghistory.monthly               # Prefer monthly graphical over annual history reports
-alias.export=export.csv                       # Prefer CSV over iCal export
-alias.export.vcalendar=export.ical            # They are the same
+# I don't know where I have this from but it causes a lot of problems:
+#alias.export=export.csv                       # Prefer CSV over iCal export
+#alias.export.vcalendar=export.ical            # They are the same
 
-merge.default.uri=cip:.task/
-push.default.uri=cip:.task/
+#merge.default.uri=cip:.task/
+#push.default.uri=cip:.task/
 #pull.default.uri=cip:.task/
 
 taskd.certificate=\/home\/thorsten\/.task\/thorsten_wissmann.cert.pem
