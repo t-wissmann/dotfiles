@@ -4,9 +4,10 @@
 xterm*faceName: 'xft:Bitstream Vera Sans Mono:pixelsize=12'
 
 !#include "pixelfont"
-URxvt.color0:  #101010
-urxvt*background: #080808
-URxvt.color3:  #FFC630
+!URxvt.color0:  #222222
+!URxvt.background: #101010
+URxvt.background:       #1d1d1d
+!URxvt.color3:  #FFC630
 !URxvt.color11: #99FF5F
 
 
