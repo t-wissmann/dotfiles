@@ -17,6 +17,9 @@ set task_format  "$-3index $project $description $> ?$due?$due?$-6priority?"
   bind tasklist  M  modify pri:M
   bind tasklist  H  modify pri:H
   bind tasklist  C  modify pri:
+  bind tasklist  a  add
+  bind tasklist  d  delete
+  bind tasklist  c  complete
 
 # Mark as completed
   bind tasklist  N  modify status:completed
