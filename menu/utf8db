@@ -262,6 +262,11 @@ Block QUADRANT UPPER LEFT AND UPPER RIGHT AND LOWER RIGHT ▜
 Block QUADRANT UPPER RIGHT ▝
 Block QUADRANT UPPER RIGHT AND LOWER LEFT ▞
 Block QUADRANT UPPER RIGHT AND LOWER LEFT AND LOWER RIGHT ▟
+Block diagonal ╱
+Block diagonal ╲
+Block diagonal dotted ⋰
+Block diagonal dotted ⋱
+Block diagonal ╳
 
 
 # fancy font
