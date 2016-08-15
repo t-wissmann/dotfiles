@@ -415,19 +415,12 @@ herbstclient set tree_style '╾│ ├╰╼─╮'
 ### RULES ###
 hc unrule -F
 hc rule focus=on
-hc rule class=Vlc tag=video index=/ focus=off
 hc rule class=Totem tag=video index=/ focus=off
 hc rule class=Gmrun pseudotile=on focus=on
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on
 hc rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off
 
-hc load float \
-   "(split vertical:0.800000:1
-        (clients max:0)
-           (clients max:0))"
-hc rule class=Xephyr tag=float pseudotile=on index=0 focus=off
-hc rule class=MPlayer tag=float index=0 focus=on ewmhrequests=off fullscreen=off
 hc rule class='logout-dialog' pseudotile=on focus=on
 hc rule instance=irc tag=irc
 hc rule instance=finch tag=im
