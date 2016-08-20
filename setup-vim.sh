@@ -2,6 +2,7 @@
 
 # utilities
 fetch() {
+    checksum="$3"
     if ! [ -f "$1" ] ; then
         mkdir -p "${1%/*}"
         wget -O "$1" "$2"
@@ -20,7 +21,7 @@ fetch() {
 
 auto-colorscheme() {
     file="${1##*/}"
-    fetch ~/.vim/colors/"${2:-$file}" "$1"
+    fetch ~/.vim/colors/"${2:-$file}" "$1" "$3"
 }
 
 update-git() {
@@ -38,7 +39,7 @@ update-git() {
 #######################
 ##### colorthemes #####
 #######################
-auto-colorscheme 'http://www.vim.org/scripts/download_script.php?src_id=17225' jellybeans.vim
+#auto-colorscheme 'http://www.vim.org/scripts/download_script.php?src_id=17225' jellybeans.vim
 #auto-colorscheme 'http://vimcolorschemetest.googlecode.com/svn/colors/autumnleaf.vim'
 #auto-colorscheme 'http://vimcolorschemetest.googlecode.com/svn/colors/kate.vim'
 #auto-colorscheme 'http://vimcolorschemetest.googlecode.com/svn/colors/tcsoft.vim'
@@ -46,21 +47,20 @@ auto-colorscheme 'http://www.vim.org/scripts/download_script.php?src_id=17225' j
 #auto-colorscheme 'http://www.vim.org/scripts/download_script.php?src_id=9750' molokai.vim 
 #auto-colorscheme 'https://vimcolorschemetest.googlecode.com/svn/colors/calmar256-dark.vim'
 #auto-colorscheme 'https://raw.githubusercontent.com/chriskempson/base16-vim/master/colors/base16-default.vim'
-auto-colorscheme 'http://www.vim.org/scripts/download_script.php?src_id=11274' mustang.vim
+#auto-colorscheme 'http://www.vim.org/scripts/download_script.php?src_id=11274' mustang.vim
 #auto-colorscheme 'http://www.vim.org/scripts/download_script.php?src_id=8685' 256-jungle.vim
-auto-colorscheme 'https://raw.githubusercontent.com/Lokaltog/vim-distinguished/develop/colors/distinguished.vim'
-auto-colorscheme 'https://raw.githubusercontent.com/Lokaltog/vim-distinguished/develop/colors/distinguished.vim'
+#auto-colorscheme 'https://raw.githubusercontent.com/Lokaltog/vim-distinguished/develop/colors/distinguished.vim'
 
 
 
 ###################
 ##### plugins #####
 ###################
-fetch ~/.vim/plugin/minibufexpl.vim \
-    'http://www.vim.org/scripts/download_script.php?src_id=3640'
+#fetch ~/.vim/plugin/minibufexpl.vim \
+#    'http://www.vim.org/scripts/download_script.php?src_id=3640'
 
-fetch ~/.vim/autoload/togglebg.vim \
-    'https://github.com/altercation/vim-colors-solarized/raw/master/autoload/togglebg.vim'
+#fetch ~/.vim/autoload/togglebg.vim \
+#    'https://github.com/altercation/vim-colors-solarized/raw/master/autoload/togglebg.vim'
 
 # for switching between header<->implementation
 fetch ~/.vim/plugin/a.vim \
@@ -73,9 +73,11 @@ fetch ~/.vim/plugin/querycommandcomplete.vim \
 update-git https://github.com/morhetz/gruvbox ~/.vim/bundle/gruvbox
 update-git https://github.com/kien/ctrlp.vim.git ~/.vim/bundle/ctrlp.vim
 update-git https://github.com/LaTeX-Box-Team/LaTeX-Box ~/.vim/bundle/LaTeX-Box.git
+update-git https://github.com/lambdatoast/elm.vim ~/.vim/bundle/elm.vim.git
 # update help tags for it
 vim --cmd 'helptags ~/.vim/bundle/ctrlp.vim/doc' --cmd 'q'
 vim --cmd 'helptags ~/.vim/bundle/LaTeX-Box.git/doc' --cmd 'q'
+vim --cmd 'helptags ~/.vim/bundle/elm-vim.git/doc' --cmd 'q'
 
 #update-git https://github.com/bling/vim-airline ~/.vim/bundle/vim-airline
 ## update help tags for it
