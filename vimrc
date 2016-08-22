@@ -114,6 +114,7 @@ set foldmethod=indent
 " hi folds ctermbg=0
 set cursorline
 
+set runtimepath^=~/.vim/bundle/elm.vim.git/
 
 set runtimepath^=~/.vim/bundle/gruvbox/
 silent !~/.vim/bundle/gruvbox/gruvbox_256palette.sh &
