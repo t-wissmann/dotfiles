@@ -14,6 +14,7 @@ ethtool
 
 # packages of daily use
 alsa-utils
+ponymix
 asciidoc
 cowsay
 figlet
