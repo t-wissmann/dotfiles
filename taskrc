@@ -22,14 +22,19 @@ include /usr/share/doc/task/rc/dark-green-256.theme
 color.tagged=color7
 color.tag.hlwm=black on color6
 color.tag.fsi=bold white on rgb004
+color.tag.ls8=bold white on rgb004
+color.tag.i8=bold white on rgb004
+color.tag.kaufen=black on magenta
 color.tag.cip=bold white on rgb030
 color.tag.esg=black on yellow
+color.tag.dobenreuth=black on cyan
 
 # Aliases - alternate names for commands
 alias.rm=delete                               # Alias for the delete command
 alias.a=add                               # Alias for the delete command
 alias.history=history.monthly                 # Prefer monthly over annual history reports
 alias.ghistory=ghistory.monthly               # Prefer monthly graphical over annual history reports
+alias.cal=calendar
 # I don't know where I have this from but it causes a lot of problems:
 #alias.export=export.csv                       # Prefer CSV over iCal export
 #alias.export.vcalendar=export.ical            # They are the same
