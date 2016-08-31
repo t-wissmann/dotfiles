@@ -35,6 +35,7 @@ homedir=(
     latexmkrc
     tmux.conf
     vimrc
+    vitrc
     inputrc
     gvimrc
     $(is_cip && echo taskrc.cip || echo taskrc)

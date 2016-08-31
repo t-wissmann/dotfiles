@@ -1,0 +1,3 @@
+
+map \$=:! task sync<Return>
+map q=:q<Return>
