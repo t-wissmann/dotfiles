@@ -21,13 +21,15 @@ include /usr/share/doc/task/rc/dark-green-256.theme
 
 color.tagged=color7
 color.tag.hlwm=black on color6
-color.tag.fsi=bold white on rgb004
-color.tag.ls8=bold white on rgb004
-color.tag.i8=bold white on rgb004
+color.tag.fsi=rgb025
+color.tag.ls8=rgb025
+color.tag.i8=rgb025
 color.tag.kaufen=black on magenta
 color.tag.cip=bold white on rgb030
-color.tag.esg=black on yellow
-color.tag.dobenreuth=black on cyan
+color.tag.esg=yellow
+color.tag.dobenreuth=cyan
+color.vit.selection=color0 on color10
+color.header=grey23 on black
 
 # Aliases - alternate names for commands
 alias.rm=delete                               # Alias for the delete command
