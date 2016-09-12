@@ -1,3 +1,6 @@
 
-map \$=:! task sync<Return>
+# read tasks again after sync
+map \$=:!r task sync<Return>
+
+# quit without asking for confirmation
 map q=:q<Return>
