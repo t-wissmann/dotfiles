@@ -150,6 +150,7 @@ texlive-genericextra
 texlive-htmlxml
 texlive-humanities
 texlive-latexextra
+biber
 texlive-music
 texlive-pictures
 texlive-plainextra

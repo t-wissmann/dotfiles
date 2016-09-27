@@ -201,7 +201,7 @@ function! EnterTexFile()
 	ab xdia \begin{diagram}<return>\end{diagram}<up><end>
 	ab xi \item
 	ab xcent \begin{center}<RETURN><RETURN><C-U>\end{center}<UP><END>
-	ab xalign \begin{align}<RETURN><C-U>\end{align}<UP><END>
+	ab xalign \begin{align*}\end{align*}<LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><RETURN><UP><END>
 	ab xals \begin{align*}<RETURN><C-U>\end{align*}<UP><END>
 	ab xma \[\]<LEFT><LEFT><RETURN><UP><END>
 	ab xtcd \begin{tikzcd}\end{tikzcd}<LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><RETURN><UP><END>
