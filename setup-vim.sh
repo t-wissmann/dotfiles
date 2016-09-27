@@ -77,7 +77,7 @@ update-git https://github.com/lambdatoast/elm.vim ~/.vim/bundle/elm.vim.git
 # update help tags for it
 vim --cmd 'helptags ~/.vim/bundle/ctrlp.vim/doc' --cmd 'q'
 vim --cmd 'helptags ~/.vim/bundle/LaTeX-Box.git/doc' --cmd 'q'
-vim --cmd 'helptags ~/.vim/bundle/elm-vim.git/doc' --cmd 'q'
+vim --cmd 'helptags ~/.vim/bundle/elm.vim.git/doc' --cmd 'q'
 
 #update-git https://github.com/bling/vim-airline ~/.vim/bundle/vim-airline
 ## update help tags for it
