@@ -6,6 +6,33 @@ halbgeviertstrich –
 # arrows
 about rightwards squiggle arrow ⇝
 about leftwards squiggle arrow ⇝⇜
+leftarrow ←
+rightarrow →
+uparrow ↑
+downarrow ↓
+leftrightarrow ↔
+updownarrow ↕
+upleftarrow ↖
+uprightarrow ↗
+downrightarrow ↘
+downleftarrow ↙
+not leftarrow ↚
+not rightarrow ↛
+not leftrightarrow ↮
+Leftarrow ⇐
+Rightarrow ⇒
+Uparrow ⇑
+Downarrow ⇓
+Leftrightarrow ⇔
+Updownarrow ⇕
+Upleftarrow ⇖
+Uprightarrow ⇗
+Downrightarrow ⇘
+Downleftarrow ⇙
+Not Leftarrow ⇍
+Not Rightarrow ⇏
+Not Leftrightarrow ⇎
+
 
 # logical
 not neg ¬

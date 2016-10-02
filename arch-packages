@@ -164,4 +164,7 @@ git-latexdiff
 perl-anyevent
 perl-common-sense
 
-
+# office:
+# libreoffice-fresh-de
+# libreoffice-still-de
+hunspell-de
