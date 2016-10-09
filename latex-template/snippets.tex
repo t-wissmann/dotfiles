@@ -1,0 +1,51 @@
+% vim: tw=80 nocul
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% nicer showkeys:
+\usepackage[notref,notcite]{showkeys}
+
+\usepackage{seqsplit}
+\renewcommand*\showkeyslabelformat[1]{%
+\parbox[t]{\marginparwidth}{\hangindent5pt\raggedright\normalfont\small\ttfamily\(\{\){\color{red!50!black}\seqsplit{#1}}\(\}\)}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% enforce uncolored links to avoid ugly colors in arxiv.org pdf
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    citecolor=black,
+    filecolor=black,
+    urlcolor=black,
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Trimm overly wide margins
+\usepackage{ifthen}
+\newboolean{trimmedmargins} \setboolean{trimmedmargins}{false}
+%%  if jobname contains "trimmed" then trim white llncs margins
+\usepackage{substr}
+\IfSubStringInString{\detokenize{trimmed}}{\jobname}{
+\setboolean{trimmedmargins}{true}
+}{}
+
+% the sizes are adjusted to fit springer's llncs
+\iftrimmedmargins
+\usepackage[marginparwidth=2cm,nohead,nofoot,
+            headsep = 1cm,
+            footskip = 1cm,
+            text={12.2cm,19.3cm},
+            paperwidth=16.2cm,
+            paperheight=23.3cm,
+            marginparsep=1mm,
+            marginparwidth=1.8cm,
+            footskip=1cm,
+            %showframe,
+            centering
+            ]{geometry}
+\else
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

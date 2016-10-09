@@ -15,6 +15,7 @@ copytags() {
                    --show-tag=GENRE \
                    --show-tag=TRACKNUMBER \
                    --show-tag=DISC \
+                   --show-tag=DISCNUMBER \
                    --show-tag=DATE |
                    sed "s,[\"\'],\\\\&,g" |
                    sed "s,=\(.*\),=$\'\\1\'," |
@@ -24,7 +25,7 @@ copytags() {
     )" || return 1
   #flac -c -d "$f" | lame -m j -q 0 --vbr-new -V 0 -s 44.1 - "$outf"
   id3v2 -t "$TITLE" -T "${TRACKNUMBER:-0}" -a "$ARTIST" -A "$ALBUM" \
-        -y "$DATE" -g "${GENRE:-12}" --TPOS "$DISC" "$2"
+        -y "$DATE" -g "${GENRE:-12}" --TPOS "${DISC:-$DISCNUMBER}" "$2"
 }
 
 rm_and_fail() {
