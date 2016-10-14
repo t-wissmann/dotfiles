@@ -2,7 +2,12 @@ src = $(shell grep -l '\\begin{document}' *.tex)
 pdf = $(src:.tex=.pdf)
 pdftrimmed = $(pdf:.pdf=-trimmed.pdf)
 
-.PHONY: all clean install trimmed info
+.PHONY: all clean install trimmed info just-trimmed
+
+just-trimmed: $(pdftrimmed)
+	@echo -ne '\e[1;33m'
+	@LC_ALL=C make -n -d --no-print-directory all 2>&1 | grep 'Must remake' || true
+	@echo -ne '\e[0m'
 
 all: $(pdf) $(pdftrimmed)
 

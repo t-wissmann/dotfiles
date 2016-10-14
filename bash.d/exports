@@ -15,7 +15,7 @@ export c_grey='\e[0;37m'
 # alwayse bhave like xterm..
 #[ "$TERM" = "linux" ] || export TERM=xterm
 export EDITOR=vim
-export PAGER="less -i"
+export PAGER="less"
 
 #PS1='[\u@\h \W]\$ '
 # show username if it is not thorsten
