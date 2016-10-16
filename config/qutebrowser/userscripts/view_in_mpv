@@ -140,12 +140,13 @@ printjs() {
 # try to extract video urls directly
 video_urls_in_html
 
-echo "jseval -q $(printjs)" >> "$QUTE_FIFO"
-
-if [[ "${#video_urls[@]}" -ge 1 ]] ; then
-    msg info "Openning ${#video_urls[@]} embedded video urls with mpv: ${video_urls[*]}"
-    "${video_command[@]}" "${video_urls[@]}"
-else
+if [[ "$QUTE_MODE" = "command" ]] ; then
+    echo "jseval -q $(printjs)" >> "$QUTE_FIFO"
+fi
+if [[ "${#video_urls[@]}" -eq 0 ]] || [[ "$QUTE_MODE" = "hints" ]] ; then
     msg info "Openning page $QUTE_URL with mpv"
     "${video_command[@]}" "$QUTE_URL"
+else
+    msg info "Openning ${#video_urls[@]} embedded video urls with mpv: ${video_urls[*]}"
+    "${video_command[@]}" "${video_urls[@]}"
 fi
