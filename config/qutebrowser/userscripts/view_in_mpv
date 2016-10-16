@@ -37,8 +37,19 @@ msg() {
 
 MPV_COMMAND=${MPV_COMMAND:-mpv}
 # Warning: spaces in single flags are not supported
-MPV_FLAGS=${MPV_FLAGS:- --force-window --no-terminal --keep-open=yes --ytdl }
+MPV_FLAGS=${MPV_FLAGS:- --force-window=immediate --no-terminal --keep-open=yes --ytdl }
 video_command=( "$MPV_COMMAND"  $MPV_FLAGS )
+
+# look in the file $QUTE_HTML for video-tags with a src url
+# and save all hits in an array named 'video_urls'
+video_urls_in_html() {
+    readarray -t video_urls \
+        < <(tr '\t\n' '  ' < $QUTE_HTML \
+            | sed 's, [ ]*, ,g' \
+            | grep -oE '<video [^>]*src="[^"]*' \
+            | sed 's,^.*src=",,' \
+           )
+}
 
 js() {
 cat <<EOF
@@ -125,7 +136,16 @@ EOF
 printjs() {
     js | sed 's,//.*$,,' | tr '\n' ' '
 }
+
+# try to extract video urls directly
+video_urls_in_html
+
 echo "jseval -q $(printjs)" >> "$QUTE_FIFO"
 
-msg info "Openning $QUTE_URL with mpv"
-"${video_command[@]}" "$QUTE_URL"
+if [[ "${#video_urls[@]}" -ge 1 ]] ; then
+    msg info "Openning ${#video_urls[@]} embedded video urls with mpv: ${video_urls[*]}"
+    "${video_command[@]}" "${video_urls[@]}"
+else
+    msg info "Openning page $QUTE_URL with mpv"
+    "${video_command[@]}" "$QUTE_URL"
+fi
