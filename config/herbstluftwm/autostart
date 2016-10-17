@@ -267,15 +267,22 @@ hc attr theme.floating.reset 1
 
 hc attr theme.outer_width 0
 hc attr theme.border_width 2
-hc attr theme.floating.border_width 3
-hc attr theme.floating.outer_width 1
+hc attr theme.padding_top 0
 hc attr theme.outer_color black
 hc attr theme.active.color
-hc attr theme.padding_top 0
 hc attr theme.inner_width 0
 hc attr theme.normal.color '#222222'
 hc attr theme.active.color '#9fbc00'
 hc attr theme.urgent.color '#C71364'
+
+hc attr theme.floating.padding_top 0
+hc attr theme.floating.border_width 2
+hc attr theme.floating.outer_width 1
+hc attr theme.floating.inner_width 0
+hc attr theme.floating.color '#2D2D2D'
+hc attr theme.floating.outer_color '#4B4B4B'
+hc attr theme.floating.active.color '#ACCCA5'
+hc attr theme.floating.active.outer_color '#ACCCA5'
 
 hc set frame_border_active_color '#222222'
 hc set frame_border_normal_color '#101010'
