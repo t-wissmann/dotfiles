@@ -253,6 +253,7 @@ recycling ♲
 note music sechzentel ♫
 note music zweiunddreißigstel ♬
 note music achtel ♪
+skull and crossbones ☠
 
 # blocks
 Block lower half block ▄
@@ -309,3 +310,18 @@ dagger †
 sharp ♯
 summation ∑
 
+# misc
+skull totenkopf ☠
+vdots ⋮
+(C) ©
+(R) ®
+degree °
+fliptable (╯°□°）╯︵┻━┻
+shrug ¯\_(ツ)_/¯
+
+# matrices
+topleftmargin lefttopmargin ┌
+verticalmargin | │
+buttomleftmargin leftbottommargin └
+toprightmargin righttopmargin ┐
+bottomrightmargin rightbottommargin ┘
