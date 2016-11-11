@@ -40,6 +40,8 @@ MPV_COMMAND=${MPV_COMMAND:-mpv}
 MPV_FLAGS=${MPV_FLAGS:- --force-window=immediate --no-terminal --keep-open=yes --ytdl }
 video_command=( "$MPV_COMMAND"  $MPV_FLAGS )
 
+FORCE_YOUTUBEDL=${FORCE_YOUTUBEDL:-yes}
+
 # look in the file $QUTE_HTML for video-tags with a src url
 # and save all hits in an array named 'video_urls'
 video_urls_in_html() {
@@ -137,7 +139,7 @@ printjs() {
     js | sed 's,//.*$,,' | tr '\n' ' '
 }
 
-# try to extract video urls directly
+video_urls=( )
 video_urls_in_html
 
 if [[ "$QUTE_MODE" = "command" ]] ; then
