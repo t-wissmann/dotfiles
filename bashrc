@@ -57,6 +57,9 @@ case `hostname` in
     ircbox) trysource ~/.bash.d/cip ;;
     mephisto) trysource ~/.bash.d/mephisto ;;
 esac
+trysource /usr/share/fzf/key-bindings.bash
+trysource /usr/share/fzf/completion.bash
+
 
 trysource /home/thorsten/.opam/opam-init/init.sh || true
 

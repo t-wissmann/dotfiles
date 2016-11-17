@@ -86,6 +86,7 @@ python-docs
 pandoc
 vim-minibufexpl
 xfburn
+fzf
 
 # for exiftran:
 fbida
