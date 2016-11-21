@@ -935,3 +935,9 @@ o() {
     "$@"
 }
 
+pasteshell() {
+    unset PROMPT_COMMAND
+    PS1='$ '
+}
+
+

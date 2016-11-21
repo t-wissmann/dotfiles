@@ -121,4 +121,6 @@ export HISTIGNORE='&:ls:cd ~:cd ..:[bf]g:exit:h:history:rm *'
 export HISTSIZE=
 export HISTCONTROL=erasedups
 
+export FZF_DEFAULT_OPTS="--tabstop=4 --color=dark,bg+:0,hl+:3,hl:2"
+
 # vim: ft=sh
