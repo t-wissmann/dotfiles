@@ -1,9 +1,12 @@
 #!/bin/bash
 
+# if a urxvt is focused, then run the given command in the same pwd
+# as the child process of the focused urxvt
+
 ARGS=( "$@" )
 
 fallback() {
-    exec urxvt "${ARGS[@]}"
+    exec "${ARGS[@]}"
     exit 1
 }
 
@@ -27,6 +30,6 @@ fi
 
 child_pwd=/proc/$(pgrep -P "$pid"|head -n 1)/cwd
 child_pwd=$(readlink -f "$child_pwd") || fallback
-echo $child_pwd
-exec urxvt -cd "$child_pwd" "${ARGS[@]}"
+cd $child_pwd || true
+exec "${ARGS[@]}"
 
