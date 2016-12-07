@@ -30,6 +30,6 @@ fi
 
 child_pwd=/proc/$(pgrep -P "$pid"|head -n 1)/cwd
 child_pwd=$(readlink -f "$child_pwd") || fallback
-cd $child_pwd || true
+cd "$child_pwd" || true
 exec "${ARGS[@]}"
 
