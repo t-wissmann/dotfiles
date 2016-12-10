@@ -1,0 +1,66 @@
+#!/bin/bash
+
+# when being run as a userscript in pr0gramm.com, both up and downvotes are
+# shown next to the overal score
+
+if [ -z "$QUTE_FIFO" ] ; then
+    echo "This needs to be run as a qutebrowser userscript"
+    exit
+fi
+
+js() {
+cat <<EOF
+    function extractUpvotes(str) {
+        var up_string = str.replace(/^(.*[^\d]|)(\d+[ ]*up)(.*)/i,'\$2');
+        return up_string.replace(/[^\d]*(\d+)[^\d]*/,'\$1');
+    }
+    function extractDownvotes(str) {
+        var up_string = str.replace(/^(.*[^\d]|)(\d+[ ]*down)(.*)/i,'\$2');
+        return up_string.replace(/[^\d]*(\d+)[^\d]*/,'\$1');
+    }
+    function addDetailsToScore(score_span) {
+        console.log(score_span);
+        console.log("Up: " + extractUpvotes(score_span.title));
+        console.log("Down: " + extractDownvotes(score_span.title));
+        var upDownCss = "";
+        var parent_span = document.createElement('span');
+        if (score_span.innerHTML.search(/</i) != -1) {
+            // we have already edited this node
+            return;
+        } else if (score_span.innerHTML.search(/Punkte/i) != -1) {
+            // we edit a comment
+            upDownCss = "padding-left: 0.4em;";
+        } else {
+            // we edit the image score
+            upDownCss = "padding-left: 0.2em; font-size: 0.4em; margin-bottom: -3px;";
+            parent_span.style.cssText = " margin: 0px; padding: 0px; line-height: 0.4em";
+            score_span.appendChild(document.createElement('br'));
+        }
+        console.log(score_span.innerHTML);
+        var upSpan = document.createElement('span');
+        upSpan.style.cssText = upDownCss;
+        upSpan.innerHTML = "↑" + extractUpvotes(score_span.title);
+        var downSpan = document.createElement('span');
+        downSpan.innerHTML = "↓" + extractDownvotes(score_span.title);
+        downSpan.style.cssText = upDownCss;
+        parent_span.appendChild(upSpan);
+        parent_span.appendChild(downSpan);
+        score_span.appendChild(parent_span);
+    }
+    function renewAllScores() {
+        var all_score_spans = document.getElementsByClassName("score");
+        for (i = 0; i < all_score_spans.length; i++) {
+            addDetailsToScore(all_score_spans[i]);
+        }
+    }
+    renewAllScores();
+    setInterval(renewAllScores, 3000);
+EOF
+}
+
+
+printjs() {
+    js | sed 's,//.*$,,' | tr '\n' ' '
+}
+
+echo "jseval -q $(printjs)" >> "$QUTE_FIFO"

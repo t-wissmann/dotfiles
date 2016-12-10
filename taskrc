@@ -28,6 +28,7 @@ color.tag.kaufen=black on magenta
 color.tag.cip=bold white on rgb030
 color.tag.esg=yellow
 color.tag.dobenreuth=cyan
+color.tag.einkaufen=bold red
 color.vit.selection=color0 on color10
 color.header=grey23 on black
 
