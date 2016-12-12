@@ -1,0 +1,7 @@
+#!/bin/bash
+
+#echo ">>> $1 <<<"
+# yank the given parameter to the clipboard
+printf '%s' "$1" | xclip -selection clipboard -i
+# yank the given parameter to the primary selection
+printf '%s' "$1" | xclip -selection primary -i

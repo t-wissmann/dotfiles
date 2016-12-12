@@ -69,8 +69,14 @@ URxvt.urgentOnBell: true
 !URxvt.keysym.M-y: perl:mark-yank-urls:activate_mark_mode
 URxvt.perl-ext-common: default,url-select,clipboard
 URxvt.keysym.M-u:      perl:url-select:select_next
-URxvt.urlLauncher:     luakit
-URxvt.underlineURLs:    false
+!URxvt.url-select.launcher: ~/dotfiles/utils/yank-parameter
+!gggrrr. why do they not support ~ or quotes?
+URxvt.url-select.launcher: /home/thorsten/dotfiles/utils/yank-parameter
+URxvt.url-select.underline: false
+!URxvt.keysym.M-U:    matcher:select
+!URxvt.keysym.C-Delete:    matcher:last
+!URxvt.keysym.M-Delete:    matcher:list
+
 
 URxvt.iso14755: False
 URxvt.iso14755_52: False
