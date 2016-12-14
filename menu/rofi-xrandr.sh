@@ -96,11 +96,11 @@ case "$res" in
         ;;
     2)
         xrandr --output $ext --off --output $internal --auto --primary
-        enabled_screensaver
+        enable_screensaver
         ;;
     3)
         xrandr --output $ext --auto --output $internal --off
-        enabled_screensaver
+        enable_screensaver
         ;;
     *)
         ;;
