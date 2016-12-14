@@ -134,6 +134,9 @@ qt5-webengine
 poppler-qt4
 poppler-qt5
 
+# if cups:
+# gtk3-print-backends
+
 # from the aur
 #katarakt-git
 #compton

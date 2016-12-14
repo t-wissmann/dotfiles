@@ -315,6 +315,17 @@ if has("autocmd")
 	augroup END
 endif " has ("autocmd")
 
+
+" vimpager
+" --------
+let vimpager_passthrough = 0
+if exists("vimpager")
+    "let vimpager_scrolloff = 0
+    "let g:less_enabled=0
+    call <SNR>1_End()
+endif
+
+
 au VimEnter *.tex execute "nmap ZE :! VIM_KEY='ZE' synctex-katarakt-vim " . v:servername . " 2>/dev/null >/dev/null &<LEFT><LEFT>"
 
 " CTRLP configuration
