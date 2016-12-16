@@ -126,7 +126,7 @@ let g:gruvbox_number_column="bg3"
 
 set background=dark
 
-hi LineNr ctermbg=233
+hi LineNr ctermbg=233 guibg=Black
 hi Normal ctermbg=NONE term=NONE
 hi VertSplit ctermbg=NONE ctermfg=black cterm=NONE
 hi Visual ctermbg=black cterm=None
@@ -214,6 +214,7 @@ function! EnterTexFile()
 	ab xlst \lstinputblock{}<LEFT>
 	ab dt \d t
     let g:LatexBox_split_type="new"
+    set nocul
 endfunction
 
 function! ComposeMessage()
