@@ -17,6 +17,6 @@ function! EnterTexFile()
     set cul
 endfunction
 
-set guifont=Envy Code R 10
+set guifont="Envy Code R 10"
 
 

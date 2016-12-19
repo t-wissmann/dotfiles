@@ -23,6 +23,7 @@ if [[ -f /usr/lib/qt/plugins/platformthemes/libqt5gtk2.so ]] ; then
 else
     hc unsetenv QT_QPA_PLATFORMTHEME
 fi
+hc setenv FREETYPE_PROPERTIES "truetype:interpreter-version=35"
 
 #xsetroot -solid '#D47A55'
 hc set frame_gap 8
