@@ -1,12 +1,12 @@
 ! vim: nu:ai:si:et:ts=4:sw=4:ft=xdefaults
 !xterm*faceName: 'xft:Bitstream Vera Sans Mono:style=pixelsize=12'
 !xterm*faceName: 'xft:GohuFont:pixelsize=12'
-xterm*faceName: 'xft:Bitstream Vera Sans Mono:pixelsize=12'
+!xterm*faceName: 'xft:Bitstream Vera Sans Mono:pixelsize=12'
 
 !#include "pixelfont"
 !URxvt.color0:  #222222
 !URxvt.background: #101010
-URxvt.background:       #1d1d1d
+!URxvt.background:       #1d1d1d
 !URxvt.color3:  #FFC630
 !URxvt.color11: #99FF5F
 
@@ -42,7 +42,11 @@ URxvt.background:       #1d1d1d
 !rofi.hide-scrollbar:   false
 !rofi.color-window:     #C4B07A,#4B2D22
 
-rofi.width:                          80
+!rofi.width:                          80
+
+urxvt*background:rgba:1818/1818/1818/eeee
+urxvt*depth: 32
+
 
 !urxvt*background:rgba:0F0F/0707/0000/EEEE
 !urxvt*depth: 32
