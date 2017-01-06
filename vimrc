@@ -115,6 +115,7 @@ set foldmethod=indent
 set cursorline
 
 set runtimepath^=~/.vim/bundle/elm.vim.git/
+set runtimepath^=~/.vim/bundle/minibufexpl/
 
 set runtimepath^=~/.vim/bundle/gruvbox/
 " silent !~/.vim/bundle/gruvbox/gruvbox_256palette.sh &
@@ -293,14 +294,19 @@ imap <F7> <ESC>:call ToggleSpell()<CR>a
 map <F9> :MBEToggle<CR>
 map <C-J> :bn<CR>
 map <C-K> :bp<CR>
+
+let g:miniBufExplStatusLineText = "MiniBufExpl"
 let g:miniBufExplVSplit = 1
 let g:miniBufExplMinSize = 10
 let g:miniBufExplMaxSize = 50
+let g:miniBufExplShowBufNumbers = 1
 
 hi MBENormal ctermbg=None term=None cterm=None ctermfg=Gray
 hi MBEChanged ctermbg=None term=None cterm=None ctermfg=DarkYellow
 hi MBEVisibleNormal ctermbg=None term=None cterm=None ctermfg=DarkGreen
 hi MBEVisibleChanged ctermbg=None term=None cterm=None ctermfg=DarkGreen
+hi def link MBEVisibleActiveNormal None
+
 
 if has("autocmd")
 	augroup GPGASCII
