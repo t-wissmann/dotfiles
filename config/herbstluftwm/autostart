@@ -70,7 +70,10 @@ hc keybind $Mod-x spawn rofi -columns 3 -show drun
 hc keybind $Mod-Shift-x spawn rofi -columns 3 -show run
 hc keybind $Mod-bracketleft spawn rofi-bibbrowser
 hc keybind $Mod-apostrophe spawn ~/dotfiles/menu/rofi-mpd.sh
-hc keybind $Mod-Shift-apostrophe spawn ~/dotfiles/menu/rofi-file-open.sh /mnt/unterhaltung/video/
+
+videodir=/mnt/unterhaltung/video/
+[[ $HOSTNAME =~ ^faui8.*$ ]] && videodir=$HOME/video/
+hc keybind $Mod-Shift-apostrophe spawn ~/dotfiles/menu/rofi-file-open.sh "$videodir"
 hc keybind $Mod-F2 spawn gmrun
 #hc keybind $Mod-e spawn thunar
 hc keybind $Mod-semicolon spawn rofi -show window

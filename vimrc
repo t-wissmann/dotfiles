@@ -329,6 +329,7 @@ let vimpager_passthrough = 0
 if exists("vimpager")
     "let vimpager_scrolloff = 0
     "let g:less_enabled=0
+    set nonu
     call <SNR>1_End()
 endif
 
