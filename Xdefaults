@@ -165,7 +165,7 @@ rofi.fg:                             #efefef
 rofi.color-enabled:                  true
 #define itembg argb:EF101010
 #define selbg #9fbc00
-!    STATE             BG         FG        BGALT     HLBG      HLFG
+!!    STATE             BG         FG        BGALT     HLBG      HLFG
 rofi.color-normal:     itembg,    #cecece,  itembg,   selbg,  black
 rofi.color-urgent:     #D6156C,   white,    #D6156C,  #dc322f,  selbg
 rofi.color-active:     #101010,   #FFE352,  #101010,  selbg,  black
@@ -184,18 +184,18 @@ rofi.hide-scrollbar:   true
 !rofi.hlbg:                           #586E75
 rofi.bc:                             #9fbc00
 rofi.terminal:                       urxvt
-rofi.sidebar-mode:                   true
-rofi.fixed-num-lines:                false
+!rofi.sidebar-mode:                   false
+!rofi.fixed-num-lines:                false
 rofi.bw:                             1
 rofi.lazy-filter-limit:              5000000
-!             1 2 3
-!             8 0 4
-!             7 6 5
+!!             1 2 3
+!!             8 0 4
+!!             7 6 5
 rofi.location:                       0
 rofi.padding:                        3
 rofi.line-margin:                    1
 rofi.separator-style:                solid
-rofi.monitor:                        -5
+rofi.monitor:                        -1
 rofi.yoffset:                        0
 rofi.xoffset:                        0
 rofi.eh:                             1

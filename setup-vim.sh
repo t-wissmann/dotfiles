@@ -74,7 +74,7 @@ update-git https://github.com/morhetz/gruvbox ~/.vim/bundle/gruvbox
 update-git https://github.com/kien/ctrlp.vim.git ~/.vim/bundle/ctrlp.vim
 update-git https://github.com/LaTeX-Box-Team/LaTeX-Box ~/.vim/bundle/LaTeX-Box.git
 update-git https://github.com/lambdatoast/elm.vim ~/.vim/bundle/elm.vim.git
-update-git https://github.com/fholgado/minibufexpl.vim/ ~/.vim/bundle/minibufexpl
+update-git https://github.com/t-wissmann/minibufexpl.vim ~/.vim/bundle/minibufexpl
 
 # update help tags for it
 vim --cmd 'helptags ~/.vim/bundle/ctrlp.vim/doc' --cmd 'q'

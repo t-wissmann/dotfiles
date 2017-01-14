@@ -115,7 +115,7 @@ set foldmethod=indent
 set cursorline
 
 set runtimepath^=~/.vim/bundle/elm.vim.git/
-set runtimepath^=~/.vim/bundle/minibufexpl/
+"set runtimepath^=~/.vim/bundle/minibufexpl/
 
 set runtimepath^=~/.vim/bundle/gruvbox/
 " silent !~/.vim/bundle/gruvbox/gruvbox_256palette.sh &
@@ -131,6 +131,8 @@ hi LineNr ctermbg=233 guibg=Black
 hi Normal ctermbg=NONE term=NONE
 hi VertSplit ctermbg=NONE ctermfg=black cterm=NONE
 hi Visual ctermbg=black cterm=None
+hi StatusLineNC ctermbg=black ctermfg=white cterm=NONE
+hi StatusLine ctermbg=black ctermfg=green cterm=bold
 set fillchars+=vert:│
 
 cnoreabbrev reload source ~/.vimrc
@@ -291,21 +293,21 @@ imap <F7> <ESC>:call ToggleSpell()<CR>a
 
 
 " minibufexplorer options
-map <F9> :MBEToggle<CR>
-map <C-J> :bn<CR>
-map <C-K> :bp<CR>
-
-let g:miniBufExplStatusLineText = "MiniBufExpl"
-let g:miniBufExplVSplit = 1
-let g:miniBufExplMinSize = 10
-let g:miniBufExplMaxSize = 50
-let g:miniBufExplShowBufNumbers = 1
-
-hi MBENormal ctermbg=None term=None cterm=None ctermfg=Gray
-hi MBEChanged ctermbg=None term=None cterm=None ctermfg=DarkYellow
-hi MBEVisibleNormal ctermbg=None term=None cterm=None ctermfg=DarkGreen
-hi MBEVisibleChanged ctermbg=None term=None cterm=None ctermfg=DarkGreen
-hi def link MBEVisibleActiveNormal None
+"map <F9> :MBEToggle<CR>
+"map <C-J> :bn<CR>
+"map <C-K> :bp<CR>
+"
+"let g:miniBufExplStatusLineText = "MiniBufExpl"
+"let g:miniBufExplVSplit = 1
+"let g:miniBufExplMinSize = 10
+"let g:miniBufExplMaxSize = 50
+"let g:miniBufExplShowBufNumbers = 1
+"
+"hi MBENormal ctermbg=None term=None cterm=None ctermfg=Gray
+"hi MBEChanged ctermbg=None term=None cterm=None ctermfg=DarkYellow
+"hi MBEVisibleNormal ctermbg=None term=None cterm=None ctermfg=DarkGreen
+"hi MBEVisibleChanged ctermbg=None term=None cterm=None ctermfg=DarkGreen
+"hi def link MBEVisibleActiveNormal None
 
 
 if has("autocmd")
@@ -339,6 +341,11 @@ au VimEnter *.tex execute "nmap ZE :! VIM_KEY='ZE' synctex-katarakt-vim " . v:se
 " CTRLP configuration
 set runtimepath^=~/.vim/bundle/ctrlp.vim
 nmap <C-O> :CtrlPBuffer<CR>
+hi CtrlPMode1 cterm=bold ctermfg=blue ctermbg=black
+hi CtrlPMode2 cterm=bold ctermfg=red ctermbg=black
+hi CtrlPStatus cterm=bold ctermfg=yellow ctermbg=black
+let g:ctrlp_match_window = 'bottom,order:btt,min:2,max:20'
+let g:ctrlp_switch_buffer = '0'
 
 noremap  <buffer> <silent> k gk
 noremap  <buffer> <silent> j gj
