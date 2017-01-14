@@ -341,9 +341,9 @@ au VimEnter *.tex execute "nmap ZE :! VIM_KEY='ZE' synctex-katarakt-vim " . v:se
 " CTRLP configuration
 set runtimepath^=~/.vim/bundle/ctrlp.vim
 nmap <C-O> :CtrlPBuffer<CR>
-hi CtrlPMode1 cterm=bold ctermfg=blue ctermbg=black
-hi CtrlPMode2 cterm=bold ctermfg=red ctermbg=black
-hi CtrlPStatus cterm=bold ctermfg=yellow ctermbg=black
+hi CtrlPMode1 cterm=bold ctermfg=blue ctermbg=black guibg=black
+hi CtrlPMode2 cterm=bold ctermfg=red ctermbg=black guibg=black
+hi CtrlPStatus cterm=bold ctermfg=yellow ctermbg=black guibg=black
 let g:ctrlp_match_window = 'bottom,order:btt,min:2,max:20'
 let g:ctrlp_switch_buffer = '0'
 

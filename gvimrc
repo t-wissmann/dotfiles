@@ -17,6 +17,5 @@ function! EnterTexFile()
     set cul
 endfunction
 
-set guifont="Envy Code R 10"
-
+set anti guifont=Envy\ Code\ R\ 10,Mono\ 12,Inconsolata\ 12
 
