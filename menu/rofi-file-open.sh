@@ -35,6 +35,7 @@ rofiflags=(
 
 find "$dir" -type f -printf '%P\n' \
     | grep -v '~$\|/\.\|^\.\|.swp$' \
+    | sort \
     | rofi "${rofiflags[@]}" \
     | while read line ; do
         echo "$line"
