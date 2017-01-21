@@ -184,7 +184,7 @@ rofi.hide-scrollbar:   true
 !rofi.hlbg:                           #586E75
 rofi.bc:                             #9fbc00
 rofi.terminal:                       urxvt
-!rofi.sidebar-mode:                   false
+rofi.sidebar-mode:                   true
 !rofi.fixed-num-lines:                false
 rofi.bw:                             1
 rofi.lazy-filter-limit:              5000000
