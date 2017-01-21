@@ -29,6 +29,7 @@ git
 tig
 #gnu-netcat
 openbsd-netcat
+socat
 gvim
 #gpicview
 viewnior
