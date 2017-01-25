@@ -45,10 +45,11 @@ FORCE_YOUTUBEDL=${FORCE_YOUTUBEDL:-yes}
 # look in the file $QUTE_HTML for video-tags with a src url
 # and save all hits in an array named 'video_urls'
 video_urls_in_html() {
+    tagname="${1:-video}"
     readarray -t video_urls \
         < <(tr '\t\n' '  ' < $QUTE_HTML \
             | sed 's, [ ]*, ,g' \
-            | grep -oE '<video [^>]*src="[^"]*' \
+            | grep -oE '<'"$tagname"' [^>]*src="[^"]*' \
             | sed 's,^.*src=",,' \
            )
 }
@@ -141,6 +142,11 @@ printjs() {
 
 video_urls=( )
 video_urls_in_html
+if [[ "${#video_urls[@]}" -eq 0 ]] ; then
+    # if there are no videos directly, then maybe there are
+    # iframes with content supported by youtube-dl
+    video_urls_in_html 'iframe'
+fi
 
 if [[ "$QUTE_MODE" = "command" ]] ; then
     echo "jseval -q $(printjs)" >> "$QUTE_FIFO"
