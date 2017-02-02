@@ -1,0 +1,39 @@
+#!/usr/bin/env python3
+
+# for debugging, run:
+#
+#   QUTE_CONFIG_DIR=$HOME/.config/qutebrowser/ QUTE_FIFO=/dev/stdout ./reload-config
+#
+
+import configparser
+import os
+import time
+
+config_path = os.path.join(os.environ['QUTE_CONFIG_DIR'], 'qutebrowser.conf')
+qute_fifo_path = os.environ['QUTE_FIFO']
+config = configparser.RawConfigParser()
+
+
+with open(qute_fifo_path, 'w') as qute_fifo:
+    buf = ""
+    try:
+        config.read(config_path)
+        for s in config.sections():
+            for option in config[s]:
+                cmd = "set --temp {} {} \"".format(s, option)
+                cmd += config[s][option].replace('\"', '\\\"')
+                cmd += "\"\n"
+                buf += cmd
+    except configparser.Error as e:
+        buf = "message-error \"{}\"\n".format(str(e).replace('\n', ' ').replace('\"', '\\\"'))
+    qute_fifo.write("message-info \"Reloading config…\"\n")
+    qute_fifo.flush()
+    # try to get the previous message through the fifo s.t. the message
+    # is shown in the gui before the huge set-block is processed
+    time.sleep(0.1)
+    qute_fifo.flush()
+    qute_fifo.write(buf)
+    qute_fifo.flush()
+    qute_fifo.write("message-info \"… finished!\"\n")
+    qute_fifo.flush()
+
