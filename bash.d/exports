@@ -70,7 +70,7 @@ unset PROMPT_COMMAND
       ;;
  esac;
 
-source /usr/share/git/git-prompt.sh || __git_ps1() { true; }
+source /usr/share/git/git-prompt.sh 2> /dev/null || __git_ps1() { true; }
 printexitstat() {
     local status=$?
     local l=$(printf "%${COLUMNS}s" " ")
