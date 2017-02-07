@@ -81,7 +81,10 @@ enable_screensaver() {
     xset +dpms
 }
 
-res=$(print_menu | rofi -dmenu -sep '\0' -eh 5 -p '' -no-custom -format i)
+element_height=5
+element_count=4
+
+res=$(print_menu | rofi -dmenu -sep '\0' -lines "$element_count" -eh "$element_height" -p '' -no-custom -format i)
 if [ -z "$res" ] ; then
     exit
 fi
