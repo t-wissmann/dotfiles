@@ -24,6 +24,7 @@ color.tag.hlwm=black on color6
 color.tag.fsi=rgb025
 color.tag.ls8=rgb025
 color.tag.i8=rgb025
+color.project.i8=rgb025
 color.tag.kaufen=black on magenta
 color.tag.cip=bold white on rgb030
 color.tag.esg=yellow
