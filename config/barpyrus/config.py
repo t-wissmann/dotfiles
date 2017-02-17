@@ -22,6 +22,31 @@ x += gap
 width -= 2 * gap
 hc(['pad', str(monitor), str(height + gap)]) # get space for the panel
 
+network_devices = os.listdir('/sys/class/net/')
+network_devices = [ n for n in network_devices if n != "lo"]
+
+cg = conky.ConkyGenerator(lemonbar.textpainter())
+cg.fg('#B7CE42'); cg.symbol(0xe026); cg += ' '; cg.fg('#CDCDCD'); cg.var('cpu'); cg += '% '
+cg.fg('#6F99B4'); cg.symbol(0xe021); cg += ' '; cg.fg('#CDCDCD'); cg.var('memperc'); cg += '% '
+for net in network_devices:
+    wireless_icons = [ 0xe218, 0xe219, 0xe21a ]
+    wireless_delta = 100 / len(wireless_icons)
+    with cg.if_('up %s' % net):
+        cg.fg('#FEA63C')
+        if net[0] == 'w':
+            with cg.cases():
+                for i,wicon in enumerate(wireless_icons[:-1]):
+                    cg.case('match ${wireless_link_qual_perc %s} < %d}' % (net,(i+1)*wireless_delta))
+                    cg.symbol(wicon)
+                cg.else_()
+                cg.symbol(wireless_icons[-1]) # icon for 100 percent
+        else:
+            cg.symbol(0xe197) # normal wired icon
+        cg.fg('#D81860') ; cg.symbol(0xe13c) ; cg.fg('#CDCDCD') ; cg.var('downspeed %s' % net)
+        cg.fg('#D81860') ; cg.symbol(0xe13b) ; cg.fg('#CDCDCD') ; cg.var('upspeed %s' % net)
+cg.drawRaw('%{F-}%{B-}')
+
+
 # An example conky-section:
 # icons
 bat_icons = [
@@ -29,34 +54,9 @@ bat_icons = [
     0xe247, 0xe248, 0xe249, 0xe24a, 0xe24b,
 ]
 
-network_devices = os.listdir('/sys/class/net/')
-network_devices = [ n for n in network_devices if n != "lo"]
-
 # first icon: 0 percent
 # last icon: 100 percent
 bat_delta = 100 / len(bat_icons)
-conky_text_title  = '%{F\\#B7CE42}%{T2}\ue026%{T-}%{F\\#CDCDCD} ${cpu}% '
-conky_text_title += '%{F\\#6F99B4}%{T2}\ue021%{T-}%{F\\#CDCDCD} ${memperc}% '
-for net in network_devices:
-    conky_text_title += '${if_up ' + net + '}'
-    icon = ''
-    wireless_icons = [ 0xe218, 0xe219, 0xe21a ]
-    wireless_delta = 100 / len(wireless_icons)
-    if net[0] == 'w':
-        for i,wicon in enumerate(wireless_icons[:-1]):
-            icon += "${if_match ${wireless_link_qual_perc %s} < %d}" % (net,(i+1)*wireless_delta)
-            icon += chr(wicon)
-            icon += "${else}"
-        icon += chr(wireless_icons[-1]) # icon for 100 percent
-        for _ in wireless_icons[:-1]:
-            icon += "${endif}"
-    else:
-        icon = chr(0xe197)
-    conky_text_title += '%{F\\#FEA63C}%{T2}' + icon + '%{T-}%{F\\#CDCDCD}'
-    conky_text_title += '%{F\\#D81860}%{T2}\ue13c%{T-}%{F\\#CDCDCD}${downspeed ' + net + '}'
-    conky_text_title += '%{F\\#D81860}%{T2}\ue13b%{T-}%{F\\#CDCDCD}${upspeed ' + net + '}'
-    conky_text_title += '${endif}'
-conky_text_title += '%{F-}%{B-}'
 
 #conky_sep = '%{T2}  %{T-}%{F\\#FEA63C}|%{T2} %{T-}'
 #conky_sep = '%{T3}%{F\\#FEA63C}\ue1b1%{T-}'
@@ -96,8 +96,6 @@ setxkbmap += ' -option compose:ralt -option compose:rctrl'
 # you can define custom themes
 grey_frame = Theme(fg = '#FFFFFF')
 
-conky_widget = conky.ConkyWidget(conky_text_title)
-
 def tab_renderer(self, painter):
     painter.fg('#989898')
     painter.symbol(0xe1aa)
@@ -125,6 +123,7 @@ def zip_renderer(self, painter):
         painter.space(2)
     #painter.space(3)
 
+conky_widget = conky.ConkyWidget(str(cg))
 
 # Widget configuration:
 bar = lemonbar.Lemonbar(geometry = (x,y,width,height))
