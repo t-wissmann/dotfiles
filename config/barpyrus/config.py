@@ -3,6 +3,7 @@ from barpyrus import widgets as W
 from barpyrus.core import Theme
 from barpyrus import lemonbar
 from barpyrus import conky
+from barpyrus import windowframe
 import sys
 import os
 # Copy this config to ~/.config/barpyrus/config.py
@@ -26,8 +27,13 @@ network_devices = os.listdir('/sys/class/net/')
 network_devices = [ n for n in network_devices if n != "lo"]
 
 cg = conky.ConkyGenerator(lemonbar.textpainter())
-cg.fg('#B7CE42'); cg.symbol(0xe026); cg += ' '; cg.fg('#CDCDCD'); cg.var('cpu'); cg += '% '
-cg.fg('#6F99B4'); cg.symbol(0xe021); cg += ' '; cg.fg('#CDCDCD'); cg.var('memperc'); cg += '% '
+with cg.temp_fg('#B7CE42'):
+    cg.symbol(0xe026);
+cg += ' '; cg.var('cpu'); cg += '% '
+with cg.temp_fg('#6F99B4'):
+    cg.symbol(0xe021);
+cg += ' '; cg.var('memperc'); cg += '% '
+
 for net in network_devices:
     wireless_icons = [ 0xe218, 0xe219, 0xe21a ]
     wireless_delta = 100 / len(wireless_icons)
@@ -94,7 +100,7 @@ setxkbmap = 'setxkbmap -option compose:menu -option ctrl:nocaps'
 setxkbmap += ' -option compose:ralt -option compose:rctrl'
 
 # you can define custom themes
-grey_frame = Theme(fg = '#FFFFFF')
+grey_frame = Theme(fg = '#dedede', bg = '#454545', padding = (4,4))
 
 def tab_renderer(self, painter):
     painter.fg('#989898')
@@ -125,8 +131,11 @@ def zip_renderer(self, painter):
 
 conky_widget = conky.ConkyWidget(str(cg))
 
+#xwin = windowframe.WindowFrame((x,y+20,width,height), 1);
+#xwin.loop()
+
 # Widget configuration:
-bar = lemonbar.Lemonbar(geometry = (x,y,width,height))
+bar = lemonbar.Lemonbar(geometry = (x,y,width,height), foreground='#CDCDCD')
 bar.widget = W.ListLayout([
     W.RawLabel('%{l}'),
     hlwm.HLWMTags(hc, monitor, tag_renderer = hlwm.underlined_tags),
