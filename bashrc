@@ -47,7 +47,6 @@ trysource /usr/share/bash-completion/bash_completion
 #    trysource /usr/share/bash-completion/completions/$i
 #done
 trysource /usr/share/bash-completion/completions/pass
-complete -o filenames -o nospace -F _pass pass-copy
 
 trysource ~/dev/c/herbstluftwm/share/herbstclient-completion
 trysource ~/git/herbstluftwm/share/herbstclient-completion

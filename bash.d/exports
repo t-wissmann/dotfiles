@@ -122,5 +122,6 @@ export HISTSIZE=
 export HISTCONTROL=erasedups
 
 export FZF_DEFAULT_OPTS="--tabstop=4 --color=dark,bg+:0,hl+:3,hl:2"
+export PASSWORD_STORE_ENABLE_EXTENSIONS="true"
 
 # vim: ft=sh

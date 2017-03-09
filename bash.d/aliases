@@ -84,7 +84,7 @@ which ncmatrix > /dev/null 2> /dev/null && alias ncmatrix='ncmatrix -b'
 alias wol.ameise='wol 00:02:B3:88:F8:E0' # intelbootagent-karte wol klappt "einfach" :D
 alias wol.piggy='wol -h 10.202.63.123 00:40:63:c4:e6:c7'
 alias tty-clock='tty-clock -c -s -C 3'
-alias tclock="watch -n 1 'date +%H\ :\ %M\ :\ %S | figlet -c -f big -w $(tput cols)'"
+alias tclock='watch -n 1 "date +%H\ :\ %M\ :\ %S | figlet -c -f big -w $(tput cols)"'
 alias testbeep='echo -n Beep in "3.. " && sleep 1 && echo -n "2.. " && sleep 1 && echo -n "1.. " && sleep 1 && echo -e "\e[1;31mBEEP\e[0m\a"'
 
 alias mplayer.console='mplayer -framedrop -really-quiet -vo caca'
