@@ -393,6 +393,7 @@ case "$HOSTNAME" in
         hc set frame_bg_transparent 1
         hc keybind XF86Stop spawn ~/scripts/mpd/mpc.sh toggle
         hc keybind XF86PowerOff spawn xset dpms force off
+        hc keybind XF86Calculator spawn bash -c 'systemctl suspend -i ; sleep 10 ; xset -b'
         ;;
     dachs)
         hc keybind $Mod-Return spawn xterm
