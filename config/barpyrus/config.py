@@ -3,7 +3,6 @@ from barpyrus import widgets as W
 from barpyrus.core import Theme
 from barpyrus import lemonbar
 from barpyrus import conky
-from barpyrus import windowframe
 import sys
 import os
 # Copy this config to ~/.config/barpyrus/config.py
@@ -131,6 +130,7 @@ def zip_renderer(self, painter):
 
 conky_widget = conky.ConkyWidget(str(cg))
 
+#barpyrus/windowframe.py
 #xwin = windowframe.WindowFrame((x,y+20,width,height), 1);
 #xwin.loop()
 
