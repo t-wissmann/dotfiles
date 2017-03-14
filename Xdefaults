@@ -195,7 +195,7 @@ rofi.location:                       0
 rofi.padding:                        3
 rofi.line-margin:                    1
 rofi.separator-style:                solid
-rofi.monitor:                        -1
+rofi.monitor:                        -4
 rofi.yoffset:                        0
 rofi.xoffset:                        0
 rofi.eh:                             1

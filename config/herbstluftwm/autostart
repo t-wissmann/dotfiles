@@ -56,6 +56,20 @@ case "$HOSTNAME" in
         ;;
 esac
 
+# keyboard-layout:
+has-kbd() {
+    lsusb | grep "ID $*" > /dev/null
+}
+
+if has-kbd 04d9:0134 Holtek Semiconductor ; then # pure kbtalking
+    setxkbmap us -variant altgr-intl -option compose:menu -option ctrl:nocaps -option compose:ralt -option compose:rwin
+elif false ; then # mac
+    setxkbmap us -variant altgr-intl -option compose:menu -option ctrl:nocaps -option compose:ralt -option compose:rctrl
+    xmodmap -e 'keycode any 94 = grave'
+else
+    setxkbmap us -variant altgr-intl -option compose:menu -option ctrl:nocaps -option compose:ralt -option compose:rwin
+fi
+
 # keybindings
 Mod=Mod4
 if [ $HOSTNAME = faui03a ] ; then
