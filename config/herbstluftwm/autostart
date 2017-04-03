@@ -78,7 +78,7 @@ hc keybind $Mod-F2 spawn gmrun
 #hc keybind $Mod-e spawn thunar
 hc keybind $Mod-semicolon spawn rofi -show window
 #hc keybind $Mod-Shift-semicolon spawn ~/.config/herbstluftwm/wselect.sh bring
-hc keybind Mod4-y spawn bash -c 'mpv --force-window=immediate --no-terminal --keep-open=yes --ytdl "$(xclip -selection clipboard -o)"'
+hc keybind Mod4-y spawn bash -c 'mpv --force-window=immediate --no-terminal --keep-open=yes --ytdl-format "best[width<=1280]" --ytdl "$(xclip -selection clipboard -o)"'
 
 # tags
 TAG_NAMES=( irc vim web mail )
