@@ -19,7 +19,9 @@ include /usr/share/doc/task/rc/dark-green-256.theme
 #include /proj/ciptmp/re06huxa/git/task/doc/rc/dark-yellow-green.theme
 
 
-color.tagged=color7
+color.label=white
+color.label.sort=white
+color.alternate=on gray2
 color.tag.hlwm=black on color6
 color.tag.fsi=rgb025
 color.tag.ls8=rgb025
@@ -32,6 +34,7 @@ color.tag.dobenreuth=cyan
 color.tag.einkaufen=bold red
 color.vit.selection=color0 on color10
 color.header=grey23 on black
+color.tagged=gray23
 
 # Aliases - alternate names for commands
 alias.rm=delete                               # Alias for the delete command
@@ -39,6 +42,11 @@ alias.a=add                               # Alias for the delete command
 alias.history=history.monthly                 # Prefer monthly over annual history reports
 alias.ghistory=ghistory.monthly               # Prefer monthly graphical over annual history reports
 alias.cal=calendar
+alias.esg=list +esg
+alias.i8=list project:i8
+
+report.next.filter=status:pending project: -esg
+
 # I don't know where I have this from but it causes a lot of problems:
 #alias.export=export.csv                       # Prefer CSV over iCal export
 #alias.export.vcalendar=export.ical            # They are the same
@@ -52,3 +60,4 @@ taskd.key=\/home\/thorsten\/.task\/thorsten_wissmann.key.pem
 taskd.ca=\/home\/thorsten\/.task\/ca.cert.pem
 taskd.server=apus.uberspace.de:63996
 taskd.credentials=Users\/Thorsten Wißmann\/82cf35ae-d58c-42ff-ab37-80f0ba26bf08
+
