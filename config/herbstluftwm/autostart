@@ -63,6 +63,8 @@ has-kbd() {
 
 if has-kbd 04d9:0134 Holtek Semiconductor ; then # pure kbtalking
     setxkbmap us -variant altgr-intl -option compose:menu -option ctrl:nocaps -option compose:ralt -option compose:rwin
+elif has-kbd 04d9:0112 Holtek Semiconductor ; then # kbparadise V60 Mini
+    setxkbmap us -variant altgr-intl -option compose:menu -option ctrl:nocaps -option compose:rwin
 elif false ; then # mac
     setxkbmap us -variant altgr-intl -option compose:menu -option ctrl:nocaps -option compose:ralt -option compose:rctrl
     xmodmap -e 'keycode any 94 = grave'
