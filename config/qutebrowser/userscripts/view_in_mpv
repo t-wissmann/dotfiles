@@ -37,7 +37,7 @@ msg() {
 
 MPV_COMMAND=${MPV_COMMAND:-mpv}
 # Warning: spaces in single flags are not supported
-MPV_FLAGS=${MPV_FLAGS:- --force-window=immediate --no-terminal --keep-open=yes --ytdl }
+MPV_FLAGS=${MPV_FLAGS:- --force-window=immediate --no-terminal --keep-open=yes --ytdl-format 'best[width<=1280]' --ytdl }
 video_command=( "$MPV_COMMAND"  $MPV_FLAGS )
 
 FORCE_YOUTUBEDL=${FORCE_YOUTUBEDL:-yes}
