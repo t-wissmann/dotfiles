@@ -41,7 +41,7 @@ for net in network_devices:
         if net[0] == 'w':
             with cg.cases():
                 for i,wicon in enumerate(wireless_icons[:-1]):
-                    cg.case('match ${wireless_link_qual_perc %s} < %d}' % (net,(i+1)*wireless_delta))
+                    cg.case('match ${wireless_link_qual_perc %s} < %d' % (net,(i+1)*wireless_delta))
                     cg.symbol(wicon)
                 cg.else_()
                 cg.symbol(wireless_icons[-1]) # icon for 100 percent
