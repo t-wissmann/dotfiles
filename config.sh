@@ -28,8 +28,8 @@ homedir=(
     dialogrc
     gitconfig
     tigrc
-    emacs
-    emacs.d
+    #emacs
+    #emacs.d
     pinforc
     screenrc
     latexmkrc
@@ -38,6 +38,7 @@ homedir=(
     vitrc
     inputrc
     gvimrc
+    spacemacs
     $(is_cip && echo taskrc.cip || echo taskrc)
     Xdefaults{,.d}
     abcde.conf
