@@ -377,10 +377,10 @@ case "$HOSTNAME" in
 esac
 
 
-SCRIPTSDIR=$HOME/dev/c/herbstluftwm/scripts/
+SCRIPTSDIR=$HOME/git/herbstluftwm/scripts/
 
 if ! [ -d "$SCRIPTSDIR" ] ; then
-    SCRIPTSDIR=$HOME/git/herbstluftwm/scripts/
+    SCRIPTSDIR=$HOME/dev/c/herbstluftwm/scripts/
 fi
 
 if [ -d "$SCRIPTSDIR" ] ; then
@@ -390,7 +390,7 @@ if [ -d "$SCRIPTSDIR" ] ; then
         ~/.bash_settings $SCRIPTSDIR/dmenu.sh move
     hc keybind $Mod-Alt-space spawn $SCRIPTSDIR/execwith.sh \
         ~/.bash_settings $SCRIPTSDIR/dmenu.sh set_layout
-    hc keybind $Mod-t spawn $SCRIPTSDIR/q3terminal.sh
+    hc keybind $Mod-t spawn bash -c "WIDTH_PERC=100 $SCRIPTSDIR/q3terminal.sh"
 fi
 
 # multimonitors

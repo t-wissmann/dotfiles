@@ -84,7 +84,7 @@ do_cached() {
     local cachename="$1"
     shift
     mkdir -p "$cachedir"
-    date=$(mpc stats | grep 'DB Updated: ')
+    date=$(mpc stats | grep 'DB Updated: ') || exit 1
     file="$cachedir/$cachename"
     # only use cached output if it was saved more recently than the
     # present script and the config file
