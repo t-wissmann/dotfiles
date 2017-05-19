@@ -1,0 +1,15 @@
+Ocaml errors
+============
+
+Spot the 'syntax error':
+
+----
+type dllist =
+  | Empty
+  | NonEmpty
+
+fromList xs = Empty
+----
+
+
+// vim: ft=asciidoc
