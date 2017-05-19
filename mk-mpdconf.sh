@@ -25,7 +25,7 @@ msg() {
 
 ::() {
     echo ":: $*"
-    "$@"
+    "$@" || exit 1
 }
 
 print_config(){
@@ -67,9 +67,10 @@ echo "----  >8  ----"
 if ! ask "Write above config to $configfile?" ; then
     exit 0
 fi
+:: mkdir -p "${configfile%/*}"
 msg "Writing $configfile"
 cat <<< "$config_content" > "$configfile"
-if ask "Set MPD_HOST via herbstclient?" ; then
+if [[ -n "$DISPLAY" ]] && ask "Set MPD_HOST via herbstclient?" ; then
     :: herbstclient setenv MPD_HOST "$password@localhost"
 fi
 

@@ -13,14 +13,19 @@ hc = hlwm.connect()
 
 # get the geometry of the monitor
 monitor = sys.argv[1] if len(sys.argv) >= 2 else 0
-(x, y, monitor_w, monitor_h) = hc.monitor_rect(monitor)
+(x, monitor_y, monitor_w, monitor_h) = hc.monitor_rect(monitor)
 height = 18 # height of the panel
 width = monitor_w # width of the panel
 gap = int(hc(['get', 'frame_gap'])) if 0 == int(hc(['get', 'smart_frame_surroundings'])) else 0
-y += gap
 x += gap
 width -= 2 * gap
-hc(['pad', str(monitor), str(height + gap)]) # get space for the panel
+top = True
+if top:
+    y = monitor_y + gap
+    hc(['pad', str(monitor), str(height + gap)]) # get space for the panel
+else:
+    y = monitor_y + monitor_h - gap - height
+    hc(['pad', str(monitor), "", "", str(height + gap)]) # get space for the panel
 
 network_devices = os.listdir('/sys/class/net/')
 network_devices = [ n for n in network_devices if n != "lo"]
