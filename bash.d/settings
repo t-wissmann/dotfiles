@@ -46,47 +46,47 @@ export -f luakit
 BROWSER="luakit"
 
 # mpd profiles
-[ -z "$MPD_Profile" ] && [ -f "$HOME/.mpd_profile" ] &&  MPD_Profile="$(cat ~/.mpd_profile)"
-[ -z "$MPD_QueuePort" ] && MPD_QueuePort="23233"
-
-MPD_AvailableProfiles=(ameise ghul eule towi04)
-
-case "$MPD_Profile"  in
-    eule)
-        MPD_HOST=localhost
-        MPD_PORT=6600
-        MPD_QueueFile="${HOME}/scripts/mpd/queue"
-        function MPD_QueueGet() { cat "$MPD_QueueFile"; }
-        function MPD_QueueSet() { echo $* > "$MPD_QueueFile"; }
-        function MPD_QueuePushBack() { echo $* >> "$MPD_QueueFile"; }
-        ;;
-    ameise)
-        MPD_HOST=ameise
-        MPD_PORT=6600
-        function MPD_QueueGet() { true; }
-        ;;
-    ghul)
-        MPD_HOST=ghul
-        MPD_PORT=6600
-        function MPD_QueueGet() { true; }
-        ;;
-    towi04)
-        MPD_HOST=towi04
-        MPD_PORT=6600
-        # queue through network is not supported yet ;)
-        MPD_QueueFile="${HOME}/scripts/mpd/queue"
-        function MPD_QueueGet() { echo 'echo $MPD_Queue' \
-                    |console-send $MPD_HOST $MPD_QueuePort ; }
-        function MPD_QueueSet() { echo "var MPD_Queue = \"$*\"" \
-                    |console-send $MPD_HOST $MPD_QueuePort ; }
-        function MPD_QueuePushBack() { MPD_QueueSet $(MPD_QueueGet) $* ; }
-        ;;
-esac
-# export it
-export MPD_QueuePort
-export MPD_HOST
-export MPD_PORT
-export MPD_QueueFile
+#[ -z "$MPD_Profile" ] && [ -f "$HOME/.mpd_profile" ] &&  MPD_Profile="$(cat ~/.mpd_profile)"
+#[ -z "$MPD_QueuePort" ] && MPD_QueuePort="23233"
+#
+#MPD_AvailableProfiles=(ameise ghul eule towi04)
+#
+#case "$MPD_Profile"  in
+#    eule)
+#        MPD_HOST=localhost
+#        MPD_PORT=6600
+#        MPD_QueueFile="${HOME}/scripts/mpd/queue"
+#        function MPD_QueueGet() { cat "$MPD_QueueFile"; }
+#        function MPD_QueueSet() { echo $* > "$MPD_QueueFile"; }
+#        function MPD_QueuePushBack() { echo $* >> "$MPD_QueueFile"; }
+#        ;;
+#    ameise)
+#        MPD_HOST=ameise
+#        MPD_PORT=6600
+#        function MPD_QueueGet() { true; }
+#        ;;
+#    ghul)
+#        MPD_HOST=ghul
+#        MPD_PORT=6600
+#        function MPD_QueueGet() { true; }
+#        ;;
+#    towi04)
+#        MPD_HOST=towi04
+#        MPD_PORT=6600
+#        # queue through network is not supported yet ;)
+#        MPD_QueueFile="${HOME}/scripts/mpd/queue"
+#        function MPD_QueueGet() { echo 'echo $MPD_Queue' \
+#                    |console-send $MPD_HOST $MPD_QueuePort ; }
+#        function MPD_QueueSet() { echo "var MPD_Queue = \"$*\"" \
+#                    |console-send $MPD_HOST $MPD_QueuePort ; }
+#        function MPD_QueuePushBack() { MPD_QueueSet $(MPD_QueueGet) $* ; }
+#        ;;
+#esac
+## export it
+#export MPD_QueuePort
+#export MPD_HOST
+#export MPD_PORT
+#export MPD_QueueFile
 
 
 #alias sa='ssh -t ernie bash -l -c "ssh\\ -t\\ zimmer"'
@@ -94,7 +94,7 @@ export MPD_QueueFile
 #alias finch='ssh -t ernie bash -l -c "ssh\\ -t\\ zimmer\\ bash\\ -l\\ -c\\ \\\\\\\"screen-reconnect.sh\\ finch\\\\\\\""'
 #alias irc='ssh -t ameise bash -l -c "screen\\ -S\\ all\\ -x\\ -p\\ irc"'
 #alias icq='ssh -t ameise bash -l -c "screen\\ -S\\ all\\ -x\\ -p\\ finch"'
-alias sa='ssh ameise'
+#alias sa='ssh ameise'
 
 #if ps u|grep icewm > /dev/null ; then
 #PS1='C:$(echo ${PWD}|sed "s#/home/$USER#/Eigene Dateien#"|sed "s#/#\\\\\\#g")> '
