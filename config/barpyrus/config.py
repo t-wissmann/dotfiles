@@ -140,7 +140,7 @@ conky_widget = conky.ConkyWidget(str(cg))
 #xwin.loop()
 
 # Widget configuration:
-bar = lemonbar.Lemonbar(geometry = (x,y,width,height), foreground='#CDCDCD')
+bar = lemonbar.Lemonbar(geometry = (x,y,width,height), foreground='#CDCDCD', background='#AA212121')
 bar.widget = W.ListLayout([
     W.RawLabel('%{l}'),
     hlwm.HLWMTags(hc, monitor, tag_renderer = hlwm.underlined_tags),

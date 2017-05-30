@@ -118,7 +118,7 @@ set runtimepath^=~/.vim/bundle/elm.vim.git/
 "set runtimepath^=~/.vim/bundle/minibufexpl/
 
 set runtimepath^=~/.vim/bundle/gruvbox/
-" silent !~/.vim/bundle/gruvbox/gruvbox_256palette.sh &
+silent !~/.vim/bundle/gruvbox/gruvbox_256palette.sh &
 colorscheme gruvbox
 let g:gruvbox_contrast_dark="hard"
 let g:gruvbox_contrast_light="hard"
