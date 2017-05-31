@@ -100,7 +100,7 @@ gui_app qutebrowser \
 
 Icon=text-editor
 #cli_app vim \
-gui_app emacsclient \
+gui_app emacsclient\ -n \
     $(mimes 'text/.*'|grep -vE 'text/html') \
     text/x-shellscript \
     application/x-shellscript \
