@@ -46,6 +46,7 @@ alias.esg=list +esg
 alias.i8=list project:i8
 
 report.next.filter=status:pending project: -esg
+#report.next.sort=modified-
 
 # I don't know where I have this from but it causes a lot of problems:
 #alias.export=export.csv                       # Prefer CSV over iCal export

@@ -324,6 +324,9 @@ you should place your code here."
   (setq TeX-view-program-list '(("katarakt" katarakt-view)))
   (setq TeX-view-program-selection '((output-pdf "katarakt")))
 
+  (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
+  (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
+
   ;; (add-hook 'LaTeX-mode-hook (lambda () (push
   ;;                                        '("latexmk" "latexmk -pdf %s" TeX-run-Tex nil t
   ;;                                          :help "Run latexmk on file")
