@@ -130,14 +130,14 @@ values."
    ;; with 2 themes variants, one dark and one light)
    ;; see http://themegallery.robdor.com/ for the themes
    ;; others: wombat
-   dotspacemacs-themes '(gruvbox spacemacs-light mustang)
+   dotspacemacs-themes '(gruvbox mustang)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   ;; possible ideas: Inconsolata, Envy Code R
-   dotspacemacs-default-font '("Bitstream Vera Sans Mono"
-                               :size 14
+   ;; possible ideas: Inconsolata, Envy Code R, xos4 Terminus
+   dotspacemacs-default-font '("monospace"
+                               :size 13
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -326,6 +326,13 @@ you should place your code here."
 
   (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
   (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
+
+  (fringe-mode '(nil . 0))
+  (custom-theme-set-faces
+   'gruvbox
+   '(linum ((t (:background "#000000" :foreground "#878787"))))
+   '(fringe ((t ( :background "#000000"))))
+   '(linum-relative-current-face ((t (:inherit (shadow default) :background "#3C3836" :foreground "#878787")))))
 
   ;; (add-hook 'LaTeX-mode-hook (lambda () (push
   ;;                                        '("latexmk" "latexmk -pdf %s" TeX-run-Tex nil t
