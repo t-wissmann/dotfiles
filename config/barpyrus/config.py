@@ -97,11 +97,11 @@ conky_text += '%{F\\#CDCDCD}'
 
 # example options for the hlwm.HLWMLayoutSwitcher widget
 xkblayouts = [
-    'us us -variant altgr-intl us'.split(' '),
+    'us us -option compose:ralt -variant altgr-intl us'.split(' '),
     'de de de'.split(' '),
 ]
-setxkbmap = 'setxkbmap -option compose:menu -option ctrl:nocaps'
-setxkbmap += ' -option compose:ralt -option compose:rctrl'
+setxkbmap = 'setxkbmap -option -option compose:menu -option ctrl:nocaps'
+setxkbmap += ' -option compose:rctrl'
 
 # you can define custom themes
 grey_frame = Theme(fg = '#dedede', bg = '#454545', padding = (4,4))
