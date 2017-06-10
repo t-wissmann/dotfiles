@@ -333,7 +333,8 @@ you should place your code here."
    '(linum ((t (:background "#000000" :foreground "#878787"))))
    '(fringe ((t ( :background "#000000"))))
    '(linum-relative-current-face ((t (:inherit (shadow default) :background "#3C3836" :foreground "#878787")))))
-
+  ;; Turn off the tildes in the fringe
+  (global-vi-tilde-fringe-mode -1)
   ;; (add-hook 'LaTeX-mode-hook (lambda () (push
   ;;                                        '("latexmk" "latexmk -pdf %s" TeX-run-Tex nil t
   ;;                                          :help "Run latexmk on file")
