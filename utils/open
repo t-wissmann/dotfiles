@@ -5,4 +5,5 @@ filetype=$(xdg-mime query filetype "$file")
 default=$(xdg-mime query default "$filetype")
 
 echo -e "Opening \e[32m${file##*/}\e[0m with \e[33m${default%.desktop}\e[0m" >&2
-xdg-open "$file" 1>/dev/null 2>/dev/null &
+# Force a generic DE such that xdg-mime is used to open the right file browser
+XDG_CURRENT_DESKTOP='X-Generic' xdg-open "$file" 1>/dev/null 2>/dev/null &

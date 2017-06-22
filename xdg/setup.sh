@@ -130,6 +130,7 @@ gui_app ~/dotfiles/utils/mpv-append.sh \
     $(mimes 'video/.*') \
     $(mimes 'audio/.*')
 
+xdg-mime default Thunar-folder-handler.desktop inode/directory
 
 # Check your mail-setup with:
 # xdg-open 'mailto:p@thorsten-wissmann.de?cc=C1&cc=C2&subject=subject'
