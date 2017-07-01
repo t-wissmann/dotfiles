@@ -2,15 +2,22 @@
 
 del_key=Alt-Return
 add_key=Alt-Delete
+shift_key=Alt-m
+pkey() {
+    printf "%-12s" "$*"
+}
+
 mesg="\
-Enter      : select a tag to focused
-$del_key : delete selected tag
-$add_key : create new tag with name as entered"
+$(pkey Return     )| go to the tag
+$(pkey $shift_key )| go to the tag and bring the window with
+$(pkey $del_key   )| delete selected tag
+$(pkey $add_key   )| create new tag with name as entered"
 rofi_args=(
     -dmenu
     -p "tag:"
     -kb-custom-1 "$del_key"
     -kb-custom-2  "$add_key"
+    -kb-custom-3  "$shift_key"
     -mesg "$mesg"
 )
 
@@ -22,6 +29,10 @@ case "$exit_code" in
         ;;
     11)
         herbstclient merge_tag "$res"
+        ;;
+    12)
+        echo herbstclient chain , move "$res" , use "$res"
+        herbstclient chain , move "$res" , use "$res"
         ;;
     0)
         herbstclient use "$res"
