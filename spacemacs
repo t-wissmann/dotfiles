@@ -317,7 +317,7 @@ explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   (setq powerline-default-separator 'contour)
   (setq TeX-source-correlate-mode t)
-  (setq TeX-source-correlate-start-server t)
+  (setq TeX-source-correlate-start-server nil)
   (setq TeX-source-correlate-method 'synctex)
 
   (load-file "~/git/katarakt/share/katarakt.el")
