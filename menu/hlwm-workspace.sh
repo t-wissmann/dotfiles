@@ -8,6 +8,7 @@ $del_key : delete selected tag
 $add_key : create new tag with name as entered"
 rofi_args=(
     -dmenu
+    -p "tag:"
     -kb-custom-1 "$del_key"
     -kb-custom-2  "$add_key"
     -mesg "$mesg"
