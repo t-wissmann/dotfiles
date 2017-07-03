@@ -56,8 +56,11 @@ case `hostname` in
     ircbox) trysource ~/.bash.d/cip ;;
     mephisto) trysource ~/.bash.d/mephisto ;;
 esac
-trysource /usr/share/fzf/key-bindings.bash
-trysource /usr/share/fzf/completion.bash
+
+if [[ -z "${INSIDE_EMACS}" ]] ; then
+    trysource /usr/share/fzf/key-bindings.bash
+    trysource /usr/share/fzf/completion.bash
+fi
 
 
 trysource /home/thorsten/.opam/opam-init/init.sh || true
