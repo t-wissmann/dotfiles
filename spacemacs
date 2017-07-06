@@ -351,9 +351,11 @@ you should place your code here."
 
   (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
   (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
-
   (fringe-mode '(nil . 0))
-
+  ;; (setq LaTeX-indent-level 2)
+  ;;(add-hook 'LaTeX-mode-hook
+  ;;          (lambda ()
+  ;;            (kill-local-variable 'line-indent-function)))
 
   ;; Turn off the tildes in the fringe
   (global-vi-tilde-fringe-mode -1)
