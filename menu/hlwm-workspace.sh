@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-del_key=Alt-Return
-add_key=Alt-Delete
+del_key=Alt-Delete
+add_key=Alt-Return
 shift_key=Alt-m
 pkey() {
     printf "%-12s" "$*"
@@ -15,9 +15,9 @@ $(pkey $add_key   )| create new tag with name as entered"
 rofi_args=(
     -dmenu
     -p "tag:"
-    -kb-custom-1 "$del_key"
-    -kb-custom-2  "$add_key"
-    -kb-custom-3  "$shift_key"
+    -kb-custom-1 "$add_key"
+    -kb-custom-2 "$del_key"
+    -kb-custom-3 "$shift_key"
     -mesg "$mesg"
 )
 
