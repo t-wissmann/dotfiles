@@ -349,10 +349,11 @@ you should place your code here."
   (load-file "~/git/katarakt/share/katarakt.el")
   (setq TeX-view-program-list '(("katarakt" katarakt-view)))
   (setq TeX-view-program-selection '((output-pdf "katarakt")))
-  (setq scroll-conservatively 101)
+  (setq scroll-conservatively 10000)
   (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
   (setq scroll-step 1 scroll-margin 2)
   (setq hscroll-step 1 hscroll-margin 2)
+  (setq auto-window-vscroll nil)
 
   (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
   (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
