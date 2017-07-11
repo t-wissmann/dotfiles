@@ -345,9 +345,14 @@ you should place your code here."
   (setq TeX-source-correlate-start-server nil)
   (setq TeX-source-correlate-method 'synctex)
 
+
   (load-file "~/git/katarakt/share/katarakt.el")
   (setq TeX-view-program-list '(("katarakt" katarakt-view)))
   (setq TeX-view-program-selection '((output-pdf "katarakt")))
+  (setq scroll-conservatively 101)
+  (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
+  (setq scroll-step 1 scroll-margin 2)
+  (setq hscroll-step 1 hscroll-margin 2)
 
   (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
   (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
