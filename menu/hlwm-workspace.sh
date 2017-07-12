@@ -1,15 +1,37 @@
 #!/usr/bin/env bash
 
-del_key=Alt-Delete
+del_key=Alt-BackSpace
 add_key=Alt-Return
 shift_key=Alt-m
 pkey() {
-    printf "%-12s" "$*"
+    printf "%-14s" "$*"
 }
 
+
+default_action_str='go to the tag'
+default_action() {
+    herbstclient use "$1"
+}
+
+move_action_str='go to the tag and bring the window with'
+move_action() {
+    herbstclient chain , add "$1" , use "$1" , bring "$focus_window_id"
+}
+
+case "$1" in
+    --move)
+        default_action_str="$move_action_str"
+        default_action() {
+            move_action "$@"
+        }
+        ;;
+    *)
+        ;;
+esac
+
 mesg="\
-$(pkey Return     )| go to the tag
-$(pkey $shift_key )| go to the tag and bring the window with
+$(pkey Return     )| $default_action_str
+$(pkey $shift_key )| $move_action_str
 $(pkey $del_key   )| delete selected tag
 $(pkey $add_key   )| create new tag with name as entered"
 
@@ -39,11 +61,10 @@ case "$exit_code" in
             , merge_tag "$res"
         ;;
     12)
-        #echo herbstclient chain , move "$res" , use "$res"
-        herbstclient chain , use "$res" , bring "$focus_window_id"
+        move_action_str "$res"
         ;;
     0)
-        herbstclient use "$res"
+        default_action "$res"
         ;;
     *)
         ;;
