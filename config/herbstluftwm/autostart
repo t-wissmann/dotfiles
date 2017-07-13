@@ -100,7 +100,7 @@ hc keybind $Mod-semicolon spawn rofi -show window
 hc keybind Mod4-y spawn bash -c 'mpv --force-window=immediate --no-terminal --keep-open=yes --ytdl-format "best[width<=1280]" --ytdl "$(xclip -selection clipboard -o)"'
 
 # tags
-TAG_NAMES=( irc vim web mail )
+TAG_NAMES=( irc vim web mail music video )
 TAG_KEYS=( {1..9} 0 q w e)
 
 hc rename default "${TAG_NAMES[0]}" || true
