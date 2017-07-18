@@ -5,7 +5,7 @@ command=( "$@" )
 
 if [ -z "$command" ] ; then
     # defaulting to tmux a
-    command=( tmux a )
+    command=( tmux a -d )
 fi
 
 
