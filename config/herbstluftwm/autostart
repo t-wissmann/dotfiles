@@ -100,16 +100,25 @@ hc keybind $Mod-semicolon spawn rofi -show window
 hc keybind Mod4-y spawn bash -c 'mpv --force-window=immediate --no-terminal --keep-open=yes --ytdl-format "best[width<=1280]" --ytdl "$(xclip -selection clipboard -o)"'
 
 # tags
-TAG_NAMES=( irc vim web mail music video )
-TAG_KEYS=( {1..9} 0 q w e)
+BINDS=(
+    1:irc
+    2:vim
+    3:web
+    4:mail
+    5:music
+    6:video
+    7:tmp
+    9:doc
+    w:chromium
+    e:tmux
+)
 
-hc rename default "${TAG_NAMES[0]}" || true
-for i in ${!TAG_NAMES[@]} ; do
-    hc add "${TAG_NAMES[$i]}"
-done
-for i in "${!TAG_KEYS[@]}" ; do
-    key="${TAG_KEYS[$i]}"
-    hc keybind "$Mod-$key" or . and , compare tags.focus.index = "$i" , try use_previous . use_index "$i"
+hc rename default "irc" || true
+for i in "${BINDS[@]}" ; do
+    key="${i%%:*}"
+    tag="${i#*:}"
+    hc add "$tag"
+    hc keybind "$Mod-$key" or . and , compare tags.focus.name = "$tag" , try use_previous . use "$tag"
     hc keybind "$Mod-Shift-$key" move_index "$i"
 done
 
@@ -117,7 +126,7 @@ hc load irc     '(clients max:0)'
 #hc load vim     '(split vertical:0.700000:1 (clients max:0) (clients max:0))'
 hc load web     '(clients max:0)'
 hc load mail    '(split vertical:0.200000:1 (clients horizontal:0) (clients max:0))'
-hc load 9       '(clients max:0)'
+hc load doc     '(clients max:0)'
 
 hc keybind "$Mod-period" use_index +1 --skip-visible
 hc keybind "$Mod-comma"  use_index -1 --skip-visible
