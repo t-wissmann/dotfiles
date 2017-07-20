@@ -29,7 +29,7 @@ importfile() {
             # temporarily ignore ogg files
             return
             ;;
-        *.wav|*.mood|*.log|*.cue|*.AVI|*.mid|*.md5|*.ffp|*.sh|*.m3u|*.pdf|*.css)
+        *.wav|*.mood|*.log|*.cue|*.AVI|*.mid|*.md5|*.ffp|*.sh|*.m3u|*.pdf|*.css|*.nzb|*.sfv|*.nfo)
             # silently ignore some file types
             return
             ;;
