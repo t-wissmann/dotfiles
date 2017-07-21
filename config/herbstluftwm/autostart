@@ -106,8 +106,9 @@ BINDS=(
     3:web
     4:mail
     5:music
-    6:video
+    6:pdf
     7:tmp
+    8:video
     9:doc
     w:chromium
     e:tmux
@@ -119,7 +120,7 @@ for i in "${BINDS[@]}" ; do
     tag="${i#*:}"
     hc add "$tag"
     hc keybind "$Mod-$key" or . and , compare tags.focus.name = "$tag" , try use_previous . use "$tag"
-    hc keybind "$Mod-Shift-$key" move_index "$i"
+    hc keybind "$Mod-Shift-$key" move "$tag"
 done
 
 hc load irc     '(clients max:0)'
