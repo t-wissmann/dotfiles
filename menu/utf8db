@@ -73,6 +73,7 @@ coproduct ∐
 # relations
 subgroup ◅
 subseteq ⊆
+supseteq ⊇
 not subseteq ⊈
 subset ⊂
 overset ⊃

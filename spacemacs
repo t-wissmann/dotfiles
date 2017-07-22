@@ -48,7 +48,8 @@ values."
      (latex :variables latex-build-command "LatexMk")
      ;; markdown
      org
-     c-c++
+     (c-c++ :variables
+            c-c++-default-mode-for-headers 'c++-mode)
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
@@ -357,9 +358,6 @@ you should place your code here."
   (setq hscroll-step 1 hscroll-margin 2)
   (setq auto-window-vscroll nil)
 
-  (setq-default dotspacemacs-configuration-layers
-                '((c-c++ :variables
-                         c-c++-default-mode-for-headers 'c++-mode)))
   ;; (setq-default dotspacemacs-configuration-layers
   ;;               '((c-c++ :variables c-c++-enable-clang-support t)))
 
