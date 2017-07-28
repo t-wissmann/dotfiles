@@ -371,6 +371,7 @@ you should place your code here."
 
   ;; Turn off the tildes in the fringe
   (global-vi-tilde-fringe-mode -1)
+  (setq server-temp-file-regexp "^/tmp/\\|/draft\\|/dev/shm/$")
   ;; (add-hook 'LaTeX-mode-hook (lambda () (push
   ;;                                        '("latexmk" "latexmk -pdf %s" TeX-run-Tex nil t
   ;;                                          :help "Run latexmk on file")
