@@ -38,6 +38,7 @@ $(pkey $add_key   )| create new tag with name as entered"
 rofi_args=(
     -dmenu
     -p "tag:"
+    -i
     -select "$(herbstclient get_attr tags.focus.name)"
     -kb-custom-1 "$add_key"
     -kb-custom-2 "$del_key"
