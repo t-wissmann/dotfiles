@@ -56,9 +56,11 @@ report.next.filter=status:pending project: -esg
 #push.default.uri=cip:.task/
 #pull.default.uri=cip:.task/
 
-taskd.certificate=\/home\/thorsten\/.task\/thorsten_wissmann.cert.pem
-taskd.key=\/home\/thorsten\/.task\/thorsten_wissmann.key.pem
+taskd.certificate=\/home\/thorsten\/.task\/thorsten.cert.pem
+taskd.key=\/home\/thorsten\/.task\/thorsten.key.pem
 taskd.ca=\/home\/thorsten\/.task\/ca.cert.pem
 taskd.server=apus.uberspace.de:63996
-taskd.credentials=Users\/Thorsten Wißmann\/82cf35ae-d58c-42ff-ab37-80f0ba26bf08
+taskd.credentials=PUBLIC\/thorsten\/6455880c-7a55-44a3-944a-7a952c0e19b1
 
+taskd.trust=strict
+taskd.ciphers=NORMAL
