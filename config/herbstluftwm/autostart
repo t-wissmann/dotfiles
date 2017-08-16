@@ -126,7 +126,7 @@ done
 hc load irc     '(clients max:0)'
 #hc load vim     '(split vertical:0.700000:1 (clients max:0) (clients max:0))'
 hc load web     '(clients max:0)'
-hc load mail    '(split vertical:0.200000:1 (clients horizontal:0) (clients max:0))'
+#hc load mail    '(split vertical:0.200000:1 (clients horizontal:0) (clients max:0))'
 hc load doc     '(clients max:0)'
 
 hc keybind "$Mod-period" use_index +1 --skip-visible
