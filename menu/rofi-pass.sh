@@ -8,7 +8,8 @@ password_files=( "${password_files[@]#"$prefix"/}" )
 password_files=( "${password_files[@]%.gpg}" )
 
 clipwiz_key=Control-t
-gen_key=Control-t
+edit_key=Control-i
+gen_key=Control-g
 pkey() {
     printf "%-15s" "$*"
 }
@@ -16,7 +17,6 @@ pkey() {
 call_pass() {
     EDITOR="emacsclient -c --alternate-editor= " pass "$@"
 }
-
 
 terminal_pass() {
     rect=( $(herbstclient monitor_rect) )
@@ -26,15 +26,17 @@ terminal_pass() {
 }
 
 mesg="\
-$(pkey Return       )| Open in an editor
+$(pkey Return       )| Auto-type
 $(pkey $clipwiz_key )| Copy credentials to clipboard
-$(pkey $gen_key     )| Generate a new entry"
+$(pkey $gen_key     )| Generate a new entry
+$(pkey $edit_key    )| Open in an editor"
 
 rofi_args=(
     -p 'pass> '
     -format i
     -kb-custom-1 "$clipwiz_key"
     -kb-custom-2 "$gen_key"
+    -kb-custom-3 "$edit_key"
     -mesg "$mesg"
 
 )
@@ -42,19 +44,26 @@ rofi_args=(
 idx=$(printf '%s\n' "${password_files[@]}" \
     | sed 's,/, → ,g' \
     | rofi "${rofi_args[@]}" -dmenu )
-exit_code=$?
+exit_code="$?"
+
+if [[ "$exit_code" -eq 1 ]] ; then
+    exit
+else
+        entry="${password_files[$idx]}"
+fi
+
 case "$exit_code" in
     0)
-        entry="${password_files[$idx]}"
-        call_pass edit "$entry"
+        terminal_pass autotype "$entry"
         ;;
     10) # kb-custom-1
-        entry="${password_files[$idx]}"
         terminal_pass clipwiz "$entry"
         ;;
     11) # kb-custom-2
-        entry="${password_files[$idx]}"
         call_pass gen "$entry"
+        ;;
+    12) # kb-custom-3
+        call_pass edit "$entry"
         ;;
     *)
         ;;
