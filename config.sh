@@ -31,6 +31,7 @@ homedir=(
     #emacs
     #emacs.d
     pinforc
+    ghci
     screenrc
     latexmkrc
     tmux.conf
