@@ -2,18 +2,24 @@
 
 IFS=$'\n'
 stop_all='[ STOP ALL PROFILES ]'
+mapfile -d '' -t profiles \
+    < <(find /etc/netctl/ \
+            -maxdepth 1 -type f  -printf '%f\n' \
+            | grep -xvE '\..*\.swp|.*~' \
+            | sort )
 profiles=(
-    '  '"$stop_all"
-    $(netctl list)
+    "$stop_all"
+    "${profiles[@]}"
 )
 
 i=0
+active_name=$(systemctl list-units --state=active --no-pager --no-legend  'netctl*.service')
+active_name=${active_name%%.service*}
 active=""
 for p in "${profiles[@]}" ; do
-    if [ "${p#\* }" != "$p" ] ; then
+    if [ "${p}" == "$active_name" ] ; then
         active="$i"
     fi
-    profiles[$i]="${p:2}"
     i=$((i+1))
 done
 
@@ -37,6 +43,7 @@ else
         sudo netctl stop-all
         :: sudo netctl start "$selection"
         sudo netctl start "$selection"
+        sudo netctl wait-online "$selection"
         :: Press any key to close… | tr -d '\n'
         read -n 1
         kill "$journalctl_pid"
