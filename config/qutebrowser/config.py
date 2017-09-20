@@ -42,6 +42,9 @@ c.tabs.indicator_padding = {
 c.downloads.location.directory = '~/downloads/'
 c.downloads.location.prompt = False
 
+c.scrolling.bar = True
+c.scrolling.smooth = True
+
 c.hints.border = '1px solid black'
 c.hints.mode = 'number'
 c.hints.chars = '12345'
@@ -141,3 +144,31 @@ c.fonts.statusbar = 'bold 8pt "Bitstream Vera Sans"'
 c.fonts.downloads = '8pt bold "Bitstream Vera Sans"'
 c.fonts.hints = 'bold 12px "Bitstream Vera Sans"'
 c.fonts.web.family.fixed = 'Bitstream Vera Sans Mono'
+
+
+binds = {
+    'O' : 'set-cmd-text :open {url}',
+    't' : 'set-cmd-text -s :open -t ',
+    'T' : 'set-cmd-text :open -t {url}',
+    'gT' : 'tab-prev',
+    'gt' : 'tab-focus',
+    '<' : 'tab-move -',
+    '>' : 'tab-move +',
+    '<home>' : 'scroll-perc 0',
+    '0' : 'scroll-perc -x 0',
+    '^' : 'scroll-perc -x 0',
+    '$' : 'scroll-perc -x 100',
+    '<end>' : 'scroll-perc',
+    'yy' : 'yank ;; yank -s',
+    'M' : 'set-cmd-text -s :quickmark-load',
+    'm' : 'enter-mode set_mark',
+    '\'' : 'enter-mode jump_mark',
+    'zl' : 'spawn --userscript password_fill',
+    'sd' : "spawn --userscript /bin/bash -c 'DOWNLOAD_DIR=~/downloads ~/.config/qutebrowser/userscripts/open_download'",
+    ';v' : "hint links userscript view_in_mpv",
+    'b' : "set-cmd-text -s :buffer",
+}
+
+for k,v in binds.items():
+    config.bind(k, v, force=True)
+
