@@ -17,6 +17,7 @@ c.content.headers.accept_language = 'de-DE,en-US,en'
 c.completion.cmd_history_max_items = -1
 c.completion.web_history_max_items = 500
 c.completion.shrink = True
+c.completion.show = 'auto'
 
 
 c.tabs.background = True
