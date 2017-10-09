@@ -1,6 +1,7 @@
 
-
-"colorscheme wombat
+set runtimepath^=~/.vim/bundle/gruvbox/
+colorscheme gruvbox
+source ~/.vimrc
 "let g:solarized_visibility="high"    "default value is normal
 "set bg=dark
 "colorscheme solarized

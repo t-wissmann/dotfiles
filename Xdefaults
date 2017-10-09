@@ -28,14 +28,16 @@ URxvt.cursorBlink: true
 ! warning, the following doesnt work
 #define POWERLINE xft:PowerlineSymbols:pixelsize=11
 
-#define FONT     -misc-fixed-medium-r-semicondensed-*-13-*-*-*-*-*-iso10646-1
-#define BOLDFONT -misc-fixed-bold-r-semicondensed-*-13-*-*-*-*-*-iso10646-1
-#define SCALEFONT(X) xft:Bitstream Vera Sans Mono:bold:size=X
+#define SCALEFONT(X) xft:Bitstream Vera Sans Mono:size=X
 #define SCALEBOLDFONT(X) xft:Bitstream Vera Sans Mono:bold:size=X
+!#define SCALEFONT(X) xft:inconsolata:size=X
+!#define SCALEBOLDFONT(X) xft:inconsolata:bold:size=X
 #define ENVYSCALEFONT(X) xft:Envy Code R:size=X
 #define ENVYSCALEBOLDFONT(X) xft:Envy Code R:bold:size=X
-!#define FONT     SCALEFONT(10)
-!#define BOLDFONT SCALEBOLDFONT(10)
+!#define FONT     -misc-fixed-medium-r-semicondensed-*-13-*-*-*-*-*-iso10646-1
+!#define BOLDFONT -misc-fixed-bold-r-semicondensed-*-13-*-*-*-*-*-iso10646-1
+#define FONT     SCALEFONT(9)
+#define BOLDFONT SCALEBOLDFONT(9)
 !URxvt.font: FONT
 !xft:PowerlineSymbols:pixelsize=11:minspace=False
 URxvt.font: FONT
@@ -44,9 +46,9 @@ URxvt.letterSpace: 0
 
 !URxvt.font: xft:Monospace:size=9,xft:Bitstream Vera Sans Mono:size=8
 !URxvt.boldFont: xft:Bitstream Vera Sans Mono:size=9,xft:Bitstream Vera Sans Mono:size=8
-URxvt.keysym.C-1: command:\033]710;SCALEFONT(9)\007\033]711;SCALEBOLDFONT(9)\007
-URxvt.keysym.C-2: command:\033]710;FONT\007\033]711;BOLDFONT\007
-URxvt.keysym.C-3: command:\033]710;ENVYFONT(10)\007\033]711;ENVYBOLDFONT(9)\007
+URxvt.keysym.C-1: command:\033]710;FONT\007\033]711;BOLDFONT\007
+URxvt.keysym.C-2: command:\033]710;SCALEFONT(10)\007\033]711;SCALEBOLDFONT(10)\007
+URxvt.keysym.C-3: command:\033]710;SCALEFONT(11)\007\033]711;SCALEBOLDFONT(11)\007
 URxvt.keysym.C-4: command:\033]710;SCALEFONT(12)\007\033]711;SCALEBOLDFONT(12)\007
 URxvt.keysym.C-5: command:\033]710;SCALEFONT(14)\007\033]711;SCALEBOLDFONT(14)\007
 URxvt.keysym.C-6: command:\033]710;SCALEFONT(16)\007\033]711;SCALEBOLDFONT(16)\007

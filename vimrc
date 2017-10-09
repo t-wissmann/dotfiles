@@ -4,7 +4,7 @@ au VimEnter *.fr set ft=haskell
 au VimEnter *.scala set ft=scala
 au BufRead,BufNewFile *.v set ft=coq
 " enforce 8 colors
-"set t_Co=8
+set t_Co=8
 "set t_Co=256
 
 set encoding=utf-8
@@ -117,9 +117,9 @@ set cursorline
 set runtimepath^=~/.vim/bundle/elm.vim.git/
 "set runtimepath^=~/.vim/bundle/minibufexpl/
 
-set runtimepath^=~/.vim/bundle/gruvbox/
+"set runtimepath^=~/.vim/bundle/gruvbox/
 "silent !~/.vim/bundle/gruvbox/gruvbox_256palette.sh &
-colorscheme gruvbox
+"colorscheme gruvbox
 let g:gruvbox_contrast_dark="hard"
 let g:gruvbox_contrast_light="hard"
 let g:gruvbox_number_column="bg3"
@@ -356,6 +356,7 @@ noremap <space>bp <C-^>
 noremap <space>bn <C-^>
 
 set showcmd
+set nocul
 
 " Use OmniCompletion for abook dictionary entries
 " Fire omnicompletion using ^X^O
