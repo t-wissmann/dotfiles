@@ -171,5 +171,6 @@ binds = {
 }
 
 for k,v in binds.items():
-    config.bind(k, v, force=True)
+    #config.bind(k, v, force=True)
+    config.bind(k, v)
 
