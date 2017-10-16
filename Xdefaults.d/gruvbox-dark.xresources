@@ -31,11 +31,16 @@
 *color4:  #FE8019
 *color12: #D65D0E
 ! DarkMagenta + Magenta
-*color5:  #b16286
-*color13: #d3869b
+!*color5:  #b16286
+!*color13: #d3869b
 ! DarkCyan + Cyan
 *color6:  #689d6a
 *color14: #8ec07c
 ! LightGrey + White
 *color7:  #a89984
 *color15: #ebdbb2
+
+! own modifications
+! DarkMagenta + Magenta
+*color5:  #C52A48
+*color13: #F74B5F

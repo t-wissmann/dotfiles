@@ -133,6 +133,9 @@ hi VertSplit ctermbg=NONE ctermfg=black cterm=NONE
 hi Visual ctermbg=black cterm=None
 hi StatusLineNC ctermbg=black ctermfg=white cterm=NONE
 hi StatusLine ctermbg=black ctermfg=green cterm=bold
+hi CursorLine ctermbg=black term=NONE cterm=NONE
+hi LineNr ctermbg=black term=NONE ctermfg=gray cterm=NONE
+hi CursorLineNr ctermbg=black term=NONE ctermfg=green cterm=bold
 set fillchars+=vert:│
 
 cnoreabbrev reload source ~/.vimrc
@@ -140,10 +143,6 @@ cnoreabbrev reload source ~/.vimrc
 
 """ " My colorscheme
 """ hi Normal ctermbg=NONE term=NONE cterm=NONE
-""" hi CursorLine ctermbg=black term=NONE cterm=NONE
-""" " yellow line numbers
-""" hi LineNr ctermbg=black term=NONE ctermfg=gray cterm=NONE
-""" hi CursorLineNr ctermbg=black term=NONE ctermfg=green cterm=bold
 """ hi Pmenu ctermbg=black ctermfg=white term=NONE cterm=NONE
 """ hi PmenuSel ctermbg=green ctermfg=0 term=NONE cterm=NONE
 """ hi PmenuThumb ctermbg=red term=NONE cterm=bold
@@ -356,7 +355,6 @@ noremap <space>bp <C-^>
 noremap <space>bn <C-^>
 
 set showcmd
-set nocul
 
 " Use OmniCompletion for abook dictionary entries
 " Fire omnicompletion using ^X^O
