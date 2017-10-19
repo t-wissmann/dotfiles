@@ -42,6 +42,9 @@ URxvt.cursorBlink: true
 !xft:PowerlineSymbols:pixelsize=11:minspace=False
 URxvt.font: FONT
 URxvt.boldFont: BOLDFONT
+! simple and with unicode support
+!URxvt.font: -misc-fixed-medium-r-*-*-*-140-*-*-*-*-iso10646-1
+!URxvt.boldFont: -misc-fixed-medium-r-*-*-*-140-*-*-*-*-iso10646-1
 URxvt.letterSpace: 0
 
 !URxvt.font: xft:Monospace:size=9,xft:Bitstream Vera Sans Mono:size=8
