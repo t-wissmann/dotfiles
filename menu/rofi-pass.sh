@@ -9,7 +9,7 @@ password_files=( "${password_files[@]%.gpg}" )
 
 clipwiz_key=Control-t
 edit_key=Control-i
-gen_key=Control-g
+gen_key=Control-Shift-g
 pkey() {
     printf "%-15s" "$*"
 }
