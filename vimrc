@@ -351,8 +351,8 @@ noremap  <buffer> <silent> k gk
 noremap  <buffer> <silent> j gj
 " some spacemacs keys
 noremap <space>w <C-w>
-noremap <space>bp <C-^>
-noremap <space>bn <C-^>
+map <space>bp :bp<CR>
+map <space>bn :bn<CR>
 
 set showcmd
 
