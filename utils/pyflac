@@ -1,0 +1,94 @@
+#!/usr/bin/env python3
+import glob, os
+import sys
+import json
+import re
+
+import requests
+import discid
+import musicbrainzngs as mb
+
+# encode and tag flac files the python way
+
+tags_template="""\
+#!/usr/bin/env python3
+# vim: ft=python
+
+tags = {{
+{GLOBAL_TAGS}  # 'DISC': 1,
+}}
+
+tracklist = [
+{TRACKLIST}]
+
+files = [
+{FILELIST}]
+
+musicroot = '~/musik/'
+filepath = '{{ARTIST}}/{{ALBUM}}/{{TRACKNUMBER:0>2}}. {{TITLE}}.flac'
+
+for idx,f in enumerate(files):
+    tags['TRACKNUMBER'] = idx + 1
+    tags['TITLE'] = tracklist[idx]
+    encode(f, tags)
+
+"""
+
+files = sorted(list(glob.glob('*.wav')))
+
+def print_template_discogs(discogs, outfile=sys.stdout):
+    global files
+    global tags_template
+    artists = [ a['name'] for a in discogs['artists'] ]
+    tags = {
+        'TRACKNUMBER' : 0,
+        'ARTIST' : ', '.join(artists),
+        'ALBUM' : discogs['title'],
+        'DATE' : discogs['year'],
+    }
+    global_tags = ""
+    for k, v in tags.items():
+        line_str = str({k: v})
+        global_tags += re.sub(r"{(.*)}", '  \\1,\n', line_str)
+
+    tracklist_str = ""
+    for t in res['tracklist']:
+        if t['type_'] == 'track':
+            line_str = re.sub(r"\[(.*)\]", '\\1', str([t['title']]))
+            tracklist_str += "  {},\n".format(line_str)
+        if t['type_'] == 'heading':
+            tracklist_str += "  # {}\n".format(t['title'])
+
+    filelist_str = ""
+    for f in files:
+        line_str = re.sub(r"\[(.*)\]", '\\1', str([f]))
+        filelist_str += "  {},\n".format(line_str)
+
+    template_parameters = {
+        'GLOBAL_TAGS': global_tags,
+        'TRACKLIST': tracklist_str,
+        'FILELIST': filelist_str,
+    }
+    tags_py_file = tags_template.format(**template_parameters)
+    print(tags_py_file, file=outfile)
+
+
+def query_discogs_release(url):
+    match = re.search('release/([0-9]*)$', url)
+    if not match:
+        return None
+    api_url = 'https://api.discogs.com/releases/' + match.group(1)
+    r = requests.get(api_url)
+    return json.loads(r.text)
+
+res = query_discogs_release(sys.argv[1])
+if res is None:
+    sys.exit(1)
+
+#with open('tags.py', 'w') as fh:
+#    print_template_discogs(res, outfile = fh)
+print_template_discogs(res, outfile = sys.stdout)
+
+#print(discid.read(device='/dev/sr1'))
+
+
