@@ -3,6 +3,7 @@ import glob, os
 import sys
 import json
 import re
+import subprocess
 
 import requests
 import discid
@@ -54,24 +55,20 @@ def discogs_template_parameters(discogs_url):
         'TRACKNUMBER' : 0,
         'ARTIST' : ', '.join(artists),
         'ALBUM' : discogs_json.get('title', ''),
-        'DATE' : discogs_json.get('year', ''),
+        'DATE' : str(discogs_json.get('year', '')),
     }
-    global_tags = ""
-    for k, v in tags.items():
-        line_str = str({k: v})
-        global_tags += re.sub(r"{(.*)}", '  \\1,\n', line_str)
-
-    tracklist_str = ""
+    tracklist = []
+    track_index = 0
     for t in discogs_json['tracklist']:
         if t['type_'] == 'track' or t['type_'] == 'index':
-            line_str = '  ' + string_quoted(t['title']) + ', '
-            tracklist_str += "{:<60}# {}\n".format(line_str, t['position'])
+            track_index += 1
+            pos = t.get('position', str(track_index))
+            tracklist.append((pos, t['title']))
             for sub in t.get('sub_tracks', []):
-                tracklist_str += "{:<60}# {}\n".format(\
-                    '  # ' + string_quoted(sub['title']) + ', ',
-                    sub['position'])
-        if t['type_'] == 'heading':
-            tracklist_str += "  # {}\n".format(string_quoted(t['title']))
+                comment = sub['position'] + ', ' + string_quoted(sub['title'])
+                tracklist.append(('#', comment))
+        if t['type_'] == 'heading' and 'title' in t:
+            tracklist.append(('#',string_quoted(t['title'])))
 
     barcode = tags['ARTIST'] + '+' + tags['ALBUM']
     for identifier in discogs_json.get('identifiers', []):
@@ -81,9 +78,8 @@ def discogs_template_parameters(discogs_url):
             break
     cover_url = get_cover_url_by_barcode(barcode)
     return {
-        'GLOBAL_TAGS': global_tags,
-        'TRACKLIST': tracklist_str,
-        'COVER_URL': string_quoted(cover_url),
+        'GLOBAL_TAGS': tags,
+        'TRACKLIST': tracklist,
         'TAGS_NOTES': '# generated from ' + discogs_url
     }
 
@@ -108,20 +104,61 @@ files = {FILELIST_COMMAND}
 music_root('~/musik/')
 filepath_format('{{ARTIST}}/{{ALBUM}}/{{TRACKNUMBER:0>2}}. {{TITLE}}.flac')
 
-# currently unused
-#cover_image_url = {COVER_URL}
+# filter the tracklist for a specific medium
+#tracklist = \\
+#    [ t for t in tracklist \\
+#        if re.search('^CD2-', t[0]) ]
 
 for idx,f in enumerate(files):
     tags['TRACKNUMBER'] = idx + 1
-    tags['TITLE'] = tracklist[idx]
+    tags['TITLE'] = tracklist[idx][1]
     encode(f, tags)
 
 """
 
 def create_template(parameters, outfile=sys.stdout):
     global tags_template
+    tracklist_str = ""
+    for k,v in parameters['TRACKLIST']:
+        if k == '#':
+            tracklist_str += "  # {}\n".format(v)
+        else:
+            tracklist_str += "  ({:<9}, {}),\n".format(\
+                string_quoted(k),
+                string_quoted(v))
+    global_tags = ""
+    for k,v in parameters['GLOBAL_TAGS'].items():
+        global_tags += " {:<18}: {},\n".format(\
+            string_quoted(k),
+            string_quoted(v))
+
+    parameters['TRACKLIST'] = tracklist_str
+    parameters['GLOBAL_TAGS'] = global_tags
     tags_py_file = tags_template.format(**parameters)
     print(tags_py_file, file=outfile)
+
+def encode_flac(source_path, target_path, tags):
+    flac_cmd = [
+        'flac',
+        '--best',
+        '--output-name=' + target_path,
+        source_path,
+    ]
+    for k, v in tags.items():
+        flac_cmd.append('--tag={}={}'.format(k,v))
+    # debug(' '.join(flac_cmd))
+    if os.path.exists(target_path):
+        debug('skipping existing {}'.format(target_path))
+        return
+    debug('Creating {}'.format(target_path))
+    subprocess.call(flac_cmd)
+
+def tags_pathencoded(tags):
+    """replace characters that are not allowed in filenames"""
+    res = { }
+    for k,v in tags.items():
+        res[k] = str(v).replace("/", "-")
+    return res
 
 class TagsFileResult:
     def __init__(self):
@@ -135,7 +172,7 @@ class TagsFileResult:
         buf.append("Creating the following files in " + root_expanded)
         last_tags = { }
         for source, tags in self.files:
-            target = self.filepattern.format(**tags)
+            target = self.filepattern.format(**tags_pathencoded(tags))
             buf.append("")
             buf.append("{} -> {}".format(source, target))
             for k,v in tags.items():
@@ -147,6 +184,17 @@ class TagsFileResult:
             last_tags = tags
         buf.append("")
         return '\n'.join(buf)
+
+    def apply(self):
+        root_expanded = os.path.expanduser(self.root)
+        for source, tags in self.files:
+            target = os.path.join( \
+                root_expanded, \
+                self.filepattern.format(**tags_pathencoded(tags)))
+            target_dir = os.path.dirname(target)
+            if not os.path.isdir(target_dir):
+                os.makedirs(os.path.normpath(target_dir))
+            encode_flac(source, target, tags)
 
 def evaluate_tags_file(filepath) -> TagsFileResult:
     def encode(filepath, tags):
@@ -175,13 +223,18 @@ def main(argv):
     if os.path.isfile(tags_file):
         debug("Using existing {}".format(tags_file))
     else:
-        discogs_url = input('Discogs url: ')
+        discogs_url = argv[0] if len(argv) >= 1 \
+            else input('Discogs url: ')
         parameters = discogs_template_parameters(discogs_url)
         parameters.update(fileglob_template_parameters('*.wav'))
         with open(tags_file, 'w') as fh:
             create_template(parameters, outfile = fh)
+        if 'EDITOR' in os.environ:
+            subprocess.call([os.environ['EDITOR'], tags_file])
     result = evaluate_tags_file(tags_file)
     print(result.preview())
+    if input('Apply above changes? [y/n] ') == 'y':
+        result.apply()
 
 sys.exit(main(sys.argv[1:]))
 
