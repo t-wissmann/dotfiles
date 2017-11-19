@@ -10,10 +10,88 @@ import musicbrainzngs as mb
 
 # encode and tag flac files the python way
 
+def debug(string):
+    print(":: " + string, file=sys.stdout)
+
+def fail(string):
+    print("ERROR: " + string, file=sys.stdout)
+    sys.exit(1)
+
+def string_quoted(string):
+    """quote a string to be used in python code"""
+    # force the quoting by putting the string into an array
+    # then drop the first and the last character for the square brackets
+    return str([string])[1:-1]
+
+def fileglob_template_parameters(pattern = '*.wav'):
+    code = "sorted(list(glob.glob({})))".format(string_quoted(pattern))
+    files = sorted(list(glob.glob(pattern)))
+    file_list_quoted = [ '#   ' + string_quoted(f) + ',' for f in files ]
+    return {
+        'FILELIST_COMMAND': code,
+        'FILELIST_EXAMPLE': '\n'.join(file_list_quoted),
+    }
+
+def discogs_release_id_from_url(url):
+    match = re.search('discogs.com/.*release/([0-9]*)', url)
+    if not match:
+        return None
+    return match.group(1)
+
+def discogs_release_json(release_id):
+    r = requests.get('https://api.discogs.com/releases/' + release_id)
+    return json.loads(r.text)
+
+def get_cover_url_by_barcode(barcode):
+    images_url = 'http://www.google.com/search?hl=en&q={}+amazon&btnI=745'.format(barcode)
+    return images_url
+
+def discogs_template_parameters(discogs_url):
+    release_id = discogs_release_id_from_url(discogs_url)
+    discogs_json = discogs_release_json(release_id)
+    artists = [ a.get('name', '') for a in discogs_json.get('artists', []) ]
+    tags = {
+        'TRACKNUMBER' : 0,
+        'ARTIST' : ', '.join(artists),
+        'ALBUM' : discogs_json.get('title', ''),
+        'DATE' : discogs_json.get('year', ''),
+    }
+    global_tags = ""
+    for k, v in tags.items():
+        line_str = str({k: v})
+        global_tags += re.sub(r"{(.*)}", '  \\1,\n', line_str)
+
+    tracklist_str = ""
+    for t in discogs_json['tracklist']:
+        if t['type_'] == 'track' or t['type_'] == 'index':
+            line_str = '  ' + string_quoted(t['title']) + ', '
+            tracklist_str += "{:<60}# {}\n".format(line_str, t['position'])
+            for sub in t.get('sub_tracks', []):
+                tracklist_str += "{:<60}# {}\n".format(\
+                    '  # ' + string_quoted(sub['title']) + ', ',
+                    sub['position'])
+        if t['type_'] == 'heading':
+            tracklist_str += "  # {}\n".format(string_quoted(t['title']))
+
+    barcode = tags['ARTIST'] + '+' + tags['ALBUM']
+    for identifier in discogs_json.get('identifiers', []):
+        id_type = identifier.get('type', '')
+        if id_type == 'Barcode' and 'value' in identifier:
+            barcode = identifier['value'].replace(' ', '').replace('-', '')
+            break
+    cover_url = get_cover_url_by_barcode(barcode)
+    return {
+        'GLOBAL_TAGS': global_tags,
+        'TRACKLIST': tracklist_str,
+        'COVER_URL': string_quoted(cover_url),
+        'TAGS_NOTES': '# generated from ' + discogs_url
+    }
+
 tags_template="""\
 #!/usr/bin/env python3
 # vim: ft=python
 
+{TAGS_NOTES}
 tags = {{
 {GLOBAL_TAGS}  # 'DISC': 1,
 }}
@@ -21,11 +99,17 @@ tags = {{
 tracklist = [
 {TRACKLIST}]
 
-files = [
-{FILELIST}]
+files = {FILELIST_COMMAND}
+# # currently, this will evaluate to:
+# files = [
+{FILELIST_EXAMPLE}
+# ]
 
-musicroot = '~/musik/'
-filepath = '{{ARTIST}}/{{ALBUM}}/{{TRACKNUMBER:0>2}}. {{TITLE}}.flac'
+music_root('~/musik/')
+filepath_format('{{ARTIST}}/{{ALBUM}}/{{TRACKNUMBER:0>2}}. {{TITLE}}.flac')
+
+# currently unused
+#cover_image_url = {COVER_URL}
 
 for idx,f in enumerate(files):
     tags['TRACKNUMBER'] = idx + 1
@@ -34,60 +118,72 @@ for idx,f in enumerate(files):
 
 """
 
-files = sorted(list(glob.glob('*.wav')))
-
-def print_template_discogs(discogs, outfile=sys.stdout):
-    global files
+def create_template(parameters, outfile=sys.stdout):
     global tags_template
-    artists = [ a['name'] for a in discogs['artists'] ]
-    tags = {
-        'TRACKNUMBER' : 0,
-        'ARTIST' : ', '.join(artists),
-        'ALBUM' : discogs['title'],
-        'DATE' : discogs['year'],
-    }
-    global_tags = ""
-    for k, v in tags.items():
-        line_str = str({k: v})
-        global_tags += re.sub(r"{(.*)}", '  \\1,\n', line_str)
-
-    tracklist_str = ""
-    for t in res['tracklist']:
-        if t['type_'] == 'track':
-            line_str = re.sub(r"\[(.*)\]", '\\1', str([t['title']]))
-            tracklist_str += "  {},\n".format(line_str)
-        if t['type_'] == 'heading':
-            tracklist_str += "  # {}\n".format(t['title'])
-
-    filelist_str = ""
-    for f in files:
-        line_str = re.sub(r"\[(.*)\]", '\\1', str([f]))
-        filelist_str += "  {},\n".format(line_str)
-
-    template_parameters = {
-        'GLOBAL_TAGS': global_tags,
-        'TRACKLIST': tracklist_str,
-        'FILELIST': filelist_str,
-    }
-    tags_py_file = tags_template.format(**template_parameters)
+    tags_py_file = tags_template.format(**parameters)
     print(tags_py_file, file=outfile)
 
+class TagsFileResult:
+    def __init__(self):
+        self.files = []
+        self.filepattern = ''
+        self.root = '~'
 
-def query_discogs_release(url):
-    match = re.search('release/([0-9]*)$', url)
-    if not match:
-        return None
-    api_url = 'https://api.discogs.com/releases/' + match.group(1)
-    r = requests.get(api_url)
-    return json.loads(r.text)
+    def preview(self):
+        buf = []
+        root_expanded = os.path.expanduser(self.root)
+        buf.append("Creating the following files in " + root_expanded)
+        last_tags = { }
+        for source, tags in self.files:
+            target = self.filepattern.format(**tags)
+            buf.append("")
+            buf.append("{} -> {}".format(source, target))
+            for k,v in tags.items():
+                if k not in last_tags or last_tags[k] != v:
+                    buf.append("  {}: {}".format(k, v))
+            for k in last_tags.keys():
+                if k not in tags:
+                    buf.append("  {} -/->".format(k))
+            last_tags = tags
+        buf.append("")
+        return '\n'.join(buf)
 
-res = query_discogs_release(sys.argv[1])
-if res is None:
-    sys.exit(1)
+def evaluate_tags_file(filepath) -> TagsFileResult:
+    def encode(filepath, tags):
+        if not hasattr(encode, 'res'):
+            encode.res = [ ]
+        encode.res.append((filepath,dict(tags)))
+    def music_root(root):
+        music_root.res = root
+    def filepath_format(ff):
+        filepath_format.res = ff
+    def get_result(function):
+        if not hasattr(function, 'res'):
+            fail(function.__name__ + "() not set!")
+        return function.res
 
-#with open('tags.py', 'w') as fh:
-#    print_template_discogs(res, outfile = fh)
-print_template_discogs(res, outfile = sys.stdout)
+    exec(compile(open(filepath, "rb").read(), filepath, 'exec'))
+    res = TagsFileResult()
+    res.files = get_result(encode)
+    res.root = get_result(music_root)
+    res.filepattern = get_result(filepath_format)
+    return res
+
+def main(argv):
+    tags_file = 'tags.py'
+
+    if os.path.isfile(tags_file):
+        debug("Using existing {}".format(tags_file))
+    else:
+        discogs_url = input('Discogs url: ')
+        parameters = discogs_template_parameters(discogs_url)
+        parameters.update(fileglob_template_parameters('*.wav'))
+        with open(tags_file, 'w') as fh:
+            create_template(parameters, outfile = fh)
+    result = evaluate_tags_file(tags_file)
+    print(result.preview())
+
+sys.exit(main(sys.argv[1:]))
 
 #print(discid.read(device='/dev/sr1'))
 
