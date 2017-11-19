@@ -111,6 +111,9 @@ filepath_format('{{ARTIST}}/{{ALBUM}}/{{TRACKNUMBER:0>2}}. {{TITLE}}.flac')
 
 for idx,f in enumerate(files):
     tags['TRACKNUMBER'] = idx + 1
+    # disc, track = tracklist[idx][0].split('-')
+    # tags['TRACKNUMBER'] = track
+    # tags['DISC'] = disc
     tags['TITLE'] = tracklist[idx][1]
     encode(f, tags)
 
