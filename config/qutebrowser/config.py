@@ -5,6 +5,7 @@ c.editor.command = 'urxvt -e vim {}'.split(' ')
 c.auto_save.session = True
 c.content.user_stylesheets = [ '~/.config/qutebrowser/style.css' ]
 c.downloads.remove_finished = 0
+c.statusbar.position = 'top'
 c.statusbar.padding = {
     'top': 3,
     'bottom': 2,
@@ -13,6 +14,7 @@ c.statusbar.padding = {
 }
 
 c.content.headers.accept_language = 'de-DE,en-US,en'
+c.content.geolocation = False
 
 c.completion.cmd_history_max_items = -1
 c.completion.web_history_max_items = 500
@@ -25,7 +27,6 @@ c.tabs.last_close = 'blank'
 c.tabs.show = 'multiple'
 
 
-c.tabs.width.indicator = 1
 c.tabs.title.alignment = 'center'
 c.tabs.padding = {
     'top': 2,
@@ -33,7 +34,8 @@ c.tabs.padding = {
     'left': 0,
     'right': 5
 }
-c.tabs.indicator_padding = {
+c.tabs.indicator.width = 1
+c.tabs.indicator.padding = {
     'top': 1,
     'bottom': 1,
     'left': 0,
@@ -123,7 +125,8 @@ c.colors.tabs.odd.fg = '#989898'
 c.colors.tabs.odd.bg = '#121212'
 c.colors.tabs.even.fg = c.colors.tabs.odd.fg
 c.colors.tabs.even.bg = c.colors.tabs.odd.bg
-c.colors.tabs.selected.odd.bg = '#1f1f1f'
+c.colors.tabs.selected.odd.bg = '#212121'
+c.colors.tabs.selected.even.bg = c.colors.tabs.selected.odd.bg
 c.colors.tabs.bar.bg = '#222222'
 c.colors.tabs.indicator.start = '#888a85'
 c.colors.tabs.indicator.stop = c.colors.tabs.indicator.start
