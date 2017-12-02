@@ -1,19 +1,18 @@
 #!/usr/bin/env python3
 
+# wait for mpd volume changes and then set the master volume in pulse
+# accordingly. this is only useful, if mpd's output mixer_type is set to
+# 'null'.
+
+# requires: mpc, pactl, ponymix
+
 from select import select
 import os
 import subprocess
 import re
 
-
-# wait for mpd volume changes and then set the
-# master volume in pulse accordingly.
-# this is only useful, if mpd's output mixer_type is set to
-# 'null'.
-
-# see:
+# see: https://www.musicpd.org/doc/user/config_audio_outputs.html
 # https://github.com/Mic92/python-mpd2/blob/master/examples/idle.py
-# https://www.musicpd.org/doc/user/config_audio_outputs.html
 
 def readStdout(command):
     """ execute the given command and return its stdout """
@@ -72,7 +71,7 @@ class MPD2PulseAudio:
         self.get_pa_volume()
         pa_event_re = re.compile('Event \'change\' on sink #[0-9]*')
         while True:
-            print("mpd: %d%%, pa: %d%%" % (self.mpd_volume,self.pa_volume))
+            #print("mpd: %d%%, pa: %d%%" % (self.mpd_volume,self.pa_volume))
             ready = select([self.mpc.stdout, self.pactl.stdout], [], [])[0]
             if self.pactl.returncode != None or self.mpc.returncode != None:
                 break
@@ -101,4 +100,3 @@ class MPD2PulseAudio:
 main = MPD2PulseAudio()
 main.loop()
 main.shutdown()
-
