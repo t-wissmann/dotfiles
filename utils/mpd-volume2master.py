@@ -8,6 +8,8 @@
 
 from select import select
 import os
+import signal
+import sys
 import subprocess
 import re
 
@@ -20,10 +22,21 @@ def readStdout(command):
     proc.wait()
     return proc.stdout.read().decode()
 
+debug_output = False
+
+if '-v' in sys.argv:
+    debug_output = True
+
+def debug(string):
+    global debug_output
+    if debug_output:
+        print(string, file=sys.stderr)
+
 class MPD2PulseAudio:
     def __init__(self):
         self.mpd_volume = -1
         self.pa_volume = -1
+        self.running = True
         env = os.environ
         env['LC_ALL'] = 'C'
         self.mpc = subprocess.Popen('mpc idleloop mixer'.split(' '), \
@@ -49,6 +62,7 @@ class MPD2PulseAudio:
         return False
 
     def set_mpd_volume(self, vol):
+        vol = min(100, vol)
         if vol != self.mpd_volume:
             self.mpd_volume = vol
             subprocess.call(['mpc', '-q', 'volume', str(vol)])
@@ -70,7 +84,7 @@ class MPD2PulseAudio:
         self.get_mpd_volume()
         self.get_pa_volume()
         pa_event_re = re.compile('Event \'change\' on sink #[0-9]*')
-        while True:
+        while self.running:
             #print("mpd: %d%%, pa: %d%%" % (self.mpd_volume,self.pa_volume))
             ready = select([self.mpc.stdout, self.pactl.stdout], [], [])[0]
             if self.pactl.returncode != None or self.mpc.returncode != None:
@@ -80,23 +94,34 @@ class MPD2PulseAudio:
                 m = pa_event_re.match(line)
                 if m:
                     if self.get_pa_volume():
-                        print("PA %d%% --> MPD" % (self.pa_volume))
+                        debug("PA %d%% --> MPD" % (self.pa_volume))
                         self.set_mpd_volume(self.pa_volume)
                 # print("PA: >{}<" .format(line))
             if self.mpc.stdout in ready:
                 line = MPD2PulseAudio.readline(self.mpc.stdout)
                 if line == 'mixer':
                     if self.get_mpd_volume():
-                        print("MPD %d%% --> PA" % (self.mpd_volume))
+                        debug("MPD %d%% --> PA" % (self.mpd_volume))
                         self.set_pa_volume(self.mpd_volume)
                 #print("MPD: >{}<" .format(line))
 
     def shutdown(self):
+        self.running = False
         self.pactl.kill()
         self.mpc.kill()
         self.pactl.wait()
         self.mpc.wait()
 
 main = MPD2PulseAudio()
-main.loop()
+def on_sig_term(signum,frame):
+    global main
+    main.shutdown()
+    sys.exit(0)
+
+signal.signal(signal.SIGTERM, on_sig_term)
+try:
+    main.loop()
+except KeyboardInterrupt:
+    pass
 main.shutdown()
+
