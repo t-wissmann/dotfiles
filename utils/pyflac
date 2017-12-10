@@ -6,8 +6,8 @@ import re
 import subprocess
 
 import requests
-import discid
-import musicbrainzngs as mb
+#import discid
+#import musicbrainzngs as mb
 
 # encode and tag flac files the python way
 
@@ -27,16 +27,19 @@ def string_quoted(string):
 def fileglob_template_parameters(pattern = '*.wav'):
     code = "sorted(list(glob.glob({})))".format(string_quoted(pattern))
     files = sorted(list(glob.glob(pattern)))
-    file_list_quoted = [ '#   ' + string_quoted(f) + ',' for f in files ]
     return {
         'FILELIST_COMMAND': code,
-        'FILELIST_EXAMPLE': '\n'.join(file_list_quoted),
+        'FILELIST_EXAMPLE': files,
     }
+
+class UserError(Exception):
+    def __init__(self,msg):
+        self.msg = msg
 
 def discogs_release_id_from_url(url):
     match = re.search('discogs.com/.*release/([0-9]*)', url)
     if not match:
-        return None
+        raise UserError("Not a valid discogs-release url")
     return match.group(1)
 
 def discogs_release_json(release_id):
@@ -82,6 +85,26 @@ def discogs_template_parameters(discogs_url):
         'TRACKLIST': tracklist,
         'TAGS_NOTES': '# generated from ' + discogs_url
     }
+
+def generic_template_parameters(files):
+    tags = {
+        'TRACKNUMBER' : 0,
+        'ARTIST' : "",
+        'ALBUM' : "",
+        'DATE' : "",
+    }
+    tracklist = []
+    for idx,name in enumerate(files):
+        tracklist.append((idx + 1, name))
+    return {
+        'GLOBAL_TAGS': tags,
+        'TRACKLIST': tracklist,
+        'TAGS_NOTES': '',
+    }
+
+backends = [
+    (r'discogs.com', discogs_template_parameters)
+]
 
 tags_template="""\
 #!/usr/bin/env python3
@@ -137,6 +160,10 @@ def create_template(parameters, outfile=sys.stdout):
 
     parameters['TRACKLIST'] = tracklist_str
     parameters['GLOBAL_TAGS'] = global_tags
+    # quote FILELIST_EXAMPLE
+    file_list_quoted = [ '#   ' + string_quoted(f) + ',' for f in parameters['FILELIST_EXAMPLE'] ]
+    parameters['FILELIST_EXAMPLE'] = '\n'.join(file_list_quoted)
+    # format template
     tags_py_file = tags_template.format(**parameters)
     print(tags_py_file, file=outfile)
 
@@ -226,12 +253,20 @@ def main(argv):
     if os.path.isfile(tags_file):
         debug("Using existing {}".format(tags_file))
     else:
-        discogs_url = argv[0] if len(argv) >= 1 \
-            else input('Discogs url: ')
-        parameters = discogs_template_parameters(discogs_url)
-        parameters.update(fileglob_template_parameters('*.wav'))
-        with open(tags_file, 'w') as fh:
-            create_template(parameters, outfile = fh)
+        try:
+            if len(argv) >= 1:
+                discogs_url = argv[0]
+                parameters = discogs_template_parameters(discogs_url)
+                parameters.update(fileglob_template_parameters('*.wav'))
+            else:
+                files = fileglob_template_parameters('*.wav')
+                parameters = generic_template_parameters(files['FILELIST_EXAMPLE'])
+                parameters.update(files)
+            with open(tags_file, 'w') as fh:
+                create_template(parameters, outfile = fh)
+        except UserError as e:
+            print("Error: {}".format(e.msg))
+            sys.exit(1)
         if 'EDITOR' in os.environ:
             subprocess.call([os.environ['EDITOR'], tags_file])
     result = evaluate_tags_file(tags_file)
