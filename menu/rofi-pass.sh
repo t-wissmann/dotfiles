@@ -3,7 +3,7 @@
 #set -e
 # from passmenu
 prefix=${PASSWORD_STORE_DIR-~/.password-store}
-password_files=( "$prefix"/**/*.gpg )
+mapfile -t password_files < <(find "${prefix}" -name '*.gpg' -printf "%P\n"|sort)
 password_files=( "${password_files[@]#"$prefix"/}" )
 password_files=( "${password_files[@]%.gpg}" )
 
