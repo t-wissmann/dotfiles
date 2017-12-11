@@ -5,6 +5,7 @@ import json
 import re
 import subprocess
 
+import unidecode
 import requests
 #import discid
 #import musicbrainzngs as mb
@@ -203,6 +204,7 @@ class TagsFileResult:
         last_tags = { }
         for source, tags in self.files:
             target = self.filepattern.format(**tags_pathencoded(tags))
+            target = unidecode.unidecode(target)
             buf.append("")
             buf.append("{} -> {}".format(source, target))
             for k,v in tags.items():
@@ -218,9 +220,9 @@ class TagsFileResult:
     def apply(self):
         root_expanded = os.path.expanduser(self.root)
         for source, tags in self.files:
-            target = os.path.join( \
-                root_expanded, \
-                self.filepattern.format(**tags_pathencoded(tags)))
+            target = self.filepattern.format(**tags_pathencoded(tags))
+            target = unidecode.unidecode(target)
+            target = os.path.join(root_expanded, target)
             target_dir = os.path.dirname(target)
             if not os.path.isdir(target_dir):
                 os.makedirs(os.path.normpath(target_dir))
