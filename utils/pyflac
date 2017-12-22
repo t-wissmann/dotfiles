@@ -125,7 +125,7 @@ def jpc_template_parameters(jpc_url):
                     if data.strip() == '':
                         # skip whitespace-only data
                         return False
-                    item = (self.track_number, string_quoted(data.strip()))
+                    item = (self.track_number, data.strip())
                     self.track_number += 1
                     self.tracklist.append(item)
                 self.on_next_data = add_track
@@ -333,7 +333,7 @@ def evaluate_tags_file(filepath) -> TagsFileResult:
     return res
 
 def main(argv):
-    dry_run = True
+    dry_run = False
     tags_file = 'tags.py'
     if dry_run:
         tags_file = '/dev/stdout'
