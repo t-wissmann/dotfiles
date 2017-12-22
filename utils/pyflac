@@ -7,6 +7,8 @@ import subprocess
 
 import unidecode
 import requests
+from html.parser import HTMLParser
+import datetime
 #import discid
 #import musicbrainzngs as mb
 
@@ -87,6 +89,86 @@ def discogs_template_parameters(discogs_url):
         'TAGS_NOTES': '# generated from ' + discogs_url
     }
 
+
+
+def jpc_template_parameters(jpc_url):
+    class JPCExtractor(HTMLParser):
+        def __init__(self):
+            super(JPCExtractor,self).__init__()
+            self.fields = {}
+            self.action = ""
+            self.inCredentials = False
+            self.tags = {
+                'TRACKNUMBER' : 0,
+                'ARTIST' : "",
+                'ALBUM' : "",
+                'DATE' : "",
+            }
+            self.on_next_data = None
+            self.tracklist = [ ]
+            self.current_depth = 0
+            self.last_track_depth = None
+            self.track_number = 1
+
+        def handle_starttag(self, tag, attrs):
+            self.current_depth += 1
+            attrs = dict(attrs)
+            if 'class' in attrs and attrs['class'] == 'box title':
+                def set_album(data):
+                    self.tags['ALBUM'] = data.strip()
+                self.on_next_data = set_album
+            if 'itemtype' in attrs and attrs['itemtype'] == 'https://schema.org/MusicRecording':
+                self.last_track_depth = self.current_depth
+            if 'itemprop' in attrs and attrs['itemprop'] == 'name' \
+              and not self.last_track_depth is None:
+                def add_track(data):
+                    if data.strip() == '':
+                        # skip whitespace-only data
+                        return False
+                    item = (self.track_number, string_quoted(data.strip()))
+                    self.track_number += 1
+                    self.tracklist.append(item)
+                self.on_next_data = add_track
+            if 'class' in attrs and attrs['class'] == 'subtrack':
+                def add_subtrack(data):
+                    if data.strip() == '':
+                        # skip whitespace-only data
+                        return False
+                    item = ('#', string_quoted(data.strip()))
+                    self.tracklist.append(item)
+                self.on_next_data = add_subtrack
+
+        def handle_endtag(self, tag):
+            self.current_depth -= 1
+            if not self.last_track_depth is None and \
+              self.last_track_depth > self.current_depth:
+                self.last_track_depth = None
+
+        def handle_data(self, data):
+            #print("Encountered some data  :" + data)
+            if data.strip() == "Künstler:":
+                def set_artist(data):
+                    self.tags['ARTIST'] = data.strip()
+                self.on_next_data = set_artist
+            elif data.strip() == "Erscheinungstermin:":
+                def set_date(data):
+                    self.tags['DATE'] = datetime.datetime.strptime(data.strip(), "%d.%m.%Y").date().isoformat()
+                self.on_next_data = set_date
+            elif not self.on_next_data is None:
+                result = self.on_next_data(data)
+                if result is None:
+                    self.on_next_data = None
+    # instantiate the parser and feed it some HTML
+    r = requests.get(jpc_url)
+    parser = JPCExtractor()
+    parser.feed(r.text)
+    return {
+        'GLOBAL_TAGS': parser.tags,
+        'TRACKLIST': parser.tracklist,
+        'TAGS_NOTES': '# generated from ' + jpc_url
+    }
+
+
 def generic_template_parameters(files):
     tags = {
         'TRACKNUMBER' : 0,
@@ -103,9 +185,10 @@ def generic_template_parameters(files):
         'TAGS_NOTES': '',
     }
 
-backends = [
-    (r'discogs.com', discogs_template_parameters)
-]
+backends = {
+  r'http.*discogs.com.*': discogs_template_parameters,
+  r'http.*jpc.de.*':     jpc_template_parameters,
+}
 
 tags_template="""\
 #!/usr/bin/env python3
@@ -120,7 +203,7 @@ tracklist = [
 {TRACKLIST}]
 
 files = {FILELIST_COMMAND}
-# # currently, this will evaluate to:
+# # currently, this evaluates to:
 # files = [
 {FILELIST_EXAMPLE}
 # ]
@@ -250,25 +333,33 @@ def evaluate_tags_file(filepath) -> TagsFileResult:
     return res
 
 def main(argv):
+    dry_run = True
     tags_file = 'tags.py'
+    if dry_run:
+        tags_file = '/dev/stdout'
 
     if os.path.isfile(tags_file):
         debug("Using existing {}".format(tags_file))
     else:
         try:
-            if len(argv) >= 1:
-                discogs_url = argv[0]
-                parameters = discogs_template_parameters(discogs_url)
-                parameters.update(fileglob_template_parameters('*.wav'))
+            url = argv[0] if len(argv) >= 1 else ''
+            extractor = None
+            for k,v in backends.items():
+                if re.match(k, url):
+                    extractor = v
+            files = fileglob_template_parameters('*.wav')
+            if not extractor is None:
+                parameters = extractor(url)
             else:
-                files = fileglob_template_parameters('*.wav')
                 parameters = generic_template_parameters(files['FILELIST_EXAMPLE'])
-                parameters.update(files)
+            parameters.update(files)
             with open(tags_file, 'w') as fh:
                 create_template(parameters, outfile = fh)
         except UserError as e:
             print("Error: {}".format(e.msg))
             sys.exit(1)
+        if dry_run:
+            sys.exit(0)
         if 'EDITOR' in os.environ:
             subprocess.call([os.environ['EDITOR'], tags_file])
     result = evaluate_tags_file(tags_file)
