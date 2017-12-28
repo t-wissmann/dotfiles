@@ -4,6 +4,7 @@ import sys
 import json
 import re
 import subprocess
+import shutil
 
 import unidecode
 import requests
@@ -106,6 +107,7 @@ def jpc_template_parameters(jpc_url):
             }
             self.on_next_data = None
             self.tracklist = [ ]
+            self.cover_url = None
             self.current_depth = 0
             self.last_track_depth = None
             self.track_number = 1
@@ -113,6 +115,10 @@ def jpc_template_parameters(jpc_url):
         def handle_starttag(self, tag, attrs):
             self.current_depth += 1
             attrs = dict(attrs)
+            if tag == 'a' and 'class' in attrs \
+                and attrs['class'] == 'main-image mfp-image' \
+                and self.cover_url is None:
+                self.cover_url = attrs['href']
             if 'class' in attrs and attrs['class'] == 'box title':
                 def set_album(data):
                     self.tags['ALBUM'] = data.strip()
@@ -162,11 +168,14 @@ def jpc_template_parameters(jpc_url):
     r = requests.get(jpc_url)
     parser = JPCExtractor()
     parser.feed(r.text)
-    return {
+    tags = {
         'GLOBAL_TAGS': parser.tags,
         'TRACKLIST': parser.tracklist,
         'TAGS_NOTES': '# generated from ' + jpc_url
     }
+    if not parser.cover_url is None:
+        tags['COVER_URL'] = parser.cover_url
+    return tags
 
 
 def generic_template_parameters(files):
@@ -211,6 +220,9 @@ files = {FILELIST_COMMAND}
 music_root('~/musik/')
 filepath_format('{{ARTIST}}/{{ALBUM}}/{{TRACKNUMBER:0>2}}. {{TITLE}}.flac')
 
+# optionally download cover art
+{COVER_URL_COMMAND}
+
 # filter the tracklist for a specific medium
 #tracklist = \\
 #    [ t for t in tracklist \\
@@ -247,6 +259,11 @@ def create_template(parameters, outfile=sys.stdout):
     # quote FILELIST_EXAMPLE
     file_list_quoted = [ '#   ' + string_quoted(f) + ',' for f in parameters['FILELIST_EXAMPLE'] ]
     parameters['FILELIST_EXAMPLE'] = '\n'.join(file_list_quoted)
+    if 'COVER_URL' in parameters:
+        url = parameters['COVER_URL']
+        parameters['COVER_URL_COMMAND'] = 'cover_url({})'.format(string_quoted(url))
+    else:
+        parameters['COVER_URL_COMMAND'] = "# cover_url('insert cover url here...')"
     # format template
     tags_py_file = tags_template.format(**parameters)
     print(tags_py_file, file=outfile)
@@ -279,8 +296,44 @@ class TagsFileResult:
         self.files = []
         self.filepattern = ''
         self.root = '~'
+        self.cover_url = None
+
+        # set by fetch_cover()
+        self.cover_response = None
+        self.cover_suffix = None
+
+    def fetch_cover(self):
+        print("Fetching cover {}".format(self.cover_url))
+        r = requests.get(self.cover_url, stream=True)
+        type2suffix = {
+            'image/jpeg' : 'jpg',
+            'image/png'  : 'png',
+        }
+        if r.status_code != 200:
+            fail("Request failed with http code {}".format(r.status_code))
+        if not 'Content-Type' in r.headers:
+            fail('Content-Type header missing')
+        if not r.headers['Content-Type'] in type2suffix:
+            fail("Unsupported file type '{}'. Supported filetypes: {}", \
+                r.headers['Content-Type'],
+                ' '.join(type2suffix.keys()))
+        self.cover_response = r
+        self.cover_suffix = type2suffix[r.headers['Content-Type']]
+
+    def save_cover(self,dir_path):
+        if self.cover_response is None:
+            self.fetch_cover()
+        cover_path = os.path.join(dir_path, 'cover.' + self.cover_suffix)
+        if os.path.isfile(cover_path):
+            print("Cover file {} already exists".format(cover_path))
+        else:
+            print("Saving cover to {}".format(cover_path))
+            with open(cover_path, 'wb') as f:
+                self.cover_response.raw.decode_content = True
+                shutil.copyfileobj(self.cover_response.raw, f)
 
     def preview(self):
+        self.fetch_cover()
         buf = []
         root_expanded = os.path.expanduser(self.root)
         buf.append("Creating the following files in " + root_expanded)
@@ -302,20 +355,29 @@ class TagsFileResult:
 
     def apply(self):
         root_expanded = os.path.expanduser(self.root)
+        dir_paths = { }
         for source, tags in self.files:
             target = self.filepattern.format(**tags_pathencoded(tags))
             target = unidecode.unidecode(target)
             target = os.path.join(root_expanded, target)
             target_dir = os.path.dirname(target)
+            dir_paths[target_dir] = True
             if not os.path.isdir(target_dir):
                 os.makedirs(os.path.normpath(target_dir))
             encode_flac(source, target, tags)
+        dir_paths = list(dir_paths.keys())
+        if len(dir_paths) == 0:
+            print("No directory present to download the cover art to.")
+        else:
+            self.save_cover(dir_paths[0])
 
 def evaluate_tags_file(filepath) -> TagsFileResult:
     def encode(filepath, tags):
         if not hasattr(encode, 'res'):
             encode.res = [ ]
         encode.res.append((filepath,dict(tags)))
+    def cover_url(url):
+        cover_url.res = url
     def music_root(root):
         music_root.res = root
     def filepath_format(ff):
@@ -324,12 +386,17 @@ def evaluate_tags_file(filepath) -> TagsFileResult:
         if not hasattr(function, 'res'):
             fail(function.__name__ + "() not set!")
         return function.res
+    def get_result_optional(function):
+        if not hasattr(function, 'res'):
+            return None
+        return function.res
 
     exec(compile(open(filepath, "rb").read(), filepath, 'exec'))
     res = TagsFileResult()
     res.files = get_result(encode)
     res.root = get_result(music_root)
     res.filepattern = get_result(filepath_format)
+    res.cover_url = get_result_optional(cover_url)
     return res
 
 def main(argv):
