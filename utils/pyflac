@@ -303,6 +303,8 @@ class TagsFileResult:
         self.cover_suffix = None
 
     def fetch_cover(self):
+        if self.cover_url is None:
+            return
         print("Fetching cover {}".format(self.cover_url))
         r = requests.get(self.cover_url, stream=True)
         type2suffix = {
@@ -321,6 +323,8 @@ class TagsFileResult:
         self.cover_suffix = type2suffix[r.headers['Content-Type']]
 
     def save_cover(self,dir_path):
+        if self.cover_url is None:
+            return
         if self.cover_response is None:
             self.fetch_cover()
         cover_path = os.path.join(dir_path, 'cover.' + self.cover_suffix)
