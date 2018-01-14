@@ -296,6 +296,7 @@ class TagsFileResult:
         self.files = []
         self.filepattern = ''
         self.root = '~'
+        self.root_expanded = '/'
         self.cover_url = None
 
         # set by fetch_cover()
@@ -339,11 +340,9 @@ class TagsFileResult:
     def preview(self):
         self.fetch_cover()
         buf = []
-        root_expanded = os.path.expanduser(self.root)
-        buf.append("Creating the following files in " + root_expanded)
+        buf.append("Creating the following files in " + self.root_expanded)
         last_tags = { }
-        for source, tags in self.files:
-            target = self.filepattern.format(**tags_pathencoded(tags))
+        for source, tags, target in self.files:
             target = unidecode.unidecode(target)
             buf.append("")
             buf.append("{} -> {}".format(source, target))
@@ -358,12 +357,9 @@ class TagsFileResult:
         return '\n'.join(buf)
 
     def apply(self):
-        root_expanded = os.path.expanduser(self.root)
         dir_paths = { }
-        for source, tags in self.files:
-            target = self.filepattern.format(**tags_pathencoded(tags))
-            target = unidecode.unidecode(target)
-            target = os.path.join(root_expanded, target)
+        for source, tags, target in self.files:
+            target = os.path.join(self.root_expanded, target)
             target_dir = os.path.dirname(target)
             dir_paths[target_dir] = True
             if not os.path.isdir(target_dir):
@@ -397,9 +393,14 @@ def evaluate_tags_file(filepath) -> TagsFileResult:
 
     exec(compile(open(filepath, "rb").read(), filepath, 'exec'))
     res = TagsFileResult()
-    res.files = get_result(encode)
-    res.root = get_result(music_root)
     res.filepattern = get_result(filepath_format)
+    res.files = []
+    res.root = get_result(music_root)
+    res.root_expanded = os.path.expanduser(res.root)
+    for source, tags in get_result(encode):
+        target = res.filepattern.format(**tags_pathencoded(tags))
+        target = unidecode.unidecode(target)
+        res.files.append((source,tags,target))
     res.cover_url = get_result_optional(cover_url)
     return res
 
