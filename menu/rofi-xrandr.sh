@@ -55,12 +55,13 @@ cat <<EOF
 EOF
 }
 
+
 print_menu() {
-external_on_top
+external_off
 echo -e '\0'
 external_right
 echo -e '\0'
-external_off
+external_on_top
 echo -e '\0'
 internal_off
 }
@@ -90,16 +91,16 @@ if [ -z "$res" ] ; then
 fi
 case "$res" in
     0)
-        xrandr --output $internal --auto --primary --output $ext --auto --pos 0x0
-        disable_screensaver
+        xrandr --output $ext --off --output $internal --auto --primary
+        enable_screensaver
         ;;
     1)
         xrandr --output $internal --auto --primary --output $ext --auto --right-of $internal
         disable_screensaver
         ;;
     2)
-        xrandr --output $ext --off --output $internal --auto --primary
-        enable_screensaver
+        xrandr --output $internal --auto --primary --output $ext --auto --pos 0x0
+        disable_screensaver
         ;;
     3)
         xrandr --output $ext --auto --output $internal --off
