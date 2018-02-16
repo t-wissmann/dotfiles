@@ -35,10 +35,12 @@ for k,m in keys:
     unbind_cmd += [ unbind_cmd_sep, 'keyunbind', k ]
 
 unbind_cmd += [ unbind_cmd_sep, 'keyunbind', exit_omnivim ]
+unbind_cmd += [ unbind_cmd_sep, 'spawn', 'notify-send', '-t', '1', 'VIM Bindings Inactive']
 
 bind_cmd += [ bind_cmd_sep, 'keybind', exit_omnivim ]
 bind_cmd += unbind_cmd
 
 #print(' '.join(bind_cmd))
 subprocess.call(bind_cmd)
+subprocess.call(['notify-send', '-t', '1', 'VIM Bindings Active'])
 
