@@ -941,7 +941,7 @@ pasteshell() {
 }
 
 jpy() {
-    sed 's/\.,//g' <<< "ceil($* * jpy * 100) / 100" | calc -p -d | sed 's,$,€,'
+    sed 's/\.,//g' <<< "ceil(($*) * jpy * 100) / 100" | calc -p -d | sed 's,$,€,'
 }
 
 alias ¥=jpy

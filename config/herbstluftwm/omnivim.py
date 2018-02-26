@@ -42,5 +42,6 @@ bind_cmd += unbind_cmd
 
 #print(' '.join(bind_cmd))
 subprocess.call(bind_cmd)
-subprocess.call(['notify-send', '-t', '1', 'VIM Bindings Active'])
+notify = ['notify-send', '-t', '1', 'VIM Bindings Active']
+print(subprocess.call(notify))
 
