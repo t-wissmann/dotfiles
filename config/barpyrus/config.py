@@ -16,7 +16,8 @@ monitor = sys.argv[1] if len(sys.argv) >= 2 else 0
 (x, monitor_y, monitor_w, monitor_h) = hc.monitor_rect(monitor)
 height = 18 # height of the panel
 width = monitor_w # width of the panel
-gap = int(hc(['get', 'frame_gap'])) if 0 == int(hc(['get', 'smart_frame_surroundings'])) else 0
+#gap = int(hc(['get', 'frame_gap'])) if 0 == int(hc(['get', 'smart_frame_surroundings'])) else 0
+gap = 0
 x += gap
 width -= 2 * gap
 top = True
