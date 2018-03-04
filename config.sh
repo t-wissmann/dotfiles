@@ -51,6 +51,7 @@ files=(
     finch-gntrc
     ${homedir[@]}
     ncmpcpp-config
+    mplayer.conf
     gpg.conf
 )
 
@@ -62,6 +63,7 @@ relpath2target=(
     "s#^ncmpcpp-config#$HOME/.ncmpcpp/config#"
     "s#^gpg.conf#$HOME/.gnupg/gpg.conf#"
     "s#^finch-gntrc#$HOME/.gntrc#"
+    "s#^mplayer.conf#$HOME/.mplayer/config#"
     "s,^config/qutebrowser/userscripts,$HOME/.local/share/qutebrowser/userscripts,"
     "s#^config/\(.*\)\$#$HOME/.config/\1#"
 )
