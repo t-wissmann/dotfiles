@@ -1,4 +1,5 @@
-# Write your default config options here!
+# For pitch correction:
+#   -af scaletempo=speed=pitch --audio-pitch-correction=no
 
 
 [big-cache]

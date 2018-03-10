@@ -43,6 +43,7 @@ EntryName=""
 GenericName=""
 Icon=""
 ExecSuffix=""
+FileName=""
 }
 
 appdir="$HOME/.local/share/applications/"
@@ -53,7 +54,8 @@ app() {
     cmd_name="${cmd%% *}"
     shift 2
     local tmp=${cmd_name##*/}
-    desktop_file="$appdir/${tmp//./}.desktop"
+    FileName=${FileName:-${tmp//./}}
+    desktop_file="$appdir/$FileName.desktop"
     :: Creating desktop file "$desktop_file"
     desktop_entry "$cmd" "$terminal" > "$desktop_file"
     for mimetype in "$@" ; do
@@ -131,10 +133,13 @@ gui_app ~/dotfiles/utils/mpv-append.sh \
     $(mimes 'video/.*') \
     $(mimes 'audio/.*')
 
+FileName="skype-web-chromium"
+EntryName="Skype Web (in Chromium)"
+gui_app "chromium --incognito https://web.skype.com"
 xdg-mime default Thunar-folder-handler.desktop inode/directory
 
 # Check your mail-setup with:
-# xdg-open 'mailto:p@thorsten-wissmann.de?cc=C1&cc=C2&subject=subject'
+# xdg-open 'mailto:test@example.de?cc=C1&cc=C2&subject=subject'
 gitroot=$(git rev-parse --show-toplevel)
 EntryName="Mutt"
 Icon=mail_generic
