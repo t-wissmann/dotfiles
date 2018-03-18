@@ -70,6 +70,8 @@ elif has-kbd 04d9:0112 Holtek Semiconductor ; then # kbparadise V60 Mini
 elif false ; then # mac
     setxkbmap us -variant altgr-intl -option compose:menu -option ctrl:nocaps -option compose:ralt -option compose:rctrl
     xmodmap -e 'keycode any 94 = grave'
+elif [[ $HOSTNAME == x1 ]] ; then
+    setxkbmap us -variant altgr-intl -option compose:menu -option ctrl:nocaps -option compose:ralt -option compose:prsc
 else
     setxkbmap us -variant altgr-intl -option compose:menu -option ctrl:nocaps -option compose:ralt -option compose:rwin
     keyboard=other
@@ -403,7 +405,11 @@ fi
 if [ -d "$SCRIPTSDIR" ] ; then
     hc keybind $Mod-Alt-space spawn $SCRIPTSDIR/execwith.sh \
         ~/.bash_settings $SCRIPTSDIR/dmenu.sh set_layout
-    hc keybind $Mod-t spawn bash -c "WIDTH_PERC=100 $SCRIPTSDIR/q3terminal.sh"
+    terminal_options='HEIGHT_PIXELS=600 WIDTH_PERC=100'
+    if [[ "$HOSTNAME" == x1 ]] ; then
+        terminal_options+=' ANIMATION_STEPS=1'
+    fi
+    hc keybind $Mod-t spawn bash -c "$terminal_options $SCRIPTSDIR/q3terminal.sh"
 fi
 
 hc keybind $Mod-g spawn ~/dotfiles/menu/hlwm-workspace.sh
@@ -458,6 +464,11 @@ case "$HOSTNAME" in
         hc keybind $Mod-Shift-q quit
         hc keybind $Mod-Control-q quit
         xset -b
+        ;;
+    x1)
+        hc keybind XF86MonBrightnessDown spawn xbacklight -dec 10
+        hc keybind XF86MonBrightnessUp spawn xbacklight -inc 10
+        hc keybind XF86WLan spawn ~/dotfiles/menu/rofi-netctl
         ;;
     *)
         ;;
@@ -531,6 +542,7 @@ hc keybind $Mod-F9          emit_hook togglehidepanel
 [ -f "$STATEFILE" ] && ~/git/herbstluftwm/scripts/loadstate.sh < "$STATEFILE"
 rm -f "$STATEFILE"
 
+if [[ $HOSTNAME != x1 ]] ; then
 mpc -q current -f '' > /dev/null && # if we can connect to a mpd
 {
     f=$(mpc -f %file% current)
@@ -547,6 +559,7 @@ mpc -q current -f '' > /dev/null && # if we can connect to a mpd
             f="$f2"
     done
 } &
+fi
 
 # add an external panel
 #{
