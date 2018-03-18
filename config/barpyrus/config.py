@@ -5,6 +5,9 @@ from barpyrus import lemonbar
 from barpyrus import conky
 import sys
 import os
+import socket
+
+is_hidpi = socket.gethostname() == 'x1'
 # Copy this config to ~/.config/barpyrus/config.py
 
 # set up a connection to herbstluftwm in order to get events
@@ -15,6 +18,9 @@ hc = hlwm.connect()
 monitor = sys.argv[1] if len(sys.argv) >= 2 else 0
 (x, monitor_y, monitor_w, monitor_h) = hc.monitor_rect(monitor)
 height = 18 # height of the panel
+if is_hidpi:
+    height = 28
+
 width = monitor_w # width of the panel
 #gap = int(hc(['get', 'frame_gap'])) if 0 == int(hc(['get', 'smart_frame_surroundings'])) else 0
 gap = 0
@@ -72,6 +78,8 @@ bat_delta = 100 / len(bat_icons)
 #conky_sep = '%{T2}  %{T-}%{F\\#FEA63C}|%{T2} %{T-}'
 #conky_sep = '%{T3}%{F\\#FEA63C}\ue1b1%{T-}'
 conky_sep = '%{T3}%{F\\#878787}\ue1ac%{T2} %{T-}'
+if is_hidpi:
+    conky_sep = '%{T3}%{F\\#878787} / %{T2} %{T-}'
 conky_text = ""
 conky_text += "${if_existing /sys/class/power_supply/BAT0}"
 conky_text += conky_sep
@@ -106,6 +114,10 @@ setxkbmap += ' -option compose:rctrl'
 
 # you can define custom themes
 grey_frame = Theme(fg = '#dedede', bg = '#454545', padding = (4,4))
+if is_hidpi:
+    def identity(x):
+        return x
+    grey_frame = identity
 
 def tab_renderer(self, painter):
     painter.fg('#989898')
@@ -141,10 +153,24 @@ conky_widget = conky.ConkyWidget(str(cg))
 #xwin.loop()
 
 # Widget configuration:
-bar = lemonbar.Lemonbar(geometry = (x,y,width,height), foreground='#CDCDCD', background='#AA212121')
+lemonbar_options = {
+    'geometry': (x,y,width,height),
+    'foreground': '#CDCDCD',
+    'background': '#AA212121',
+}
+
+if is_hidpi:
+    lemonbar_options['font'] = 'Bitstream Vera Sans:size=8'
+    lemonbar_options['symbol_font'] = lemonbar_options['font']
+    tag_renderer = None
+else:
+    tag_renderer = hlwm.underlined_tags
+
+bar = lemonbar.Lemonbar(**lemonbar_options)
+
 bar.widget = W.ListLayout([
     W.RawLabel('%{l}'),
-    hlwm.HLWMTags(hc, monitor, tag_renderer = hlwm.underlined_tags),
+    hlwm.HLWMTags(hc, monitor, tag_renderer = tag_renderer),
     W.TabbedLayout(list(enumerate([
         W.ListLayout([ W.RawLabel('%{c}'),
             hlwm.HLWMMonitorFocusLayout(hc, monitor,

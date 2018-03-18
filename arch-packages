@@ -101,16 +101,16 @@ python-dbus
 python-gobject2
 python-yaml
 mercurial
-abs
+#abs
 devtools
 xorg-xfontsel
 xorg-xfd
 
 # multimedia
-gstreamer0.10-base-plugins
-gstreamer0.10-ugly
-gstreamer0.10-ugly-plugins
-ffmpeg0.10
+#gstreamer0.10-base-plugins
+#gstreamer0.10-ugly
+#gstreamer0.10-ugly-plugins
+#ffmpeg0.10
 ffmpeg2theora
 gst-libav
 gst-plugins-bad
@@ -140,10 +140,10 @@ poppler-qt5
 
 # from the aur
 #katarakt-git
-#compton
+compton
 
 #maybe:
-#sudo
+sudo
 
 # tex packages
 texlive-bibtexextra
@@ -162,7 +162,7 @@ texlive-plainextra
 texlive-pstricks
 texlive-publishers
 texlive-science
-git-latexdiff
+#git-latexdiff
 
 # for plugins:
 # for urxvt-config-reload
@@ -173,3 +173,41 @@ perl-common-sense
 # libreoffice-fresh-de
 # libreoffice-still-de
 hunspell-de
+
+
+rofi
+auctex
+lemonbar
+mpd
+pass
+perl-term-readkey # for git-svn password input
+python-bibtexparser
+mosh
+conky
+
+adobe-source-han-sans-jp-fonts
+adobe-source-han-serif-jp-fonts
+cantarell-fonts
+freetype2
+gsfonts
+pangox-compat
+sdl_ttf
+siji-git
+t1lib
+texlive-fontsextra
+ttf-bitstream-vera
+ttf-dejavu
+ttf-envy-code-r
+ttf-hanazono
+ttf-inconsolata
+ttf-ms-fonts
+ttf-sazanami
+pavucontrol
+gvfs thunar-volman
+python-requests
+ncmpcpp
+mpd
+mpdscribble
+cantata
+remind
+pwgen
