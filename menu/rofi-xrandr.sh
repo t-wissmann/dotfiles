@@ -9,6 +9,10 @@
 
 ext=VGA1
 internal=LVDS1
+if [[ $HOSTNAME == x1 ]] ; then
+    ext=HDMI1
+    internal=eDP1
+fi
 
 external_on_top() {
 #cat <<EOF

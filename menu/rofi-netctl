@@ -55,7 +55,7 @@ else
     }
     export selection
     export -f connect
-    urxvt -t "netctl start $selection" -e bash -c connect
+    urxvt -title "netctl start $selection" -e bash -c connect
 fi
 
 

@@ -10,7 +10,7 @@ incomplete_group_installs() {
 
 full_group_installs() {
     # list groups that are entirely installed
-    comm -23 <(pacman -Sg|sort) <(incomplete_group_installs)
+    comm -23 <(pacman -Sg|sort) <(incomplete_group_installs|sort)
 }
 
 # query all packages specified in `arch-packages`
@@ -19,7 +19,8 @@ full_group_installs() {
 list_missing_packages() {
     grep -vE '^(#|$)' < "$file" | sort \
         | pacman -T \
-        | comm -23 - <(full_group_installs)
+        | sort \
+        | comm -23 - <(full_group_installs|sort)
 }
 
 readarray -t not_installed < <(list_missing_packages)

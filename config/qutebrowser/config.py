@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-
 c.editor.command = 'urxvt -e vim {}'.split(' ')
 c.auto_save.session = True
 c.content.user_stylesheets = [ '~/.config/qutebrowser/style.css' ]
@@ -151,6 +150,9 @@ c.fonts.downloads = '8pt bold "Bitstream Vera Sans"'
 c.fonts.hints = 'bold 12px "Bitstream Vera Sans"'
 c.fonts.web.family.fixed = 'Bitstream Vera Sans Mono'
 
+import socket
+if socket.gethostname() == 'x1':
+    c.zoom.default = '125%'
 
 binds = {
     'O' : 'set-cmd-text :open {url}',

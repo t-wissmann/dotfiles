@@ -47,6 +47,7 @@ FileName=""
 }
 
 appdir="$HOME/.local/share/applications/"
+mkdir -p "$appdir"
 
 app() {
     terminal="$1"
