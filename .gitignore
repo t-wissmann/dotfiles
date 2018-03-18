@@ -4,3 +4,6 @@
 .*.swp
 # ignore some special annoying files
 config/zathura/bookmarks
+
+config/qutebrowser/bookmarks/
+config/qutebrowser/quickmarks
