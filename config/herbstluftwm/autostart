@@ -468,7 +468,7 @@ case "$HOSTNAME" in
     x1)
         hc keybind XF86MonBrightnessDown spawn xbacklight -dec 10
         hc keybind XF86MonBrightnessUp spawn xbacklight -inc 10
-        hc keybind XF86WLan spawn ~/dotfiles/menu/rofi-netctl
+        hc keybind XF86Tools spawn ~/dotfiles/menu/rofi-netctl
         ;;
     *)
         ;;

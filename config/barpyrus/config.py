@@ -112,6 +112,32 @@ xkblayouts = [
 setxkbmap = 'setxkbmap -option -option compose:menu -option ctrl:nocaps'
 setxkbmap += ' -option compose:rctrl'
 
+def simple_tag_renderer(self, painter): # self is a HLWMTagInfo object
+    if self.empty:
+        return
+    #painter.ol('#ffffff' if self.focused else None)
+    painter.set_flag(painter.underline, True if self.visible else False)
+    painter.fg('#a0a0a0' if self.occupied else '#909090')
+    if self.urgent:
+        painter.ol('#FF7F27')
+        painter.fg('#FF7F27')
+        painter.set_flag(painter.underline, True)
+        painter.bg('#57000F')
+    elif self.here:
+        painter.fg('#ffffff')
+        painter.ol(self.activecolor if self.focused else '#ffffff')
+        painter.bg(self.emphbg)
+    else:
+        painter.ol('#454545')
+    painter.space(1)
+    painter += self.name
+    painter.space(1)
+    painter.bg()
+    painter.ol()
+    painter.set_flag(painter.underline, False)
+    painter.space(1)
+
+
 # you can define custom themes
 grey_frame = Theme(fg = '#dedede', bg = '#454545', padding = (4,4))
 if is_hidpi:
@@ -162,7 +188,7 @@ lemonbar_options = {
 if is_hidpi:
     lemonbar_options['font'] = 'Bitstream Vera Sans:size=8'
     lemonbar_options['symbol_font'] = lemonbar_options['font']
-    tag_renderer = None
+    tag_renderer = simple_tag_renderer
 else:
     tag_renderer = hlwm.underlined_tags
 
