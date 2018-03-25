@@ -34,14 +34,35 @@ for k,m in keys:
     bind_cmd += [ 'spawn' ] + cmd
     unbind_cmd += [ unbind_cmd_sep, 'keyunbind', k ]
 
+border_color = '#FF690C'
+hlwm_themes = [
+    'theme.tiling.active',
+    'theme.floating.active',
+]
+for attr in hlwm_themes:
+    # backup the color
+    bind_cmd += [ bind_cmd_sep, \
+                'try', 'new_attr', 'color', \
+                attr + '.my_color_backup' ]
+    bind_cmd += [ bind_cmd_sep, \
+                'substitute', 'COLOR', \
+                attr + '.color', \
+                'set_attr', attr + '.my_color_backup', 'COLOR' ]
+    bind_cmd += [ bind_cmd_sep, \
+                'set_attr', attr + '.color', border_color ]
+    unbind_cmd += [ unbind_cmd_sep, \
+                'substitute', 'COLOR', \
+                attr + '.my_color_backup', \
+                'set_attr', attr + '.color', 'COLOR' ]
+
 unbind_cmd += [ unbind_cmd_sep, 'keyunbind', exit_omnivim ]
-unbind_cmd += [ unbind_cmd_sep, 'spawn', 'notify-send', '-t', '1', 'VIM Bindings Inactive']
+#unbind_cmd += [ unbind_cmd_sep, 'spawn', 'notify-send', '-t', '1', 'VIM Bindings Inactive']
 
 bind_cmd += [ bind_cmd_sep, 'keybind', exit_omnivim ]
 bind_cmd += unbind_cmd
 
 #print(' '.join(bind_cmd))
 subprocess.call(bind_cmd)
-notify = ['notify-send', '-t', '1', 'VIM Bindings Active']
-print(subprocess.call(notify))
+#notify = ['notify-send', '-t', '1', 'VIM Bindings Active']
+#print(subprocess.call(notify))
 
