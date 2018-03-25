@@ -6,6 +6,6 @@ Pi = PI
 pi = PI
 e = exp(1)
 
-jpy = 0.00739778631
+jpy = 0.00772816288
 define binom(n,k) { return n! / k! / (n-k)! ; }
 
