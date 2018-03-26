@@ -343,7 +343,6 @@ class TagsFileResult:
         buf.append("Creating the following files in " + self.root_expanded)
         last_tags = { }
         for source, tags, target in self.files:
-            target = unidecode.unidecode(target)
             buf.append("")
             buf.append("{} -> {}".format(source, target))
             for k,v in tags.items():
@@ -400,6 +399,9 @@ def evaluate_tags_file(filepath) -> TagsFileResult:
     for source, tags in get_result(encode):
         target = res.filepattern.format(**tags_pathencoded(tags))
         target = unidecode.unidecode(target)
+        # replace whitespace around slashes
+        target = re.sub(r' [ ]*/', '/', target)
+        target = re.sub(r'/ [ ]*', '/', target)
         res.files.append((source,tags,target))
     res.cover_url = get_result_optional(cover_url)
     return res

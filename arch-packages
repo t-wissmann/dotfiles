@@ -215,3 +215,8 @@ aspell-de
 vimpager
 scrot
 gimp
+# phone stuff
+ifuse
+mtpfs
+fuseiso
+python-unidecode
