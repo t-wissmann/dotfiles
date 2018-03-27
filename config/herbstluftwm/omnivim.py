@@ -20,10 +20,21 @@ keys = [
     #('/', 'Ctrl-f'),
 ]
 
+#def compile_tree(tree):
+#    res = []
+#    for x in tree:
+#        if isinstance(x, list):
+#            res += compile_tree(
+#        elif isinstance(x, basestring):
+#            res.append(x)
+#        else:
+#            res.append(str(x))
+
 bind_cmd = [
     'herbstclient',
     'chain',
 ]
+
 bind_cmd_sep = 'NEXTKEY'
 unbind_cmd = [ 'chain' ]
 unbind_cmd_sep = 'UBNEXTKEY'
@@ -41,19 +52,25 @@ hlwm_themes = [
 ]
 for attr in hlwm_themes:
     # backup the color
-    bind_cmd += [ bind_cmd_sep, \
-                'try', 'new_attr', 'color', \
-                attr + '.my_color_backup' ]
-    bind_cmd += [ bind_cmd_sep, \
-                'substitute', 'COLOR', \
-                attr + '.color', \
-                'set_attr', attr + '.my_color_backup', 'COLOR' ]
-    bind_cmd += [ bind_cmd_sep, \
-                'set_attr', attr + '.color', border_color ]
+    cmds_sep = 'ASDF'
+    cmds = [
+        [ 'silent', 'new_attr', 'color', attr + '.my_color_backup' ],
+        [ 'substitute', 'COLOR', attr + '.color',
+                    'set_attr', attr + '.my_color_backup', 'COLOR' ],
+        [ 'set_attr', attr + '.color', border_color ],
+    ]
+    bind_cmd.append(bind_cmd_sep)
+    bind_cmd.append('try')
+    bind_cmd.append('and')
+    for c in cmds:
+        bind_cmd.append(cmds_sep)
+        bind_cmd += c
     unbind_cmd += [ unbind_cmd_sep, \
                 'substitute', 'COLOR', \
                 attr + '.my_color_backup', \
                 'set_attr', attr + '.color', 'COLOR' ]
+    unbind_cmd += [ unbind_cmd_sep, \
+                'remove_attr', attr + '.my_color_backup' ]
 
 unbind_cmd += [ unbind_cmd_sep, 'keyunbind', exit_omnivim ]
 #unbind_cmd += [ unbind_cmd_sep, 'spawn', 'notify-send', '-t', '1', 'VIM Bindings Inactive']
