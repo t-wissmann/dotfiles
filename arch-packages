@@ -220,3 +220,7 @@ ifuse
 mtpfs
 fuseiso
 python-unidecode
+pdfscissors
+pdftk
+pkgfile
+pkgbuild-introspection
