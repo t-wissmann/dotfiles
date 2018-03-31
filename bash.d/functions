@@ -108,7 +108,7 @@ function aur-build(){
     ) &&
     makepkg $CLEAN -f &&
     echo  "pacman -U --noconfirm $AURBUILD_ASDEPS $(ls -t *.pkg.tar.xz|head -1)" &&
-    su -c "pacman -U --noconfirm $AURBUILD_ASDEPS ""$(ls -t *.pkg.tar.xz|head -1)"
+    sudo pacman -U --noconfirm $AURBUILD_ASDEPS "$(ls -t *.pkg.tar.xz|head -1)"
 }
 
 aur-fetch() {
