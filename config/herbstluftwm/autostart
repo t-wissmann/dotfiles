@@ -219,6 +219,7 @@ hc keybind Mod4+n spawn ~/dotfiles/menu/utf8select.sh
 if pactl list > /dev/null 2>&1 ; then
     #hc keybind Shift+XF86AudioMute spawn ponymix
     hc keybind XF86AudioMute        spawn ponymix toggle
+    hc keybind XF86AudioMicMute     spawn ponymix --source toggle
     hc keybind XF86AudioLowerVolume spawn ponymix decrease 5
     hc keybind XF86AudioRaiseVolume spawn ponymix increase 5
 else
