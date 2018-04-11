@@ -55,6 +55,7 @@ audio_output {
     type        "pulse"
     name        "MPD"
 #   server      "localhost"
+#   mixer_type  "null"
 }
 EOF
 }
