@@ -182,7 +182,7 @@ conky_widget = conky.ConkyWidget(str(cg))
 lemonbar_options = {
     'geometry': (x,y,width,height),
     'foreground': '#CDCDCD',
-    'background': '#AA212121',
+    'background': '#CC101010',
 }
 
 if is_hidpi:
