@@ -220,8 +220,10 @@ if pactl list > /dev/null 2>&1 ; then
     #hc keybind Shift+XF86AudioMute spawn ponymix
     hc keybind XF86AudioMute        spawn ponymix toggle
     hc keybind XF86AudioMicMute     spawn ponymix --source toggle
-    hc keybind XF86AudioLowerVolume spawn ponymix decrease 5
-    hc keybind XF86AudioRaiseVolume spawn ponymix increase 5
+    hc keybind XF86AudioLowerVolume spawn ponymix decrease 4
+    hc keybind XF86AudioRaiseVolume spawn ponymix increase 4
+    hc keybind Shift-XF86AudioLowerVolume spawn ponymix decrease 2
+    hc keybind Shift-XF86AudioRaiseVolume spawn ponymix increase 2
 else
     audioaction() {
         # example for $1: toggle
@@ -407,11 +409,11 @@ fi
 if [ -d "$SCRIPTSDIR" ] ; then
     hc keybind $Mod-Alt-space spawn $SCRIPTSDIR/execwith.sh \
         ~/.bash_settings $SCRIPTSDIR/dmenu.sh set_layout
-    terminal_options='HEIGHT_PIXELS=600 WIDTH_PERC=100'
+    terminal_options='WIDTH_PERC=100'
     if [[ "$HOSTNAME" == x1 ]] ; then
-        terminal_options+=' ANIMATION_STEPS=1'
+        terminal_options+=' HEIGHT_PIXELS=600'
     fi
-    hc keybind $Mod-t spawn bash -c "$terminal_options $SCRIPTSDIR/q3terminal.sh"
+    hc keybind $Mod-t spawn env $terminal_options $SCRIPTSDIR/q3terminal.sh
 fi
 
 hc keybind $Mod-g spawn ~/dotfiles/menu/hlwm-workspace.sh
