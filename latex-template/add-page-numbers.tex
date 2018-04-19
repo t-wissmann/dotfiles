@@ -1,0 +1,22 @@
+\documentclass[11pt,a4paper]{article}
+% add page numbers to a PDF file
+% compile this with lualatex
+\usepackage{fancyhdr}
+\usepackage{lmodern}
+\usepackage[
+    margin=2.2cm,
+]{geometry}
+%\pagecolor{red}
+\usepackage{fontspec}
+\setmainfont{LiberationSerif}
+\usepackage{pdfpages}
+\fancypagestyle{customplain}{%
+\fancyhf{}%
+\fancyhf[cf]{\thepage}%
+\renewcommand*\headrulewidth{0pt}}
+
+\pagestyle{customplain}
+\begin{document}
+% pagecommand={} means: avoid the pagestyle 'empty'
+\includepdf[pagecommand={},pages={1-},scale=1]{orig.pdf}
+\end{document}
