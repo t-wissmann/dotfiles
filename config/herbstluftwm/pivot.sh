@@ -11,6 +11,10 @@ hoth)
     rotateoutput='DVI-D-0'
     args=( --left-of HDMI-0 )
     ;;
+x1)
+    rotateoutput='HDMI1'
+    args=( --right-of eDP1 )
+    ;;
 *)
     echo "I do not know what to rotate on $HOSTNAME" >&2
     exit 1
