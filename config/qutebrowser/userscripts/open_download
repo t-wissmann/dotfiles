@@ -54,8 +54,8 @@ if ! $(which "${ROFI_CMD}" > /dev/null ) ; then
 fi
 
 mesg="\
-Control-Y       Copy path to clipboard
-Shift-Delete    Move file to trash"
+Control-Y   Copy path to clipboard
+Delete      Move file to trash"
 
 rofi_default_args=(
         -monitor -2 # place above window
