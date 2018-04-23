@@ -222,6 +222,7 @@ filepath_format('{{ARTIST}}/{{ALBUM}}/{{TRACKNUMBER:0>2}}. {{TITLE}}.flac')
 
 # optionally download cover art
 {COVER_URL_COMMAND}
+copy_tags_py() # copy this tags.py file to the target directory
 
 # filter the tracklist for a specific medium
 #tracklist = \\
@@ -323,6 +324,16 @@ class TagsFileResult:
         self.cover_response = r
         self.cover_suffix = type2suffix[r.headers['Content-Type']]
 
+    def save_tags_py(self,dir_path):
+        if self.copy_tags_py is None:
+            return
+        target = os.path.join(dir_path, 'tags.py')
+        if os.path.isfile(target):
+            print("Tags file {} already exists".format(target))
+        else:
+            print("Saving tags.py to {}".format(target))
+            shutil.copyfile(self.tags_py_path, target)
+
     def save_cover(self,dir_path):
         if self.cover_url is None:
             return
@@ -368,6 +379,7 @@ class TagsFileResult:
         if len(dir_paths) == 0:
             print("No directory present to download the cover art to.")
         else:
+            self.save_tags_py(dir_paths[0])
             self.save_cover(dir_paths[0])
 
 def evaluate_tags_file(filepath) -> TagsFileResult:
@@ -375,6 +387,8 @@ def evaluate_tags_file(filepath) -> TagsFileResult:
         if not hasattr(encode, 'res'):
             encode.res = [ ]
         encode.res.append((filepath,dict(tags)))
+    def copy_tags_py():
+        copy_tags_py.res = True
     def cover_url(url):
         cover_url.res = url
     def music_root(root):
@@ -392,6 +406,7 @@ def evaluate_tags_file(filepath) -> TagsFileResult:
 
     exec(compile(open(filepath, "rb").read(), filepath, 'exec'))
     res = TagsFileResult()
+    res.tags_py_path = filepath
     res.filepattern = get_result(filepath_format)
     res.files = []
     res.root = get_result(music_root)
@@ -404,6 +419,7 @@ def evaluate_tags_file(filepath) -> TagsFileResult:
         target = re.sub(r'/ [ ]*', '/', target)
         res.files.append((source,tags,target))
     res.cover_url = get_result_optional(cover_url)
+    res.copy_tags_py = get_result_optional(copy_tags_py)
     return res
 
 def main(argv):
