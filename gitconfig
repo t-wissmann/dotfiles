@@ -19,6 +19,7 @@
 	deltalog = log --oneline origin/master..HEAD
 	pff = pull --ff-only
 	ff = merge --ff-only
+	mff = merge --ff-only
 	ldiff = latexdiff --latexmk --ignore-makefile --subtree
 [merge]
 	tool = vimdiff
