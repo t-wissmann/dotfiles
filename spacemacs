@@ -349,9 +349,11 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   (setq powerline-default-separator 'contour)
+  (setq TeX-auto-save nil)
   (setq TeX-source-correlate-mode t)
   (setq TeX-source-correlate-start-server nil)
   (setq TeX-source-correlate-method 'synctex)
+  (spacemacs/enable-transparency)
   ; (setq-default TeX-master 'shared) ; Query for master file.
   ; (setq TeX-master  'shared) ; Query for master file.
 
