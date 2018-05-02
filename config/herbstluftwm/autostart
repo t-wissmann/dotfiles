@@ -49,7 +49,7 @@ case "$HOSTNAME" in
         #feh --bg-tile ~/Documents/wallpaper/patterns/black-pattern-ob.png
         #feh --bg-tile ~/Documents/wallpaper/patterns/rXuLc2TI.gif
         ;;
-    hoth|towi04)
+    hoth|towi04|x1)
         nitrogen --restore
         ;;
     *)
