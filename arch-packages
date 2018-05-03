@@ -10,6 +10,7 @@ xorg-xinit
 arandr
 ntp
 ethtool
+dnsutils
 
 
 # packages of daily use
