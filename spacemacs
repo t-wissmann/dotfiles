@@ -366,6 +366,8 @@ you should place your code here."
   (setq scroll-step 1 scroll-margin 2)
   (setq hscroll-step 1 hscroll-margin 2)
   (setq auto-window-vscroll nil)
+  (setq recentf-auto-cleanup 60)
+  (recentf-mode 1)
 
   ;; (setq-default dotspacemacs-configuration-layers
   ;;               '((c-c++ :variables c-c++-enable-clang-support t)))
