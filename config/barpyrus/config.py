@@ -113,6 +113,7 @@ setxkbmap = 'setxkbmap -option -option compose:menu -option ctrl:nocaps'
 setxkbmap += ' -option compose:rctrl'
 
 def simple_tag_renderer(self, painter): # self is a HLWMTagInfo object
+    self.activecolor = '#86AB5F'
     if self.empty:
         return
     #painter.ol('#ffffff' if self.focused else None)
@@ -166,7 +167,7 @@ def zip_renderer(self, painter):
         painter.space(2)
     else:
         painter.bg('#303030')
-        painter.fg('#9fbc00')
+        painter.fg('#86AB5F')
         painter.space(2)
         painter.symbol(0xe26f)
         painter.space(2)
