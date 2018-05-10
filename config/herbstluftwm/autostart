@@ -537,6 +537,7 @@ hc rule class='logout-dialog' pseudotile=on focus=on
 hc rule instance=irc tag=irc
 hc rule instance=finch tag=im
 hc rule instance=mutt tag=mail
+hc rule class=Do instance=Do manage=off
 
 STATEFILE=~/.config/herbstluftwm/state
 

@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Unison Sync (buero)
+Name[de]=Unison Sync (buero)
+Comment=Sync buero profile via Unison
+GenericName=File synchronization
+GenericName[de]=Dateisynchronisierung
+Exec=unison-gtk2 buero
+Icon=view-refresh
+Terminal=false
+StartupNotify=true
+Type=Application
+Categories=Utility

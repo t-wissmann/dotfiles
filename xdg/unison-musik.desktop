@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Unison Sync (musik)
+Name[de]=Unison Sync (musik)
+Comment=Sync musik profile via Unison
+GenericName=File synchronization
+GenericName[de]=Dateisynchronisierung
+Exec=unison-gtk2 musik
+Icon=view-refresh
+Terminal=false
+StartupNotify=true
+Type=Application
+Categories=Utility

@@ -148,4 +148,16 @@ ExecSuffix=" %u"
 cli_app "$gitroot"/xdg/mutt-mailto.py \
     x-scheme-handler/mailto
 
+# install local desktop files
+targetdir=$HOME/.local/share/applications/
+for i in *.desktop ; do
+    if [[ -L "$targetdir/$i" ]] ; then
+        :: "$targetdir/$i" already exists
+        continue
+    fi
+    :: ln -s "`pwd`/$i" "$targetdir"
+    ln -s "`pwd`/$i" "$targetdir"
+done
+:: update-desktop-database "$targetdir"
+update-desktop-database "$targetdir"
 
