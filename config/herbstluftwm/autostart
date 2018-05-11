@@ -391,8 +391,8 @@ hc attr theme.floating.reset 1
 
 hc attr theme.outer_width 0
 hc attr theme.border_width 2
-hc attr theme.padding_top 4
-hc attr theme.outer_color '#202020'
+hc attr theme.padding_top 5
+hc attr theme.outer_color '#404040'
 hc attr theme.inner_color '#404040'
 hc attr theme.active.color
 hc attr theme.inner_width 1
@@ -401,10 +401,8 @@ hc attr theme.active.inner_color '#5F833A'
 hc attr theme.active.color '#A9C48D'
 hc attr theme.urgent.color '#C71364'
 
-hc attr theme.floating.padding_top 0
 hc attr theme.floating.border_width 3
 hc attr theme.floating.outer_width 1
-hc attr theme.floating.inner_width 1
 
 hc set frame_border_active_color '#5F833A'
 hc set frame_border_normal_color '#404040'
