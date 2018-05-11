@@ -393,7 +393,7 @@ hc attr theme.outer_width 0
 hc attr theme.border_width 2
 hc attr theme.padding_top 4
 hc attr theme.outer_color '#202020'
-hc attr theme.inner_color '#202020'
+hc attr theme.inner_color '#404040'
 hc attr theme.active.color
 hc attr theme.inner_width 1
 hc attr theme.normal.color '#363636'
@@ -407,7 +407,7 @@ hc attr theme.floating.outer_width 1
 hc attr theme.floating.inner_width 1
 
 hc set frame_border_active_color '#5F833A'
-hc set frame_border_normal_color '#202020'
+hc set frame_border_normal_color '#404040'
 hc set frame_bg_normal_color '#303030'
 hc set frame_bg_active_color '#86AB5F'
 hc set frame_border_width 1
