@@ -193,6 +193,8 @@ rofi.sidebar-mode:                   true
 !rofi.fixed-num-lines:                false
 rofi.bw:                             1
 rofi.lazy-filter-limit:              5000000
+rofi.theme:                          ~/.config/rofi/themes/rezlooks.rasi
+rofi.show-icons:                     true
 !!             1 2 3
 !!             8 0 4
 !!             7 6 5
