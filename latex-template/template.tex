@@ -3,12 +3,29 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
+\usepackage{hyperref}
 \usepackage[ngerman]{babel}
 
 \setlength{\parindent}{0em}
 \setlength{\parskip}{0.5em}
 
 \usepackage{tikz}
+
+\title{Some Title}
+\author{Your Name}
+
+\makeatletter
+\hypersetup{
+    final,
+    hidelinks,
+    urlcolor=black,
+    pdftitle={\@title},
+    pdfauthor={\@author},
+    pdfkeywords={},
+    pdfduplex={DuplexFlipLongEdge},
+}
+\makeatother
+
 \begin{document}
 Content
 \end{document}
