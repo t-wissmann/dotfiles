@@ -192,6 +192,7 @@ if is_hidpi:
     tag_renderer = simple_tag_renderer
 else:
     tag_renderer = hlwm.underlined_tags
+    tag_renderer.activecolor = 'red'
 
 bar = lemonbar.Lemonbar(**lemonbar_options)
 

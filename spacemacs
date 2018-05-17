@@ -347,16 +347,21 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (defun git-svn-dcommit ()
     "Run git svn dcommit"
     (interactive)
-    ;;(call-process "sleep" nil nil nil "10")
     (magit-run-git-async "svn" "dcommit"))
   (spacemacs/set-leader-keys "g x p" 'git-svn-dcommit)
   (defun git-svn-rebase ()
     "Run git svn rebase"
     (interactive)
-    ;;(call-process "sleep" nil nil nil "10")
     (magit-run-git-async "svn" "rebase"))
-    ;;(shell-command "true" nil nil))
   (spacemacs/set-leader-keys "g x r" 'git-svn-rebase)
+  (spacemacs/set-leader-keys "g x f" 'git-svn-rebase)
+  (defun git-svn-fetch ()
+    "Run git svn fetch"
+    (interactive)
+    (magit-run-git-async "svn" "fetch"))
+  (spacemacs/set-leader-keys "g x F" 'git-svn-fetch)
+  ;; for other commands, use:
+  ;;(shell-command "true" nil nil))
 )
 
 (defun dotspacemacs/user-config ()
