@@ -39,22 +39,6 @@ fi
 #\[     begins a sequence of non-printing characters
 #\]     ends a sequence of non-printing characters
 
-# extend path-variable
-if [ -d "${HOME}/.local/bin" ] ; then
-    export PATH="${HOME}/.local/bin:${PATH}"
-fi
-if [ -d "${HOME}/bin" ] ; then
-    export PATH="${HOME}/bin:${PATH}"
-fi
-if [ -d "${HOME}/.cabal/bin" ] ;then
-    export PATH="${HOME}/.cabal/bin:${PATH}"
-fi
-
-# extend man-variable
-if [ -d "${HOME}/man" ] ; then
-    export MANPATH="${HOME}/man:${MANPATH}"
-fi
-
 unset PROMPT_COMMAND
 
  # set xterm title
