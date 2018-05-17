@@ -344,6 +344,19 @@ before packages are loaded. If you are unsure, you should try in setting them in
         '((:eval (if (buffer-file-name)
                      (abbreviate-file-name (buffer-file-name))
                    "%b"))))
+  (defun git-svn-dcommit ()
+    "Run git svn dcommit"
+    (interactive)
+    ;;(call-process "sleep" nil nil nil "10")
+    (magit-run-git-async "svn" "dcommit"))
+  (spacemacs/set-leader-keys "g x p" 'git-svn-dcommit)
+  (defun git-svn-rebase ()
+    "Run git svn rebase"
+    (interactive)
+    ;;(call-process "sleep" nil nil nil "10")
+    (magit-run-git-async "svn" "rebase"))
+    ;;(shell-command "true" nil nil))
+  (spacemacs/set-leader-keys "g x r" 'git-svn-rebase)
 )
 
 (defun dotspacemacs/user-config ()
