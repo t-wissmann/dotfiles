@@ -39,7 +39,7 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     ocaml
+     ;; ocaml
      helm
      theming
      auto-completion
@@ -344,24 +344,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
         '((:eval (if (buffer-file-name)
                      (abbreviate-file-name (buffer-file-name))
                    "%b"))))
-  (defun git-svn-dcommit ()
-    "Run git svn dcommit"
-    (interactive)
-    (magit-run-git-async "svn" "dcommit"))
-  (spacemacs/set-leader-keys "g x p" 'git-svn-dcommit)
-  (defun git-svn-rebase ()
-    "Run git svn rebase"
-    (interactive)
-    (magit-run-git-async "svn" "rebase"))
-  (spacemacs/set-leader-keys "g x r" 'git-svn-rebase)
-  (spacemacs/set-leader-keys "g x f" 'git-svn-rebase)
-  (defun git-svn-fetch ()
-    "Run git svn fetch"
-    (interactive)
-    (magit-run-git-async "svn" "fetch"))
-  (spacemacs/set-leader-keys "g x F" 'git-svn-fetch)
-  ;; for other commands, use:
-  ;;(shell-command "true" nil nil))
 )
 
 (defun dotspacemacs/user-config ()
@@ -410,6 +392,25 @@ you should place your code here."
   ;;                                        '("latexmk" "latexmk -pdf %s" TeX-run-Tex nil t
   ;;                                          :help "Run latexmk on file")
   ;;                                        TeX-command-list)))
+  (require 'magit-process)
+  (defun git-svn-dcommit ()
+    "Run git svn dcommit"
+    (interactive)
+    (magit-run-git-async "svn" "dcommit"))
+  (spacemacs/set-leader-keys "g x p" 'git-svn-dcommit)
+  (defun git-svn-rebase ()
+    "Run git svn rebase"
+    (interactive)
+    (magit-run-git-async "svn" "rebase"))
+  (spacemacs/set-leader-keys "g x r" 'git-svn-rebase)
+  (spacemacs/set-leader-keys "g x f" 'git-svn-rebase)
+  (defun git-svn-fetch ()
+    "Run git svn fetch"
+    (interactive)
+    (magit-run-git-async "svn" "fetch"))
+  (spacemacs/set-leader-keys "g x F" 'git-svn-fetch)
+  ;; for other commands, use:
+  ;;(shell-command "true" nil nil))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
