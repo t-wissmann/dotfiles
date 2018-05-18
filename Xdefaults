@@ -163,7 +163,7 @@ XTerm*cursorColor: #ff9900
 rofi.modi:                           window,drun,ssh,combi
 rofi.opacity:                        100
 rofi.width:                          80
-rofi.lines:                          20
+rofi.lines:                          19
 rofi.columns:                        1
 rofi.font:                           Bitstream Vera Sans Mono bold 8
 rofi.fg:                             #efefef
