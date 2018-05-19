@@ -26,7 +26,7 @@
     selected-normal-background:  rgba ( 152, 177, 127, 100 % );
     border-color:                rgba ( 80, 80,80, 100%) ;
     spacing:                     2;
-    separatorcolor:              rgba (111, 80, 8, 20%) ;
+    separatorcolor:               #D3C8AE;
     urgent-background:           rgba ( 245, 245, 245, 100 % );
     selected-urgent-background:  rgba ( 215, 95, 0, 100 % );
     alternate-urgent-foreground: @urgent-foreground;
@@ -34,27 +34,54 @@
     alternate-active-foreground: @active-foreground;
     active-background:           rgba ( 245, 245, 245, 100 % );
     selected-active-background:  rgba ( 0, 95, 135, 100 % );
+    font: "Bitstream Vera Sans 8";
+    monospace: "Bitstream Vera Sans Mono 8";
 }
 #window {
     // background-color: #FBF8F1;
     background-color: #789C54;
+    // background-color: rgba(120, 156, 84, 50%);
     border:           1;
     padding:          3px;
+    spacing: 0;
+    children: [ tabcontent ];
 }
+
+#tabcontent {
+    children: [ topborder, sidebar, mainbox ];
+    background-color: @background;
+    spacing: 0;
+    border: 0px;
+    padding: 8px;
+}
+
+#topborder {
+    border-color: @dark-border-color;
+    expand: false;
+    border: 1px 0px 0px 0px;
+    height: 0px;
+}
+
 #mainbox {
     background-color: @background;
     border:  0;
     padding: 0px 8px 8px 8px;
     spacing: 8px;
-    children:   [ sidebar, inputbar, message, listview ];
+    children:   [ inputbar, message, listview ];
+    margin: 0px;
+    padding: 8px;
+    border: 0px 1px 1px 1px;
+    border-color: @dark-border-color;
 }
 #message {
-    border:       0px 0px 0px ;
+    border:       0px ;
     border-color: @separatorcolor;
     padding:      3px ;
 }
+
 #textbox {
     text-color: @foreground;
+    font: @monospace;
 }
 #listview {
     fixed-height: 0;
@@ -68,6 +95,7 @@
 #element {
     border:  0;
     padding: 3px ;
+    font: @monospace;
 }
 #element.normal.normal {
     background-color: @normal-background;
@@ -112,23 +140,22 @@
     padding:      0;
 }
 #sidebar {
-    border:       0px 1px 0px 0px;
+    border:       0px 0px 0px 1px;
     border-color: @dark-border-color;
     spacing: 0px;
-    padding: 0px;
-    margin: 8px 0px;
+    padding: 0px 0px 0px 0px;
 }
 #button {
     margin: 0px 0px 0px 0px;
     background-color: #DBDBDB;
-    border: 1px 0px 1px 1px;
+    border: 0px 1px 1px 0px;
     border-color: @dark-border-color;
     padding: 8px 0px 8px 0px;
 }
 
 #button.selected {
     margin: 0px 0px 0px 0px;
-    border: 4px 0px 0px 1px;
+    border: 3px 1px 0px 0px;
     background-color: @background;
     text-color:       #212121;
     border-color: @dark-border-color;
@@ -136,11 +163,16 @@
 #inputbar {
     spacing:    0px;
     text-color: @normal-foreground;
-    padding:    2px ;
+    padding:    0px ;
     border-color: @separatorcolor;
     border: 1px;
     background-color: white;
 }
+
+#case-indicator { padding: 2px; }
+#prompt { padding: 2px 6px; }
+#entry { padding: 2px 6px; }
+
 #case-indicator {
     spacing:    0;
     text-color: @normal-foreground;
@@ -151,15 +183,15 @@
 }
 #prompt {
     spacing:    0;
+    background-color: @background ;
     text-color: @normal-foreground;
+    border: 0px 1px 0px 0px;
+    border-color: @separatorcolor;
+    text: @monospace;
+    highlight: bold red;
 }
 #inputbar {
-    children:   [ prompt,textbox-prompt-colon,entry,case-indicator ];
+    children:   [ prompt,entry,case-indicator ];
 }
-#textbox-prompt-colon {
-    expand:     false;
-    str:        ":";
-    margin:     0px 0.3em 0em 0em ;
-    text-color: @normal-foreground;
-}
+
 // vim: ft=css
