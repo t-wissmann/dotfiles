@@ -175,7 +175,7 @@ rofi.color-normal:     itembg,    #cecece,  itembg,   selbg,  black
 rofi.color-urgent:     #D6156C,   white,    #D6156C,  #dc322f,  selbg
 rofi.color-active:     #101010,   #FFE352,  #101010,  selbg,  black
 rofi.color-window:     argb:EE242424,black,argb:EE242424
-rofi.hide-scrollbar:   true
+rofi.hide-scrollbar:   false
 !rofi.fg-active:                      #268BD2
 !rofi.fg-urgent:                      #DC322F
 !rofi.hlfg-active:                    #FDF6E3
