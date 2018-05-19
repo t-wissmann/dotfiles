@@ -76,7 +76,7 @@ fetch ~/.vim/plugin/a.vim \
 fetch ~/.vim/plugin/querycommandcomplete.vim \
     'http://www.vim.org/scripts/download_script.php?src_id=20369'
 
-#update-git https://github.com/morhetz/gruvbox ~/.vim/bundle/gruvbox
+update-git https://github.com/morhetz/gruvbox ~/.vim/bundle/gruvbox
 update-git https://github.com/kien/ctrlp.vim.git ~/.vim/bundle/ctrlp.vim
 #update-git https://github.com/LaTeX-Box-Team/LaTeX-Box ~/.vim/bundle/LaTeX-Box.git
 update-git https://github.com/lambdatoast/elm.vim ~/.vim/bundle/elm.vim.git
