@@ -14,6 +14,8 @@ keys = [
     ('0', 'Home'),
     ('Ctrl+f', 'Next'),
     ('Ctrl+b', 'Prior'),
+    ('Shift+j', 'Ctrl+Next'),
+    ('Shift+k', 'Ctrl+Prior'),
     ('b', 'Ctrl+Left'),
     ('f', 'Ctrl+Right'),
     ('w', 'Ctrl+Right'),

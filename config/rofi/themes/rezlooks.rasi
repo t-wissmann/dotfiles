@@ -18,8 +18,9 @@
     selected-active-foreground:  rgba ( 245, 245, 245, 100 % );
     alternate-active-background: rgba ( 208, 208, 208, 100 % );
     /*background:                  rgba ( 245, 245, 245, 100 % ); */
-    background:                  #FBF8F1;
+    background:                  #F2F2F2;
     alternate-normal-foreground: @foreground;
+    dark-border-color:           #8C836E;
     normal-background:           rgba ( 0, 0, 0, 1 % );
     lightfg:                     rgba ( 88, 104, 117, 100 % );
     selected-normal-background:  rgba ( 152, 177, 127, 100 % );
@@ -35,15 +36,17 @@
     selected-active-background:  rgba ( 0, 95, 135, 100 % );
 }
 #window {
-    background-color: @background;
+    // background-color: #FBF8F1;
+    background-color: #789C54;
     border:           1;
-    padding:          1;
+    padding:          3px;
 }
 #mainbox {
-    background-color: #F2F2F2;
+    background-color: @background;
     border:  0;
-    padding: 8px;
+    padding: 0px 8px 8px 8px;
     spacing: 8px;
+    children:   [ sidebar, inputbar, message, listview ];
 }
 #message {
     border:       0px 0px 0px ;
@@ -109,12 +112,26 @@
     padding:      0;
 }
 #sidebar {
-    border:       1px;
-    border-color: @separatorcolor;
+    border:       0px 1px 0px 0px;
+    border-color: @dark-border-color;
+    spacing: 0px;
+    padding: 0px;
+    margin: 8px 0px;
 }
+#button {
+    margin: 0px 0px 0px 0px;
+    background-color: #DBDBDB;
+    border: 1px 0px 1px 1px;
+    border-color: @dark-border-color;
+    padding: 8px 0px 8px 0px;
+}
+
 #button.selected {
-    background-color: @selected-normal-background;
-    text-color:       @selected-normal-foreground;
+    margin: 0px 0px 0px 0px;
+    border: 4px 0px 0px 1px;
+    background-color: @background;
+    text-color:       #212121;
+    border-color: @dark-border-color;
 }
 #inputbar {
     spacing:    0px;
