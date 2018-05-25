@@ -52,12 +52,13 @@ c.hints.mode = 'number'
 c.hints.chars = '12345'
 c.hints.uppercase = True
 
-c.url.searchengines['DEFAULT'] = 'https://duckduckgo.com/?q={}'
-c.url.searchengines['duckduckgo'] = 'https://duckduckgo.com/?q={}'
-c.url.searchengines['ddg'] = c.url.searchengines['duckduckgo']
 c.url.searchengines['google'] = 'https://encrypted.google.com/search?q={}'
-c.url.searchengines['gimg'] = 'http://www.google.de/search?tbm=isch&hl=de&source=hp&q={}'
 c.url.searchengines['g'] = c.url.searchengines['google']
+c.url.searchengines['DEFAULT'] = c.url.searchengines['google']
+c.url.searchengines['gimg'] = 'http://www.google.de/search?tbm=isch&hl=de&source=hp&q={}'
+
+c.url.searchengines['duckduckgo'] = 'https://duckduckgo.com/?q={}'
+c.url.searchengines['d'] = c.url.searchengines['duckduckgo']
 
 c.url.searchengines['h'] = 'http://www.google.com/search?btnI=1&q=hackage%20{}'
 c.url.searchengines['wikipedia'] = 'http://en.wikipedia.org/w/index.php?title=Special:Search&search={}'
