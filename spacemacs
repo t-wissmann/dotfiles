@@ -366,7 +366,6 @@ you should place your code here."
   (setq TeX-source-correlate-mode t)
   (setq TeX-source-correlate-start-server nil)
   (setq TeX-source-correlate-method 'synctex)
-  (spacemacs/enable-transparency)
   ; (setq-default TeX-master 'shared) ; Query for master file.
   ; (setq TeX-master  'shared) ; Query for master file.
 
@@ -380,7 +379,16 @@ you should place your code here."
   (setq hscroll-step 1 hscroll-margin 2)
   (setq auto-window-vscroll nil)
   (setq recentf-auto-cleanup 60)
+  (setq vc-follow-symlinks t)
   (recentf-mode 1)
+  (add-hook 'after-make-frame-functions
+    (lambda (frame)
+      ;;(message "running enable trans")
+      ;;(spacemacs/enable-transparency)
+      (set-frame-parameter frame 'alpha (cons dotspacemacs-active-transparency dotspacemacs-inactive-transparency))
+      ;; (set-frame-parameter frame 'width 80)
+      ;; (set-frame-parameter frame 'height 40)
+      ))
 
   ;; (setq-default dotspacemacs-configuration-layers
   ;;               '((c-c++ :variables c-c++-enable-clang-support t)))
