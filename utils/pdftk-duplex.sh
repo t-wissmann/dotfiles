@@ -2,16 +2,18 @@
 
 # cat the given PDFs in such a way such that all PDF parts
 # start on odd page numbers (i.e. on the right sheet side when printing it in
-# duplex)
+# duplex). this is achieved by inserting blank a4 pages
 
 set -e
-blank=~/dotfiles/latex-template/blank-a4.pdf
-output=output.pdf
 
 ::() {
     echo ":: $*"
     "$@"
 }
+
+output=output.pdf
+blank=$(mktemp --suffix=.pdf)
+:: convert xc:none -page A4 "$blank"
 
 options=1
 while [[ "$options" -eq 1 ]] ; do
@@ -50,4 +52,5 @@ for i in "$@" ; do
 done
 
 :: pdftk "${FILES[@]}" cat output "$output"
+:: rm "$blank"
 
