@@ -1,0 +1,40 @@
+\documentclass[a4paper]{article}
+%\usepackage[showframe,margin=2cm]{geometry}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
+%\usepackage[ngerman]{babel}
+
+%\setlength{\parindent}{0em}
+%\setlength{\parskip}{0.5em}
+
+\title{Empty A4 Page}
+\author{}
+
+\makeatletter
+\hypersetup{
+    final,
+    hidelinks,
+    urlcolor=black,
+    pdftitle={\@title},
+    pdfauthor={\@author},
+    pdfkeywords={},
+    pdfduplex={DuplexFlipLongEdge},
+}
+\makeatother
+\pagestyle{empty}
+
+\begin{document}
+~
+\end{document}
+% another dictionary:
+%%% ispell-local-dictionary: "british-ize"
+
+% vim: tw=80
+%
+%%% Local Variables:
+%%% TeX-PDF-mode:t
+%%% ispell-local-dictionary: "german"
+%%% TeX-master: t
+%%% End:
