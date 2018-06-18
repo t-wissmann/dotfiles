@@ -7,12 +7,12 @@
 #'└─────┘'
 #'┡ '
 
-ext=VGA1
 internal=LVDS1
-if [[ $HOSTNAME == x1 ]] ; then
-    ext=HDMI1
-    internal=eDP1
-fi
+ext=VGA1
+
+internal=$(xrandr|grep primary|cut -d' ' -f1)
+ext=$(xrandr |grep ' 'connected| grep -v primary | head -n 1| cut -d' ' -f1)
+
 
 external_on_top() {
 #cat <<EOF
@@ -89,10 +89,15 @@ enable_screensaver() {
 element_height=5
 element_count=4
 
-res=$(print_menu | rofi -dmenu -sep '\0' -lines "$element_count" -eh "$element_height" -p '' -no-custom -format i)
+res=$(print_menu | rofi \
+    -dmenu -sep '\0' -lines "$element_count" \
+    -eh "$element_height" -p '' -no-custom \
+    -format i)
+
 if [ -z "$res" ] ; then
     exit
 fi
+
 case "$res" in
     0)
         xrandr --output $ext --off --output $internal --auto --primary
