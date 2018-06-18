@@ -227,10 +227,10 @@ hc keybind Mod1+Mod4+u spawn mpc -q prev
 hc keybind Mod1+Mod4+i spawn mpc -q toggle
 hc keybind Mod1+Mod4+o spawn mpc -q next
 
-hc keybind XF86AudioStop spawn mpc -q random
-hc keybind XF86AudioPrev spawn mpc -q prev
-hc keybind XF86AudioPlay spawn mpc -q toggle
-hc keybind XF86AudioNext spawn mpc -q next
+#hc keybind XF86AudioStop spawn mpc -q random
+#hc keybind XF86AudioPrev spawn mpc -q prev
+#hc keybind XF86AudioPlay spawn mpc -q toggle
+#hc keybind XF86AudioNext spawn mpc -q next
 
 hc keybind Mod4+n spawn ~/dotfiles/menu/utf8select.sh
 
