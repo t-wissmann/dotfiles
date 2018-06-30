@@ -54,7 +54,7 @@ fi
 
 case "$exit_code" in
     0)
-        terminal_pass autotype "$entry"
+        ~/dotfiles/utils/pass-autotype.py "$entry"
         ;;
     10) # kb-custom-1
         terminal_pass clipwiz "$entry"
