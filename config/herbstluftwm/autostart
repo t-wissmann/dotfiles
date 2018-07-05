@@ -116,7 +116,7 @@ BINDS=(
     7:tmp
     8:video
     9:doc
-    w:chromium
+    w:firefox
     e:tmux
 )
 
