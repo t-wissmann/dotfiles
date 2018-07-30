@@ -9,3 +9,6 @@ e = exp(1)
 jpy = 0.00772816288
 define binom(n,k) { return n! / k! / (n-k)! ; }
 
+epsilon(1e-100)
+display(100)
+

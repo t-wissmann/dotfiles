@@ -69,6 +69,7 @@ values."
      gruvbox-theme
      solarized-theme
      sync-recentf
+     adaptive-wrap
      )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -368,7 +369,6 @@ you should place your code here."
   (setq TeX-source-correlate-method 'synctex)
   ; (setq-default TeX-master 'shared) ; Query for master file.
   ; (setq TeX-master  'shared) ; Query for master file.
-
 
   (load-file "~/git/katarakt/share/katarakt.el")
   (setq TeX-view-program-list '(("katarakt" katarakt-view)))
