@@ -21,9 +21,7 @@ has_cmd xprop || fallback
 has_cmd readlink || fallback
 has_cmd herbstclient || fallback
 
-if ! pid=$(herbstclient \
-    and , compare clients.focus.class = URxvt \
-        , get_attr clients.focus.pid)
+if ! pid=$(herbstclient get_attr clients.focus.pid)
 then
     fallback
 fi
