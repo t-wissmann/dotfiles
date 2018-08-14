@@ -497,7 +497,7 @@ case "$HOSTNAME" in
         ;;
     faui8*)
         #hc keybind $Mod-F1 spawn bash -c ' i3lock -i ~/wallpaper/patterns/strawberry-tile.png -t && systemctl suspend'
-        hc keybind $Mod-F2 spawn bash -c 'i3lock -i ~/wallpaper/patterns/strawberry-tile.png -t -e -f -d & { sleep 0.5 ; xset dpms force off ; }'
+        hc keybind $Mod-b spawn bash -c '~/dotfiles/utils/i3lock.sh & { sleep 1.5 ; xset dpms force off ; }'
         ;;
     ghul)
         # TODO: why are there problems with XGrabKey for XF86ScreenSaver;
