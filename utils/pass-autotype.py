@@ -4,10 +4,10 @@
 # see https://developer.gnome.org/notification-spec/
 
 import dbus.service
-import dbus.glib
+#import dbus.glib
 import gobject
 import dbus
-import dbus.mainloop.glib
+from dbus.mainloop.glib import DBusGMainLoop
 import sys
 import subprocess
 import re
@@ -21,7 +21,10 @@ item = 'org.freedesktop.Notifications'
 path = '/org/freedesktop/Notifications'
 interface = 'org.freedesktop.Notifications'
 
+
+DBusGMainLoop(set_as_default=True)
 bus = dbus.SessionBus()
+loop = gobject.MainLoop()
 
 ACTION_TYPE = 'type'
 ACTION_SKIP = 'skip'
@@ -97,8 +100,6 @@ def step_answer_password(para):
     if para == ACTION_TYPE:
         type_string(password + '\t')
     loop.quit()
-
-loop = gobject.MainLoop()
 
 def on_action(cur_dialog_id, action_str):
     global dialog_id
