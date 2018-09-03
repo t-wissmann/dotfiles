@@ -15,6 +15,10 @@ x1)
     rotateoutput='HDMI1'
     args=( --right-of eDP1 )
     ;;
+faui8thorsten)
+    rotateoutput='DP-5'
+    args=( --left-of DP-2 )
+    ;;
 *)
     echo "I do not know what to rotate on $HOSTNAME" >&2
     exit 1
