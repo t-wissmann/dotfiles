@@ -8,16 +8,17 @@ put_notes() {
     echo -n "${notes[$((RANDOM % ${#notes[@]}))]}"
 }
 
-channel=${channel:-irc.uni-erl.#fauinp}
-msg_prefix=${msg_prefix:-/me np: $(put_notes) }
-msg_suffix=${msg_suffix:- $(put_notes)}
-format="%artist% — %title% (%album%)"
-np=$(mpc -f "$format" current)
-weechat_host=${weechat_host:-uber}
-pipe_cmd=${pipe_cmd:-ssh "${weechat_host}" tee '~/.weechat/weechat_fifo_*'}
+m() {
+    playerctl metadata "$1"
+}
 
-msg="${msg_prefix}${np}${msg_suffix}"
-#echo "Announcing »${msg}« to ${channel} via ${pipe_cmd} …"
-echo "${channel} *${msg}" | ${pipe_cmd}
+msg_prefix=${msg_prefix:-np: $(put_notes) }
+msg_suffix=${msg_suffix:- $(put_notes)}
+msg="$(m artist) — $(m title) ($(m album))"
+
+msg="${msg_prefix}${msg}${msg_suffix}"
+echo "$msg"
+echo -n "$msg" | xclip -i
+echo -n "$msg" | xclip -i -selection clipboard
 
 
