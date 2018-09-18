@@ -25,7 +25,7 @@ for p in "${profiles[@]}" ; do
     i=$((i+1))
 done
 
-message=$(journalctl -n 10 -o short --unit=system-netctl.slice)
+message=$(sudo journalctl -n 10 -o short --unit=system-netctl.slice)
 
 selection=$(printf "%s\n" "${profiles[@]}" \
     | rofi \
