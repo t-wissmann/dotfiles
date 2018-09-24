@@ -86,26 +86,11 @@ PROMPT_COMMAND="printexitstat $hasgui"
 #	. /etc/bash_completion
 #fi
 
-# add colors for less when viewing manpages
-export LESS_TERMCAP_mb=$'\e[01;31m' # begin blinking - for what is this line good for ?
-export LESS_TERMCAP_md=$'\e[1;35m' # begin bold - syntax and keywords
-export LESS_TERMCAP_me=$'\e[0m' # end mode - some rows
-export LESS_TERMCAP_so=$'\e[0;43;30m' # begin standout-mode -- statusbar and searchhighlights
-export LESS_TERMCAP_se=$'\e[0m' # end standout-mode first and last row background
-export LESS_TERMCAP_us=$'\e[0;32m' # begin underline "variables"
-export LESS_TERMCAP_ue=$'\e[0m'    # end underline background
-
-# for openoffice .... -.-
-export OOO_FORCE_DESKTOP='gnome'
-
 
 ### BASH OPTIONS ###
 shopt -s histappend
 export HISTIGNORE='&:ls:cd ~:cd ..:[bf]g:exit:h:history:rm *'
 export HISTSIZE=
 export HISTCONTROL=erasedups
-
-export FZF_DEFAULT_OPTS="--tabstop=4 --color=dark,bg+:0,hl+:3,hl:2"
-export PASSWORD_STORE_ENABLE_EXTENSIONS="true"
 
 # vim: ft=sh

@@ -24,6 +24,8 @@ is_cip() {
 homedir=(
     bash.d
     bashrc
+    zshrc
+    zprofile
     calcrc
     dialogrc
     gitconfig

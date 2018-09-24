@@ -22,5 +22,50 @@ source ~/dotfiles/shellutils.sh
 
 bindkey    "^[[3~"          delete-char
 bindkey    "^[3;5~"         delete-char
+#bindkey -s '\eu' '^Ucd ..^M' # Meta-u to chdir to the parent directory
+#bindkey -s '^[^[[A' '^E^Ucd ..^M' # Alt-↑ to chdir to the parent directory
 
 alias :r='source ~/.zshrc'
+
+cdUndoKey() {
+  popd || return 0
+  #zle       reset-prompt
+  #echo
+  #ls
+  zle       reset-prompt
+  xterm_title_precmd
+}
+
+cdParentKey() {
+  pushd ..
+  zle      reset-prompt
+  #echo
+  #ls
+  #zle       reset-prompt
+  xterm_title_precmd
+}
+
+zle -N                 cdParentKey
+zle -N                 cdUndoKey
+bindkey '^[[1;3A'      cdParentKey
+bindkey '^[[1;3D'      cdUndoKey
+bindkey '^[^[[A'      cdParentKey
+bindkey '^[^[[D'      cdUndoKey
+
+autoload -Uz add-zsh-hook
+
+function xterm_title_precmd () {
+    if [[ "$TERM" == (screen*|xterm*|rxvt*) ]]; then
+        print -Pn '\e]2;%n@%m %1~\a'
+    fi
+}
+
+# add running command to title
+#function xterm_title_preexec () {
+#	print -Pn '\e]2;%n@%m %1~ %# '
+#	print -n "${(q)1}\a"
+#}
+
+add-zsh-hook -Uz precmd xterm_title_precmd
+#add-zsh-hook -Uz preexec xterm_title_preexec
+
