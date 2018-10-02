@@ -11,7 +11,7 @@ compinit
 zstyle ':completion:*' menu select
 
 promptinit
-prompt adam2 8bit 'red}%B%F{black' green yellow red
+prompt adam2 8bit 'red}%B%F{black' green yellow default
 
 # let small letters match capital letters in a completion suggestion
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
