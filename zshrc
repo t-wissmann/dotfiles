@@ -51,6 +51,7 @@ bindkey '^[[1;3A'      cdParentKey
 bindkey '^[[1;3D'      cdUndoKey
 bindkey '^[^[[A'      cdParentKey
 bindkey '^[^[[D'      cdUndoKey
+bindkey \^U backward-kill-line
 
 autoload -Uz add-zsh-hook
 
