@@ -15,8 +15,7 @@ c.statusbar.padding = {
 c.content.headers.accept_language = 'de-DE,en-US,en'
 c.content.geolocation = False
 
-c.completion.cmd_history_max_items = -1
-c.completion.web_history_max_items = 500
+c.completion.web_history.max_items = 500
 c.completion.shrink = True
 c.completion.show = 'auto'
 
@@ -44,7 +43,7 @@ c.tabs.indicator.padding = {
 c.downloads.location.directory = '~/downloads/'
 c.downloads.location.prompt = False
 
-c.scrolling.bar = True
+#c.scrolling.bar = True
 c.scrolling.smooth = True
 
 c.hints.border = '1px solid black'
