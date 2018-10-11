@@ -32,6 +32,7 @@ c.tabs.padding = {
     'left': 0,
     'right': 5
 }
+c.tabs.max_width = 200
 c.tabs.indicator.width = 1
 c.tabs.indicator.padding = {
     'top': 1,
@@ -128,7 +129,7 @@ c.colors.tabs.even.fg = c.colors.tabs.odd.fg
 c.colors.tabs.even.bg = c.colors.tabs.odd.bg
 c.colors.tabs.selected.odd.bg = '#212121'
 c.colors.tabs.selected.even.bg = c.colors.tabs.selected.odd.bg
-c.colors.tabs.bar.bg = '#222222'
+c.colors.tabs.bar.bg = '#010101'
 c.colors.tabs.indicator.start = '#888a85'
 c.colors.tabs.indicator.stop = c.colors.tabs.indicator.start
 c.colors.tabs.indicator.error = c.colors.tabs.indicator.start
