@@ -20,6 +20,13 @@ source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 
 source ~/dotfiles/shellutils.sh
 
+trysource() {
+    if [[ -f "$1" ]] ; then
+        source "$1"
+    fi
+}
+trysource ~/dotfiles/3rd-party/zsh-interactive-cd/zsh-interactive-cd.plugin.zsh
+
 bindkey    "^[[3~"          delete-char
 bindkey    "^[3;5~"         delete-char
 #bindkey -s '\eu' '^Ucd ..^M' # Meta-u to chdir to the parent directory
@@ -60,6 +67,7 @@ function xterm_title_precmd () {
         print -Pn '\e]2;%n@%m %1~\a'
     fi
 }
+
 
 # add running command to title
 #function xterm_title_preexec () {
