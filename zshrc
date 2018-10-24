@@ -25,7 +25,7 @@ trysource() {
         source "$1"
     fi
 }
-trysource ~/dotfiles/3rd-party/zsh-interactive-cd/zsh-interactive-cd.plugin.zsh
+trysource /usr/share/fzf/key-bindings.zsh
 
 bindkey    "^[[3~"          delete-char
 bindkey    "^[3;5~"         delete-char

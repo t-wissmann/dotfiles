@@ -37,8 +37,6 @@ fetch() {
 fetch https://github.com/regnarg/urxvt-config-reload
 :: ln -sf $HOME/dotfiles/3rd-party/urxvt-config-reload/config-reload ~/.urxvt/ext/
 
-fetch https://github.com/changyuheng/zsh-interactive-cd
-
 # example:
 #fetch colortrans https://gist.github.com/MicahElliott/719710 \
 #    colortrans.py
