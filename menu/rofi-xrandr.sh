@@ -86,6 +86,17 @@ enable_screensaver() {
     xset +dpms
 }
 
+fix_hdmi_audio() {
+    if [[ $(< /sys/class/drm/card0/*HDMI*/status) = connected ]] &&
+       [[ "$1" != "force-disable" ]] ; then
+        # echo "Audio output: HDMI"
+        pactl set-card-profile 0 output:hdmi-stereo+input:analog-stereo
+    else
+        # echo "Audio output: analog"
+        pactl set-card-profile 0 output:analog-stereo+input:analog-stereo
+    fi
+}
+
 element_height=5
 element_count=4
 
@@ -102,22 +113,25 @@ case "$res" in
     0)
         xrandr --output $ext --off --output $internal --auto --primary
         enable_screensaver
+        fix_hdmi_audio force-disable
         ;;
     1)
         xrandr --output $internal --auto --primary --output $ext --auto --right-of $internal
         disable_screensaver
+        fix_hdmi_audio
         ;;
     2)
         xrandr --output $internal --auto --primary --output $ext --auto --pos 0x0
         disable_screensaver
+        fix_hdmi_audio
         ;;
     3)
         xrandr --output $ext --auto --output $internal --off
         enable_screensaver
+        fix_hdmi_audio
         ;;
     *)
         ;;
 esac
-
 update_hlwm
 
