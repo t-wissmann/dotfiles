@@ -96,9 +96,13 @@ for i,icon in enumerate(bat_icons[:-1]):
 conky_text += chr(bat_icons[-1]) # icon for 100 percent
 for _ in bat_icons[:-1]:
     conky_text += "${endif}"
-conky_text += "%{T-}%{F\\#CDCDCD} $battery_percent%"
-conky_text += "${endif}"
-conky_text += "%{F-}"
+conky_text += "%{T-}"
+conky_text += "${if_match $battery_percent < 8}%{B\\#57000F}%{F\\#FF7F27}${else}"
+conky_text += "${if_match $battery_percent < 15}%{F\\#FF7F27}${else}"
+conky_text += "%{F\\#CDCDCD}${endif}${endif}"
+conky_text += " $battery_percent% "
+conky_text += "${endif}" # endif: if BAT0 exists
+conky_text += "%{B-}%{F-}"
 conky_text += conky_sep
 conky_text += '%{F\\#CDCDCD}${time %d. %B}'
 conky_text += conky_sep
@@ -188,7 +192,8 @@ lemonbar_options = {
 
 if is_hidpi:
     lemonbar_options['font'] = 'Bitstream Vera Sans:size=8'
-    lemonbar_options['symbol_font'] = lemonbar_options['font']
+    lemonbar_options['symbol_font'] = \
+        '-wuncon-siji-medium-r-normal--10-100-75-75-c-80-iso10646-1'
     tag_renderer = simple_tag_renderer
 else:
     tag_renderer = hlwm.underlined_tags
