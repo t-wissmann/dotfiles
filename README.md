@@ -21,3 +21,10 @@ export -f gain_dir
 find -mindepth 2 -type f -iname '*.flac' | sed 's,/[^/]*$,,' | sort | uniq| parallel gain_dir '{}'
 ```
 
+## route ipv4 from one network to the other
+```
+sudo iptables -t nat -A POSTROUTING -o enp0s25 -j MASQUERADE
+sudo sh -c 'echo 1 > /proc/sys/net/ipv4/ip_forward'
+```
+Plus an appropriate `/etc/dhcpd.conf`.
+
