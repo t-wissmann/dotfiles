@@ -56,6 +56,7 @@ c.url.searchengines['google'] = 'https://encrypted.google.com/search?q={}'
 c.url.searchengines['g'] = c.url.searchengines['google']
 c.url.searchengines['DEFAULT'] = c.url.searchengines['google']
 c.url.searchengines['gimg'] = 'http://www.google.de/search?tbm=isch&hl=de&source=hp&q={}'
+c.url.searchengines['doi2bib'] = 'https://www.doi2bib.org/bib/{}'
 
 c.url.searchengines['duckduckgo'] = 'https://duckduckgo.com/?q={}'
 c.url.searchengines['d'] = c.url.searchengines['duckduckgo']
