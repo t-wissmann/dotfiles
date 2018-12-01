@@ -9,3 +9,4 @@ Xft.rgba: rgb
 
 urxvt*background:rgba:2828/2828/2828/dddd
 urxvt*depth: 32
+xterm*faceName: 'xft:Bitstream Vera Sans Mono:style=bold:pixelsize=20'

@@ -12,6 +12,11 @@ c.statusbar.padding = {
     'right': 1,
 }
 
+c.input.insert_mode.auto_enter = True
+c.input.insert_mode.auto_leave = False
+c.input.insert_mode.auto_load = True
+c.input.insert_mode.plugins = True
+
 c.content.headers.accept_language = 'de-DE,en-US,en'
 c.content.geolocation = False
 

@@ -427,6 +427,21 @@ you should place your code here."
   (spacemacs/set-leader-keys "g x F" 'git-svn-fetch)
   ;; for other commands, use:
   ;;(shell-command "true" nil nil))
+  ;; let gqq preserve the indentation
+  ;; found on https://github.com/syl20bnr/spacemacs/issues/9034
+  (evil-define-operator evil-LaTeX-fill-and-move (beg end)
+    (cl-letf (((symbol-function #'fill-region) #'LaTeX-fill-region))
+      (evil-fill-and-move beg end)))
+
+  (evil-define-operator evil-LaTeX-fill (beg end)
+    (cl-letf (((symbol-function #'fill-region) #'LaTeX-fill-region))
+      (evil-fill beg end)))
+
+  ;; TODO use [remap evil-fill ...] ... instead?
+  (evil-define-key 'normal LaTeX-mode-map "gq"
+    #'evil-LaTeX-fill-and-move)
+  (evil-define-key 'normal LaTeX-mode-map "gw"
+    #'evil-LaTeX-fill)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
