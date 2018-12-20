@@ -96,7 +96,7 @@ hc keybind $Mod-apostrophe spawn ~/dotfiles/menu/rofi-mpd.sh
 hc keybind $Mod-backslash spawn ~/dotfiles/menu/rofi-pass.sh
 
 videodir=/mnt/unterhaltung/video/
-[[ $HOSTNAME =~ ^faui8.*$ ]] && videodir=$HOME/video/
+[[ -d ~/video ]] && videodir=$HOME/video/
 hc keybind $Mod-Shift-apostrophe spawn ~/dotfiles/menu/rofi-file-open.sh "$videodir"
 hc keybind $Mod-F2 spawn gmrun
 #hc keybind $Mod-e spawn thunar
