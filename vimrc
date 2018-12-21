@@ -360,3 +360,9 @@ set showcmd
 " Fire omnicompletion using ^X^O
 au BufRead /tmp/mutt* setlocal omnifunc=QueryCommandComplete
 
+" Suppress flake8 warnings:
+"  * E123: closing bracket indentation (weird recommendation, tbh)
+"  * E128: deep visual indentations (subverts the point of linebreaks)
+"  * E501: line too long
+"  * ...
+let g:ale_python_flake8_options='--ignore=E123,E128,E501'
