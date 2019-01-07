@@ -41,11 +41,7 @@ alias luakit='LD_PRELOAD=~/dev/c/libnounlink/libnounlink.so.1.0.1 luakit'
 alias 2clipboard='xclip -selection clipboard'
 alias clipboard2='xclip -selection clipboard -o'
 alias clipwget='xclip -o -selection clipboard|xargs wget'
-# add colors in grep
-export GREP_COLOR="1;33"
-export GREP_COLORS="mc=1;33"
 alias amute='amixer -q sset Master toggle'
-alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias igr='grep -i --color=auto'

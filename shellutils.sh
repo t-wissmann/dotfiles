@@ -51,6 +51,8 @@ alias djvu2pdf='ddjvu -format=pdf -quality=85 -verbose'
 
 export GREP_COLOR="1;33"
 export GREP_COLORS="mc=1;33"
+alias grep='grep --color=auto'
+
 export EDITOR="vim"
 export PAGER="less"
 
