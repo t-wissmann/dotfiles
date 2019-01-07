@@ -354,6 +354,7 @@ noremap <space>w <C-w>
 map <space>bp :bp<CR>
 map <space>bn :bn<CR>
 
+set clipboard=unnamedplus
 set showcmd
 
 " Use OmniCompletion for abook dictionary entries

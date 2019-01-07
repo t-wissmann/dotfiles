@@ -13,7 +13,38 @@ alias rot1="tr '[A-Za-z]' '[B-ZAb-za]'"
 alias rot25="tr '[B-ZAb-za]' '[A-Za-z]'"
 alias urldecode=$'python2 -c "import sys, urllib as ul;\nfor line in sys.stdin: print ul.unquote_plus(line)"'
 alias urlencode=$'python2 -c "import sys, urllib as ul;\nfor line in sys.stdin: print ul.quote_plus(line)"'
-alias asciidoc2pdf='JAVA_HOME=/usr/lib/jvm/java-7-openjdk a2x --xsltproc-opts="--stringparam alignment justify" -f pdf --fop -d article -a lang=de'
+# fop is broken and always has been a mess...
+#alias asciidoc2pdf='JAVA_HOME=/usr/lib/jvm/java-7-openjdk a2x --xsltproc-opts="--stringparam alignment justify" -f pdf --fop -d article -a lang=de'
+
+::() {
+    echo -e "\e[1;33m:: \e[0;32m$*\e[0m" >&2
+    "$@"
+}
+
+asciidoc2pdf() {
+    :: asciidoc -b docbook - < "$1" \
+        | :: pandoc --from docbook - \
+            -V 'geometry:margin=1in' \
+            -V papersize:a4 \
+            -V lang:de-DE \
+            -V toc \
+            -o "${1%%.txt}.pdf"
+}
+
+asciidoc2md() {
+    :: asciidoc -b docbook - < "$1" \
+        | :: pandoc --from docbook - \
+            -t commonmark \
+            -o "${1%%.txt}.md"
+}
+
+asciidoc2wiki() {
+    :: asciidoc -b docbook - < "$1" \
+        | :: pandoc --from docbook - \
+            -t mediawiki \
+            -o "${1%%.txt}.md"
+}
+
 alias ts='~/dotfiles/utils/tmux-reattachloop.sh tmux new-session -A -D -s shell'
 alias rm='gio trash'
 alias djvu2pdf='ddjvu -format=pdf -quality=85 -verbose'
