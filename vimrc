@@ -357,6 +357,8 @@ map <space>bn :bn<CR>
 set clipboard=unnamedplus
 set showcmd
 
+let b:ale_linters = ['flake8', 'pylint']
+
 " Use OmniCompletion for abook dictionary entries
 " Fire omnicompletion using ^X^O
 au BufRead /tmp/mutt* setlocal omnifunc=QueryCommandComplete
