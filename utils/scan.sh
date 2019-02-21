@@ -38,6 +38,7 @@ vendor_product_id=04b8:0881
 usb_addr=$(:: lsusb -d "$vendor_product_id" \
     |sed 's,^Bus \([^ ]*\) Device \([^ ]*\):.*$,\1:\2,')
 sane_device="epkowa:usb:$usb_addr"
+#sane_device="epson2:libusb:$usb_addr"
 
-:: scanimage -v -d "$sane_device" --format=tiff \
+:: scanimage -v --mode Color -d "$sane_device" --format=tiff \
     | :: convert - -page a4 -quality 81 "$outfile"
