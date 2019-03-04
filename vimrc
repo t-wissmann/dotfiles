@@ -226,6 +226,7 @@ function! ComposeMessage()
 	iab cu Gruß,<CR>Thorsten
 	iab cuv Viele Grüße,<CR>Thorsten
 	iab cuw Viele Grüße,<CR>Thorsten Wißmann
+	iab xbest Best,<CR>Thorsten
 	iab xwe Schönes Wochenende,<CR>Thorsten
 	iab xsprech http://wwwcip.cs.fau.de/admin/index.html.en
 	iab xfaq http://wwwcip.cs.fau.de/doc/faq.html.en
