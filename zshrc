@@ -3,6 +3,7 @@ HISTFILE=~/.histfile
 HISTSIZE=1000000
 SAVEHIST=1000000
 setopt appendhistory autocd beep nomatch notify
+setopt interactivecomments
 bindkey -e
 zstyle :compinstall filename "$HOME/.zshrc"
 
