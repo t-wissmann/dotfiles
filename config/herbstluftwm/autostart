@@ -61,6 +61,8 @@ has-kbd() {
     lsusb | grep "ID $*" > /dev/null
 }
 
+hc keyunbind --all
+
 keyboard=
 if has-kbd 04d9:0134 Holtek Semiconductor ; then # pure kbtalking
     setxkbmap us -variant altgr-intl -option compose:menu -option ctrl:nocaps -option compose:ralt -option compose:rwin
