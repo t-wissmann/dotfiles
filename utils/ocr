@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+files=( "$@" )
+cmdname="$0"
+lang="${lang:-deu}"
+
+usage() {
+cat <<EOF
+$cmdname FILES...
+
+Run tesseract ocr on the given files and a produce a
+PDF with a similar name.
+EOF
+}
+
+::() {
+    echo ":: $*" >&2
+    "$@"
+}
+
+if [ "${files[0]}" = -h ] || [ -z "${files[0]}" ] ; then
+    usage
+    exit 0
+fi
+
+# pick pdf to be the common prefix of files
+pdf=${files[0]}
+pdf=${pdf%.*} # drop the file extension anyway
+for f in "${files[@]}" ; do
+    # crop $f to ${#pdf} (the len of $pdf) and see if they agree
+    while [[ "$pdf" != "${f:0:${#pdf}}" ]] ; do
+        pdf=${pdf%?} # if they don't aggree, drop the last character
+    done
+done
+
+while [[ -f "$pdf.pdf" ]] ; do
+    pdf="${pdf}-ocr"
+done
+
+# tesseract does not accept the .pdf extension anyway..
+cat <<EOF
+Running:   printf '%s\n' ${files[@]} | time tesseract -l $lang stdin "$pdf" pdf
+EOF
+
+:: printf '%s\n' "${files[@]}" | :: tesseract -l "$lang" stdin "$pdf" pdf
+
