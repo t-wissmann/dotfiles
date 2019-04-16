@@ -62,6 +62,7 @@ export -f importfile
 # furthermore ignore duplicates, since some of the files may have multiple sources
 # (e.g. if the cover image is present as both an jpg and png file)
 parentpid=$BASHPID
+export PARALLEL_SHELL=/bin/bash
 mapfile -t outputfiles < <(find "$1" -xtype f -printf '%P\n' \
                            | parallel --halt soon,fail=1 importfile \
                            |sort|uniq \
