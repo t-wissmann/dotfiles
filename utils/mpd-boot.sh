@@ -21,17 +21,18 @@ start_or_restart() {
     if line=$(grep " $cmdname$" <<< "$ps_output") ; then
         echo ":: Process $* already running:"
         echo "   $line"
-        pid=$(sed 's,^[ ]*\([^ ]\+\) .*$,\1,' <<< "$line")
-        if ask "Kill \"$pid\"?" ; then
-            kill "$pid" # drop prefixing spaces
+        pid=$(sed 's,^[ ]*\([^ ]\+\) .*$,\1,' <<< "$line"|tr '\n' ' ')
+        if ask "Kill $pid?" ; then
+            kill $pid # drop spaces
         fi
     fi
     # 2. run it
     echo ":: Starting $*"
-    nohup "$@" 2> /dev/null > /dev/null &
+    nohup "$@" 2>> err.log >> out.log &
 }
 
 start_or_restart mpd
-start_or_restart ~/dotfiles/utils/mpd-volume2pulse.py
+sleep 1 # hope that mpd boots up quick enough
 start_or_restart mpdscribble
 start_or_restart cantata
+~/dotfiles/utils/mpd-volume2pulse.py &

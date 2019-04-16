@@ -48,8 +48,6 @@ class MPD2PulseAudio:
     def readline(stream):
         """read a line from the given stream or raise EOF otherwise"""
         raw_line = stream.readline()
-        if raw_line == b'':
-            raise EOFError
         return raw_line.decode().rstrip()
 
     def get_mpd_volume(self):
@@ -91,6 +89,8 @@ class MPD2PulseAudio:
                 break
             if self.pactl.stdout in ready:
                 line = MPD2PulseAudio.readline(self.pactl.stdout)
+                if line == '':
+                    continue
                 m = pa_event_re.match(line)
                 if m:
                     if self.get_pa_volume():
@@ -99,6 +99,8 @@ class MPD2PulseAudio:
                 # print("PA: >{}<" .format(line))
             if self.mpc.stdout in ready:
                 line = MPD2PulseAudio.readline(self.mpc.stdout)
+                if line == '':
+                    continue
                 if line == 'mixer':
                     if self.get_mpd_volume():
                         debug("MPD %d%% --> PA" % (self.mpd_volume))
