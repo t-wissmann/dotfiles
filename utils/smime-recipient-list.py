@@ -10,6 +10,7 @@ import os
 import re
 import subprocess
 import sys
+import textwrap
 
 class Openssl:
     def __init__(self, openssl_command):
@@ -59,10 +60,27 @@ class Openssl:
 def main():
     """main"""
     description = "Detect recipients of smime encrypt"
-    epilog = """
-    E.g. you can decrypt
-    """
-    parser = argparse.ArgumentParser(description=description, epilog=epilog)
+    epilog = textwrap.dedent(r"""
+    E.g. you can decrypt an email with the command that picks the
+    private key automatically:
+
+        {} --passin stdin --decrypt \
+            --private-key ~/.smime/keys/* \
+            -- encryptedmailfile ~/.smime/certificates/*
+
+    If you use mutt, you can set
+
+    set smime_decrypt_command="\
+        ~/path/to/smime-recipient-list.py --passin stdin --decrypt \
+        --private-key ~/.smime/keys/* \
+        -- %f ~/.smime/certificates/KEYPREFIX.*"
+
+    where KEYPREFIX is the prefix of your key (i.e. without the .0 or .1 suffix).
+    """.format(sys.argv[0]))
+    parser = argparse.ArgumentParser(
+        description=description,
+        epilog=epilog,
+        formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('encryptedfile', help='the encrypted file')
     parser.add_argument('certificates',
                         nargs='+',
@@ -76,7 +94,8 @@ def main():
     parser.add_argument('--decrypt', action='store_true',
                         help='decrypt using one of the private keys passed.\
                               the key must have the same file name as the certificate.')
-    parser.add_argument('--passin', default='stdin', help='default openssl -passin parameter for decrypt')
+    parser.add_argument('--passin', default='stdin',
+                        help='default openssl -passin parameter for decrypt')
     args = parser.parse_args()
     openssl = Openssl(args.openssl)
 
