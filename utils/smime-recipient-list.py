@@ -6,8 +6,10 @@ encrypted for.
 """
 
 import argparse
-import subprocess
+import os
 import re
+import subprocess
+import sys
 
 class Openssl:
     def __init__(self, openssl_command):
@@ -18,7 +20,10 @@ class Openssl:
         command = [self.openssl_command, 'x509', '-in', certificate_file, '-serial', '-noout']
         proc = subprocess.run(command, stdout=subprocess.PIPE)
         # output should be of the form 'serial=HEXADECIMALNUMBER'
-        return int(proc.stdout.decode().replace('serial=', ''), 16)
+        try:
+            return int(proc.stdout.decode().replace('serial=', ''), 16)
+        except ValueError:
+             print("Can not read file: {}".format(certificate_file), file=sys.stderr)
 
     def smime_pk7out(self, encrypted_file):
         """run smime -pk7out, return its output"""
@@ -34,7 +39,6 @@ class Openssl:
         for match in re.finditer('serial: ([0-9]+)', proc.stdout):
             yield int(match.group(1))
 
-
     def list_recipient_serial_numbers(self, encrypted_file):
         """Do essentially:
             openssl smime -pk7out -inform DER -in MYMAIL \
@@ -44,15 +48,35 @@ class Openssl:
         pk7out = self.smime_pk7out(encrypted_file)
         return list(self.pkcs7_serial_numbers(pk7out))
 
+    def smime_decrypt(self, private_key, certificate, filepath, passin='stdin'):
+        """encrypt the given filepath and print to stdout"""
+        command = [self.openssl_command, 'smime', '-decrypt', '-passin', passin]
+        command += ['-inform', 'DER', '-in', filepath]
+        command += ['-inkey', private_key]
+        command += ['-recip', certificate]
+        subprocess.run(command)
+
 def main():
     """main"""
     description = "Detect recipients of smime encrypt"
-    parser = argparse.ArgumentParser(description=description)
+    epilog = """
+    E.g. you can decrypt
+    """
+    parser = argparse.ArgumentParser(description=description, epilog=epilog)
     parser.add_argument('encryptedfile', help='the encrypted file')
     parser.add_argument('certificates',
                         nargs='+',
                         help='the smime certificate files')
     parser.add_argument('--openssl', default='openssl', help='openssl command name')
+    parser.add_argument('--list-serials', action='store_true',
+                        help='list serial numbers of certifacts')
+    parser.add_argument('--print-path', action='store_true',
+                        help='print path of recipient certificates')
+    parser.add_argument('--private-keys', nargs='*', default=[], help='private keys for decrypt')
+    parser.add_argument('--decrypt', action='store_true',
+                        help='decrypt using one of the private keys passed.\
+                              the key must have the same file name as the certificate.')
+    parser.add_argument('--passin', default='stdin', help='default openssl -passin parameter for decrypt')
     args = parser.parse_args()
     openssl = Openssl(args.openssl)
 
@@ -60,15 +84,36 @@ def main():
     serialnum2cert = {}
     for i in args.certificates:
         serialnum2cert[openssl.get_certificate_serial_number(i)] = i
-    for serialnum, keyfile in serialnum2cert.items():
-        print("{} --> {}".format(keyfile, serialnum))
+    if args.list_serials:
+        for serialnum, keyfile in serialnum2cert.items():
+            print("{} --> {}".format(keyfile, serialnum))
     recipients = openssl.list_recipient_serial_numbers(args.encryptedfile)
-    print(recipients)
-    for i in recipients:
-        if i in serialnum2cert:
-            print(serialnum2cert[i])
+    if args.print_path or args.decrypt:
+        matching_keys = []
+        for i in recipients:
+            if i in serialnum2cert:
+                matching_keys.append(serialnum2cert[i])
+    if args.print_path:
+        for i in matching_keys:
+            print(i)
+    if args.decrypt:
+        private_keys = {}
+        for filepath in args.private_keys:
+            private_keys[os.path.basename(filepath)] = filepath
+        key_found = None
+        for fp in matching_keys:
+            if os.path.basename(fp) in private_keys:
+                priv_key_path = private_keys[os.path.basename(fp)]
+                # print("We can use {} and {}".format(priv_key_path, fp))
+                key_found = (priv_key_path, fp)
+        if key_found is None:
+            print("No matching private key found.", file=sys.stderr)
+            sys.exit(1)
+        openssl.smime_decrypt(key_found[0], key_found[1],
+                              args.encryptedfile, passin=args.passin)
 
-    # get the serial numbers in the file via:
+
+
 
 if __name__ == "__main__":
     main()
