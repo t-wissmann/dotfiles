@@ -59,14 +59,15 @@ class Openssl:
 
 def main():
     """main"""
-    description = "Detect recipients of smime encrypt"
+    description = "Detect recipients of smime encrypted files"
     epilog = textwrap.dedent(r"""
     E.g. you can decrypt an email with the command that picks the
     private key automatically:
 
-        {} --passin stdin --decrypt \
+        {} \
+            --passin stdin --decrypt \
             --private-key ~/.smime/keys/* \
-            -- encryptedmailfile ~/.smime/certificates/*
+            -- mymail ~/.smime/certificates/*
 
     If you use mutt, you can set
 
@@ -130,9 +131,6 @@ def main():
             sys.exit(1)
         openssl.smime_decrypt(key_found[0], key_found[1],
                               args.encryptedfile, passin=args.passin)
-
-
-
 
 if __name__ == "__main__":
     main()
