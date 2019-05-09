@@ -33,7 +33,7 @@ rofiflags=(
     -mesg "$mesg"
 )
 
-find "$dir" -type f -printf '%P\n' \
+find -L "$dir" -type f -printf '%P\n' \
     | grep -v '~$\|/\.\|^\.\|.swp$' \
     | sort \
     | rofi "${rofiflags[@]}" \
