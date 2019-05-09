@@ -122,7 +122,7 @@ BINDS=(
     e:tmux
 )
 
-hc rename default "irc" || true
+hc silent attr tags.default && hc rename default "irc"
 for i in "${BINDS[@]}" ; do
     key="${i%%:*}"
     tag="${i#*:}"
@@ -340,7 +340,6 @@ hc attr theme.border_width 3
 hc attr theme.padding_top 0
 hc attr theme.outer_color '#101010'
 hc attr theme.inner_color '#101010'
-hc attr theme.active.color
 hc attr theme.inner_width 1
 hc attr theme.normal.color '#454545'
 hc attr theme.active.color '#9fbc00'
@@ -376,7 +375,6 @@ hc attr theme.border_width 3
 hc attr theme.padding_top 0
 hc attr theme.outer_color '#101010'
 hc attr theme.inner_color '#101010'
-hc attr theme.active.color
 hc attr theme.inner_width 1
 hc attr theme.normal.color '#454545'
 hc attr theme.active.color '#86AB5F'
@@ -411,7 +409,6 @@ hc attr theme.border_width 2
 hc attr theme.padding_top 5
 hc attr theme.outer_color '#404040'
 hc attr theme.inner_color '#404040'
-hc attr theme.active.color
 hc attr theme.inner_width 1
 hc attr theme.normal.color '#363636'
 hc attr theme.active.inner_color '#5F833A'
@@ -595,24 +592,24 @@ hc keybind $Mod-F9          emit_hook togglehidepanel
 [ -f "$STATEFILE" ] && ~/git/herbstluftwm/scripts/loadstate.sh < "$STATEFILE"
 rm -f "$STATEFILE"
 
-if [[ $HOSTNAME != x1 ]] ; then
-mpc -q current -f '' > /dev/null && # if we can connect to a mpd
-{
-    f=$(mpc -f %file% current)
-    {
-        pids=( )
-        mpc idleloop player &
-        pids+=( $! )
-        hc -w 'reload' > /dev/null
-        # stopp all started processes
-        kill ${pids[@]}
-    } | while read line ; do
-            f2=$(mpc -f %file% current)
-            [[ "$f" != "$f2" ]] && ~/scripts/mpd/showosd.sh
-            f="$f2"
-    done
-} &
-fi
+#if [[ $HOSTNAME != x1 ]] ; then
+#mpc -q current -f '' > /dev/null && # if we can connect to a mpd
+#{
+#    f=$(mpc -f %file% current)
+#    {
+#        pids=( )
+#        mpc idleloop player &
+#        pids+=( $! )
+#        hc -w 'reload' > /dev/null
+#        # stopp all started processes
+#        kill ${pids[@]}
+#    } | while read line ; do
+#            f2=$(mpc -f %file% current)
+#            [[ "$f" != "$f2" ]] && ~/scripts/mpd/showosd.sh
+#            f="$f2"
+#    done
+#} &
+#fi
 
 # add an external panel
 #{
