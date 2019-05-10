@@ -122,7 +122,7 @@ BINDS=(
     e:tmux
 )
 
-hc silent attr tags.default && hc rename default "irc"
+hc silent attr tags.by-name.default && hc rename default "irc"
 for i in "${BINDS[@]}" ; do
     key="${i%%:*}"
     tag="${i#*:}"
