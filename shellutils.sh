@@ -5,6 +5,7 @@
 mkcd() {
   mkdir "$1" && cd "$1"
 }
+alias beep="echo -e '\\a'"
 alias ll='/bin/ls --color=auto -lah'
 alias ls='ls -B --color=auto'
 alias lln='ls -t -lah --color=always|head'

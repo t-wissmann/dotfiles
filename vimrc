@@ -347,6 +347,7 @@ hi CtrlPMode2 cterm=bold ctermfg=red ctermbg=black guibg=black
 hi CtrlPStatus cterm=bold ctermfg=yellow ctermbg=black guibg=black
 let g:ctrlp_match_window = 'bottom,order:btt,min:2,max:20'
 let g:ctrlp_switch_buffer = '0'
+let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 
 noremap  <buffer> <silent> k gk
 noremap  <buffer> <silent> j gj
