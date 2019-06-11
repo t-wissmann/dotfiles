@@ -98,7 +98,7 @@ def step_ask_password():
 
 def step_answer_password(para):
     if para == ACTION_TYPE:
-        type_string(password + '\t')
+        type_string(password)
     loop.quit()
 
 def on_action(cur_dialog_id, action_str):
