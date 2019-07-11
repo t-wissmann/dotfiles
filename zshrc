@@ -69,6 +69,14 @@ function xterm_title_precmd () {
     fi
 }
 
+alias -g G="| grep -iE"
+alias -g L=" 1>&2 | less -R"
+alias -g C=" --color=always"
+
+zstyle ':completion:*:*:kill:*' menu yes select
+#zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
+#zstyle ':completion:*:*:kill:*:processes' command 'ps xo pid,user:10,cmd | ack-grep -v "sshd:|-zsh$"'
+zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm -w -w"
 
 # add running command to title
 #function xterm_title_preexec () {
