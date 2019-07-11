@@ -87,3 +87,27 @@ zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm -w 
 add-zsh-hook -Uz precmd xterm_title_precmd
 #add-zsh-hook -Uz preexec xterm_title_preexec
 
+preexec() {
+  timer=${timer:-$SECONDS}
+}
+
+precmd() {
+  if [ $timer ]; then
+    timer_show=$(($SECONDS - $timer))
+    timer_suffix='s'
+    if [[ ${timer_show} -ge 60 ]] ; then
+        timer_suffix="m $((timer_show % 60))$timer_suffix"
+        timer_show=$((timer_show / 60))
+        if [[ ${timer_show} -ge 60 ]] ; then
+            timer_suffix="h $((timer_show % 60))$timer_suffix"
+            timer_show=$((timer_show / 60))
+            if [[ ${timer_show} -ge 24 ]] ; then
+                timer_suffix="d $((timer_show % 24))$timer_suffix"
+                timer_show=$((timer_show / 24))
+            fi
+        fi
+    fi
+    export RPROMPT="%F{cyan}${timer_show}${timer_suffix}%{$reset_color%}"
+    unset timer
+  fi
+}
