@@ -94,19 +94,21 @@ preexec() {
 precmd() {
   if [ $timer ]; then
     timer_show=$(($SECONDS - $timer))
+    #timer_show=400000 # for testing
     timer_suffix='s'
-    if [[ ${timer_show} -ge 60 ]] ; then
-        timer_suffix="m $((timer_show % 60))$timer_suffix"
-        timer_show=$((timer_show / 60))
-        if [[ ${timer_show} -ge 60 ]] ; then
-            timer_suffix="h $((timer_show % 60))$timer_suffix"
-            timer_show=$((timer_show / 60))
-            if [[ ${timer_show} -ge 24 ]] ; then
-                timer_suffix="d $((timer_show % 24))$timer_suffix"
-                timer_show=$((timer_show / 24))
-            fi
+    # alternate versions for the unit:
+    #   m,60 h,60 d,24 w,7
+    #   m,60 h,60 d,24 year,365 century,100
+    for unit in m,60 h,60 d,24 ; do
+        size=${unit#*,}
+        name=${unit%,*}
+        if [[ ${timer_show} -ge ${size} ]] ; then
+            timer_suffix="${name} $((timer_show % ${size}))$timer_suffix"
+            timer_show=$((timer_show / ${size}))
+        else
+            break
         fi
-    fi
+    done
     export RPROMPT="%F{cyan}${timer_show}${timer_suffix}%{$reset_color%}"
     unset timer
   fi
