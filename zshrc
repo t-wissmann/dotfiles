@@ -70,7 +70,7 @@ function xterm_title_precmd () {
 }
 
 alias -g G="| grep -iE"
-alias -g L=" 1>&2 | less -R"
+alias -g L=" 2>&1 | less -R"
 alias -g C=" --color=always"
 
 zstyle ':completion:*:*:kill:*' menu yes select
@@ -94,22 +94,27 @@ preexec() {
 precmd() {
   if [ $timer ]; then
     timer_show=$(($SECONDS - $timer))
-    #timer_show=400000 # for testing
-    timer_suffix='s'
-    # alternate versions for the unit:
-    #   m,60 h,60 d,24 w,7
-    #   m,60 h,60 d,24 year,365 century,100
-    for unit in m,60 h,60 d,24 ; do
-        size=${unit#*,}
-        name=${unit%,*}
-        if [[ ${timer_show} -ge ${size} ]] ; then
-            timer_suffix="${name} $((timer_show % ${size}))$timer_suffix"
-            timer_show=$((timer_show / ${size}))
-        else
-            break
-        fi
-    done
-    export RPROMPT="%F{cyan}${timer_show}${timer_suffix}%{$reset_color%}"
-    unset timer
+    if [ ${timer_show} -eq 0 ] ; then
+        export RPROMPT=""
+        unset timer
+    else
+        #timer_show=400000 # for testing
+        timer_suffix='s'
+        # alternate versions for the unit:
+        #   m,60 h,60 d,24 w,7
+        #   m,60 h,60 d,24 year,365 century,100
+        for unit in m,60 h,60 d,24 ; do
+            size=${unit#*,}
+            name=${unit%,*}
+            if [[ ${timer_show} -ge ${size} ]] ; then
+                timer_suffix="${name} $((timer_show % ${size}))$timer_suffix"
+                timer_show=$((timer_show / ${size}))
+            else
+                break
+            fi
+        done
+        export RPROMPT="%F{cyan}${timer_show}${timer_suffix}%{$reset_color%}"
+        unset timer
+    fi
   fi
 }
