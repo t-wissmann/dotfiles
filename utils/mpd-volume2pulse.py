@@ -78,14 +78,30 @@ class MPD2PulseAudio:
             subprocess.call(['ponymix', 'set-volume', str(vol) + '%'], \
                 stdout=subprocess.PIPE)
 
+    def all_subprocesses_running(self):
+        """return whether all subprocesses still run"""
+        all_still_running = True
+        for proc in [self.pactl, self.mpc]:
+            try:
+                status = proc.wait(0)
+                print("command {} exited with status {}".format(
+                    proc.args, status))
+                all_still_running = False
+            except subprocess.TimeoutExpired as e:
+                pass
+        return all_still_running
+
     def loop(self):
         self.get_mpd_volume()
         self.get_pa_volume()
         pa_event_re = re.compile('Event \'change\' on sink #[0-9]*')
         while self.running:
             #print("mpd: %d%%, pa: %d%%" % (self.mpd_volume,self.pa_volume))
+            #print("mpc pid: %d, pactl pid: %d" % (self.mpc.pid, self.mpc.pid))
+            if not self.all_subprocesses_running():
+                break
             ready = select([self.mpc.stdout, self.pactl.stdout], [], [])[0]
-            if self.pactl.returncode != None or self.mpc.returncode != None:
+            if not self.all_subprocesses_running():
                 break
             if self.pactl.stdout in ready:
                 line = MPD2PulseAudio.readline(self.pactl.stdout)
