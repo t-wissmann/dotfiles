@@ -14,6 +14,9 @@ dnsutils
 
 
 # packages of daily use
+exa
+fd
+bat
 alsa-utils
 ponymix
 asciidoc

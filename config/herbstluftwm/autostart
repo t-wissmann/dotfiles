@@ -548,8 +548,6 @@ hc rule class=Do instance=Do manage=off
 # do not manage audacity tooltips
 hc rule class=Audacity instance=Audacity title='' manage=off
 
-STATEFILE=~/.config/herbstluftwm/state
-
 # GIMP
 # ensure there is a gimp tag
 #hc add gimp
@@ -588,6 +586,7 @@ hc keybind $Mod-bracketright spawn $c/toggledualhead.sh
 hc keybind XF86Display      spawn ~/dotfiles/menu/rofi-xrandr.sh
 hc keybind $Mod-F9          emit_hook togglehidepanel
 
+STATEFILE=~/.config/herbstluftwm/state
 [ -f "$STATEFILE" ] && ~/dev/c/herbstluftwm/scripts/loadstate.sh < "$STATEFILE"
 [ -f "$STATEFILE" ] && ~/git/herbstluftwm/scripts/loadstate.sh < "$STATEFILE"
 rm -f "$STATEFILE"

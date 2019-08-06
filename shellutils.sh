@@ -7,8 +7,13 @@ mkcd() {
 }
 alias beep="echo -e '\\a'"
 alias ll='/bin/ls --color=auto -lah'
+alias ll='exa -l'
 alias ls='ls -B --color=auto'
+alias ls='exa'
+alias l='exa'
+alias cat='bat'
 alias lln='ls -t -lah --color=always|head'
+alias lln='exa --color=always -t modified -l | head'
 alias rot13="tr '[A-Za-z]' '[N-ZA-Mn-za-m]'"
 alias rot1="tr '[A-Za-z]' '[B-ZAb-za]'"
 alias rot25="tr '[B-ZAb-za]' '[A-Za-z]'"
