@@ -5,6 +5,7 @@ from barpyrus import lemonbar
 from barpyrus import conky
 import sys
 import os
+import subprocess
 import socket
 
 is_hidpi = socket.gethostname() == 'x1'
@@ -199,6 +200,16 @@ else:
     tag_renderer = hlwm.underlined_tags
     tag_renderer.activecolor = 'red'
 
+def run_gdmflexi(button):
+    cmd = ['urxvt']
+    cmd = ['gdmflexiserver']
+    os.spawnvpe(os.P_NOWAIT, cmd[0], cmd, os.environ)
+
+gdmflexiserver = W.RawLabel('')
+if socket.gethostname() == 'hoth':
+    gdmflexiserver = W.Button('[Nutzer Wechseln] ')
+    gdmflexiserver.callback = run_gdmflexi
+
 bar = lemonbar.Lemonbar(**lemonbar_options)
 
 bar.widget = W.ListLayout([
@@ -215,6 +226,7 @@ bar.widget = W.ListLayout([
         W.ListLayout([ W.RawLabel('%{c}'), conky_widget ]),
     ])), tab_renderer = tab_renderer),
     W.RawLabel('%{r}'),
+    gdmflexiserver,
     # something like a tabbed widget with the tab labels '>' and '<'
     W.TabbedLayout([
         ('0', W.RawLabel('')),
