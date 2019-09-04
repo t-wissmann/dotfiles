@@ -7,7 +7,7 @@ mkcd() {
 }
 alias beep="echo -e '\\a'"
 alias ll='/bin/ls --color=auto -lah'
-alias ll='exa -l'
+alias ll='exa -l -a'
 alias ls='ls -B --color=auto'
 alias ls='exa'
 alias l='exa'
