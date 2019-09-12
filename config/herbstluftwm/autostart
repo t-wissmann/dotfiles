@@ -227,6 +227,10 @@ fi
 hc keybind Mod1+Mod4+u spawn playerctl previous
 hc keybind Mod1+Mod4+i spawn playerctl play-pause
 hc keybind Mod1+Mod4+o spawn playerctl next
+hc keybind XF86AudioPlay spawn playerctl play-pause
+hc keybind XF86AudioNext spawn playerctl next
+hc keybind XF86AudioPrev spawn playerctl prev
+hc keybind XF86AudioStop spawn playerctl stop
 
 #hc keybind XF86AudioStop spawn mpc -q random
 #hc keybind XF86AudioPrev spawn mpc -q prev
