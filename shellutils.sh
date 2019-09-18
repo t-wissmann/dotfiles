@@ -62,6 +62,7 @@ alias grep='grep --color=auto'
 export EDITOR="vim"
 export PAGER="less"
 
+alias abook='~/.abook/abook.sh'
 
 setWindowTitle(){
     echo -ne '\033]0;'$1'\007'
