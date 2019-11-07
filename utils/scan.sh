@@ -41,5 +41,9 @@ sane_device="epkowa:usb:$usb_addr"
 #sane_device="epson2:libusb:$usb_addr"
 QUALITY=${QUALITY:-81}
 
+# TODO: do some filtering to avoid noise?
+# e.g. add the convert options like: -range-threshold '10%,90%,100%,100%'
+# or even -threshold '50%'
+
 :: scanimage -v --mode Color -d "$sane_device" --format=tiff \
     | :: convert - -page a4 -quality "${QUALITY}" "$outfile"
