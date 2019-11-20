@@ -7,9 +7,10 @@ mkcd() {
 }
 alias beep="echo -e '\\a'"
 alias ll='/bin/ls --color=auto -lah'
-alias ll='exa -l -a'
+alias ll='exa -l -a -a'
 alias ls='ls -B --color=auto'
 alias ls='exa'
+alias la='exa -a'
 alias l='exa'
 alias cat='bat'
 alias lln='ls -t -lah --color=always|head'
@@ -87,3 +88,9 @@ export OOO_FORCE_DESKTOP='gnome'
 export FZF_DEFAULT_OPTS="--tabstop=4 --color=dark,bg+:0,hl+:3,hl:2"
 export PASSWORD_STORE_ENABLE_EXTENSIONS="true"
 
+normpages() {
+    # count norm pages "normseiten" in a document.
+    # one norm page consists of 1500 key strokes
+    local strokecount=$(pdftotext -l "${2:-1000000}" "$1" - | wc -m)
+    bc -l <<< "$strokecount / 1500"
+}
