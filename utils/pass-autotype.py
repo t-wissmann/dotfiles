@@ -6,7 +6,7 @@
 import dbus.service
 #import dbus.glib
 import gi
-from gi.repository import GObject
+from gi.repository import GLib
 import dbus
 from dbus.mainloop.glib import DBusGMainLoop
 import sys
@@ -25,7 +25,7 @@ interface = 'org.freedesktop.Notifications'
 
 DBusGMainLoop(set_as_default=True)
 bus = dbus.SessionBus()
-loop = GObject.MainLoop()
+loop = GLib.MainLoop()
 
 ACTION_TYPE = 'type'
 ACTION_SKIP = 'skip'
