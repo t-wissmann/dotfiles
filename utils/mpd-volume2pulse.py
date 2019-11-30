@@ -40,15 +40,15 @@ class MPD2PulseAudio:
         env = os.environ
         env['LC_ALL'] = 'C'
         self.mpc = subprocess.Popen('mpc idleloop mixer'.split(' '), \
-            bufsize=1, stdout=subprocess.PIPE)
+            bufsize=1, stdout=subprocess.PIPE, text=True)
         self.pactl = subprocess.Popen('pactl subscribe'.split(' '), \
-            bufsize=1, env=env, stdout=subprocess.PIPE)
+            bufsize=1, env=env, stdout=subprocess.PIPE, text=True)
 
     @staticmethod
     def readline(stream):
         """read a line from the given stream or raise EOF otherwise"""
         raw_line = stream.readline()
-        return raw_line.decode().rstrip()
+        return raw_line.rstrip()
 
     def get_mpd_volume(self):
         volume_re = re.compile('volume:[ ]*([0-9]*)%')
