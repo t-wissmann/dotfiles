@@ -18,6 +18,7 @@ alias lln='exa --color=always --sort=modified -r -l | head'
 alias rot13="tr '[A-Za-z]' '[N-ZA-Mn-za-m]'"
 alias rot1="tr '[A-Za-z]' '[B-ZAb-za]'"
 alias rot25="tr '[B-ZAb-za]' '[A-Za-z]'"
+alias uns='unison -auto buero'
 alias urldecode=$'python2 -c "import sys, urllib as ul;\nfor line in sys.stdin: print ul.unquote_plus(line)"'
 alias urlencode=$'python2 -c "import sys, urllib as ul;\nfor line in sys.stdin: print ul.quote_plus(line)"'
 # fop is broken and always has been a mess...

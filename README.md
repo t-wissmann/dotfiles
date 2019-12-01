@@ -28,3 +28,8 @@ sudo sh -c 'echo 1 > /proc/sys/net/ipv4/ip_forward'
 ```
 Plus an appropriate `/etc/dhcpd.conf`.
 
+
+## Printer packages: Epson Stylus SX340
+
+  - from the arch repos: `iscan iscan-data sane`
+  - from the aur: `epson-inkjet-printer-escpr`
