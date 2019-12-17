@@ -123,6 +123,7 @@ gst-plugins-ugly
 gstreamer-vaapi
 mpc
 id3v2
+joyutils
 
 # theming
 gtk-engine-murrine

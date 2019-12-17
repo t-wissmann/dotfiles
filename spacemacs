@@ -74,7 +74,10 @@ values."
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '()
+   dotspacemacs-excluded-packages
+   '(
+     ;; smartparens
+     )
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and uninstall any
@@ -347,6 +350,10 @@ before packages are loaded. If you are unsure, you should try in setting them in
         '((:eval (if (buffer-file-name)
                      (abbreviate-file-name (buffer-file-name))
                    "%b"))))
+  ;; TODO:  why is sp-show--pair-function still called?
+  ;; try some things from
+  ;; https://emacs.stackexchange.com/questions/16935/disable-smartparens-in-spacemacs
+  ;; in the future
   (spacemacs|use-package-add-hook smartparens
     :post-init
     ;;(remove-hook 'comint-mode-hook 'smartparens-mode)

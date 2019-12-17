@@ -49,7 +49,7 @@ filetype plugin on
 "set ofu=syntaxcomplete#Complete
 
 " show a readable Beep! e.g. if finding a char via fx fails
-set debug=beep
+"set debug=beep
 
 " code folding
 set foldmethod=indent
@@ -82,7 +82,7 @@ set wildmenu
 set wildmode=longest,list
 set wildignorecase
 
-set visualbell t_vb=
+" set visualbell t_vb=
 
 set scrolloff=2
 " ignorecase:
@@ -360,6 +360,9 @@ set clipboard=unnamedplus
 set showcmd
 
 let b:ale_linters = ['flake8', 'pylint']
+" let g:ale_enabled = 0
+" Plug 'w0rp/ale', { 'on':  'ALEToggle' }
+
 
 " Use OmniCompletion for abook dictionary entries
 " Fire omnicompletion using ^X^O

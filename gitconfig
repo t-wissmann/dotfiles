@@ -29,4 +29,6 @@
         cmd = git-latexdiff \"$LOCAL\" \"$REMOTE\"
 [difftool]
         prompt = false
+[diff]
+	noprefix = true
 # vim: noet
