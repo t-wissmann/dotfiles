@@ -6,6 +6,7 @@ prefix=${PASSWORD_STORE_DIR-~/.password-store}
 mapfile -t password_files < <(find "${prefix}" -name '*.gpg' -printf "%P\n"|sort)
 password_files=( "${password_files[@]#"$prefix"/}" )
 password_files=( "${password_files[@]%.gpg}" )
+filter="$1"
 
 clipwiz_key=Control-t
 edit_key=Control-i
@@ -25,6 +26,15 @@ terminal_pass() {
     urxvt -override-redirect -geometry 60x8+$((x+10))+$((y+10)) -e pass "$@"
 }
 
+# detect whether we are run within qutebrowser
+if [ -n "$QUTE_FIFO" ] ; then
+    echo 'enter-mode insert' >> "$QUTE_FIFO"
+fi
+if [ -n "$QUTE_URL" ] ; then
+    filter=${QUTE_URL#*://}
+    filter=${filter%%/*}
+fi
+
 mesg="\
 $(pkey Return       )| Auto-type
 $(pkey $clipwiz_key )| Copy credentials to clipboard
@@ -34,6 +44,7 @@ $(pkey $edit_key    )| Open in an editor"
 rofi_args=(
     -p 'pass> '
     -format i
+    -filter "$filter"
     -kb-custom-1 "$clipwiz_key"
     -kb-custom-2 "$gen_key"
     -kb-custom-3 "$edit_key"

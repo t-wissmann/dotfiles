@@ -183,6 +183,7 @@ binds = {
     'sd' : "spawn --userscript /bin/bash -c 'DOWNLOAD_DIR=~/downloads ~/.config/qutebrowser/userscripts/open_download'",
     ';v' : "hint links userscript view_in_mpv",
     'b' : "set-cmd-text -s :buffer",
+    '<Windows-\\>' : 'spawn --userscript ~/dotfiles/menu/rofi-pass.sh',
 }
 
 for k,v in binds.items():

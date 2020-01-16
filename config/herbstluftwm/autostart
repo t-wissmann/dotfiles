@@ -552,6 +552,7 @@ hc rule instance=mutt tag=mail
 hc rule class=Do instance=Do manage=off
 # do not manage audacity tooltips
 hc rule class=Audacity instance=Audacity title='' manage=off
+hc rule class=qutebrowser keymask='Mod4[+]backslash' # use own pass-dmenu in qutebrowser
 
 # GIMP
 # ensure there is a gimp tag
