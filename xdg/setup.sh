@@ -121,9 +121,14 @@ gui_app katarakt            \
     x-unknown/pdf           \
     text/pdf                \
 
-EntryName="SXIV"
+# EntryName="SXIV"
+# Icon=emblem-photos
+# gui_app ~/dotfiles/utils/sxiv-helper.sh \
+#     image/{x-,}{tiff,sun-raster} \
+#     image/{gif,jpeg,png} \
+#     image/{svg+xml,svg-xml}
 Icon=emblem-photos
-gui_app ~/dotfiles/utils/sxiv-helper.sh \
+gui_app viewnior \
     image/{x-,}{tiff,sun-raster} \
     image/{gif,jpeg,png} \
     image/{svg+xml,svg-xml}

@@ -33,6 +33,7 @@ fi
 if [ -n "$QUTE_URL" ] ; then
     filter=${QUTE_URL#*://}
     filter=${filter%%/*}
+    filter=${filter#www.}
 fi
 
 mesg="\

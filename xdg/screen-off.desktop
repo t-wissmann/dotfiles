@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Turn screen off
+Name[de]=Bildschirm aus
+Comment=Make the screen blank
+GenericName=Screen properties
+GenericName[de]=Bildschirmeinstellungen
+Exec=xset dpms force off
+Icon=display
+Terminal=false
+StartupNotify=true
+Type=Application
+Categories=Utility
