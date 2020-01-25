@@ -32,7 +32,12 @@ start_or_restart() {
 }
 
 start_or_restart mpd
-sleep 1 # hope that mpd boots up quick enough
+while sleep 1 ; do
+    echo 'Waiting for mpd...'
+    if mpc version > /dev/null 2> /dev/null ; then
+        break
+    fi
+done
 start_or_restart mpdscribble
 start_or_restart cantata
 ~/dotfiles/utils/mpd-volume2pulse.py &
