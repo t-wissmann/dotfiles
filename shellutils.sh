@@ -57,6 +57,9 @@ alias ts='~/dotfiles/utils/tmux-reattachloop.sh tmux new-session -A -D -s shell'
 alias rm='gio trash'
 alias djvu2pdf='ddjvu -format=pdf -quality=85 -verbose'
 
+alias myscan='~/dotfiles/utils/scan.sh'
+alias myocr='~/dotfiles/utils/ocr'
+
 export GREP_COLOR="1;33"
 export GREP_COLORS="mc=1;33"
 alias grep='grep --color=auto'
