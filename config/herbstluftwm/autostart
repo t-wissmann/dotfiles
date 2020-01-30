@@ -96,6 +96,7 @@ hc keybind $Mod-Shift-x spawn rofi -columns 3 -show run
 hc keybind $Mod-bracketleft spawn rofi-bibbrowser
 hc keybind $Mod-apostrophe spawn ~/dotfiles/menu/rofi-mpd.sh
 hc keybind $Mod-backslash spawn ~/dotfiles/menu/rofi-pass.sh
+hc keybind $Mod-Shift-backslash spawn ~/dotfiles/menu/rofi-pass.sh
 
 videodir=/mnt/unterhaltung/video/
 [[ -d ~/video ]] && videodir=$HOME/video/
