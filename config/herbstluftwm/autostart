@@ -233,6 +233,7 @@ hc keybind XF86AudioPause spawn playerctl pause
 hc keybind XF86AudioNext spawn playerctl next
 hc keybind XF86AudioPrev spawn playerctl previous
 hc keybind XF86AudioStop spawn playerctl stop
+hc keybind Alt-Super-0 spawn xrandr --auto
 
 #hc keybind XF86AudioStop spawn mpc -q random
 #hc keybind XF86AudioPrev spawn mpc -q prev
