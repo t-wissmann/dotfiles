@@ -130,7 +130,7 @@ gui_app katarakt            \
 Icon=emblem-photos
 gui_app viewnior \
     image/{x-,}{tiff,sun-raster} \
-    image/{gif,jpeg,png} \
+    image/{gif,jpeg,png,ppm,pbm} \
     image/{svg+xml,svg-xml}
 
 EntryName="MPV (Append)"

@@ -98,6 +98,7 @@ c.url.searchengines['osm'] = c.url.searchengines['map']
 c.url.searchengines['amazon'] = 'http://www.amazon.de/s/field-keywords={}'
 c.url.searchengines['duden'] = 'http://www.duden.de/suchen/dudenonline/{}'
 c.url.searchengines['python'] = 'file:///usr/share/doc/python/html/search.html?q={}&check_keywords=yes&area=default'
+c.url.searchengines['jpc'] = 'https://www.jpc.de/s/{}'
 
 c.aliases['images'] = 'hint images tab'
 c.aliases['tabopen'] = 'open -t'
