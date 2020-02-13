@@ -85,6 +85,8 @@ update_hlwm() {
     herbstclient reload
     setxkbmap us -variant altgr-intl -option compose:menu -option ctrl:nocaps -option compose:ralt -option compose:rctrl
     xset -b
+    # no tag locking if only one monitor
+    herbstclient try and , compare monitors.count = 1 , unlock_tag
 }
 
 disable_screensaver() {
