@@ -57,30 +57,10 @@ case "$HOSTNAME" in
 esac
 
 # keyboard-layout:
-has-kbd() {
-    lsusb | grep "ID $*" > /dev/null
-}
+setxkbmap us -variant altgr-intl
+~/.config/herbstluftwm/setup-keyboard.sh
 
 hc keyunbind --all
-
-keyboard=
-if has-kbd 04d9:0134 Holtek Semiconductor ; then # pure kbtalking
-    setxkbmap us -variant altgr-intl -option compose:menu -option ctrl:nocaps -option compose:ralt -option compose:rwin
-elif has-kbd 04d9:0112 Holtek Semiconductor ; then # kbparadise V60 Mini
-    setxkbmap us -variant altgr-intl -option compose:menu -option ctrl:nocaps -option compose:rwin
-    keyboard=v60mini
-elif has-kbd 2be8:0004 ; then # Progres Touch Retro Tiny
-    setxkbmap us -variant altgr-intl -option compose:rctrl -option ctrl:nocaps
-elif false ; then # mac
-    setxkbmap us -variant altgr-intl -option compose:menu -option ctrl:nocaps -option compose:ralt -option compose:rctrl
-    xmodmap -e 'keycode any 94 = grave'
-elif [[ $HOSTNAME == x1 ]] ; then
-    setxkbmap us -variant altgr-intl -option compose:menu -option ctrl:nocaps -option compose:prsc
-else
-    setxkbmap us -variant altgr-intl -option compose:menu -option ctrl:nocaps -option compose:ralt -option compose:rwin
-    keyboard=other
-fi
-
 # keybindings
 Mod=Mod4
 if [ $HOSTNAME = faui03a ] || [ $DISPLAY = :13 ] ; then
@@ -215,13 +195,13 @@ hc keybind $Mod-Shift-k or / shift up / \
 hc keybind $Mod-Shift-l or / shift right / \
     chain , lock , shift_to_monitor -r , focus_monitor -r , unlock
 
-if [[ "$keyboard" = "v60mini" ]] ; then
-    # i keep hitting this accidentally on my v60 mini
-    # so make this a key without any action
-    hc keybind Pause true
-else
+# if [[ "$keyboard" = "v60mini" ]] ; then
+#     # i keep hitting this accidentally on my v60 mini
+#     # so make this a key without any action
+#     hc keybind Pause true
+# else
     hc keybind Pause spawn playerctl play-pause
-fi
+# fi
 #hc keybind Mod4-q spawn ~/scripts/mpd/dmenu.sh play
 #hc keybind Mod4-w spawn ~/scripts/mpd/dmenu.sh totem
 #hc keybind Mod4-t spawn ~/scripts/utils/iptv/watch-dmenu.sh
