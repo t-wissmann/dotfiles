@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# move commits to a feature branch
+set -e
+
+targetbranch="$1"
+currentbranch=$(git branch --show-current)
+
+git push origin HEAD:"${targetbranch}"
+
+# the commit we will reset $currentbranch back to
+lastcommit="HEAD~1"
+lastcommit=$(git rev-parse "$lastcommit")
+
+# detach from the current branch
+git checkout --detach "HEAD"
+# reset the branch first
+git branch -f "$currentbranch" "$lastcommit"
+# and then go back there, taking the changes with us:
+git checkout --merge "$currentbranch"
+
+
+
+
