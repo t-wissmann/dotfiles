@@ -93,6 +93,9 @@ c.url.searchengines['27c3-phone'] = 'http://www.eventphone.de/guru2/phonebook?ev
 c.url.searchengines['27c3'] = 'https://events.ccc.de/congress/2010/wiki/Special:Search?search={}'
 c.url.searchengines['hoogle'] = 'http://haskell.org/hoogle/?hoogle={}'
 c.url.searchengines['github'] = 'https://github.com/search?utf8=%E2%9C%93&q={}'
+#c.url.searchengines['gh'] = 'https://github.com/{literal}'
+c.url.searchengines['gh2'] = 'https://github.com/{}'
+#c.url.searchengines['gh3'] = 'https://github.com/{quoted}'
 c.url.searchengines['map'] = 'http://openstreetmap.org/search?query={}'
 c.url.searchengines['discogs'] = 'http://www.discogs.com/search/?q={}&type=release'
 c.url.searchengines['maps'] = c.url.searchengines['map']
@@ -100,7 +103,7 @@ c.url.searchengines['osm'] = c.url.searchengines['map']
 c.url.searchengines['amazon'] = 'http://www.amazon.de/s/field-keywords={}'
 c.url.searchengines['duden'] = 'http://www.duden.de/suchen/dudenonline/{}'
 c.url.searchengines['python'] = 'file:///usr/share/doc/python/html/search.html?q={}&check_keywords=yes&area=default'
-c.url.searchengines['jpc'] = 'https://www.jpc.de/s/{}'
+c.url.searchengines['jpc'] = 'https://www.jpc.de/s/{}'  # TODO: replace by {quoted}
 
 c.aliases['images'] = 'hint images tab'
 c.aliases['tabopen'] = 'open -t'
