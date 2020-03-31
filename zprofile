@@ -12,6 +12,9 @@ fi
 if [ -d "${HOME}/.cabal/bin" ] ;then
     export PATH="${HOME}/.cabal/bin:${PATH}"
 fi
+if [ -d "${HOME}/dotfiles/utils" ] ;then
+    export PATH="${PATH}:${HOME}/dotfiles/utils"
+fi
 
 # extend man-variable
 if [ -d "${HOME}/man" ] ; then
