@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Name=Sitzung in Standby
+GenericName=Standby und sperren
+Comment=Danach Sperren
+Exec=bash -c 'playerctl pause ; systemctl suspend -i ; sleep 10 ; xset -b'
+Icon=screensaver
+Terminal=false
+Type=Application
+Categories=
+MimeType=
