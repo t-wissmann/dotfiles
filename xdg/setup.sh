@@ -25,6 +25,19 @@ desktop_entry() {
         terminal=false
     fi
     local name="${3:-${1%% *}}"
+    mimetypes='' # ;-separated list of mimetypes
+    if shift 3 ;then
+        for mimetype in "$@" ; do
+            case "$mimetype" in
+            /*) ;;
+            x-unknown/*) ;; # skip those
+            .*) mimetypes+="${mimetype#.};"
+                ;;
+            *) mimetypes+="${mimetype};"
+                ;;
+            esac
+        done
+    fi
     cat <<EOF
 [Desktop Entry]
 Encoding=UTF-8
@@ -37,6 +50,7 @@ Icon=$Icon
 Terminal=$terminal
 Type=Application
 Categories=
+MimeType=$mimetypes
 EOF
 # reset the displayed name
 EntryName=""
@@ -58,7 +72,8 @@ app() {
     FileName=${FileName:-${tmp//./}}
     desktop_file="$appdir/$FileName.desktop"
     :: Creating desktop file "$desktop_file"
-    desktop_entry "$cmd" "$terminal" > "$desktop_file"
+    # also pass all mimetypes to the desktop entry
+    desktop_entry "$cmd" "$terminal" "$@" > "$desktop_file"
     for mimetype in "$@" ; do
         case "$mimetype" in
         /*)

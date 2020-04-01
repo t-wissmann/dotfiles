@@ -10,3 +10,4 @@ Terminal=false
 StartupNotify=true
 Type=Application
 Categories=Utility
+MimeType=
