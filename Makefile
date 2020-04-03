@@ -4,7 +4,13 @@
 install:
 	./lsfiles.sh | dryrun=0 ./link.sh -
 
-all: install xdg man checkpackages
+all: install dry-run dryrun xdg man checkpackages
+
+dryrun:
+	./lsfiles.sh | dryrun=1 ./link.sh -
+
+dry-run:
+	./lsfiles.sh | dryrun=1 ./link.sh -
 
 xrdb: xdefaults
 

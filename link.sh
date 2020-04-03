@@ -48,6 +48,21 @@ function create_link() {
     return 0
 }
 
+create_directories() {
+    for d in "${createdirectories[@]}" ; do
+        if [[ -d "$HOME/$d" ]] ; then
+            echo -e "$color_link EXISTS   $color_source ~/$d$color_default"
+        elif [[ -e "$HOME/$d" ]] ; then
+            echo -e "$color_skip ERROR:   $color_source ~/$d" \
+                        "$color_skip not a directory!$color_default"
+        else
+            echo -e "$color_link MKDIR -p $color_source ~/$d$color_default"
+            [ "$dryrun" = 0 ] && mkdir -p "$HOME/$d" || return 1
+        fi
+    done
+}
+
+create_directories
 
 if [ "$1" = "-" ] ; then
     while read i ; do

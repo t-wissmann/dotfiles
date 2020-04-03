@@ -21,6 +21,16 @@ is_cip() {
     esac
 }
 
+# create the following directories in home
+createdirectories=(
+    .config
+    .themes
+    .mplayer
+    .gnupg
+    .ncmpcpp
+    .local/share/qutebrowser
+)
+
 homedir=(
     bash.d
     bashrc
@@ -55,6 +65,7 @@ files=(
     ncmpcpp-config
     mplayer.conf
     gpg.conf
+    openbox-themes/*/
 )
 
 
@@ -68,6 +79,7 @@ relpath2target=(
     "s#^mplayer.conf#$HOME/.mplayer/config#"
     "s,^config/qutebrowser/userscripts,$HOME/.local/share/qutebrowser/userscripts,"
     "s#^config/\(.*\)\$#$HOME/.config/\1#"
+    "s#^openbox-themes/\(.*\)\$#$HOME/.themes/\1#"
 )
 
 # options
