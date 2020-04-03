@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openbox_menu xmlns="http://openbox.org/3.4/menu">
+<!--
+    <menu id="mpc-actions-menu" label="Musik" execute="~/scripts/pipemenus/mpc.sh" />
+    <menu id="system-info-menu" label="Systeminfo" execute="~/scripts/pipemenus/info.sh" />
+    <menu id="windowlist2-menu" label="Fensterliste" execute="~/scripts/pipemenus/windowlist.sh" />
+    <menu id="desktoplist2-menu" label="Arbeitsflächen" execute="~/scripts/pipemenus/desktoplist.sh" />
+-->
+<menu id="desktoplist-with-context-menu" label="Alle Fenster" execute="~/scripts/pipemenus/desktoplist.sh --contextmenus" />
+
+
+    <menu id="root-menu" label="Openbox 3">
+<!--  <separator label="Towi04" /> -->
+    <item label="Dateimanager"><action name="Execute"><execute>
+        thunar</execute></action></item>
+    <item label="Konsole"><action name="Execute"><execute>
+	   urxvt </execute></action></item>
+	<menu id="applications-menu" label="Anwendungen">
+		<separator label="Anwendungen"/>
+    <menu id="internet-menu" label="Internet">
+		<separator label="Internet" />
+    		<item label="Webbrowser"><action name="Execute"><execute>
+			firefox</execute></action></item>
+    		<item label="E-Mail"><action name="Execute"><execute>
+			sylpheed</execute></action></item>
+    		<item label="Pidgin"><action name="Execute"><execute>
+			pidgin</execute></action></item>
+	</menu>
+	<menu id="multimedia-menu" label="Multimedia">
+			<separator label="Multimedia" />
+			<item label="Ario"><action name="Execute"><execute>
+			ario</execute></action></item>
+
+    		<item label="Amarok"><action name="Execute"><execute>
+			amarok</execute></action></item>
+    		<item label="Mixer"><action name="Execute"><execute>
+			xfce4-mixer</execute></action></item>
+    	<item label="Fernsehen"><action name="Execute"><execute>
+			xdtv</execute></action></item>
+    		<item label="TiMidity"><action name="Execute"><execute>
+			timidity -ig</execute></action></item>
+    		<item label="CD Rippen"><action name="Execute"><execute>
+			asunder</execute></action></item>
+    		<item label="V4L Viewer"><action name="Execute"><execute>
+			cheese</execute></action></item>
+	</menu>
+	<menu id="graphics-menu" label="Graphik">
+		<separator label="Graphik" />
+		<item label="Gimp"><action name="Execute"><execute>
+			 gimp</execute></action></item>
+    	<item label="Inkscape"><action name="Execute"><execute>
+			inkscape</execute></action></item>
+    	<item label="Farbwähler"><action name="Execute"><execute>
+			gcolor2</execute></action></item>
+	</menu>
+	<menu id="tools-menu" label="Werkzeuge">
+	   <separator label="Werkzeuge"/>
+       <item label="Ausführen"><action name="Execute"><execute>
+        gmrun</execute></action></item>
+	   <item label="Anwendungen"><action name="Execute"><execute>
+        xfce4-appfinder</execute></action></item>
+       <item label="Bulk-Rename"><action name="Execute"><execute>
+        thunar --bulk-rename</execute></action></item>
+       <item label="Taskmanager"><action name="Execute"><execute>
+        xfce4-taskmanager</execute></action></item>
+	</menu>
+    <menu id="edu-menu" label="Bildung">
+	   <separator label="Bildung"/>
+       <item label="DEA Editor"><action name="Execute"><execute>
+        dea_editor</execute></action></item>
+       <item label="Kollegstufe"><action name="Execute"><execute>
+        kollegstufe</execute></action></item>
+       <item label="Abakus"><action name="Execute"><execute>
+        abakus_qt4</execute></action></item>
+	</menu>
+    <menu id="system-menu" label="System">
+	   <separator label="System"/>
+       <item label="Virtualbox"><action name="Execute"><execute>
+        VirtualBox</execute></action></item>
+       <item label="Dateimanager"><action name="Execute"><execute>
+        thunar</execute></action></item>
+       <item label="Konsole"><action name="Execute"><execute>
+        ~/scripts/terminal.sh</execute></action></item>
+	</menu>
+
+	<menu id="games-menu" label="Spiele">
+	   <separator label="Spiele"/>
+       <item label="Teeworlds"><action name="Execute"><execute>
+        teeworlds</execute></action></item>
+	   <item label="Frozen-Bubble"><action name="Execute"><execute>
+	   frozen-bubble</execute></action></item>
+	 </menu>
+    </menu> <!-- end of applications-menu -->
+	<separator />
+	<menu id="transset-menu" label="Transparenz">		
+     <separator label="Transparenz"/>
+      <item label="100 %"><action name="Execute"><execute>
+       transset-df 1</execute></action></item>
+      <item label="90 %"><action name="Execute"><execute>
+       transset-df .9</execute></action></item>
+      <item label="75 %"><action name="Execute"><execute>
+       transset-df .75</execute></action></item>
+      <item label="50 %"><action name="Execute"><execute>
+       transset-df .50</execute></action></item>
+      <item label="25 %"><action name="Execute"><execute>
+       transset-df .25</execute></action></item>
+      <separator/>
+      <!--
+      <item label="An"><action name="Execute"><execute>
+       ~/scripts/setxcompmgr.sh activate</execute></action></item>
+      <item label="Aus"><action name="Execute"><execute>
+       ~/scripts/setxcompmgr.sh deactivate</execute></action></item>
+      -->
+	</menu>
+	<!--	<menu id="client-list-combined-menu"/> -->
+    <!--
+	<menu id="mpc-actions-menu" label="Musik"/> 
+	<menu id="system-info-menu" label="Systeminfo"/>
+    -->
+	<separator/>
+	<menu id="config-menu" label="Konfiguration">
+	  <separator label="Openbox" />
+	 <item label="Neu Laden">
+      <action name="Reconfigure"/>
+     </item>
+	<item label="Obconf"><action name="Execute"><execute>
+      	obconf</execute></action>
+	</item>
+	<item label="Menü"><action name="Execute"><execute>
+		roxterm --title="Menü bearbeiten" -e vi ~/.config/openbox/menu.xml
+		</execute></action>
+	</item>
+
+	<item label="Hintergrundbild"><action name="Execute"><execute>
+		nitrogen ~/wallpapers</execute></action>
+	</item>
+	
+	  <separator label="Andere" />
+    <!--
+	<item label="Xfce4"><action name="Execute"><execute>
+		xfce4-settings-manager</execute></action></item>
+    -->
+	<item label="Erscheinungsbild"><action name="Execute"><execute>
+		lxappearance</execute></action></item>
+	<!--<item label="Paketinformationen"><action name="Execute"><execute>
+							shaman</execute></action>
+	</item>-->
+    <menu id="menu-other-wms" label="WM Wechseln">
+     <separator label="Fenstermanager"/>
+      <item label="herbstluftwm">
+       <action name="Restart"><execute>
+        herbstluftwm</execute>
+       </action>
+      </item>
+      <item label="Fluxbox">
+       <action name="Restart"><execute>
+        fluxbox	</execute>
+       </action>
+      </item>
+      <item label="Ion3">
+       <action name="Restart"><execute>
+        ion3		</execute>
+       </action>
+      </item>
+      <item label="SithWM">
+       <action name="Restart"><execute>
+        sithwm		</execute>
+       </action>
+      </item>
+      <item label="PekWM">
+       <action name="Restart"><execute>
+        pekwm</execute>
+       </action>
+      </item>
+      <item label="Awesome">
+       <action name="Restart"><execute>
+        awesome</execute>
+       </action>
+      </item>
+   </menu>
+ </menu>
+
+           	    <!--        <item label="Beenden">
+            <action name="Exit"/>
+    </item>-->
+        <item label="Beenden">
+		<action name="Execute">
+			<execute>~/scripts/logout-dialog.sh</execute>
+		</action>
+        </item>
+    </menu>
+</openbox_menu>
