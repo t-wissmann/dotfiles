@@ -1,0 +1,131 @@
+# Menu
+menu.border.color: #111111
+menu.border.width: 0
+#menu.title.text.color: #5f971f
+menu.title.text.color: #504A3C
+menu.title.text.justify: Center
+
+menu.items.bg: Flat Gradient Vertical Border
+menu.items.bg.color: #FBF8F1
+menu.items.bg.colorTo: #F2EDE1
+menu.items.text.color: #111111
+menu.items.bg.border.color: #c3b69a
+menu.items.disabled.text.color: #9b9b9b
+
+# Obconf crashes!
+#menu.title.bg: Parentrelative
+menu.title.bg: Flat Gradient SplitVertical Border
+menu.title.bg.border.color: #A99975
+menu.title.bg.color.splitTo: #FEFEFE
+menu.title.bg.color: #FEFCF9
+menu.title.bg.colorTo: #F9F6ED
+menu.title.bg.colorTo.splitTo: #F4EEDD
+
+
+menu.items.active.bg:  Flat Gradient SplitVertical Border
+menu.items.active.bg.color.splitTo:   #6DB81A
+menu.items.active.bg.color:           #6AB219
+menu.items.active.bg.colorTo:         #65A51E
+menu.items.active.bg.colorTo.splitTo: #60981F
+menu.items.active.bg.border.color:    #224300
+menu.items.active.disabled.text.color: #dddddd
+menu.items.active.text.color: #ffffff
+
+
+menu.separator.color: #444444
+
+# Window focused
+# Style one: split vertical gradient
+window.active.border.color: #37521A
+window.active.title.bg:  Flat Gradient SplitVertical Border
+window.active.title.bg.color.splitTo:   #72C317
+window.active.title.bg.color:           #6DB81A
+window.active.title.bg.colorTo:         #6AB01C
+window.active.title.bg.colorTo.splitTo: #65A41D
+window.active.title.bg.border.color:    #78CF15
+# Style two: Standard-opensuse-metacity-like ;D
+window.active.title.bg: flat border gradient mirrorhorizontal
+window.active.title.bg.color: #65A41D
+window.active.title.bg.colorTo: #92CF4D
+window.active.title.bg.border.color: #AACF53
+
+window.active.label.bg: parentrelative
+window.active.label.text.color: #ffffff
+window.active.label.text.font:shadow=y:shadowtint=70:shadowoffset=1
+
+
+window.active.label.bg: Parentrelative
+window.active.label.text.color: #ffffff
+window.active.handle.bg: Raised Solid
+window.active.handle.bg.color: #4a4a4a
+
+window.active.grip.bg: Raised Solid
+window.active.grip.bg.color: #b4b4b4
+
+window.active.button.unpressed.bg: Parentrelative
+window.active.button.unpressed.image.color: #ffffff
+
+window.active.button.pressed.bg: Parentrelative
+window.active.button.pressed.image.color: #ced7ce
+
+window.active.button.disabled.bg: Parentrelative
+window.active.button.disabled.image.color: #353535
+
+window.active.button.toggled.bg: Parentrelative Border
+window.active.button.toggled.bg.border.color: #ced7ce
+window.active.button.toggled.image.color: #ced7ce
+
+
+# Window unfocused
+window.inactive.border: 0
+window.inactive.title.bg: Flat Gradient Vertical
+window.inactive.title.bg.colorTo:#FBF8F1
+window.inactive.title.bg.color: #FFFFFF
+window.inactive.title.separator.color: #FBF8F1
+
+window.inactive.label.bg: Parentrelative
+window.inactive.label.text.color: #40423C
+
+window.inactive.handle.bg: Flat Solid
+window.inactive.handle.bg.color: #F9FBF6
+
+window.inactive.grip.bg: Flat Solid
+window.inactive.grip.bg.color: #A5BD7B
+
+window.inactive.button.unpressed.bg: Parentrelative
+window.inactive.button.unpressed.image.color: #686868
+
+window.inactive.button.pressed.bg: Parentrelative
+window.inactive.button.pressed.image.color: #686868
+
+window.inactive.button.disabled.bg: Parentrelative
+window.inactive.button.disabled.image.color: #686868
+
+window.inactive.button.toggled.bg: Parentrelative
+window.inactive.button.toggled.bg.color: #686868
+
+# OSD Highlight inactive
+osd.unhilight.bg: Flat Solid Border
+osd.unhilight.bg.color: #E8E8E8
+osd.unhilight.bg.border.color: #FFFFFF
+# OSD Highlight active
+osd.hilight.bg: Flat VerticalGradient Border
+osd.hilight.bg.color: #60981F
+osd.hilight.bg.colorTo: #91C950
+osd.hilight.bg.border.color: #78CF15
+
+# Everything else
+border.width: 1
+padding.width: 2
+border.color: #2c2c2c
+menu.overlap.x: 0
+menu.overlap.y: -19
+window.client.padding.width: 1
+window.client.padding.height: 0
+window.handle.width: 1
+
+# Fonts
+window.inactive.label.text.font:
+window.label.text.justify: center
+menu.items.font:
+menu.title.text.font:

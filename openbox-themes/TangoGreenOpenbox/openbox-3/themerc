@@ -1,0 +1,180 @@
+# Tango Green Openbox 
+# Menu
+menu.border.color: #000000
+menu.title.bg: Flat Gradient Vertical Border
+menu.title.border.width: 0
+menu.title.bg.color.splitTo: #5a5a5a
+menu.title.bg.colorTo: #4f4f4f
+menu.title.bg.color: #404040
+menu.title.bg.colorTo.splitTo: #303030
+menu.title.bg.border.color: #797979
+menu.title.text.color: #C9E7AB
+menu.title.text.justify: Center
+
+menu.items.bg: Flat Gradient Vertical Border
+menu.items.bg.color: #444444
+menu.items.bg.colorTo: #313131
+menu.items.text.color: #EFEFEF
+menu.items.bg.border.color: #797979
+menu.items.disabled.text.color: #9b9b9b
+
+menu.items.active.bg: Flat Gradient Vertical Border
+menu.items.active.bg.color: #A7BD80
+menu.items.active.bg.colorTo: #BDD199
+menu.items.active.text.color: #000000
+menu.items.active.bg.border.color: #EBF5D9
+menu.items.active.disabled.text.color: #dddddd
+
+menu.separator.color: #999999
+
+# Window focused
+window.active.title.bg: Flat Gradient Vertical Border
+window.active.title.bg.color: #2f2f2f
+window.active.title.bg.colorTo: #4B4B4B
+window.active.title.bg.border.color: #4B4B4B
+window.active.border.color: #2B2B2B
+window.active.title.separator.color: #4B4B4B
+
+window.active.label.bg: ParentRelative
+window.active.label.bg.color: #444444
+window.active.label.text.color: #C9E7AB
+
+window.active.handle.bg: Flat Gradient Vertical
+window.active.handle.bg.color: #2B445D
+window.active.handle.bg.colorTo: #2B445D
+
+window.active.grip.bg: ParentRelative
+window.active.grip.bg.color: #4a4a4a
+
+window.active.button.unpressed.bg: Parentrelative
+window.active.button.unpressed.image.color: #efefef
+
+window.active.button.unpressed.bg: Flat Solid
+window.active.button.unpressed.bg.color: #2E2B2E
+window.active.button.unpressed.bg.border.color: red
+
+window.active.button.hover.bg: Parentrelative
+window.active.button.hover.image.color: #ffffff
+
+window.active.button.hover.bg: Flat Solid
+window.active.button.hover.bg.color: #000000
+window.active.button.hover.bg.border.color: #000000
+
+
+window.active.button.pressed.image.color: #C9DEA1
+#window.active.button.pressed.image.color: #000000
+window.active.button.pressed.bg: Flat Gradient Vertical
+window.active.button.pressed.bg.color: #000000
+window.active.button.pressed.bg.colorTo: #202020
+window.active.button.pressed.bg.border.color: #000000
+
+window.active.button.disabled.bg: Flat Solid
+window.active.button.disabled.image.color: #646464
+window.active.button.disabled.bg.color: #2E2B2E
+
+window.active.button.toggled.image.color #E3F4C1
+window.active.button.toggled.bg: Flat Gradient Vertical
+window.active.button.toggled.bg.color: #000000
+window.active.button.toggled.bg.colorTo: #202020
+window.active.button.toggled.bg.border.color: #000000
+
+
+# Window unfocused
+window.inactive.title.bg: Flat Gradient Vertical Border
+window.inactive.title.bg.color: #2f2f2f
+window.inactive.title.bg.colorTo: #4B4B4B
+window.inactive.title.bg.border.color: #4B4B4B
+window.inactive.border.color: #2B2B2B
+window.inactive.title.separator.color: #4B4B4B
+
+window.inactive.label.bg: ParentRelative
+window.inactive.label.bg.color: #444444
+window.inactive.label.text.color: #cfcfcf
+
+window.inactive.handle.bg: Flat Gradient Vertical
+window.inactive.handle.bg.color: #2B445D
+window.inactive.handle.bg.colorTo: #2B445D
+
+window.inactive.grip.bg: ParentRelative
+window.inactive.grip.bg.color: #4a4a4a
+
+window.inactive.button.unpressed.bg: Parentrelative
+window.inactive.button.unpressed.image.color: #cfcfcf
+
+window.inactive.button.unpressed.bg: Flat Solid
+window.inactive.button.unpressed.bg.color: #2E2B2E
+window.inactive.button.unpressed.bg.border.color: red
+
+window.inactive.button.hover.bg: Parentrelative
+window.inactive.button.hover.image.color: #ffffff
+
+window.inactive.button.hover.bg: Flat Solid
+window.inactive.button.hover.bg.color: #000000
+window.inactive.button.hover.bg.border.color: #000000
+
+
+window.inactive.button.pressed.image.color: #ced7ce
+#window.inactive.button.pressed.image.color: #000000
+window.inactive.button.pressed.bg: Flat Gradient Vertical
+window.inactive.button.pressed.bg.color: #000000
+window.inactive.button.pressed.bg.colorTo: #202020
+window.inactive.button.pressed.bg.border.color: #000000
+
+window.inactive.button.disabled.bg: Flat Solid
+window.inactive.button.disabled.image.color: #646464
+window.inactive.button.disabled.bg.color: #2E2B2E
+
+window.inactive.button.toggled.image.color: #D4DEC1
+window.inactive.button.toggled.bg: Flat Gradient Vertical
+window.inactive.button.toggled.bg.color: #000000
+window.inactive.button.toggled.bg.colorTo: #202020
+window.inactive.button.toggled.bg.border.color: #000000
+
+# OSD Background
+osd.bg: Flat Gradient SplitVertical
+osd.bg.color.splitTo: #FFFFFF
+osd.bg.color: #EBEBEB
+osd.bg.colorTo: #DADADA
+osd.bg.colorTo.splitTo: #BFBFBF
+osd.bg.border.color: #FFFFFF
+osd.label.text.color: #2F2F2F
+osd.border.color: #454545
+osd.border.width: 1
+# OSD Background version 2
+osd.bg: Flat Gradient Vertical Border
+osd.bg.color: #242424
+osd.bg.colorTo: #343434
+osd.bg.border.color: #7b7b7b
+osd.label.text.color: #cFcFcF
+osd.border.color: #000000
+osd.border.width: 1
+# OSD Highlight inactive
+osd.unhilight.bg: Flat Solid Border
+osd.unhilight.bg.color: #E8E8E8
+osd.unhilight.bg.border.color: #FFFFFF
+# OSD Highlight active
+osd.hilight.bg: Flat Gradient Vertical Border
+osd.hilight.bg.color: #77a44a
+osd.hilight.bg.colorTo: #9AB87D
+osd.hilight.bg.border.color: #C1D4A6
+
+# Everything else
+border.width: 1
+padding.width: 2
+padding.height: 1
+window.handle.width: 0
+window.client.padding.width: 0
+window.client.padding.height: 0
+window.active.client.color:  #77a44a
+window.inactive.client.color:  #77a44a
+border.color: #2c2c2c
+menu.overlap.x: -5
+menu.overlap.y: -18
+
+# Fonts
+#window.active.label.text.font: shadow=y:shadowtint=40:shadowoffset=1
+window.label.text.justify: Center
+window.active.label.text.font: 
+window.inactive.label.text.font: 
+menu.items.font:
+menu.title.text.font:
