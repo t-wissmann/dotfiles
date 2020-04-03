@@ -43,7 +43,7 @@ function create_link() {
         origfile_aligned=$(printf "%${origfile_width}s" "$origfile")
         echo -e "$color_link LINKING  $color_source $origfile_aligned" \
                 "$color_link=> $color_target$targetpath$color_default"
-        [ "$dryrun" = 0 ] && ln -n -f -s "$absolutepath" "$targetpath" || return 1
+        [ "$dryrun" = 0 ] && ln -n --relative -f -s "$absolutepath" "$targetpath" || return 1
     fi
     return 0
 }
