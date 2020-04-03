@@ -118,8 +118,20 @@ hc load web     '(clients max:0)'
 #hc load mail    '(split vertical:0.200000:1 (clients horizontal:0) (clients max:0))'
 hc load doc     '(clients max:0)'
 
-hc keybind "$Mod-period" use_index +1 --skip-visible
-hc keybind "$Mod-comma"  use_index -1 --skip-visible
+hc keybind "$Mod-period"    use_index +1 --skip-visible
+hc keybind "$Mod-comma"     use_index -1 --skip-visible
+hc keybind "Ctrl-Alt-l"     use_index +1 --skip-visible
+hc keybind "Ctrl-Alt-h"     use_index -1 --skip-visible
+hc keybind "Ctrl-Alt-Right" use_index +1 --skip-visible
+hc keybind "Ctrl-Alt-Left"  use_index -1 --skip-visible
+for keyidx in l,+1 Right,+1 h,-1 Left,-1 ; do
+    key=${keyidx%,*}
+    idx=${keyidx#*,}
+    hc keybind "Ctrl-Alt-Shift-$key" \
+        substitute W clients.focus.winid \
+            chain , move_index $idx --skip-visible \
+                  , jumpto W
+done
 hc keybind $Mod-Escape use_previous
 hc keybind XF86Eject spawn eject -T
 
@@ -141,6 +153,7 @@ hc keybind $Mod-space                                                           
             or , and . compare tags.focus.curframe_wcount = 2                   \
                      . cycle_layout +1 vertical horizontal max vertical grid    \
                , cycle_layout +1
+
 
 # resizing
 RESIZESTEP=0.02
