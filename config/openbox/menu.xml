@@ -79,8 +79,8 @@
         VirtualBox</execute></action></item>
        <item label="Dateimanager"><action name="Execute"><execute>
         thunar</execute></action></item>
-       <item label="Konsole"><action name="Execute"><execute>
-        ~/scripts/terminal.sh</execute></action></item>
+       <item label="Xterm"><action name="Execute"><execute>
+        xterm</execute></action></item>
 	</menu>
 
 	<menu id="games-menu" label="Spiele">
