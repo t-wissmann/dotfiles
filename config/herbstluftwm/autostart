@@ -536,12 +536,9 @@ herbstclient set tree_style '╾│ ├╰╼─╮'
 hc unrule -F
 hc rule focus=on
 hc rule class=Totem tag=video index=/ focus=off
-hc rule class=Gmrun pseudotile=on focus=on
-hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on
-hc rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on
-hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off
+hc rule class=Gmrun floating=on focus=on
 
-hc rule class='logout-dialog' pseudotile=on focus=on
+hc rule class='logout-dialog' floating=on focus=on
 hc rule instance=irc tag=irc
 hc rule instance=finch tag=im
 hc rule instance=mutt tag=mail
@@ -549,24 +546,8 @@ hc rule class=Do instance=Do manage=off
 # do not manage audacity tooltips
 hc rule class=Audacity instance=Audacity title='' manage=off
 hc rule class=qutebrowser keymask='Mod4[+]backslash' # use own pass-dmenu in qutebrowser
-
-# GIMP
-# ensure there is a gimp tag
-#hc add gimp
-#hc load gimp '
-#(split horizontal:0.850000:0
-#  (split horizontal:0.200000:1
-#    (clients vertical:0)
-#    (clients grid:0))
-#  (clients vertical:0))
-#'               # load predefined layout
-# center all other gimp windows on gimp tag
-hc rule class=Gimp tag=gimp index=01 pseudotile=on
-hc rule class=Gimp windowrole~'gimp-(image-window|toolbox|dock)' \
-    pseudotile=off
-hc rule class=Gimp windowrole=gimp-toolbox focus=off index=00
-hc rule class=Gimp windowrole=gimp-dock focus=off index=1
-hc rule title=Unbenannt class=Chromium pseudotile=on # make chromium menus pseudotile
+hc rule class='Wrapper-2.0' floating=on # calendar of the xfce4-panel
+hc rule class='Gcolor2' floating=on
 
 # Instant messenger
 
