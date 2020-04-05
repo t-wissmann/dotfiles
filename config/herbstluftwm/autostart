@@ -545,7 +545,7 @@ hc rule instance=mutt tag=mail
 hc rule class=Do instance=Do manage=off
 # do not manage audacity tooltips
 hc rule class=Audacity instance=Audacity title='' manage=off
-hc rule class=qutebrowser keymask='Mod4[+]backslash' # use own pass-dmenu in qutebrowser
+hc rule class=qutebrowser keys_inactive='Mod4[+]backslash' # use own pass-dmenu in qutebrowser
 hc rule class='Wrapper-2.0' floating=on # calendar of the xfce4-panel
 hc rule class='Gcolor2' floating=on
 
