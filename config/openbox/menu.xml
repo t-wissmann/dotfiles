@@ -184,9 +184,12 @@
             <action name="Exit"/>
     </item>-->
         <item label="Beenden">
+            <action name="Exit"/>
+        <!--
 		<action name="Execute">
-			<execute>~/scripts/logout-dialog.sh</execute>
+			<execute>openbox --exit</execute>
 		</action>
+        -->
         </item>
     </menu>
 </openbox_menu>
