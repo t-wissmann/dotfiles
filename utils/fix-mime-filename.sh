@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 oldname="$1"
-newname=$(perl -MEncode=from_to -pe 'from_to $_, "MIME-Header", "iso-8859-1"' <<< "$oldname")
+newname=$(perl -MEncode=from_to -pe 'from_to $_, "MIME-Header", "utf-8"' <<< "$oldname")
 
 ::() {
     echo ":: $*" >&2
