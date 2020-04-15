@@ -13,15 +13,16 @@ if ! [[ "$file" =~ ^[/] ]] ; then
 fi
 filebase="${file##*/}"
 
-if [ -S "$socket" ] ; then
-    # if socket already exists, communicate with the mpv instance
+if [ -S "$socket" ] && [ -n "$(pidof mpv)$" ] ; then
+    # if socket already exists and mpv is still running,
+    # communicate with the mpv instance
     cat <<EOF | socat - "$socket"
 loadfile "${file//\"/\\\"}" append
 show_text "+= ${filebase//\"/\\\"}"
 EOF
 else
     # otherwise, start mpd
-    mpv --keep-open=yes --force-window=immediate --input-unix-socket="$socket" "$@"
+    mpv --keep-open=yes --force-window=immediate --input-unix-socket="$socket" "$@" || true
     # and clean up the socket afterwards
     rm "$socket"
 fi
