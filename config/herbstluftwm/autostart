@@ -259,7 +259,8 @@ EOF
 fi
 
 # some settings
-hc set focus_follows_mouse 1
+hc set focus_follows_mouse on
+hc set hide_covered_windows on
 
 ### COLORS ###
 colors_thin_some_color() {
@@ -534,7 +535,7 @@ herbstclient set tree_style '╾│ ├╰╼─╮'
 
 ### RULES ###
 hc unrule -F
-hc rule focus=on
+hc rule focus=on index=e
 hc rule class=Totem tag=video index=/ focus=off
 hc rule class=Gmrun floating=on focus=on
 
