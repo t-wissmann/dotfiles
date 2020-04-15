@@ -435,7 +435,7 @@ hc set frame_padding 0
 hc unlock
 }
 
-dark_green_theme() {
+green_i3_like_theme() {
 hc lock
 hc attr theme.tiling.reset 1
 hc attr theme.floating.reset 1
@@ -481,7 +481,7 @@ case "$HOSTNAME" in
         hc attr theme.normal.color '#2D2D2D'
         hc set frame_bg_active_color '#9fbc00'
         ;;
-    *) dark_green ;;
+    *) green_i3_like_theme ;;
 esac
 
 
