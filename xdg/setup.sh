@@ -24,7 +24,7 @@ desktop_entry() {
         prefix="urxvt +hold -e "
         terminal=false
     fi
-    local name="${3:-${1%% *}}"
+    local name="${1%% *}"
     mimetypes='' # ;-separated list of mimetypes
     if shift 3 ;then
         for mimetype in "$@" ; do
@@ -125,6 +125,9 @@ gui_app emacsclient\ -n\ -c\ --alternate-editor=\ '' \
     application/x-shellscript \
     application/ecmascript \
     application/javascript
+
+gui_app gvim \
+    application/csv
 
 Icon=x-office-document
 gui_app katarakt            \
