@@ -435,6 +435,41 @@ hc set frame_padding 0
 hc unlock
 }
 
+dark_green_theme() {
+hc lock
+hc attr theme.tiling.reset 1
+hc attr theme.floating.reset 1
+
+hc attr theme.color '#404040'
+hc attr theme.border_width 3
+hc attr theme.padding_top 5
+hc attr theme.inner_width 1
+hc attr theme.outer_width 1
+hc attr theme.outer_color '#606060'
+hc attr theme.inner_color '#606060'
+
+hc attr theme.active.inner_color '#74A171'
+hc attr theme.active.outer_color '#74A171'
+hc attr theme.active.color '#335D31'
+hc attr theme.urgent.color '#C71364'
+
+hc attr theme.floating.outer_width 1
+
+hc set frame_border_active_color '#404040'
+hc set frame_border_normal_color '#404040'
+hc set frame_bg_normal_color '#303030'
+hc set frame_bg_active_color '#86AB5F'
+hc set frame_border_width 1
+hc set frame_bg_transparent 1
+hc set frame_transparent_width 4
+hc set frame_active_opacity 50
+
+hc set smart_frame_surroundings 0
+hc set frame_padding 0
+
+hc unlock
+}
+
 # new colors
 case "$HOSTNAME" in
     x40)    colors_thin_red ;;
@@ -446,7 +481,7 @@ case "$HOSTNAME" in
         hc attr theme.normal.color '#2D2D2D'
         hc set frame_bg_active_color '#9fbc00'
         ;;
-    *) rezlooks_theme ;;
+    *) dark_green ;;
 esac
 
 
