@@ -21,6 +21,7 @@ alias rot25="tr '[B-ZAb-za]' '[A-Za-z]'"
 alias uns='unison -auto buero'
 alias urldecode=$'python2 -c "import sys, urllib as ul;\nfor line in sys.stdin: print ul.unquote_plus(line)"'
 alias urlencode=$'python2 -c "import sys, urllib as ul;\nfor line in sys.stdin: print ul.quote_plus(line)"'
+alias hc=herbstclient
 # fop is broken and always has been a mess...
 #alias asciidoc2pdf='JAVA_HOME=/usr/lib/jvm/java-7-openjdk a2x --xsltproc-opts="--stringparam alignment justify" -f pdf --fop -d article -a lang=de'
 
