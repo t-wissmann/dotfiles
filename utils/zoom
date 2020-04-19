@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+ZoomLauncher=/opt/zoom/ZoomLauncher
+
+if [[ "$(readlink /usr/bin/zoom)" = "$ZoomLauncher" ]] \
+    || [[ "$(readlink $(which zoom))" = "$ZoomLauncher" ]]
+then
+    echo "Error: /usr/bin/zoom or $(which zoom) is still active!"
+    exit 1
+fi
+exec firejail --quiet --profile=zoom "$ZoomLauncher"
