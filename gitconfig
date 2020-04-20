@@ -30,5 +30,5 @@
 [difftool]
         prompt = false
 [diff]
-	noprefix = true
+	noprefix = true # Warning: this breaks format-patch!
 # vim: noet

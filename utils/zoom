@@ -8,4 +8,4 @@ then
     echo "Error: /usr/bin/zoom or $(which zoom) is still active!"
     exit 1
 fi
-exec firejail --quiet --profile=zoom "$ZoomLauncher" "$@"
+exec firejail --quiet --profile=zoom -- "$ZoomLauncher" "$@"
