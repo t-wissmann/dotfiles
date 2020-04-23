@@ -60,6 +60,7 @@ homedir=(
 files=(
     config/*[^~]
     config/qutebrowser/userscripts
+    config/qutebrowser/greasemonkey/
     finch-gntrc
     ${homedir[@]}
     ncmpcpp-config
@@ -78,6 +79,7 @@ relpath2target=(
     "s#^finch-gntrc#$HOME/.gntrc#"
     "s#^mplayer.conf#$HOME/.mplayer/config#"
     "s,^config/qutebrowser/userscripts,$HOME/.local/share/qutebrowser/userscripts,"
+    "s,^config/qutebrowser/greasemonkey,$HOME/.local/share/qutebrowser/greasemonkey,"
     "s#^config/\(.*\)\$#$HOME/.config/\1#"
     "s#^openbox-themes/\(.*\)\$#$HOME/.themes/\1#"
 )
