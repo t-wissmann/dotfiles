@@ -100,7 +100,7 @@ c.url.searchengines['map'] = 'http://openstreetmap.org/search?query={}'
 c.url.searchengines['discogs'] = 'http://www.discogs.com/search/?q={}&type=release'
 c.url.searchengines['maps'] = c.url.searchengines['map']
 c.url.searchengines['osm'] = c.url.searchengines['map']
-c.url.searchengines['amazon'] = 'http://www.amazon.de/s/field-keywords={}'
+c.url.searchengines['amazon'] = 'http://www.amazon.de/s?k={}'
 c.url.searchengines['duden'] = 'http://www.duden.de/suchen/dudenonline/{}'
 c.url.searchengines['python'] = 'file:///usr/share/doc/python/html/search.html?q={}&check_keywords=yes&area=default'
 c.url.searchengines['jpc'] = 'https://www.jpc.de/s/{}'  # TODO: replace by {quoted}

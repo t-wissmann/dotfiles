@@ -89,6 +89,16 @@ hc keybind Mod4-y spawn bash -c 'mpv --force-window=immediate --no-terminal --ke
 hc keybind $Mod-z spawn ~/.config/herbstluftwm/omnivim.py
 
 # tags
+if [[ $HOSTNAME = hoth ]] ; then
+BINDS=(
+    1:irc
+    2:vim
+    3:web
+    4:four
+    5:five
+    6:six
+)
+else
 BINDS=(
     1:irc
     2:vim
@@ -102,6 +112,7 @@ BINDS=(
     w:firefox
     e:tmux
 )
+fi
 
 hc silent attr tags.by-name.default && hc rename default "irc"
 for i in "${BINDS[@]}" ; do
