@@ -110,7 +110,7 @@ fix_hdmi_audio() {
 }
 
 element_height=5
-element_count=4
+element_count=5
 
 res=$(print_menu | rofi \
     -dmenu -sep '\0' -lines "$element_count" \

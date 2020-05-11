@@ -99,3 +99,6 @@ normpages() {
     local strokecount=$(pdftotext -l "${2:-1000000}" "$1" - | wc -m)
     bc -l <<< "$strokecount / 1500"
 }
+
+alias dfh="df -h | grep --color=none '^[/A-Z]'"
+alias mounth="mount | grep --color=none '^[/A-Z]'"
