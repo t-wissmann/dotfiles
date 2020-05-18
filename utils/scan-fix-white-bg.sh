@@ -5,4 +5,6 @@
     "$@"
 }
 
-:: mogrify -white-threshold '80%' "$@"
+THRESHOLD=${THRESHOLD:-80}
+
+:: mogrify -white-threshold "$THRESHOLD%" "$@"
