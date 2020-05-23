@@ -1,0 +1,23 @@
+[Unit]
+Description=Run /etc/rc.local on reboot and after suspend
+ConditionPathExists=/etc/rc.local
+After=suspend.target
+
+[Service]
+Type=oneshot
+ExecStart=/etc/rc.local start
+
+[Install]
+WantedBy=suspend.target multi-user.target
+#WantedBy=hibernate.target
+#WantedBy=hybrid-sleep.target
+
+## INSTALLATION:
+## ------------
+# copy this file to /etc/systemd/system/rc-local.service
+# systemctl daemon-reload
+# systemctl enable rc-local
+#
+# check that it is installed correctly:
+# systemctl status rc-local
+# (it also shows the output of /etc/rc.local)
