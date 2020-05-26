@@ -1,4 +1,5 @@
 Xft.dpi: 160
+!Xft.dpi: 120
 rofi.dpi: 160
 Xft.autohint: 0
 Xft.lcdfilter:  lcddefault
