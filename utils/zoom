@@ -8,7 +8,10 @@ then
     echo "Error: /usr/bin/zoom or $(which zoom) is still active!"
     exit 1
 fi
+
+# add a bin dir in the home:
 mkdir -p $HOME/.zoom-home/bin
+export PATH=$PATH:$HOME/bin
 
 if [[ $ZoomLauncher =~ /.* ]] ; then
     ln -svf $ZoomLauncher $HOME/.zoom-home/bin/zoom
