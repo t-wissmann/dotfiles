@@ -8,6 +8,8 @@ include globals.local
 noblacklist ${HOME}/.config/zoomus.conf
 noblacklist ${HOME}/.zoom
 
+env PATH=${PATH}:${HOME}/bin
+
 # for SSO via firefox:
 noblacklist ${HOME}/.mozilla
 noblacklist ${HOME}/.cache/mozilla

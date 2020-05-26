@@ -8,5 +8,10 @@ then
     echo "Error: /usr/bin/zoom or $(which zoom) is still active!"
     exit 1
 fi
-mkdir -p $HOME/.zoom-home
+mkdir -p $HOME/.zoom-home/bin
+
+if [[ $ZoomLauncher =~ /.* ]] ; then
+    ln -svf $ZoomLauncher $HOME/.zoom-home/bin/zoom
+fi
+
 exec firejail --quiet --profile=zoom --private=$HOME/.zoom-home -- "$ZoomLauncher" "$@"
