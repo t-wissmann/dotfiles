@@ -1,0 +1,72 @@
+#!/usr/bin/env python3
+import sys
+import requests
+import re
+import os
+import json
+
+class MyGitlabApi:
+    def __init__(self, server, token):
+        self.token = token
+        self.server = server
+
+    def call(self, path, params = {}):
+        r = requests.get('https://{}/api/v4/{}'.format(self.server, path),
+                         headers={'PRIVATE-TOKEN': self.token},
+                         params=params)
+        return json.loads(r.text)
+
+    def call_all_pages(self, path, params = {}):
+        r = requests.get('https://{}/api/v4/{}'.format(self.server, path),
+                         headers={'PRIVATE-TOKEN': self.token},
+                         params=params)
+        num_pages = int(r.headers['X-Total'])
+        if num_pages <= 1:
+            return json.loads(r.text)
+        else:
+            objs = json.loads(r.text)
+            for p in range(2, num_pages):
+                print("Querying page {}...".format(p))
+                params['page'] = str(p)
+                objs += self.call(path, params)
+            return objs
+
+def main():
+    if len(sys.argv) < 2:
+        print("""usage: {} gitlab-project-url""".format(sys.argv[0]))
+        print("""prints the highest job id for the given gitlab project""")
+        print("""(it will remove job artifacts at some point)""")
+        sys.exit(1)
+    url = sys.argv[1]
+    url_re = re.compile('([^:]*://)?([^/]*)/([^?]*)?.*$')
+    token = os.environ['TOKEN']
+    m = url_re.match(url)
+    server = m.group(2)
+    project_path = m.group(3)
+    print("server = {}, project = {}".format(server, project_path))
+    gitlab = MyGitlabApi(server, token)
+    projects = gitlab.call_all_pages('projects', {'owned':'yes'})
+    proj_id = None
+    for p in projects:
+        if p['path_with_namespace'] == project_path:
+            #print(p)
+            proj_id = p['id']
+    if proj_id is None:
+        print("Error: no project id found for {}".format(project_path),
+              file=sys.stderr)
+        sys.exit(1)
+    print("project id: {}".format(proj_id))
+
+    jobs = gitlab.call(f'projects/{proj_id}/jobs')
+    highest_job_id = 1
+    for j in jobs:
+        jid = int(j['id'])
+        highest_job_id = max(highest_job_id, jid)
+    print('highest job id: {}'.format(highest_job_id))
+    # for job_id in $(seq $start_job $end_job)
+    # do
+    #    curl --request POST --header "PRIVATE-TOKEN:${token}" \
+    #   "https://${server}/api/v4/projects/${project_id}/jobs/${job_id}/erase"
+    # done
+
+main()
