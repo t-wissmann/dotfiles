@@ -3,5 +3,5 @@
 
 
 [big-cache]
-cache=123400
-demuxer-readahead-secs=20
+#cache=123400
+#demuxer-readahead-secs=20
