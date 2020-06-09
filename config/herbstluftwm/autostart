@@ -17,6 +17,7 @@ xrdb -cpp cpp -merge ~/.Xdefaults
 if ! echo "$PATH"|tr ':' '\n'|grep -x "$HOME/bin" > /dev/null ; then
     hc setenv PATH "$HOME/bin:$PATH"
 fi
+# alternatively, one can check for [[ $PATH =~ (^|.*:)$HOME/bin(:.*|$) ]]
 
 if [[ -f /usr/lib/qt/plugins/platformthemes/libqt5gtk2.so ]] ; then
     hc setenv QT_QPA_PLATFORMTHEME qt5gtk2
