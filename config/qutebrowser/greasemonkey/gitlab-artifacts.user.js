@@ -4,8 +4,6 @@
 // @description  Get permalinks to artifact files independent of the job ID
 // @author       Thorsten Wißmann
 // ==/UserScript==
-//
-// currently, this only works for the master branch.
 
 function addArtifactLink() {
     alert('gitlab');
@@ -34,7 +32,27 @@ function extractJobName() {
     return undefined;
 }
 
-function getPermalinks(jobname) {
+function extractBranchName() {
+    for (let headcont of document.getElementsByClassName("header-content")) {
+        for (let refname of document.getElementsByClassName("ref-name")) {
+            if (!('href' in refname)) {
+                continue;
+            }
+            // the branch name is in the text content
+            var branchname = refname.textContent;
+            // but to be sure we have the right a-tag, we double
+            // check with the url:
+            var regexp = new RegExp("/-/commits/" + branchname, "i");
+            var m = refname.href.match(regexp);
+            if (m != undefined) {
+                return branchname;
+            }
+        }
+    }
+    return undefined;
+}
+
+function getPermalinks(jobname, branchname) {
     var url = window.location.href;
     // in the url we have to replace the
     //      /-/jobs/JOBNUMBER/artifacts/
@@ -42,7 +60,7 @@ function getPermalinks(jobname) {
     //      /-/jobs/artifacts/master/
     // and append ?job=JOBNAME
     view_url = url.replace(/\/-\/jobs\/[0-9]+\/artifacts\//i,
-                       "/-/jobs/artifacts/master/")
+                       "/-/jobs/artifacts/" + branchname + "/")
                       + "?job=" + jobname;
     obj = [
         { title: "View",
@@ -81,9 +99,13 @@ function addLinks(links) {
  */
 (function() {
     if (isGitlab()) {
-        var jobname = extractJobName()
+        var jobname = extractJobName();
+        var branchname = extractBranchName();
+        if (branchname == undefined) {
+            branchname = 'master';
+        }
         if (jobname != undefined) {
-            addLinks(getPermalinks(jobname));
+            addLinks(getPermalinks(jobname, branchname));
         }
     }
 })();
