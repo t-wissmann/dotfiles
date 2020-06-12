@@ -9,7 +9,7 @@ put_notes() {
 }
 
 m() {
-    playerctl metadata "$1"
+    ~/dotfiles/menu/playerctl.sh metadata "$1"
 }
 
 msg_prefix=${msg_prefix:-np: $(put_notes) }
