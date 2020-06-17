@@ -31,8 +31,12 @@ alias hc=herbstclient
 }
 
 asciidoc2pdf() {
+    header='
+    \DeclareUnicodeCharacter{2009}{~} % fixed with space that appear around -- in asciidoc
+    '
     :: asciidoc -b docbook - < "$1" \
         | :: pandoc --from docbook - \
+            --include-in-header=<(echo "$header") \
             -V 'geometry:margin=1in' \
             -V papersize:a4 \
             -V lang:de-DE \
