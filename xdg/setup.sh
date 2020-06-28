@@ -162,6 +162,9 @@ EntryName="Skype Web (in Chromium)"
 gui_app "chromium --incognito https://web.skype.com"
 xdg-mime default Thunar-folder-handler.desktop inode/directory
 
+xdg-mime default libreoffice-base.desktop \
+    application/vnd.oasis.opendocument.text
+
 # Check your mail-setup with:
 # xdg-open 'mailto:test@example.de?cc=C1&cc=C2&subject=subject'
 gitroot=$(git rev-parse --show-toplevel)
