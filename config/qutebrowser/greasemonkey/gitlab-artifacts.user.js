@@ -52,8 +52,7 @@ function extractBranchName() {
     return undefined;
 }
 
-function getPermalinks(jobname, branchname) {
-    var url = window.location.href;
+function getPermalinks(jobname, branchname, url) {
     // in the url we have to replace the
     //      /-/jobs/JOBNUMBER/artifacts/
     // by
@@ -81,15 +80,37 @@ function addLinks(links) {
     for (let div of document.getElementsByTagName("div")) {
         if (div.classList.contains("tree-controls")
           || div.classList.contains("file-actions")) {
-            for (l of links) {
-                var a = document.createElement('a')
-                var linkText = document.createTextNode(l.title);
-                a.appendChild(linkText);
-                a.href = l.url;
-                a.classList.add('btn', 'btn-default');
-                a.style.marginLeft = '5px';
-                div.appendChild(a);
-            }
+            addLinksToNode(links, div);
+        }
+    }
+}
+
+function addLinksToNode(links, parentNode) {
+    for (l of links) {
+        var a = document.createElement('a')
+        var linkText = document.createTextNode(l.title);
+        a.appendChild(linkText);
+        a.href = l.url;
+        a.classList.add('btn', 'btn-default');
+        a.style.marginLeft = '5px';
+        parentNode.appendChild(a);
+    }
+}
+
+function addLinksToDirectoryEntries(jobname, branchname) {
+    for (let tr of document.getElementsByClassName("tree-item")) {
+        if (!tr.hasAttribute('data-link')) {
+            continue;
+        }
+        var url = tr.getAttribute('data-link');
+        /* add it to the last column */
+        var lastTd = undefined;
+        for (let td of tr.getElementsByTagName('td')) {
+            lastTd = td;
+        }
+        if (lastTd != undefined) {
+            var links = getPermalinks(jobname, branchname, url);
+            addLinksToNode(links, lastTd);
         }
     }
 }
@@ -105,7 +126,8 @@ function addLinks(links) {
             branchname = 'master';
         }
         if (jobname != undefined) {
-            addLinks(getPermalinks(jobname, branchname));
+            addLinksToDirectoryEntries(jobname, branchname);
+            addLinks(getPermalinks(jobname, branchname, window.location.href));
         }
     }
 })();
