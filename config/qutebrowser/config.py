@@ -21,7 +21,7 @@ c.input.insert_mode.plugins = True
 
 c.content.headers.accept_language = 'de-DE,en-US,en'
 c.content.geolocation = False
-c.content.host_blocking.whitelist = ["piwik.org", "partners.webmasterplan.com", "track.webgains.com"]
+c.content.host_blocking.whitelist = ["piwik.org", "partners.webmasterplan.com", "track.webgains.com", "www.googleadservices.com"]
 
 c.completion.web_history.max_items = 500
 c.completion.shrink = True
