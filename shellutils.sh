@@ -33,7 +33,10 @@ alias hc=herbstclient
 asciidoc2pdf() {
     header='
     \DeclareUnicodeCharacter{2009}{~} % fixed with space that appear around -- in asciidoc
+    \DeclareUnicodeCharacter{21D2}{\(\Rightarrow\)} % for some reason \ensuremath{} breaks here...
     '
+    #\usepackage{newunicodechar}
+    #\newunicodechar{⇒}{\ensuremath{\Rightarrow}}
     :: asciidoc -b docbook - < "$1" \
         | :: pandoc --from docbook - \
             --include-in-header=<(echo "$header") \
