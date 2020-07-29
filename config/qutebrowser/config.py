@@ -105,6 +105,7 @@ c.url.searchengines['duden'] = 'http://www.duden.de/suchen/dudenonline/{}'
 c.url.searchengines['python'] = 'file:///usr/share/doc/python/html/search.html?q={}&check_keywords=yes&area=default'
 c.url.searchengines['jpc'] = 'https://www.jpc.de/s/{}'  # TODO: replace by {quoted}
 c.url.searchengines['kanji'] = 'https://en.wiktionary.org/wiki/{}#Japanese'
+c.url.searchengines['jp'] = 'https://www.wadoku.de/search/{}'
 
 c.aliases['images'] = 'hint images tab'
 c.aliases['tabopen'] = 'open -t'
@@ -159,7 +160,8 @@ c.colors.prompts.bg = '#625B00'
 guifont = 'bold 8pt "Bitstream Vera Sans" bold'
 c.fonts.completion.category = guifont
 c.fonts.completion.entry = guifont
-c.fonts.tabs = guifont
+c.fonts.tabs.selected = guifont
+c.fonts.tabs.unselected = guifont
 c.fonts.statusbar = 'bold 8pt "Bitstream Vera Sans"'
 c.fonts.downloads = '8pt bold "Bitstream Vera Sans"'
 c.fonts.hints = 'bold 12px "Bitstream Vera Sans"'
