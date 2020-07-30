@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+
+set -e
+
+::() {
+    echo -e "\e[1;33m:: \e[0;32m$*\e[0m" >&2
+    "$@"
+}
+
+# try to fetch new branches
+:: git fetch -p || true
+
+remotebranch="$1"
+
+if [[ -z "$remotebranch" ]] ; then
+    # if no branch is given, take one using fzf
+    remotebranch=$(git branch -r \
+                    --format '%(committerdate:format:%Y-%m-%d) %(refname)' \
+                   | sed 's, refs/remotes/, ,'|sort -r|fzf --no-sort|cut -d' ' -f2)
+fi
+
+if [[ "$remotebranch" = "--clean" ]] ; then
+    echo "Cleaning remote branches.."
+    for branch in $(git branch --list | sed 's,..,,') ; do
+        fromPR=$(git config branch."$branch".from-pull-request) || continue
+        if [[ "$fromPR" = true ]] ; then
+            remote=$(git config branch."$branch".remote) || true
+            # git fetch -p removes this config entry if the branch is deleted
+            # on the remote side
+            if [[ -z "$remote" ]] ; then
+                echo "Removing PR $branch because it has no more remote"
+                git branch -D "$branch"
+            fi
+        fi
+    done
+    exit 0
+fi
+
+branches=$(git branch --contains refs/remotes/"$remotebranch" | sed 's,^..,,')
+
+if [[ -n "$branches" ]] ; then
+    echo "$remotebranch is already contained in: $branches"
+else
+    # if remote is something like 'origin/foo', then run 'git checkout foo'
+    localbranchname="${remotebranch#*/}"
+    exists=no
+    if git branch --list | sed 's,^..,,' | grep -x "$localbranchname" > /dev/null ; then
+        echo "Using existing branch $localbranchname"
+        exists=yes
+    fi
+    git checkout "$localbranchname"
+    if [[ "$exists" = no ]] ; then
+        git config branch."$localbranchname".from-pull-request true
+    fi
+fi
+
+
