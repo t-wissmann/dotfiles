@@ -82,7 +82,7 @@ setWindowTitle(){
 }
 
 px() {
-    ps aux|grep "$*"
+    ps aux|grep -i "$*"
 }
 
 # add colors for less when viewing manpages
