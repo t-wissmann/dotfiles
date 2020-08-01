@@ -588,6 +588,7 @@ herbstclient set tree_style '╾│ ├╰╼─╮'
 ### RULES ###
 hc unrule -F
 hc rule focus=on index=e
+hc rule floatplacement=smart
 hc rule class=Totem tag=video index=/ focus=off
 hc rule class=Gmrun floating=on focus=on
 
