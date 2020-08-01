@@ -26,10 +26,12 @@ if [[ "$remotebranch" = "--clean" ]] ; then
         fromPR=$(git config branch."$branch".from-pull-request) || continue
         if [[ "$fromPR" = true ]] ; then
             remote=$(git config branch."$branch".remote) || true
+            merge=$(git config branch."$branch".merge) || true
+            remotebranchname="$remote/${merge#refs/heads/}"
             # git fetch -p removes this config entry if the branch is deleted
             # on the remote side
-            if [[ -z "$remote" ]] ; then
-                echo "Removing PR $branch because it has no more remote"
+            if git branch --remote | grep -x "  $remotebranchname" > /dev/null ; then
+                echo "Removing PR $branch because its remote was removed"
                 git branch -D "$branch"
             fi
         fi
