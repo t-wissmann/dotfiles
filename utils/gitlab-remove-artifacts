@@ -10,11 +10,16 @@ class MyGitlabApi:
         self.token = token
         self.server = server
 
-    def call(self, path, params = {}):
-        r = requests.get('https://{}/api/v4/{}'.format(self.server, path),
-                         headers={'PRIVATE-TOKEN': self.token},
-                         params=params)
-        return json.loads(r.text)
+    def call(self, path, params = {}, dry_run=False):
+        url = 'https://{}/api/v4/{}'.format(self.server, path)
+        if dry_run:
+            print("DRY-RUN: Querying {}".format(url), file=sys.stderr)
+            return {}
+        else:
+            r = requests.get(url,
+                             headers={'PRIVATE-TOKEN': self.token},
+                             params=params)
+            return json.loads(r.text)
 
     def call_all_pages(self, path, params = {}):
         r = requests.get('https://{}/api/v4/{}'.format(self.server, path),
@@ -63,6 +68,10 @@ def main():
         jid = int(j['id'])
         highest_job_id = max(highest_job_id, jid)
     print('highest job id: {}'.format(highest_job_id))
+    for job_id in range(1, highest_job_id):
+        if job_id % 100 == 0:
+            print(f'job_id={job_id}...', file=sys.stderr)
+        gitlab.call(f'projects/{proj_id}/jobs/{job_id}/erase', dry_run=False)
     # for job_id in $(seq $start_job $end_job)
     # do
     #    curl --request POST --header "PRIVATE-TOKEN:${token}" \
