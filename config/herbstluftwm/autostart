@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# this is an simple config to herbstluftwm
-
-pad="0 0 0 0"
-
 function hc() {
     herbstclient "$@"
 }
