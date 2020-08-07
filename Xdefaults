@@ -34,10 +34,10 @@ URxvt.cursorBlink: true
 !#define SCALEBOLDFONT(X) xft:inconsolata:bold:size=X
 #define ENVYSCALEFONT(X) xft:Envy Code R:size=X
 #define ENVYSCALEBOLDFONT(X) xft:Envy Code R:bold:size=X
-#define FONT     -misc-fixed-medium-r-semicondensed-*-13-*-*-*-*-*-iso10646-1
-#define BOLDFONT -misc-fixed-bold-r-semicondensed-*-13-*-*-*-*-*-iso10646-1
-!#define FONT     SCALEFONT(9)
-!#define BOLDFONT SCALEBOLDFONT(9)
+!#define FONT     -misc-fixed-medium-r-semicondensed-*-13-*-*-*-*-*-iso10646-1
+!#define BOLDFONT -misc-fixed-bold-r-semicondensed-*-13-*-*-*-*-*-iso10646-1
+#define FONT     SCALEFONT(9)
+#define BOLDFONT SCALEBOLDFONT(9)
 !URxvt.font: FONT
 !xft:PowerlineSymbols:pixelsize=11:minspace=False
 URxvt.font: FONT
