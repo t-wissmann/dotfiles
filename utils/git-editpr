@@ -30,7 +30,7 @@ if [[ "$remotebranch" = "--clean" ]] ; then
             remotebranchname="$remote/${merge#refs/heads/}"
             # git fetch -p removes this config entry if the branch is deleted
             # on the remote side
-            if git branch --remote | grep -x "  $remotebranchname" > /dev/null ; then
+            if ! git branch --remote | grep -x "  $remotebranchname" > /dev/null ; then
                 echo "Removing PR $branch because its remote was removed"
                 git branch -D "$branch"
             fi
