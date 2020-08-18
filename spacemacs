@@ -411,10 +411,10 @@ you should place your code here."
   ;; Turn off the tildes in the fringe
   (global-vi-tilde-fringe-mode -1)
   (setq server-temp-file-regexp "^/tmp/\\|/draft\\|/dev/shm/$")
-  ;; (add-hook 'LaTeX-mode-hook (lambda () (push
-  ;;                                        '("latexmk" "latexmk -pdf %s" TeX-run-Tex nil t
-  ;;                                          :help "Run latexmk on file")
-  ;;                                        TeX-command-list)))
+  (add-hook 'LaTeX-mode-hook (lambda () (push
+                                         '("latexmk" "latexmk -pdf %s" TeX-run-Tex nil t
+                                           :help "Run latexmk on file")
+                                         TeX-command-list)))
   (require 'magit-process)
   (defun git-svn-dcommit ()
     "Run git svn dcommit"
