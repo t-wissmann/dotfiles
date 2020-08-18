@@ -106,6 +106,8 @@ c.url.searchengines['python'] = 'file:///usr/share/doc/python/html/search.html?q
 c.url.searchengines['jpc'] = 'https://www.jpc.de/s/{}'  # TODO: replace by {quoted}
 c.url.searchengines['kanji'] = 'https://en.wiktionary.org/wiki/{}#Japanese'
 c.url.searchengines['jp'] = 'https://www.wadoku.de/search/{}'
+c.url.searchengines['doi'] = 'https://dx.doi.org/{}'
+c.url.searchengines['imdb'] = 'https://www.imdb.com/find?q={}&ref_=nv_sr_sm'
 
 c.aliases['images'] = 'hint images tab'
 c.aliases['tabopen'] = 'open -t'
