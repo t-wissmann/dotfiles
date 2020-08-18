@@ -37,10 +37,17 @@ while [[ -f "$pdf.pdf" ]] ; do
     pdf="${pdf}-ocr"
 done
 
+dpioption=""
+if [[ -n "$DPI" ]] ; then
+    # DPI=300 is mostly correct for scans
+    # this will be tokenized later, beware of spaces
+    dpioption="--dpi $DPI"
+fi
+
 # tesseract does not accept the .pdf extension anyway..
 cat <<EOF
-Running:   printf '%s\n' ${files[@]} | time tesseract -l $lang stdin "$pdf" pdf
+Running:   printf '%s\n' ${files[@]} | time tesseract $dpioption -l $lang stdin "$pdf" pdf
 EOF
 
-:: printf '%s\n' "${files[@]}" | :: tesseract -l "$lang" stdin "$pdf" pdf
+:: printf '%s\n' "${files[@]}" | :: tesseract $dpioption -l "$lang" stdin "$pdf" pdf
 
