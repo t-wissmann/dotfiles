@@ -23,7 +23,7 @@ function isGitlab() {
 function extractJobName() {
     for (let head of document.getElementsByTagName("head")) {
         for (let meta of document.getElementsByTagName("meta")) {
-            var m = meta.content.match(/Artifacts [^ ]+ ([^ ]+) \(#/i);
+            var m = meta.content.match(/· ([^ ]+) \(#[0-9]/i);
             if (m != undefined) {
                 return m[1]
             }
@@ -128,6 +128,8 @@ function addLinksToDirectoryEntries(jobname, branchname) {
         if (jobname != undefined) {
             addLinksToDirectoryEntries(jobname, branchname);
             addLinks(getPermalinks(jobname, branchname, window.location.href));
+        } else {
+            console.log("Could not extract jobname!");
         }
     }
 })();
