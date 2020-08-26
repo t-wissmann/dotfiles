@@ -3,6 +3,12 @@
 # if a urxvt is focused, then run the given command in the same pwd
 # as the child process of the focused urxvt
 
+add_as_arg=false
+if [[ "$1" == '--pwd-as-arg' ]] ; then
+    shift
+    add_as_arg=true
+fi
+
 ARGS=( "$@" )
 
 fallback() {
@@ -28,6 +34,11 @@ fi
 
 child_pwd=/proc/$(pgrep -P "$pid"|head -n 1)/cwd
 child_pwd=$(readlink -f "$child_pwd") || fallback
-cd "$child_pwd" || true
+
+if [[ "$add_as_arg" = 'true' ]] ; then
+    ARGS+=( "$child_pwd" )
+else
+    cd "$child_pwd" || true
+fi
 exec "${ARGS[@]}"
 

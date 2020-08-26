@@ -67,7 +67,7 @@ hc keybind $Mod-Shift-r reload
 hc keybind $Mod-Shift-c close
 ~/.config/herbstluftwm/closeorkill.sh
 hc keybind $Mod-Return spawn ~/dotfiles/utils/with-same-pwd urxvt
-hc keybind $Mod-Shift-Return spawn ~/dotfiles/utils/with-same-pwd thunar
+hc keybind $Mod-Shift-Return spawn ~/dotfiles/utils/with-same-pwd --pwd-as-arg dolphin
 hc keybind $Mod-x spawn rofi -columns 3 -show drun
 hc keybind $Mod-Shift-x spawn rofi -columns 3 -show run
 hc keybind $Mod-bracketleft spawn ~/git/rofi-bibbrowser/rofi-bibbrowser
