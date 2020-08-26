@@ -32,7 +32,9 @@ then
     fallback
 fi
 
-child_pwd=/proc/$(pgrep -P "$pid"|head -n 1)/cwd
+child_pid=$(pgrep -P "$pid"|head -n 1)
+[[ -n "$child_pid" ]] || fallback
+child_pwd=/proc/${child_pid}/cwd
 child_pwd=$(readlink -f "$child_pwd") || fallback
 
 if [[ "$add_as_arg" = 'true' ]] ; then
