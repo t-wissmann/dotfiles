@@ -231,3 +231,10 @@ pdfscissors
 pdftk
 pkgfile
 pkgbuild-introspection
+
+# dolphin / kde stuff
+dolphin
+dolphin-plugins
+ffmpegthumbs
+kdegraphics-thumbnailers
+konsole
