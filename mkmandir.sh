@@ -17,7 +17,7 @@ for d in "$MANDIR" "$MANDIR"/man{0..8} ; do
 done
 
 searchdir=(
-    ~/git/herbstluftwm/doc/
+    ~/git/herbstluftwm/build/doc/
     ~/git/qutebrowser/doc/
     ~/git/rofi/doc/
     ~/git/katarakt/doc/

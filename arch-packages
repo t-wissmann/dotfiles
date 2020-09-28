@@ -180,6 +180,12 @@ perl-common-sense
 hunspell-de
 hunspell-en_GB
 hunspell-en_US
+# hyphenation in libreoffice!
+hyphen
+hyphen-en
+hyphen-de
+
+
 
 
 rofi
@@ -238,3 +244,6 @@ dolphin-plugins
 ffmpegthumbs
 kdegraphics-thumbnailers
 konsole
+
+# ibus jp keyboard:
+ibus-anthy
