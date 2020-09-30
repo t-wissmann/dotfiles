@@ -207,7 +207,9 @@ rofi.yoffset:                        0
 rofi.xoffset:                        0
 rofi.eh:                             1
 rofi.levenshtein-sort:               false
-rofi.run-command:                    /usr/share/doc/herbstluftwm/examples/exec_on_tag.sh "" {cmd}
+
+! let us hope the PWD is the home:
+rofi.run-command:                    .config/herbstluftwm/exec_on_tag.sh "" {cmd}
 
 
 
