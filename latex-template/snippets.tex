@@ -49,3 +49,24 @@
 \fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Using listings as a quote-block for plaintext
+
+\usepackage{listings}
+\lstset{
+  basicstyle=\footnotesize,
+  frame=L,
+  aboveskip=5mm,
+  belowskip=0mm,
+  xleftmargin=3mm,
+  breaklines=true,
+  postbreak={}, %\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+  breakindent=0pt,
+  literate=
+  {—}{{--}}1 
+  {ö}{{\"o}}1 
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
