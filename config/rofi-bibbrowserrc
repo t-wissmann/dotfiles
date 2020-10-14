@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+# config for rofi-bibbrowser
+# https://github.com/t-wissmann/rofi-bibbrowser
+
 bib_dirs = [
     BibDir('~/uni/literatur/refs.bib'),
 ]
