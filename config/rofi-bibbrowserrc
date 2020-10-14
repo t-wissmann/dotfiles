@@ -7,13 +7,12 @@ bib_dirs = [
     BibDir('~/uni/literatur/refs.bib'),
 ]
 
-# additional directories with PDFs but without bib:
+# additional directories with PDFs but without bibtex files:
 additional_paths = [
     '~/git/papers/Bars-RNNA/literature',
     '~/git/papers/COAX-Literature',
     '~/git/papers/coalgpartref/literature',
 ]
-
 for p in additional_paths:
     if os.path.exists(p):
         bib_dirs.append(p, bib='/dev/null')
