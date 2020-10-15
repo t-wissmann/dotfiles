@@ -14,5 +14,5 @@ additional_paths = [
     '~/git/papers/coalgpartref/literature',
 ]
 for p in additional_paths:
-    if os.path.exists(p):
-        bib_dirs.append(p, bib='/dev/null')
+    if os.path.exists(os.path.expanduser(p)):
+        bib_dirs.append(BibDir(p, bib='/dev/null'))
