@@ -3,6 +3,7 @@
 import argparse
 import re
 import sys
+import textwrap
 
 def remove_comments(texsrc, comments_re):
     def replacement(matchobj):
@@ -51,10 +52,27 @@ def remove_macros(texsrc, macro_re):
     return newsrc
 
 def main():
-    desc = "Clear the parameters of certain tex macros"
+    longdesc = textwrap.dedent("""
+    Clear the parameters of certain tex macros. In a latex source file, remove
+    comments of various shapes in the following order:
+
+      1. remove source code comments (text following %%)
+      2. remove macros for PDF comments, controlled by the --macros regex.
+         Here, the macro call is not removed, but the parameter passed
+         to the macros is cleared. For example for --macros='\\\\takeout'
+         the code
+
+            foo \\takeout{bar $\{\\frac{1}{2}\}$} baz
+
+         is replaced by
+
+            foo \\takeout{} baz
+
+    """)
     parser = argparse.ArgumentParser(
-                description=desc,
-                formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+                description=longdesc,
+                formatter_class=argparse.RawDescriptionHelpFormatter,
+                )
     parser.add_argument('--comments', default=r'(%)[^\n]*',
                         help='Regex for comments: replace the regex by its first group')
     parser.add_argument('--macros', default=r'\\..note(\[[^]]*\])?|\\takeout',
