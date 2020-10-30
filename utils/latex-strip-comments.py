@@ -79,6 +79,22 @@ def remove_macros(texsrc, macro_re, summary={}):
         summary[f'parameters removed {k}' ] = v
     return newsrc
 
+def test_comment_re(comment_re):
+    tests = {
+        'foo%bar': 'foo%',
+        'foo%bar\nbaz': 'foo%\nbaz',
+        'line1\nline2%comment\nline3': 'line1\nline2%\nline3',
+        r'sign 5\% in val': r'sign 5\% in val',
+        r'sign 5\% in val%bar': r'sign 5\% in val%',
+        r'a line \\% with comment': r'a line \\%',
+        'a line \\\\% with comment\nnext': 'a line \\\\%\nnext',
+    }
+    for inp, expected in tests.items():
+        got = remove_comments(inp, comment_re)
+        if got != expected:
+            print(f'Error: for »{inp}« I expected »{expected}« but got »{got}«')
+
+
 def main():
     longdesc = textwrap.dedent("""
     Clear the parameters of certain tex macros. In a latex source file, remove
@@ -97,7 +113,8 @@ def main():
             foo \\takeout{} baz
 
     It is advised to double check in the new file that all comments are
-    indeed removed and that it produces the same PDF.
+    indeed removed and that it produces the same PDF. Especially check
+    for %-characters in the PDF.
     """)
     class CustomFormatter(argparse.ArgumentDefaultsHelpFormatter, argparse.RawDescriptionHelpFormatter):
         # from https://stackoverflow.com/a/18462760/4400896
@@ -108,20 +125,27 @@ def main():
                 description=longdesc,
                 formatter_class=CustomFormatter,
                 )
-    parser.add_argument('--comments', default=r'(%)[^\n]*',
+    default_comment_re = r'((\n|[^\\](\\\\)*)%)[^\n]*'
+    default_macro_re = r'\\..note(\[[^]]*\])?|\\takeout'
+    parser.add_argument('--comments', default=default_comment_re,
                         help='Regex for comments: replace the regex by its first group')
-    parser.add_argument('--macros', default=r'\\..note(\[[^]]*\])?|\\takeout',
+    parser.add_argument('--macros', default=default_macro_re,
                         help='Regex for the macros whose parameter are to be stripped')
     parser.add_argument('--summary', action='store_const', const=True, default=False,
                         help='Print summary to stderr')
     parser.add_argument('--in-place', action='store_const', const=True, default=False,
                         help='Directly overwrite the input file')
+    parser.add_argument('--self-test', action='store_const', const=True, default=False,
+                        help='Run some self-tests')
     parser.add_argument('file', metavar='FILE', nargs='+',
                         help='tex sources')
     args = parser.parse_args()
 
     macros_re = re.compile(args.macros)
     comments_re = re.compile(args.comments)
+    if args.self_test:
+        test_comment_re(default_comment_re)
+
     for filepath in args.file:
         with open(filepath, 'r') as fh:
             texsrc = fh.read()
@@ -133,7 +157,7 @@ def main():
             with open(filepath, 'w') as fh:
                 fh.write(texsrc)
         else:
-            print(texsrc)
+            print(texsrc, end='')
         if args.summary:
             def p(text):
                 print(text, file=sys.stderr)
