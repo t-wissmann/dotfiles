@@ -96,10 +96,17 @@ def main():
 
             foo \\takeout{} baz
 
+    It is advised to double check in the new file that all comments are
+    indeed removed and that it produces the same PDF.
     """)
+    class CustomFormatter(argparse.ArgumentDefaultsHelpFormatter, argparse.RawDescriptionHelpFormatter):
+        # from https://stackoverflow.com/a/18462760/4400896
+        # A formatter class that 1. provides raw help text (without line-reformatting) and
+        # that 2. prints default values
+        pass
     parser = argparse.ArgumentParser(
                 description=longdesc,
-                formatter_class=argparse.RawDescriptionHelpFormatter,
+                formatter_class=CustomFormatter,
                 )
     parser.add_argument('--comments', default=r'(%)[^\n]*',
                         help='Regex for comments: replace the regex by its first group')
@@ -107,6 +114,8 @@ def main():
                         help='Regex for the macros whose parameter are to be stripped')
     parser.add_argument('--summary', action='store_const', const=True, default=False,
                         help='Print summary to stderr')
+    parser.add_argument('--in-place', action='store_const', const=True, default=False,
+                        help='Directly overwrite the input file')
     parser.add_argument('file', metavar='FILE', nargs='+',
                         help='tex sources')
     args = parser.parse_args()
@@ -119,14 +128,18 @@ def main():
         summary = {}
         texsrc = remove_comments(texsrc, comments_re, summary=summary)
         texsrc = remove_macros(texsrc, macros_re, summary=summary)
-        print(texsrc)
+        if args.in_place:
+            print(f'Replacing file »{filepath}«...', file=sys.stderr)
+            with open(filepath, 'w') as fh:
+                fh.write(texsrc)
+        else:
+            print(texsrc)
         if args.summary:
             def p(text):
                 print(text, file=sys.stderr)
             p(f"Summary for »{filepath}«:")
             for k, v in summary.items():
                 p(f'  {k}: {v}')
-
 
 main()
 
