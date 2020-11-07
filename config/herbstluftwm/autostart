@@ -158,6 +158,7 @@ hc keybind $Mod-u split vertical 0.5
 hc keybind $Mod-o split horizontal 0.5
 hc keybind $Mod-v split explode
 hc keybind $Mod-m spawn ~/git/herbstluftwm/scripts/maximize.sh
+hc keybind $Mod-Shift-m set_attr clients.focus.minimized toggle
 # The following cycles through the available layouts within a frame, but skips
 # layouts, if the layout change wouldn't affect the actual window positions.
 # I.e. if there are two windows within a frame, the grid layout is skipped.
