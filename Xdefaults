@@ -209,7 +209,7 @@ rofi.eh:                             1
 rofi.levenshtein-sort:               false
 
 ! let us hope the PWD is the home:
-rofi.run-command:                    .config/herbstluftwm/exec_on_tag.sh "" {cmd}
+rofi.run-command:                    /home/thorsten/.config/herbstluftwm/exec_on_tag.sh "" {cmd}
 
 
 
