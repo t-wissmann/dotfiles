@@ -18,7 +18,7 @@
 
 # settings
 folder="html/p/"
-urlprefix="http://thorsten-wissmann.de/p/"
+urlprefix="https://thorsten-wissmann.de/p/"
 remote="uber"
 remotefolder="$remote:$folder/"
 color=0
