@@ -28,8 +28,8 @@ URxvt.cursorBlink: true
 ! warning, the following doesnt work
 #define POWERLINE xft:PowerlineSymbols:pixelsize=11
 
-#define SCALEFONT(X) xft:Bitstream Vera Sans Mono:size=X
-#define SCALEBOLDFONT(X) xft:Bitstream Vera Sans Mono:bold:size=X
+#define SCALEFONT(X) xft:Bitstream Vera Sans Mono:size=X:minspace=False, xft:DejaVu Sans:pixelsize=X:minspace=False
+#define SCALEBOLDFONT(X) xft:Bitstream Vera Sans Mono:bold:size=X:minspace=False, xft:DejaVu Sans:bold:pixelsize=X:minspace=False
 !#define SCALEFONT(X) xft:inconsolata:size=X
 !#define SCALEBOLDFONT(X) xft:inconsolata:bold:size=X
 #define ENVYSCALEFONT(X) xft:Envy Code R:size=X
