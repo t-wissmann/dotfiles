@@ -65,7 +65,7 @@ autoload -Uz add-zsh-hook
 
 function xterm_title_precmd () {
     if [[ "$TERM" == (screen*|xterm*|rxvt*) ]]; then
-        print -Pn '\e]2;%n@%m %1~\a'
+        print -Pn '\e]2;%1~ %n@%m\a'
     fi
 }
 
@@ -89,6 +89,9 @@ add-zsh-hook -Uz precmd xterm_title_precmd
 
 preexec() {
   timer=${timer:-$SECONDS}
+  if [[ "$TERM" == (screen*|xterm*|rxvt*) ]]; then
+      print -Pn '\e]2;'${2}' (%1~) %n@%m\a'
+  fi
 }
 
 precmd() {

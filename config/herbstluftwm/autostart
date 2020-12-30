@@ -469,15 +469,15 @@ hc attr theme.urgent.color '#C71364'
 hc attr theme.urgent.outer_color '#E279A9'
 hc attr theme.urgent.inner_color '#E279A9'
 
-hc and , attr theme.title_height 13 \
-       , attr theme.padding_top 0 \
+hc and , attr theme.title_height 14 \
+       , attr theme.padding_top 1 \
        , attr theme.title_color white \
        , attr theme.normal.title_color '#858585'
 
 #hc attr theme.title_font 'Dejavu Sans:pixelsize=12'
 #hc attr theme.title_font '-*-terminus-*-*-*-*-*-*-*-*-*-*-*-*'
 #hc attr theme.title_font '-*-fixed-*-*-*-*-*-*-*-*-*-*-iso8859-*'
-hc attr theme.title_font '-*-fixed-medium-r-*-*-13-*-*-*-*-*-*-*'
+hc attr theme.title_font '-*-fixed-medium-r-*-*-14-*-*-*-*-*-*-*'
 #hc attr theme.active.title_font '-*-fixed-bold-r-*-*-13-*-*-*-*-*-*-*'
 
 hc attr theme.floating.outer_width 1
