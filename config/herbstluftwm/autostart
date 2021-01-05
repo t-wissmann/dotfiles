@@ -477,7 +477,7 @@ hc and , attr theme.title_height 14 \
 
 #hc attr theme.title_font 'Dejavu Sans:pixelsize=12'
 #hc attr theme.title_font '-*-terminus-*-*-*-*-*-*-*-*-*-*-*-*'
-#hc attr theme.title_font '-*-fixed-*-*-*-*-*-*-*-*-*-*-iso8859-*'
+#hc attr theme.title_font '-*-fixed-*-*-*-*-*-*-*-*-*-*-*-*'
 hc attr theme.title_font '-*-fixed-medium-r-*-*-14-*-*-*-*-*-*-*'
 #hc attr theme.active.title_font '-*-fixed-bold-r-*-*-13-*-*-*-*-*-*-*'
 
@@ -508,6 +508,12 @@ case "$HOSTNAME" in
         hc attr theme.active.color '#9fbc00'
         hc attr theme.normal.color '#2D2D2D'
         hc set frame_bg_active_color '#9fbc00'
+        ;;
+    x1)
+        green_i3_like_theme
+        hc attr theme.title_font 'bitstream vera sans:pixelsize=18'
+        hc attr theme.title_height '19'
+        hc attr theme.padding_top '4'
         ;;
     *) green_i3_like_theme ;;
 esac
