@@ -275,6 +275,7 @@ fi
 # some settings
 hc set focus_follows_mouse on
 hc set hide_covered_windows on
+hc set mouse_recenter_gap 20
 
 ### COLORS ###
 colors_thin_some_color() {

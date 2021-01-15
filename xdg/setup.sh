@@ -3,6 +3,9 @@
 ::() {
     echo -e "\e[1;32m:: \e[1;37m$*\e[0m" >&2
 }
+==() {
+    echo -e "\e[1;32m== \e[1;37m$*\e[0m" >&2
+}
 warning() {
     echo -e "\e[1;31mWarning: \e[01;33m$*\e[0m" >&2
 }
@@ -69,38 +72,42 @@ app() {
     cmd_name="${cmd%% *}"
     shift 2
     local tmp=${cmd_name##*/}
-    FileName=${FileName:-${tmp//./}}
-    desktop_file="$appdir/$FileName.desktop"
-    :: Creating desktop file "$desktop_file"
-    # also pass all mimetypes to the desktop entry
-    desktop_entry "$cmd" "$terminal" "$@" > "$desktop_file"
+    if [[ "${cmd%%.desktop}" != "${cmd}" ]] ; then
+        desktop_file="${cmd}"
+        == Using existing desktop file "$desktop_file"
+    else
+        FileName=${FileName:-${tmp//./}}
+        desktop_file="$FileName.desktop"
+        == Creating desktop file "$desktop_file"
+        # also pass all mimetypes to the desktop entry
+        desktop_entry "$cmd" "$terminal" "$@" > "$appdir/$desktop_file"
+    fi
     for mimetype in "$@" ; do
         case "$mimetype" in
         /*)
             # mime-types custom for this script
             case "${mimetype#/}" in
                 web-browser)
-                    :: New default web browser: "${cmd_name}"
-                    xdg-settings set default-web-browser "${desktop_file##*/}"
+                    == New default web browser: "${cmd_name}"
+                    xdg-settings set default-web-browser "${desktop_file}"
                     ;;
                 url-scheme-handler)
-                    :: New default url scheme handler: "${cmd_name}"
-                    xdg-settings set default-url-scheme-handler "${desktop_file##*/}"
+                    == New default url scheme handler: "${cmd_name}"
+                    xdg-settings set default-url-scheme-handler "${desktop_file}"
                     ;;
             esac
             ;;
         .*)
             # link silently
-            xdg-mime default "${desktop_file##*/}" "${mimetype#.}"
+            xdg-mime default "${desktop_file}" "${mimetype#.}"
             ;;
         *)
             # ordinary mime-types
             #if ! grep -xm 1 "$mimetype" /usr/share/mime/types > /dev/null ; then
             #    warning "Mimetype $mimetype unknown. Linking anyway."
             #fi
-            :: Link "${cmd_name}" '<-' "$mimetype" 
-            :: xdg-mime default "${desktop_file##*/}" "$mimetype"
-            xdg-mime default "${desktop_file##*/}" "$mimetype"
+            == Link "${cmd_name}" '<-' "$mimetype" 
+            :: xdg-mime default "${desktop_file}" "$mimetype"
             ;;
         esac
     done
@@ -130,14 +137,16 @@ gui_app gvim \
     application/csv
 
 Icon=x-office-document
-gui_app katarakt            \
-    application/pdf         \
-    application/x-bzpdf     \
-    application/x-gzpdf     \
-    application/x-xzpdf     \
-    application/x-pdf       \
-    x-unknown/pdf           \
-    text/pdf                \
+gui_app org.gnome.Evince.desktop \
+    application/{,x-bz,x-gz,x-xz,x-}pdf \
+    x-unknown/pdf \
+    text/pdf
+
+gui_app org.gnome.Evince.desktop application/postscript
+
+Icon=x-office-document
+#gui_app evince            \
+#    application/postscript
 
 # EntryName="SXIV"
 # Icon=emblem-photos
@@ -178,12 +187,10 @@ cli_app "$gitroot"/xdg/mutt-mailto.py \
 targetdir=$HOME/.local/share/applications/
 for i in *.desktop ; do
     if [[ -L "$targetdir/$i" ]] ; then
-        :: "$targetdir/$i" already exists
+        == "$targetdir/$i" already exists
         continue
     fi
     :: ln -s "`pwd`/$i" "$targetdir"
-    ln -s "`pwd`/$i" "$targetdir"
 done
 :: update-desktop-database "$targetdir"
-update-desktop-database "$targetdir"
 
