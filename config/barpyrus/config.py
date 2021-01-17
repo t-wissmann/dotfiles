@@ -23,8 +23,7 @@ if is_hidpi:
     height = 28
 
 width = monitor_w # width of the panel
-#gap = int(hc(['get', 'frame_gap'])) if 0 == int(hc(['get', 'smart_frame_surroundings'])) else 0
-gap = 0
+gap = int(hc(['get', 'frame_gap'])) if 'x1' == socket.gethostname() else 0
 x += gap
 width -= 2 * gap
 top = True
