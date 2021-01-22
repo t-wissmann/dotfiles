@@ -71,6 +71,7 @@ hc keybind $Mod-Shift-Return spawn ~/dotfiles/utils/with-same-pwd --pwd-as-arg d
 hc keybind $Mod-x spawn rofi -columns 3 -show drun
 hc keybind $Mod-Shift-x spawn rofi -columns 3 -show run
 hc keybind $Mod-bracketleft spawn ~/git/rofi-bibbrowser/rofi-bibbrowser
+hc keybind $Mod-Shift-bracketleft spawn ~/git/rofi-bibbrowser/rofi-bibbrowser --import-dir ~/downloads/
 hc keybind $Mod-apostrophe spawn ~/dotfiles/menu/rofi-mpd.sh
 hc keybind $Mod-backslash spawn ~/dotfiles/menu/rofi-pass.sh
 hc keybind $Mod-Shift-backslash spawn ~/dotfiles/menu/rofi-pass.sh
@@ -620,6 +621,9 @@ hc rule class=Do instance=Do manage=off
 hc rule class=qutebrowser keys_inactive='Mod4[+]backslash' # use own pass-dmenu in qutebrowser
 hc rule class='Wrapper-2.0' floating=on # calendar of the xfce4-panel
 hc rule class='Gcolor2' floating=on
+hc rule class='Steam' focus=off floating=on
+hc rule title~'.*Steam.*' focus=off floating=on
+hc rule class='Steam' title~'.*Freundesliste.*' floating=off focus=on
 
 # Instant messenger
 

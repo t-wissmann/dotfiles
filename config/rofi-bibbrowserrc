@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import os.path
 
 # config for rofi-bibbrowser
 # https://github.com/t-wissmann/rofi-bibbrowser
@@ -6,6 +7,15 @@
 bib_dirs = [
     BibDir('~/uni/literatur/refs.bib'),
 ]
+
+def tryBibDir(path):
+    global bib_dirs
+    if os.path.exists(os.path.expanduser(path)):
+        bib_dirs.append(BibDir(path))
+    else:
+        print(f'path »{path}« does not exist, skipping.', file=sys.stderr)
+
+tryBibDir('~/git/homepage/wissmann-publications.bib')
 
 # additional directories with PDFs but without bibtex files:
 additional_paths = [

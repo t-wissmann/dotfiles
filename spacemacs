@@ -377,9 +377,15 @@ you should place your code here."
   ; (setq-default TeX-master 'shared) ; Query for master file.
   ; (setq TeX-master  'shared) ; Query for master file.
 
-  (load-file "~/git/katarakt/share/katarakt.el")
-  (setq TeX-view-program-list '(("katarakt" katarakt-view)))
-  (setq TeX-view-program-selection '((output-pdf "katarakt")))
+  ; (load-file "~/git/katarakt/share/katarakt.el")
+  ; (setq TeX-view-program-list '(("katarakt" katarakt-view)))
+  ; (setq TeX-view-program-selection '((output-pdf "katarakt")))
+  (defun my-LaTeX-mode()
+    (add-to-list 'TeX-view-program-list '("Evince" "evince --page-index=%(outpage) %o"))
+    (setq TeX-view-program-selection '((output-pdf "Evince")))
+                                        ; Other mode specific config
+    )
+  (add-hook 'LaTeX-mode-hook 'my-LaTeX-mode)
   (setq scroll-conservatively 10000)
   (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
   (setq scroll-step 1 scroll-margin 2)
