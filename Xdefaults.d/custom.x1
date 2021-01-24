@@ -1,6 +1,6 @@
-Xft.dpi: 160
-!Xft.dpi: 120
-rofi.dpi: 160
+! 140 is a compromise matching dolphin and urxvt
+Xft.dpi: 140
+rofi.dpi: 140
 Xft.autohint: 0
 Xft.lcdfilter:  lcddefault
 Xft.hintstyle:  hintfull
@@ -10,4 +10,5 @@ Xft.rgba: rgb
 
 urxvt*background:rgba:2828/2828/2828/dddd
 urxvt*depth: 32
+urxvt*dpi: 160
 xterm*faceName: 'xft:Bitstream Vera Sans Mono:style=bold:pixelsize=20'
