@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 
-socket="$HOME/.mpv/mpv-append-socket"
+socket="$HOME/.config/mpv/mpv-append-socket"
 if ! [ -d "${socket%/*}" ] ; then
     mkdir -v -p "${socket%/*}" >&2
 fi
