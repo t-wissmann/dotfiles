@@ -17,7 +17,6 @@ prompt adam2 8bit 'red}%F{white' green yellow default
 # let small letters match capital letters in a completion suggestion
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 source ~/dotfiles/shellutils.sh
 
@@ -26,6 +25,8 @@ trysource() {
         source "$1"
     fi
 }
+trysource /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+trysource /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 trysource /usr/share/fzf/key-bindings.zsh
 
 bindkey    "^[[3~"          delete-char

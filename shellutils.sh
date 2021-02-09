@@ -12,7 +12,7 @@ alias ls='ls -B --color=auto'
 alias ls='exa'
 alias la='exa -a'
 alias l='exa'
-alias cat='bat'
+#alias cat='bat'
 alias lln='ls -t -lah --color=always|head'
 alias lln='exa --color=always --sort=modified -a -r -l | head'
 alias rot13="tr '[A-Za-z]' '[N-ZA-Mn-za-m]'"
