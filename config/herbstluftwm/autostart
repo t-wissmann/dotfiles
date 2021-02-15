@@ -117,8 +117,13 @@ for i in "${BINDS[@]}" ; do
     key="${i%%:*}"
     tag="${i#*:}"
     hc add "$tag"
-    hc keybind "$Mod-$key" or . and , compare tags.focus.name = "$tag" , try use_previous . use "$tag"
-    hc keybind "$Mod-Shift-$key" move "$tag"
+done
+
+tag_keys=( {1..9} 0 )
+for i in "${!tag_keys[@]}" ; do
+    key="${tag_keys[$i]}"
+    hc keybind "$Mod-$key" or . and , compare tags.focus.index = "$i" , try use_previous . use_index "$i"
+    hc keybind "$Mod-Shift-$key" move_index "$i"
 done
 
 if [[ $HOSTNAME = hoth ]] ; then
