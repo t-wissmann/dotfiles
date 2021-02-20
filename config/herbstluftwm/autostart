@@ -461,7 +461,7 @@ hc lock
 hc attr theme.tiling.reset 1
 hc attr theme.floating.reset 1
 
-hc attr theme.color '#404040'
+hc attr theme.color '#404040de'
 hc attr theme.border_width 3
 hc attr theme.padding_top 5
 hc attr theme.inner_width 1
@@ -471,8 +471,8 @@ hc attr theme.inner_color '#606060'
 
 hc attr theme.active.inner_color '#74A171'
 hc attr theme.active.outer_color '#74A171'
-hc attr theme.active.color '#335D31'
-hc attr theme.urgent.color '#C71364'
+hc attr theme.active.color '#335D31de'
+hc attr theme.urgent.color '#C71364de'
 hc attr theme.urgent.outer_color '#E279A9'
 hc attr theme.urgent.inner_color '#E279A9'
 

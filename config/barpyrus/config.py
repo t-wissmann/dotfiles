@@ -218,7 +218,8 @@ bar.widget = W.ListLayout([
         W.ListLayout([ W.RawLabel('%{c}'),
             hlwm.HLWMMonitorFocusLayout(hc, monitor,
                 # this widget is shown on the focused monitor:
-                grey_frame(hlwm.HLWMWindowTitle(hc, maxlen = 70)),
+                # grey_frame(hlwm.HLWMWindowTitle(hc, maxlen = 70)),
+                conky_widget,
                 # this widget is shown on all unfocused monitors:
                 conky_widget,
             )]),
