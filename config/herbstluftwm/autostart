@@ -489,7 +489,7 @@ hc attr theme.title_font '-*-fixed-medium-r-*-*-14-*-*-*-*-*-*-*'
 
 hc attr theme.floating.outer_width 1
 
-hc set frame_border_active_color '#404040'
+hc set frame_border_active_color '#101010dd'
 hc set frame_border_normal_color '#404040dd'
 hc set frame_bg_normal_color '#30303087'
 hc set frame_bg_active_color '#86AB5F'
