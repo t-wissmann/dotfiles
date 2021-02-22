@@ -9,6 +9,8 @@ hc emit_hook reload
 
 xrdb -cpp cpp -merge ~/.Xdefaults
 
+HOSTNAME=$(hostname)
+
 # extend path
 if ! echo "$PATH"|tr ':' '\n'|grep -x "$HOME/bin" > /dev/null ; then
     hc setenv PATH "$HOME/bin:$PATH"
