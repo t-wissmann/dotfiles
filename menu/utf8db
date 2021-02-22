@@ -299,7 +299,15 @@ Block diagonal dotted ⋱
 Block diagonal ╳
 Block line ─
 Block double ═
-
+llangle ⟨
+rrangle ⟩
+banana bracket left ⦃
+banana bracket right ⦄
+halfwidth left corner bracket ｢
+halfwidth right corner bracket ｣
+left substitution bracket ⸂
+top left half bracket ⸢
+top right half bracket ⸣
 
 # fancy font
 ^i superscript ⁱ
