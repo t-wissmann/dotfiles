@@ -3,6 +3,7 @@
 files=( "$@" )
 cmdname="$0"
 lang="${lang:-deu}"
+# output file: $pdf
 
 usage() {
 cat <<EOF
@@ -23,19 +24,24 @@ if [ "${files[0]}" = -h ] || [ -z "${files[0]}" ] ; then
     exit 0
 fi
 
-# pick pdf to be the common prefix of files
-pdf=${files[0]}
-pdf=${pdf%.*} # drop the file extension anyway
-for f in "${files[@]}" ; do
-    # crop $f to ${#pdf} (the len of $pdf) and see if they agree
-    while [[ "$pdf" != "${f:0:${#pdf}}" ]] ; do
-        pdf=${pdf%?} # if they don't aggree, drop the last character
+# strip extension '.pdf' because tesseract will append it again
+pdf=${pdf%.pdf}
+# if $pdf is not set
+if [[ -z "$pdf" ]] ; then
+    # pick pdf to be the common prefix of files
+    pdf=${files[0]}
+    pdf=${pdf%.*} # drop the file extension anyway
+    for f in "${files[@]}" ; do
+        # crop $f to ${#pdf} (the len of $pdf) and see if they agree
+        while [[ "$pdf" != "${f:0:${#pdf}}" ]] ; do
+            pdf=${pdf%?} # if they don't aggree, drop the last character
+        done
     done
-done
 
-while [[ -f "$pdf.pdf" ]] ; do
-    pdf="${pdf}-ocr"
-done
+    while [[ -f "$pdf.pdf" ]] ; do
+        pdf="${pdf}-ocr"
+    done
+fi
 
 dpioption=""
 if [[ -n "$DPI" ]] ; then
