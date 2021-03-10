@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+config.load_autoconfig()
+
 c.editor.command = 'urxvt -e vim {}'.split(' ')
 c.auto_save.session = True
 c.content.user_stylesheets = [ '~/.config/qutebrowser/style.css' ]
@@ -21,7 +23,7 @@ c.input.insert_mode.plugins = True
 
 c.content.headers.accept_language = 'de-DE,en-US,en'
 c.content.geolocation = False
-c.content.host_blocking.whitelist = ["piwik.org", "partners.webmasterplan.com", "track.webgains.com", "www.googleadservices.com"]
+c.content.blocking.whitelist = ["piwik.org", "partners.webmasterplan.com", "track.webgains.com", "www.googleadservices.com"]
 
 c.completion.web_history.max_items = 500
 c.completion.shrink = True
