@@ -9,7 +9,7 @@ export destdir=.
 importfile() {
     shopt -s nocasematch
     case "$1" in
-        *.mp3|*.jpg|*.lyrics|*.txt)
+        *.ogg|*.mp3|*.jpg|*.lyrics|*.txt)
             outfile="$1"
             CMD=( ln -f )
             ;;
@@ -25,11 +25,11 @@ importfile() {
             outfile="${1%.*}.mp3"
             CMD=( ~/dotfiles/utils/flac2mp3.sh )
             ;;
-        *.ogg)
-            # temporarily ignore ogg files
-            return
-            ;;
-        *.wav|*.mood|*.log|*.cue|*.AVI|*.mid|*.md5|*.ffp|*.sh|*.m3u|*.pdf|*.css|*.nzb|*.sfv|*.nfo)
+        # *.ogg)
+        #     # temporarily ignore ogg files
+        #     return
+        #     ;;
+        *.py|*.wav|*.mood|*.log|*.cue|*.AVI|*.mid|*.md5|*.ffp|*.sh|*.m3u|*.pdf|*.css|*.nzb|*.sfv|*.nfo)
             # silently ignore some file types
             return
             ;;
