@@ -15,7 +15,10 @@ def tryBibDir(path):
     else:
         print(f'path »{path}« does not exist, skipping.', file=sys.stderr)
 
-tryBibDir('~/git/homepage/wissmann-publications.bib')
+publications_bib = os.path.expanduser('~/git/homepage/wissmann-publications.bib')
+if not os.path.exists(publications_bib):
+    publications_bib = '/dev/null'
+bib_dirs.append(BibDir('~/uni/publications', bib=publications_bib))
 
 # additional directories with PDFs but without bibtex files:
 additional_paths = [
