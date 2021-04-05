@@ -85,6 +85,8 @@ px() {
     ps aux|grep -i "$*"
 }
 
+alias rumutt='mutt -F ~/.mutt/rumuttrc'
+
 # add colors for less when viewing manpages
 export LESS_TERMCAP_mb=$'\e[01;31m' # begin blinking - for what is this line good for ?
 export LESS_TERMCAP_md=$'\e[1;35m' # begin bold - syntax and keywords
