@@ -17,7 +17,6 @@ prompt adam2 8bit 'red}%F{white' green yellow default
 # let small letters match capital letters in a completion suggestion
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
-
 source ~/dotfiles/shellutils.sh
 
 trysource() {
@@ -122,3 +121,7 @@ precmd() {
     fi
   fi
 }
+
+
+trysource ~/.zshrc-host-specific
+
