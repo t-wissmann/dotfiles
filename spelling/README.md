@@ -1,0 +1,3 @@
+# Wordlist
+
+Wordlists for aspell
