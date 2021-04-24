@@ -227,6 +227,8 @@ pwgen
 aspell-de
 vimpager
 scrot
+# a scrot successor
+maim
 gimp
 # phone stuff
 ifuse
