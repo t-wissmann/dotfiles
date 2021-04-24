@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Name=Scrot area to clipboard
+GenericName=Bildschirmbereich ins clipboard
+Comment=Scrot area to clipboard
+Exec=bash -c 'maim -b 3 -s | xclip -selection clipboard -t image/png'
+Icon=screensaver
+Terminal=false
+Type=Application
+Categories=
+MimeType=
