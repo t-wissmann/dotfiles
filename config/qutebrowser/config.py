@@ -111,6 +111,7 @@ c.url.searchengines['jp'] = 'https://www.wadoku.de/search/{}'
 c.url.searchengines['doi'] = 'https://dx.doi.org/{}'
 c.url.searchengines['imdb'] = 'https://www.imdb.com/find?q={}&ref_=nv_sr_sm'
 c.url.searchengines['nl'] = 'https://denl.dict.cc/?s={}'
+c.url.searchengines['wl'] = 'https://woordenlijst.org/#/?q={}'
 
 c.aliases['images'] = 'hint images tab'
 c.aliases['tabopen'] = 'open -t'
