@@ -186,7 +186,7 @@ binds = {
     't' : 'set-cmd-text -s :open -t ',
     'T' : 'set-cmd-text :open -t {url}',
     'gT' : 'tab-prev',
-    'gt' : 'tab-focus',
+    'gt' : 'tab-next',
     '<' : 'tab-move -',
     '>' : 'tab-move +',
     '<home>' : 'scroll-perc 0',
