@@ -32,3 +32,5 @@
 [diff]
 	noprefix = true # Warning: this breaks format-patch!
 # vim: noet
+[init]
+	defaultBranch = master
