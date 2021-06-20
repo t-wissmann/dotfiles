@@ -33,3 +33,9 @@ Plus an appropriate `/etc/dhcpd.conf`.
 
   - from the arch repos: `iscan iscan-data sane`
   - from the aur: `epson-inkjet-printer-escpr`
+
+
+## Move partition to another host
+```
+ssh oldhost dd bs=4M if=/dev/partition | pv -s 500G | dd bs=4M of=/dev/partition
+```
