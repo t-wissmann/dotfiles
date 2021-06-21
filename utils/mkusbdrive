@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+
+# a script to format a given drive to be a usb-drive,
+# e.g. to make it a standard fat usb-drive after it
+# contained a bootable installer or live image.
+
+set -e
+drive="$1"
+
+==() {
+    echo -e "\e[1;33m== \e[0;32m$*\e[0m" >&2
+}
+
+error() {
+    echo -e "\e[1;31m!! \e[0;31m$*\e[0m" >&2
+}
+
+::() {
+    echo -e "\e[1;33m:: \e[0;32m$*\e[0m" >&2
+    "$@"
+}
+
+
+tran=$(lsblk -S "$drive" --noheadings --output "TRAN")
+name=$(lsblk -S "$drive" --noheadings --output "VENDOR,MODEL,REV,SERIAL")
+
+== "$drive: $name"
+
+if [[ "$tran" != "usb" ]] ; then
+    error "Device $drive is expected to be 'usb', but is '$tran'"
+    exit 1
+fi
+
+read -p "New name for $drive: " partitionname
+if [[ -z "$partitionname" ]] ; then
+    exit 1
+fi
+
+# delete mbr and partition table
+:: dd if=/dev/zero of="$drive" bs=1M count=1
+
+# create a partition
+# https://superuser.com/a/1132834/622774
+# type=0b = W95 FAT32
+:: sfdisk "$drive" <<< "type=0b"
+:: partprobe
+
+# create filesystem on first partiton
+:: mkfs.fat -n "$partitionname" -F32 "${drive}1"
+
