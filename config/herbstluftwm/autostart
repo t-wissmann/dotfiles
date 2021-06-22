@@ -204,7 +204,19 @@ hc mousebind $Mod-Control-B5 call cycle_value frame_gap "${reversed_frame_gap_st
 hc keybind $Mod-BackSpace cycle_monitor
 hc keybind Alt-Tab          cycle_all 1
 hc keybind Alt-Shift-Tab    cycle_all -1
-hc keybind $Mod-c cycle
+hc keybind $Mod-c substitute FS clients.focus.fullscreen \
+        chain , set_attr clients.focus.fullscreen off \
+              , cycle \
+              , set_attr clients.focus.fullscreen FS
+hc keybind $Mod-Tab substitute FS clients.focus.fullscreen \
+        chain , set_attr clients.focus.fullscreen off \
+              , cycle_all 1 \
+              , set_attr clients.focus.fullscreen FS
+hc keybind $Mod-Shift-Tab substitute FS clients.focus.fullscreen \
+        chain , set_attr clients.focus.fullscreen off \
+              , cycle_all -1 \
+              , set_attr clients.focus.fullscreen FS
+
 #hc keybind $Mod-y cycle -1
 hc keybind $Mod-h or / focus left   #/ chain , focus_monitor -1 , focus_edge right
 hc keybind $Mod-j or / focus down   #/ chain , focus_monitor +1 , focus_edge up
