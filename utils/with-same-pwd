@@ -32,7 +32,14 @@ then
     fallback
 fi
 
-child_pid=$(pgrep -P "$pid"|head -n 1)
+pgrep=$(pgrep -P "$pid")
+if [[ $(wc -l <<< "$pgrep") -eq 1 ]] ; then
+    child_pid=${pgrep}
+else
+    # if $pid has more than one child process,
+    # then just take the pwd of the process itself
+    child_pid="$pid"
+fi
 [[ -n "$child_pid" ]] || fallback
 child_pwd=/proc/${child_pid}/cwd
 child_pwd=$(readlink -f "$child_pwd") || fallback
