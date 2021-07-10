@@ -119,10 +119,13 @@ cli_app() { app true "$@" ; }
 mimes() { grep -xE "$1" /usr/share/mime/types | sed 's,^,.,'; }
 
 Icon=browser
-gui_app qutebrowser \
+for s in \
     x-scheme-handler/{http,https} \
     /default-{web-browser,url-scheme-handler} \
     text/html
+do
+    :: xdg-mime default qutebrowser.desktop "$s"
+done
 
 Icon=text-editor
 #cli_app vim \
