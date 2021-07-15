@@ -538,6 +538,7 @@ case "$HOSTNAME" in
         ;;
     *) green_i3_like_theme ;;
 esac
+hc attr theme.background_color '#181818cc'
 
 
 SCRIPTSDIR=$HOME/git/herbstluftwm/scripts/
