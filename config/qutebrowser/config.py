@@ -54,7 +54,7 @@ c.tabs.indicator.padding = {
 c.downloads.location.directory = '~/downloads/'
 c.downloads.location.prompt = False
 
-#c.scrolling.bar = True
+c.scrolling.bar = 'always'
 c.scrolling.smooth = True
 
 c.hints.border = '1px solid black'
