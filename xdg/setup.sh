@@ -132,16 +132,18 @@ done
 
 Icon=text-editor
 #cli_app vim \
-gui_app emacsclient\ -n\ -c\ --alternate-editor=\ '' \
-    $(mimes 'text/.*'|grep -vE 'text/html') \
+#gui_app emacsclient\ -n\ -c\ --alternate-editor=\ '' \
+for s in \
+    $(mimes 'text/.*'|grep -v '^\.'| grep -vE 'text/html') \
     text/x-shellscript \
     text/x-c \
     application/x-shellscript \
     application/ecmascript \
+    application/csv \
     application/javascript
-
-gui_app gvim \
-    application/csv
+do
+    :: xdg-mime default "gvim.desktop" "$s"
+done
 
 Icon=x-office-document
 gui_app org.gnome.Evince.desktop \

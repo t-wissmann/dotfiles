@@ -164,18 +164,18 @@ rofi.modi:                           window,drun,ssh,combi
 rofi.opacity:                        100
 rofi.width:                          80
 rofi.lines:                          19
-rofi.columns:                        1
-rofi.font:                           Bitstream Vera Sans Mono bold 8
-rofi.fg:                             #efefef
+rofi.columns:                        2
+!rofi.font:                           Bitstream Vera Sans Mono bold 8
+!rofi.fg:                             #efefef
 rofi.color-enabled:                  true
 #define itembg argb:EF101010
 #define selbg #9fbc00
 !!    STATE             BG         FG        BGALT     HLBG      HLFG
-rofi.color-normal:     itembg,    #cecece,  itembg,   selbg,  black
-rofi.color-urgent:     #D6156C,   white,    #D6156C,  #dc322f,  selbg
-rofi.color-active:     #101010,   #FFE352,  #101010,  selbg,  black
-rofi.color-window:     argb:EE242424,black,argb:EE242424
-rofi.hide-scrollbar:   false
+! rofi.color-normal:     itembg,    #cecece,  itembg,   selbg,  black
+! rofi.color-urgent:     #D6156C,   white,    #D6156C,  #dc322f,  selbg
+! rofi.color-active:     #101010,   #FFE352,  #101010,  selbg,  black
+! rofi.color-window:     argb:EE242424,black,argb:EE242424
+! rofi.hide-scrollbar:   false
 !rofi.fg-active:                      #268BD2
 !rofi.fg-urgent:                      #DC322F
 !rofi.hlfg-active:                    #FDF6E3
@@ -187,13 +187,13 @@ rofi.hide-scrollbar:   false
 !rofi.bgalt:                          #FDF6E3
 !rofi.hlfg:                           #EEE8D5
 !rofi.hlbg:                           #586E75
-rofi.bc:                             #9fbc00
+!rofi.bc:                             #9fbc00
 rofi.terminal:                       urxvt
 rofi.sidebar-mode:                   true
 !rofi.fixed-num-lines:                false
 rofi.bw:                             1
 rofi.lazy-filter-limit:              5000000
-!rofi.theme:                          ~/.config/rofi/themes/rezlooks.rasi
+rofi.theme:                          rezlooks
 rofi.show-icons:                     true
 !!             1 2 3
 !!             8 0 4
