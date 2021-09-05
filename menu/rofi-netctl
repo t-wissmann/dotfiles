@@ -31,10 +31,11 @@ selection=$(printf "%s\n" "${profiles[@]}" \
     | rofi \
       -dmenu \
       -i \
-      -mesg "$message" \
       -a "0,$active" \
       -no-custom \
-      -p "netctl enable ")
+      -p "netctl enable " \
+      -mesg "$message"
+      )
 
 if [ "$selection" = "$stop_all" ] ; then
     sudo netctl stop-all
