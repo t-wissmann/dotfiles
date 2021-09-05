@@ -34,7 +34,7 @@ selection=$(printf "%s\n" "${profiles[@]}" \
       -a "0,$active" \
       -no-custom \
       -p "netctl enable " \
-      -mesg "$message"
+      -mesg "<i></i>$message"
       )
 
 if [ "$selection" = "$stop_all" ] ; then
