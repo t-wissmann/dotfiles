@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Name=Netctl Rofi
+GenericName=Menü an Netzwerkprofilen
+Comment=
+Exec=/home/thorsten/dotfiles/menu/rofi-netctl
+Icon=network-wireless
+Terminal=false
+Type=Application
+Categories=
+MimeType=
