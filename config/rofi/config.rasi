@@ -1,15 +1,15 @@
 configuration {
-/*    modi: "window,run,ssh";*/
+    modi: "window,drun,ssh";
 /*    font: "mono 12";*/
 /*    location: 0;*/
 /*    yoffset: 0;*/
 /*    xoffset: 0;*/
 /*    fixed-num-lines: true;*/
-/*    show-icons: false;*/
-/*    terminal: "rofi-sensible-terminal";*/
+    show-icons: true;
+    terminal: "urxvt";
 /*    ssh-client: "ssh";*/
 /*    ssh-command: "{terminal} -e {ssh-client} {host} [-p {port}]";*/
-/*    run-command: "{cmd}";*/
+    run-command: "/home/thorsten/.config/herbstluftwm/exec_on_tag.sh '' {cmd}";
 /*    run-list-command: "";*/
 /*    run-shell-command: "{terminal} -e {cmd}";*/
 /*    window-command: "wmctrl -i -R {window}";*/
@@ -42,7 +42,7 @@ configuration {
 /*    scroll-method: 0;*/
 /*    window-format: "{w}    {c}   {t}";*/
 /*    click-to-exit: true;*/
-/*    theme: ;*/
+    theme: "rezlooks";
 /*    max-history-size: 25;*/
 /*    combi-hide-mode-prefix: false;*/
 /*    matching-negate-char: '-' /* unsupported */;*/
