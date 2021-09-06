@@ -3,7 +3,7 @@
 utf8db="$HOME/dotfiles/menu/utf8db"
 
 if line=$(grep -v '^#' "$utf8db"|grep -v '^$' \
-          |rofi -dmenu -i -p 'Zeichen:' -columns 3) ; then
+          |rofi -dmenu -i -p 'Zeichen' -columns 3) ; then
     #echo you selected "$line"
     # char is everything after the last space
     char=${line##* }

@@ -33,7 +33,7 @@ selection=$(printf "%s\n" "${profiles[@]}" \
       -i \
       -a "0,$active" \
       -no-custom \
-      -p "netctl enable " \
+      -p "netctl enable" \
       -mesg "<i></i>$message"
       )
 

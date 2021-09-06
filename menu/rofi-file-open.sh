@@ -29,7 +29,7 @@ rofiflags=(
     -dmenu
     -multi-select
     -i
-    -p 'open:'
+    -p 'open'
     -mesg "$mesg"
 )
 

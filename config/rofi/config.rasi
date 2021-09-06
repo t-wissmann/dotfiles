@@ -2,8 +2,8 @@ configuration {
     modi: "window,drun,ssh";
 /*    font: "mono 12";*/
     location: 0;
-    yoffset: 0;
-    xoffset: 0;
+    yoffset: 8;
+    xoffset: 8;
 /*    fixed-num-lines: true;*/
     show-icons: true;
     terminal: "urxvt";
