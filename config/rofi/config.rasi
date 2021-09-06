@@ -1,9 +1,9 @@
 configuration {
     modi: "window,drun,ssh";
 /*    font: "mono 12";*/
-/*    location: 0;*/
-/*    yoffset: 0;*/
-/*    xoffset: 0;*/
+    location: 0;
+    yoffset: 0;
+    xoffset: 0;
 /*    fixed-num-lines: true;*/
     show-icons: true;
     terminal: "urxvt";
@@ -42,7 +42,7 @@ configuration {
 /*    scroll-method: 0;*/
 /*    window-format: "{w}    {c}   {t}";*/
 /*    click-to-exit: true;*/
-    theme: "rezlooks";
+    theme: "plain-grey";
 /*    max-history-size: 25;*/
 /*    combi-hide-mode-prefix: false;*/
 /*    matching-negate-char: '-' /* unsupported */;*/

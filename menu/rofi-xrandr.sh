@@ -70,13 +70,13 @@ EOF
 
 print_menu() {
 external_off
-echo -e '\0'
+echo -ne '\0'
 external_right
-echo -e '\0'
+echo -ne '\0'
 external_left
-echo -e '\0'
+echo -ne '\0'
 external_on_top
-echo -e '\0'
+echo -ne '\0'
 internal_off
 }
 
@@ -109,11 +109,11 @@ fix_hdmi_audio() {
     fi
 }
 
-element_height=5
+element_height=4
 element_count=5
 
 res=$(print_menu | rofi \
-    -dmenu -sep '\0' -lines "$element_count" \
+    -dmenu -sep '\0' -l "$element_count" \
     -eh "$element_height" -p '' -no-custom \
     -format i)
 
