@@ -116,7 +116,7 @@ app() {
 
 gui_app() { app false "$@" ; }
 cli_app() { app true "$@" ; }
-mimes() { grep -xE "$1" /usr/share/mime/types | sed 's,^,.,'; }
+mimes() { grep -xE "$1" /usr/share/mime/types ; }
 
 Icon=browser
 
