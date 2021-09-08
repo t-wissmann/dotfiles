@@ -49,7 +49,7 @@ update-git() {
 #auto-colorscheme 'http://vimcolorschemetest.googlecode.com/svn/colors/autumnleaf.vim'
 #auto-colorscheme 'http://vimcolorschemetest.googlecode.com/svn/colors/kate.vim'
 #auto-colorscheme 'http://vimcolorschemetest.googlecode.com/svn/colors/tcsoft.vim'
-#auto-colorscheme 'https://github.com/altercation/vim-colors-solarized/raw/master/colors/solarized.vim'
+auto-colorscheme 'https://github.com/altercation/vim-colors-solarized/raw/master/colors/solarized.vim'
 #auto-colorscheme 'http://www.vim.org/scripts/download_script.php?src_id=9750' molokai.vim 
 #auto-colorscheme 'https://vimcolorschemetest.googlecode.com/svn/colors/calmar256-dark.vim'
 #auto-colorscheme 'https://raw.githubusercontent.com/chriskempson/base16-vim/master/colors/base16-default.vim'

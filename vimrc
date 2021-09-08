@@ -90,6 +90,10 @@ set ignorecase
 set smartcase
 
 
+" indent wrapped lines correctly:
+set breakindent
+set showbreak=..
+
 if has('mouse')
     set mouse=a
 endif
