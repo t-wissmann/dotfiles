@@ -645,6 +645,7 @@ hc rule class='Gcolor2' floating=on
 hc rule class='Steam' focus=off floating=on
 hc rule title~'.*Steam.*' focus=off floating=on
 hc rule class='Steam' title~'.*Freundesliste.*' floating=off focus=on
+hc rule class='zoom' not title~'.*Meeting.*' floating=on focus=off
 
 # Instant messenger
 
