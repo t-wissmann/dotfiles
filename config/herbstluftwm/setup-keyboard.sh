@@ -8,7 +8,7 @@ get-keyboard-options() {
     # for this keyboard
 case "$1" in
 *"HID 04d9:0134") # no * at the end, here
-   # pure kbtalking
+   # pure kbtalking (60%)
    options=( -option compose:menu
              -option ctrl:nocaps
              -option compose:ralt
@@ -18,6 +18,10 @@ case "$1" in
 *"AT Translated Set 2 keyboard"*)
     # thinkpad keyboard
     options=( -option compose:menu -option ctrl:nocaps -option compose:prsc )
+    ;;
+*"ARCHISS PTR66 ARCHISS PTR66"*)
+    # progrestouch retro tiny (black 60% arrow keys)
+    options=( -option compose:menu -option compose:rctrl -option ctrl:nocaps )
     ;;
 *)
     options=( )
@@ -32,6 +36,9 @@ esac
 
 mapfile xinputs < <(xinput list --short | grep 'slave[ ]* keyboard'|cut -f 1,2)
 
+echo "Clearing existing options:"
+:: setxkbmap -option
+
 for line in "${xinputs[@]}" ; do
     name=$(cut -f 1 <<< "$line"|sed 's,^[ ]* ,,;s,[ ]* $,,')
     id=$(cut -f 2 <<< "$line")
@@ -43,6 +50,9 @@ for line in "${xinputs[@]}" ; do
     echo "Configuring device $id \"$name\"."
     :: setxkbmap -device "$id" "${options[@]}"
 done
+
+# try to replace an existing ibus-daemon:
+:: herbstclient spawn ibus-daemon --replace
 
 
 # old code:
