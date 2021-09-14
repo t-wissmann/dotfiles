@@ -585,12 +585,12 @@ before packages are loaded."
   (load-file "~/git/katarakt/share/katarakt.el")
   (setq TeX-view-program-list '(("katarakt" katarakt-view)))
   (setq TeX-view-program-selection '((output-pdf "katarakt")))
-  ; (defun my-LaTeX-mode()
-  ;   (add-to-list 'TeX-view-program-list '("Evince" "evince --page-index=%(outpage) %o"))
-  ;   (setq TeX-view-program-selection '((output-pdf "Evince")))
-  ;                                       ; Other mode specific config
-  ;   )
-  (add-hook 'LaTeX-mode-hook 'my-LaTeX-mode)
+  ;; (defun my-LaTeX-mode-evince()
+  ;;   (add-to-list 'TeX-view-program-list '("Evince" "evince --page-index=%(outpage) %o"))
+  ;;   (setq TeX-view-program-selection '((output-pdf "Evince")))
+  ;;                                       ; Other mode specific config
+  ;;   )
+  ;; (add-hook 'LaTeX-mode-hook 'my-LaTeX-mode-evince)
   (setq scroll-conservatively 10000)
   (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
   (setq scroll-step 1 scroll-margin 2)
