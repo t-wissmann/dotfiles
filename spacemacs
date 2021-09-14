@@ -611,6 +611,10 @@ before packages are loaded."
 
   (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
   (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
+
+  ;; make SPC b W an alias for SPC b U
+  (spacemacs/set-leader-keys "b W" 'lazy-helm/spacemacs/helm-buffers-list-unfiltered)
+
   ;; (fringe-mode '(nil . 0))
 
   ;;(add-hook 'LaTeX-mode-hook (lambda () (push
