@@ -85,7 +85,8 @@ This function should only modify configuration layer settings."
    ;; installs only the used packages but won't delete unused ones. `all'
    ;; installs *all* packages supported by Spacemacs and never uninstalls them.
    ;; (default is `used-only')
-   dotspacemacs-install-packages 'used-only))
+   dotspacemacs-install-packages 'used-only)
+  )
 
 (defun dotspacemacs/init ()
   "Initialization:
@@ -568,6 +569,12 @@ before packages are loaded."
            (font-lock-comment-face :slant italic)
            )
     ))
+
+  (setq ispell-local-dictionary-alist
+    '(("british-ize"
+      "[[:alpha:]]"
+      "[^[:alpha:]]"
+      "[']" ("-r") nil nil utf-8)))
 
   (setq frame-title-format
         '((:eval (if (buffer-file-name)
