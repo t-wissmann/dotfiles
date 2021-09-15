@@ -56,7 +56,6 @@ case "$HOSTNAME" in
 esac
 
 # keyboard-layout:
-setxkbmap us -variant altgr-intl
 ~/.config/herbstluftwm/setup-keyboard.sh
 
 hc keyunbind --all

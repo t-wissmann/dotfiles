@@ -9,9 +9,7 @@ get-keyboard-options() {
 case "$1" in
 *"HID 04d9:0134") # no * at the end, here
    # pure kbtalking (60%)
-   options=( -option compose:menu
-             -option ctrl:nocaps
-             -option compose:ralt
+   options=( -option compose:ralt
              -option compose:rctrl
              -option compose:rwin )
     ;;
@@ -38,6 +36,8 @@ mapfile xinputs < <(xinput list --short | grep 'slave[ ]* keyboard'|cut -f 1,2)
 
 echo "Clearing existing options:"
 :: setxkbmap -option
+global_options=( -option ctrl:nocaps -option compose:menu )
+:: setxkbmap us -variant altgr-intl "${global_options[@]}"
 
 for line in "${xinputs[@]}" ; do
     name=$(cut -f 1 <<< "$line"|sed 's,^[ ]* ,,;s,[ ]* $,,')
