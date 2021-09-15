@@ -1,20 +1,30 @@
 #!/usr/bin/env python3
+"""
+This calls setxkbmap for the connected xinput devices with
+options that are configurable based on the device's vendor/model id or xinput
+name.
+"""
+
+
 import subprocess
 import re
 import sys
 
 models = [
+    # all keyboards, with rising preference (later keyboards
+    # possibly overwrite previous keyboards' options if multiple
+    # keyboards are connected)
+    {
+        'name': 'thinkpad x1 keyboard',
+        'id': '???',
+        'xinput_name': 'AT Translated Set 2 keyboard',
+        'options': ['compose:prsc'],
+    },
     {
         'name': 'pure kb talking 60%',
         'id': '04d9:0134',
         'usb_name': "Holtek Semiconductor, Inc. USB Keyboard",
         'options': ['compose:ralt', 'compose:rctrl', 'compose:rwin'],
-    },
-    {
-        'name': 'thinkpad x1 keyboard',
-        'id': '???',
-        'usb_name': 'AT Translated Set 2 keyboard',
-        'options': ['compose:prsc'],
     },
     {
         'name': 'progrestouch retro tiny (black 60% arrow keys)',
@@ -24,54 +34,91 @@ models = [
     },
 ]
 
+
 def log(log_line):
+    """log something to stderr"""
     print(log_line, file=sys.stderr)
 
+
 def get_stdout(command):
+    """execute a command and return its stdout"""
     log(":: {}".format(' '.join(command)))
     proc = subprocess.run(command,
                           stdout=subprocess.PIPE,
                           universal_newlines=True)
     return proc.stdout
 
-def query_usb_to_xinput_ids():
+
+class XInputDevice:
+    """Metadata of an connected XInput device
+    """
+    def __init__(self, id_, name):
+        self.id = id_
+        self.name = name
+        self.vendor_id = None
+        self.model_id = None
+        self.event_path = None  # /dev/input/eventX
+
+    def usb_id(self):
+        """a device ID as listed in lsusb"""
+        if self.vendor_id is not None and self.model_id is not None:
+            return '{}:{}'.format(self.vendor_id, self.model_id)
+        return None
+
+
+def xinput_devices():
+    """return a list of all xinput devices with additional
+    information about the event path and vendor/model ids"""
     # get xinput IDs of connected devices:
-    xinput_ids = [x for x in get_stdout(['xinput', 'list', '--id-only']).splitlines()]
+    xinput_ids = get_stdout(['xinput', 'list', '--id-only']).splitlines()
     # get their /dev/input/event.. filepath:
-    prop_re = re.compile(r'\tDevice Node \(277\):\t"([^"]*)"$')
-    section_re = re.compile(r"^Device '.*':")
+    path_re = re.compile(r'\tDevice Node \([0-9]*\):\t"([^"]*)"$')
+    section_re = re.compile(r"^Device '(.*)':$")
     devices = []
     for line in get_stdout(['xinput', 'list-props'] + xinput_ids).splitlines():
-        if section_re.match(line):
-            devices.append(None)
-            continue
-        m = prop_re.match(line)
+        m = section_re.match(line)
         if m:
-            # replace the last 'None' by the actual input even path:
-            devices[-1] = m.group(1)
+            # create a new device object with the name from the section
+            devices.append(XInputDevice('unknown_id', m.group(1)))
+            continue
+        m = path_re.match(line)
+        if m:
+            # set the event path in the last device created:
+            devices[-1].event_path = m.group(1)
     assert len(xinput_ids) == len(devices)
+    for xid, dev in zip(xinput_ids, devices):
+        dev.id = xid
 
     # read usb vendor and model IDs from udev:
-    # one usb device may create multiple xinput ids, so the following
-    # is a dict to lists
-    usb_to_xinput_ids = {}
-    vendor_id_re = re.compile('ID_VENDOR_ID=([^\n]*)')
-    model_id_re = re.compile('ID_MODEL_ID=([^\n]*)')
-    for input_id, path in zip(xinput_ids, devices):
-        if path is not None:
-            udev_props = get_stdout(['udevadm', 'info', '--query=property', '--name=' + path])
-            vendor = vendor_id_re.search(udev_props)
-            model = model_id_re.search(udev_props)
-            if model and vendor:
-                usb_id = vendor.group(1) + ':' + model.group(1)
-                if usb_id not in usb_to_xinput_ids:
-                    usb_to_xinput_ids[usb_id] = []
-                usb_to_xinput_ids[usb_id].append(input_id)
-                # log(f'{usb_id} -> {input_id}')
-    return usb_to_xinput_ids
+    udev_cmd = ['udevadm', 'info']
+    devices_in_udev = []  # devices in the udevadm output
+    for dev in devices:
+        if dev.event_path is not None:
+            devices_in_udev.append(dev)
+            udev_cmd += ['--query=property', '--name=' + dev.event_path]
+    dev_idx = -1
+    cur_dev = None
+    for line in get_stdout(udev_cmd).splitlines():
+        name, value = line.split('=', 1)
+        name = name.upper()
+        if name == 'DEVPATH':
+            # every section should start with DEVPATH
+            dev_idx += 1
+            cur_dev = devices_in_udev[dev_idx]
+        elif name == 'DEVNAME':
+            # DEVNAME=/dev/input/eventXX should come second:
+            assert cur_dev.event_path == value
+        elif name == 'ID_VENDOR_ID':
+            cur_dev.vendor_id = value
+        elif name == 'ID_MODEL_ID':
+            cur_dev.model_id = value
+
+    return devices
+
 
 def main():
-    usb_to_xinput_ids = query_usb_to_xinput_ids()
+    devices = xinput_devices()
+
     # clear existing keyboard options:
     get_stdout(['setxkbmap', '-option'])
     # set some default:
@@ -80,20 +127,25 @@ def main():
         '-option', 'ctrl:nocaps', '-option', 'compose:menu',
     ]
     get_stdout(['setxkbmap', 'us'] + global_options)
-    # go through all know 'models' and see whether they are connected:
+    # go through all know 'models' and see whether they are connected.
+    # if so, apply the specified options:
     global models
     for known_kbd in models:
-        ids = usb_to_xinput_ids.get(known_kbd['id'], [])
-        if ids:
-            log('Found "{}" on xinput {}'.format(known_kbd['name'], ' '.join(ids)))
+        devs = [d for d in devices if d.usb_id() == known_kbd['id']]
+        if not devs and 'xinput_name' in known_kbd:
+            # look for name:
+            devs = [d for d in devices if d.name == known_kbd['xinput_name']]
+        if devs:
+            ids = [d.id for d in devs]
+            log('==> Found "{}" on xinput {}'.format(known_kbd['name'], ' '.join(ids)))
             options = []
             for arg in known_kbd['options']:
                 options += ['-option', arg]
             for xinput_id in ids:
                 get_stdout(['setxkbmap', '-device', xinput_id] + options)
 
-main()
 
+main()
 
 # old code:
 # has-kbd() {
