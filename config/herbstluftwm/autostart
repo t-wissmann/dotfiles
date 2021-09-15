@@ -56,7 +56,9 @@ case "$HOSTNAME" in
 esac
 
 # keyboard-layout:
-~/.config/herbstluftwm/setup-keyboard.sh
+~/.config/herbstluftwm/setup-keyboard.py
+# try to replace an existing ibus-daemon:
+herbstclient or , spawn ibus-daemon --replace , true
 
 hc keyunbind --all
 # keybindings

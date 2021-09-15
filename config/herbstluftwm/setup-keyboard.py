@@ -42,7 +42,7 @@ def log(log_line):
 
 def get_stdout(command):
     """execute a command and return its stdout"""
-    log(":: {}".format(' '.join(command)))
+    # log(":: {}".format(' '.join(command)))
     proc = subprocess.run(command,
                           stdout=subprocess.PIPE,
                           universal_newlines=True)
