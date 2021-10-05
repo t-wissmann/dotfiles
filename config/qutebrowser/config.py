@@ -202,6 +202,7 @@ binds = {
     '\'' : 'enter-mode jump_mark',
     'zl' : 'spawn --userscript password_fill',
     'sd' : "spawn --userscript /bin/bash -c 'DOWNLOAD_DIR=~/downloads ~/.config/qutebrowser/userscripts/open_download'",
+    '<Ctrl-Shift-j>' : "spawn --userscript dict-jp-lookup",
     ';v' : "hint links userscript view_in_mpv",
     'b' : "set-cmd-text -s :buffer",
 }

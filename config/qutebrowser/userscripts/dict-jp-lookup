@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+url="https://www.wadoku.de/search/$QUTE_SELECTED_TEXT"
+echo "open -t $url" >> "$QUTE_FIFO"
+
+
