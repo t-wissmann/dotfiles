@@ -1,0 +1,75 @@
+compile_latex:
+  image: aergus/latex # the docker image by aergus https://hub.docker.com/r/aergus/latex/
+  stage: build
+  #variables:
+  #  GIT_SSL_NO_VERIFY: "true"
+  before_script:
+    # if you need to upload PDFs somewhere else, add a private  SSH key to the
+    # gitlab project config and then do the following:
+    #- 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    #- 'which rsync || ( apt-get update -y && apt-get install rsync -y )'
+    #- mkdir -p ~/.ssh
+    #- eval $(ssh-agent -s)
+    #- '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    #- ssh-add <(echo "$STAGING_PRIVATE_KEY")
+  script:
+    # the following script requires bash
+    # when editing, be careful, not to use any colons since they mess up the yaml parser!
+    # compile all the PDFs you are interested in:
+    - verb() { echo -e "\e[32;1m===== $* =====\e[0m" ; }
+    - msg-err() { echo -e "\e[31;1m==> $*\e[0m" ; }
+    - '::() { echo -e "\e[1;33m:: \e[1;34m$*\e[0m" >&2 ; "$@" ; }'  # quotes because of yaml
+    - failed=( )
+    - succeeded=( )
+    - pre_compile() { true ; }
+    - print_coverage() { echo "Successful Compilation Coverage $(((${#texfiles[@]}-${#failed[@]})*10000/${#texfiles[@]}))" | sed 's/..$/\.&/' ; }
+    - compile_tex() { ( d=$(dirname "$1") ; cd "$d" ; latexmk -f -pdf -interaction=batchmode "${1##*}" ; ); }
+    - "[[ -f .gitlab-latex.sh ]] && source .gitlab-latex.sh"  # quotes because of yaml
+    # activate the following line if you use a custom makefile
+    #- compile_tex() { make "${1%%.tex}.pdf" ; }
+    - mapfile -t gitfiles < <(git ls-files)
+    - mapfile -d $'\0' -t texfiles < <(grep -lZ -d skip --include '*.tex' -E '^[^%]*\\documentclass' "${gitfiles[@]}")
+    - pre_compile
+    - for t in "${texfiles[@]}" ; do verb "Compiling $t" ; compile_tex "$t" && succeeded+=( "$t" ) || { msg-err "FAILED compilation for $t"  ; cat "${t%.tex}.log"; failed+=( "$t" ) ; } ;  done
+    - git ls-files -z | xargs -0 rm -v -f # remove all tracked files such that they are not included in the artifacts
+    # if you want to upload PDFs somewhere else, do something like the following:
+    #- rsync -rvva *.pdf wissmann@faui8220:/serv/httpd/www8/htdocs/ext/thorsten/test
+    - echo "The following tex were compiled successfully:" ; printf "%s\n" "${succeeded[@]}"
+    - echo "The following tex files failed to build:" ; printf "%s\n" "${failed[@]}"
+    - print_coverage
+    - if [ "${#failed[@]}" -ge 1 ] ; then verb "failed files $failed" ; false ; fi
+  # the second last line in the script prints the statistics which are parsed by the following regex:
+  coverage: /^Successful Compilation Coverage [0-9]*\.[0-9][0-9]/
+  cache:
+    untracked: true # cache all pdf files for subsequent runs
+  artifacts:
+    name: "${CI_PROJECT_NAME}-pdfs"
+    when: always
+    expire_in: 10 yrs
+    paths:
+    - ./*.pdf
+    - ./*/*.pdf
+    - ./*/*/*.pdf
+    - ./*/*/*/*.pdf
+    - ./*/*/*/*/*.pdf
+    - ./*/*/*/*/*/*.pdf
+    - ./*/*/*/*/*/*/*.pdf
+    - ./*/*/*/*/*/*/*/*.pdf
+    - ./*.log
+    - ./*/*.log
+    - ./*/*/*.log
+    - ./*/*/*/*.log
+    - ./*/*/*/*/*.log
+    - ./*/*/*/*/*/*.log
+    - ./*/*/*/*/*/*/*.log
+    - ./*/*/*/*/*/*/*/*.log
+
+
+  # You can link the most recently *finished* artifacts by a badge:
+  #
+  # Link:            https://gitlab.science.ru.nl/%{project_path}/-/jobs/artifacts/%{default_branch}/browse?job=compile_latex
+  # Badge image URL: https://gitlab.science.ru.nl/%{project_path}/badges/%{default_branch}/pipeline.svg
+  #
+  #environment:
+  #    name: Recent PDFs
+  #    url: https://gitlab.cs.fau.de/$CI_PROJECT_PATH/builds/$CI_BUILD_ID/artifacts/browse
