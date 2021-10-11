@@ -23,7 +23,7 @@ compile_latex:
     - succeeded=( )
     - pre_compile() { true ; }
     - print_coverage() { echo "Successful Compilation Coverage $(((${#texfiles[@]}-${#failed[@]})*10000/${#texfiles[@]}))" | sed 's/..$/\.&/' ; }
-    - compile_tex() { ( d=$(dirname "$1") ; cd "$d" ; latexmk -f -pdf -interaction=batchmode "${1##*}" ; ); }
+    - compile_tex() { ( d=$(dirname "$1") ; cd "$d" ; latexmk -f -pdf -interaction=batchmode "${1##*/}" ; ); }
     - "[[ -f .gitlab-latex.sh ]] && source .gitlab-latex.sh"  # quotes because of yaml
     # activate the following line if you use a custom makefile
     #- compile_tex() { make "${1%%.tex}.pdf" ; }
