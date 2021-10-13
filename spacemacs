@@ -70,6 +70,7 @@ This function should only modify configuration layer settings."
      autothemer
      gruvbox-theme
      solarized-theme
+     undo-tree
      )
 
    ;; A list of packages that cannot be updated.
@@ -589,6 +590,11 @@ before packages are loaded."
   ; (setq-default TeX-master 'shared) ; Query for master file.
   ; (setq TeX-master  'shared) ; Query for master file.
 
+
+  (global-undo-tree-mode)
+  (add-hook 'evil-local-mode-hook 'turn-on-undo-tree-mode)
+  (setq evil-undo-system 'undo-tree)
+
   (load-file "~/git/katarakt/share/katarakt.el")
   (setq TeX-view-program-list '(("katarakt" katarakt-view)))
   (setq TeX-view-program-selection '((output-pdf "katarakt")))
@@ -614,6 +620,7 @@ before packages are loaded."
       ;; (set-frame-parameter frame 'width 80)
       ;; (set-frame-parameter frame 'height 40)
       ))
+
 
 
   (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
