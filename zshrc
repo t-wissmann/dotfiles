@@ -90,7 +90,13 @@ add-zsh-hook -Uz precmd xterm_title_precmd
 preexec() {
   timer=${timer:-$SECONDS}
   if [[ "$TERM" == (screen*|xterm*|rxvt*) ]]; then
-      print -Pn '\e]2;'${2}' (%1~) %n@%m\a'
+      # do not add -P here. otherwise $( ) within ${2} will be expanded!
+      #
+      # $ print -P 'foo $(echo bar) baz'
+      # foo bar baz
+      #
+      print -n '\e]2;'${2}
+      print -Pn ' (%1~) %n@%m\a'
   fi
 }
 
