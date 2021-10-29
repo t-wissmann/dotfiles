@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+# print via the samba server at Radboud University
+
+# Usage: ./ruprint PDFFILE
+# where PDFFILE is the pdf to be printed.
+# the script then asks for the U-number and password.
+
+::() {
+    echo -ne "\e[1;33m:: \e[0;32m" >&2
+    echo -n "$*" >&2
+    echo -e "\e[0m" >&2
+    "$@"
+}
+set -e
+
+#ppdurl='https://wiki.cncz.science.ru.nl/images/c/cd/FollowMe.ppd'
+
+read -p 'RU user, e.g. U1234: ' ruid
+
+ruid="${ruid//$'\t'/}"
+psfile=/tmp/print.ps
+
+:: pdftops -paper A4 -duplex "$1" "$psfile"
+:: smbclient -U 'ru\'"${ruid,,}" //print.hosting.ru.nl/FollowMe -c "print $psfile"
+
+:: rm /tmp/print.ps
