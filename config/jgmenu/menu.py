@@ -146,7 +146,14 @@ class PulseAudio:
             stdout=subprocess.PIPE,
             env=env,
             ).communicate()
-        return PulseAudio.parse_pactl_object_list(out)
+        objects = PulseAudio.parse_pactl_object_list(out)
+        name_re = re.compile('^Source #([0-9]*)')
+        sources = []
+        for name, obj in objects.items():
+            m = name_re.match(name)
+            obj['id'] = m.group(1)
+            sources.append(obj)
+        return sources
 
     @staticmethod
     def sink_items():
@@ -195,7 +202,38 @@ class PulseAudio:
 
         return entries
 
-# print(json.dumps(PulseAudio().list_sinks(), indent=4, sort_keys=True))
+    @staticmethod
+    def source_items():
+        #default_source_name = PulseAudio.get_default_source_name()
+        volume_percent_re = re.compile('([0-9]+)\%')
+        entries = []
+        all_sources = PulseAudio.list_sources()
+        for source in all_sources:
+            if source['Monitor of Sink'] != 'n/a':
+                # don't show monitors
+                continue
+            icon = 'audio-input-microphone'
+            # icon = 'emblem-noread'
+            mute_cmd = 'pactl set-source-mute {}'.format(source['id'])
+            if source['Mute'] == 'yes':
+                icon = 'remove'
+                mute_cmd += ' 0'
+                mute_item = Item('Unmute', 'audio-input-microphone', mute_cmd)
+            else:
+                mute_cmd += ' 1'
+                mute_item = Item('Mute', 'remove', mute_cmd)
+
+            current_volume = volume_percent_re.search(source['Volume']).group(1)
+            item_name = source['Description'] + ' ({}%)'.format(current_volume)
+            submenu = Menu('audio-source-{}'.format(source['id']), [
+                mute_item,
+                Item('Set to 100%', 'go-top', 'pactl set-source-volume {} 100%'.format(source['id'])),
+                Item('Make default', 'forward', 'pactl set-default-source {}'.format(source['id'])),
+            ])
+            entries.append(Item(item_name, icon, submenu))
+        return entries
+
+# print(json.dumps(PulseAudio().list_sources(), indent=4, sort_keys=True))
 
 def main():
     parser = argparse.ArgumentParser(
@@ -220,8 +258,10 @@ def main():
            Menu('audio', [
               Item('Pavucontrol', 'preferences-desktop', 'pavucontrol'),
               Sep(),
-           ] + PulseAudio.sink_items())),
-      #Item('Applications', 'start-here', XdgMenu()),
+           ] + PulseAudio.sink_items() + [
+              Sep(),
+           ] + PulseAudio.source_items())),
+      Item('Applications', 'start-here', XdgMenu()),
       Sep(),
       Item('Suspend', 'gnome-logout', 'systemctl suspend -i'),
     ])
