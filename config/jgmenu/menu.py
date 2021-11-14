@@ -72,6 +72,52 @@ class PulseAudio:
         return out.strip()
 
     @staticmethod
+    def parse_pactl_object_list(text):
+        objects = {}
+        cur_object_name = ''
+        cur_object = {}
+        property_re = re.compile('^\t([^\t:]*):[ ]?(.*)$')
+        last_property = None
+        cur_indent = ''
+
+        for line in text.splitlines():
+            if len(line) == 0:
+                objects[cur_object_name] = cur_object
+                cur_object = {}
+                last_property = None
+                continue
+
+            if line[0] != '\t':
+                cur_object_name = line
+                continue
+
+            m = property_re.match(line)
+            if m:
+                last_property = m.group(1)
+                righthand = m.group(2)
+                if len(righthand) == 0:
+                    cur_object[last_property] = []
+                else:
+                    cur_object[last_property] = righthand
+                    # the indent for continued attribute values:
+                    # (the last ' ' is below the colon)
+                    cur_indent = '\t' + len(last_property) * ' ' + ' '
+                continue
+
+            if line.startswith(cur_indent) and last_property is not None:
+                cur_object[last_property] += line[len(cur_indent):]
+                continue
+
+            if last_property is not None and line.startswith('\t\t'):
+                cur_object[last_property].append(line[2:])
+                continue
+            # else: skip
+
+        if len(cur_object_name) > 0:
+            objects[cur_object_name] = cur_object
+        return objects
+
+    @staticmethod
     def list_sinks():
         env = os.environ.copy()
         env['LC_ALL'] = 'C'
@@ -81,54 +127,34 @@ class PulseAudio:
             stdout=subprocess.PIPE,
             env=env,
             ).communicate()
-
-        sinks = []
-        cur_sink = {}
+        objects = PulseAudio.parse_pactl_object_list(out)
         sink_name_re = re.compile('^Sink #([0-9]*)')
-        property_re = re.compile('^\t([^\t:]*):[ ]?(.*)$')
-        last_property = None
-        cur_indent = ''
-
-        for line in out.splitlines():
-            if len(line) == 0:
-                sinks.append(cur_sink)
-                cur_sink = {}
-                last_property = None
-            m = sink_name_re.match(line)
-            if m:
-                cur_sink['id'] = int(m.group(1))
-                continue
-
-            m = property_re.match(line)
-            if m:
-                last_property = m.group(1)
-                righthand = m.group(2)
-                if len(righthand) == 0:
-                    cur_sink[last_property] = []
-                else:
-                    cur_sink[last_property] = righthand
-                    # the indent for continued attribute values:
-                    # (the last ' ' is below the colon)
-                    cur_indent = '\t' + len(last_property) * ' ' + ' '
-                continue
-
-            if line.startswith(cur_indent) and last_property is not None:
-                cur_sink[last_property] += line[len(cur_indent):]
-                continue
-
-            if last_property is not None and line.startswith('\t\t'):
-                cur_sink[last_property].append(line[2:])
-            # else: skip
-
-        sinks.append(cur_sink)
-
+        sinks = []
+        for name, obj in objects.items():
+            m = sink_name_re.match(name)
+            obj['id'] = m.group(1)
+            sinks.append(obj)
         return sinks
+
+    @staticmethod
+    def list_sources():
+        env = os.environ.copy()
+        env['LC_ALL'] = 'C'
+        out, err = subprocess.Popen(
+            ['pactl', 'list', 'sources'],
+            universal_newlines=True,
+            stdout=subprocess.PIPE,
+            env=env,
+            ).communicate()
+        return PulseAudio.parse_pactl_object_list(out)
 
     @staticmethod
     def sink_items():
         default_sink_name = PulseAudio.get_default_sink_name()
         entries = []
-        for sink in PulseAudio.list_sinks():
+        all_sinks = PulseAudio.list_sinks()
+        volume_percent_re = re.compile('([0-9]+)\%')
+        for sink in all_sinks:
             icon = ''
             if default_sink_name == sink['Name']:
                 icon = 'audio-volume-high'
@@ -143,12 +169,29 @@ class PulseAudio:
                     'Mute',
                     'audio-volume-muted',
                     'pactl set-sink-mute {} 1'.format(sink['id']))
+
+            use_this_cmd = [
+                'pactl set-default-sink {}'.format(sink['id']),
+            ]
+            for other_sink in all_sinks:
+                if other_sink['id'] == sink['id']:
+                    muted = '0'
+                else:
+                    muted = '1'
+                use_this_cmd.append('pactl set-sink-mute {} {}'.format(other_sink['id'], muted))
+
+            current_volume = volume_percent_re.search(sink['Volume']).group(1)
+            balance_command = 'pactl set-sink-volume {} {}%'.format(sink['id'], current_volume)
+
+            use_this_cmd = ' && '.join(use_this_cmd)
             submenu = Menu('audio-sink-{}'.format(sink['id']), [
-                Item('Use this and mute others', 'go-last', 'pactl set-default-sink {}'.format(sink['id'])),
+                Item('Use this and mute others', 'go-last', use_this_cmd),
                 Item('Make default', 'forward', 'pactl set-default-sink {}'.format(sink['id'])),
+                Item('Balance', 'reload', balance_command),
                 mute_item,
             ])
-            entries.append(Item(sink['Description'], icon, submenu))
+            item_name = sink['Description'] + ' ({}%)'.format(current_volume)
+            entries.append(Item(item_name, icon, submenu))
 
         return entries
 
@@ -178,7 +221,7 @@ def main():
               Item('Pavucontrol', 'preferences-desktop', 'pavucontrol'),
               Sep(),
            ] + PulseAudio.sink_items())),
-      Item('Applications', 'start-here', XdgMenu()),
+      #Item('Applications', 'start-here', XdgMenu()),
       Sep(),
       Item('Suspend', 'gnome-logout', 'systemctl suspend -i'),
     ])
