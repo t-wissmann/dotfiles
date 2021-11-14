@@ -205,14 +205,38 @@ def run_gdmflexi(button):
     os.spawnvpe(os.P_NOWAIT, cmd[0], cmd, os.environ)
 
 gdmflexiserver = W.RawLabel('')
-if socket.gethostname() == 'hoth':
-    gdmflexiserver = W.Button('[Nutzer Wechseln] ')
-    gdmflexiserver.callback = run_gdmflexi
+# if socket.gethostname() == 'hoth':
+#     gdmflexiserver = W.Button('[Nutzer Wechseln] ')
+#     gdmflexiserver.callback = run_gdmflexi
+
+
+class Jgmenu(W.Widget):
+    def __init__(self):
+        super(Jgmenu,self).__init__()
+        self.buttons = [ 1 ]
+
+    def render(self, painter):
+        painter.bg('#243423')
+        painter.fg('#efefef')
+        painter.symbol(0xe142)  # ghost
+        painter.space(2)
+        painter.bg(None)
+        painter.space(2)
+        painter.fg('#878787')
+        painter.symbol(0xe1aa)  # separator
+        painter.space(2)
+
+    def on_click(self, button):
+        menu = os.path.expanduser('~/.config/jgmenu/menu.py')
+        cmd = [menu, '--target=jgmenu']
+        os.spawnvpe(os.P_NOWAIT, cmd[0], cmd, os.environ)
+
 
 bar = lemonbar.Lemonbar(**lemonbar_options)
 
 bar.widget = W.ListLayout([
     W.RawLabel('%{l}'),
+    Jgmenu(),
     hlwm.HLWMTags(hc, monitor, tag_renderer = tag_renderer),
     W.TabbedLayout(list(enumerate([
         W.ListLayout([ W.RawLabel('%{c}'),
