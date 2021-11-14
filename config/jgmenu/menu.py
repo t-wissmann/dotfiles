@@ -261,7 +261,7 @@ def main():
            ] + PulseAudio.sink_items() + [
               Sep(),
            ] + PulseAudio.source_items())),
-      Item('Applications', 'start-here', XdgMenu()),
+      # Item('Applications', 'start-here', XdgMenu()),
       Sep(),
       Item('Suspend', 'gnome-logout', 'systemctl suspend -i'),
     ])
