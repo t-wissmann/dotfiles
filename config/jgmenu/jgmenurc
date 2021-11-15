@@ -5,6 +5,10 @@
 # csv_cmd = apps
 #tint2_look = 0
 position_mode = pointer
+# position_mode = fixed
+# menu_margin_x = -1
+# menu_margin_y = -1
+# menu_valign = top
 # edge_snap_x = 30
 # terminal_exec = x-terminal-emulator
 # terminal_args = -e

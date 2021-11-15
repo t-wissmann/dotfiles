@@ -191,7 +191,7 @@ lemonbar_options = {
 }
 
 if is_hidpi:
-    lemonbar_options['font'] = 'Bitstream Vera Sans:size=8'
+    lemonbar_options['font'] = 'Dejavu Sans:size=8'
     lemonbar_options['symbol_font'] = \
         '-wuncon-siji-medium-r-normal--10-100-75-75-c-80-iso10646-1'
     tag_renderer = simple_tag_renderer
@@ -218,7 +218,11 @@ class Jgmenu(W.Widget):
     def render(self, painter):
         painter.bg('#243423')
         painter.fg('#efefef')
-        painter.symbol(0xe142)  # ghost
+        if is_hidpi:
+            painter.space(2)
+            painter += '☃️'
+        else:
+            painter.symbol(0xe142)  # ghost
         painter.space(2)
         painter.bg(None)
         painter.space(2)
