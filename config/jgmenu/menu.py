@@ -6,6 +6,14 @@ import sys
 import re
 import os
 import json
+import socket
+
+"""
+A wrapper around jgmenu that allows
+
+    1. easier configuration: submenus are just nested Menu() objects
+    2. menus for PulseAudio-control
+"""
 
 
 class Sep():
@@ -246,10 +254,15 @@ def main():
                         help='wether to pipe directly to jgmenu or print to stdout')
     args = parser.parse_args()
 
+    maybe_netctl = []
+    netctl_path = os.path.expanduser('~/dotfiles/menu/rofi-netctl')
+    if socket.gethostname() == 'x1' and os.path.exists(netctl_path):
+        maybe_netctl = [Item('netctl', 'network-wired', netctl_path)]
     menu = Menu('root', [
       Item('Dolphin', 'go-home', 'dolphin'),
       Item('Thunar', 'system-file-manager', 'thunar'),
       Item('Terminal', 'utilities-terminal', 'urxvt'),
+      ] + maybe_netctl + [
       Sep(),
       Item('Qutebrowser', 'qutebrowser', 'qutebrowser'),
       Item('Firefox', 'web-browser', 'firefox'),
