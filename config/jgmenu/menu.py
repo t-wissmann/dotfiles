@@ -259,6 +259,14 @@ def main():
     if socket.gethostname() == 'x1' and os.path.exists(netctl_path):
         maybe_netctl = [Item('netctl', 'network-wired', netctl_path)]
     menu = Menu('root', [
+      Item('Audio', 'audio-card',
+           Menu('audio', [
+              Item('Pavucontrol', 'preferences-desktop', 'pavucontrol'),
+              Sep(),
+           ] + PulseAudio.sink_items() + [
+              Sep(),
+           ] + PulseAudio.source_items())),
+      Sep(),
       Item('Dolphin', 'go-home', 'dolphin'),
       Item('Thunar', 'system-file-manager', 'thunar'),
       Item('Terminal', 'utilities-terminal', 'urxvt'),
@@ -267,13 +275,7 @@ def main():
       Item('Qutebrowser', 'qutebrowser', 'qutebrowser'),
       Item('Firefox', 'web-browser', 'firefox'),
       Item('gedit', 'accessories-text-editor', 'gedit'),
-      Item('Audio', 'audio-card',
-           Menu('audio', [
-              Item('Pavucontrol', 'preferences-desktop', 'pavucontrol'),
-              Sep(),
-           ] + PulseAudio.sink_items() + [
-              Sep(),
-           ] + PulseAudio.source_items())),
+      Item('Telegram', 'telegram', 'killall telegram-desktop ; QT_QPA_PLATFORMTHEME= telegram-desktop'),
       # Item('Applications', 'start-here', XdgMenu()),
       Sep(),
       Item('Suspend', 'gnome-logout', 'systemctl suspend -i'),
