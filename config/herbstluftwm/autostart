@@ -493,8 +493,8 @@ hc attr theme.urgent.color '#C71364de'
 hc attr theme.urgent.outer_color '#E279A9'
 hc attr theme.urgent.inner_color '#E279A9'
 
-hc and , attr theme.title_height 14 \
-       , attr theme.padding_top 2 \
+hc and , attr theme.title_height 15 \
+       , attr theme.padding_top 3 \
        , attr theme.title_color white \
        , attr theme.normal.title_color '#dedede'
 
