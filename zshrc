@@ -95,8 +95,11 @@ preexec() {
       # $ print -P 'foo $(echo bar) baz'
       # foo bar baz
       #
-      print -n '\e]2;'${2}
+      title=${2}
+      title=${title//\\/\\\\}
+      print -n '\e]2;'"${title}"
       print -Pn ' (%1~) %n@%m\a'
+      true
   fi
 }
 
