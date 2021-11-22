@@ -3,6 +3,7 @@ from barpyrus import widgets as W
 from barpyrus.core import Theme
 from barpyrus import lemonbar
 from barpyrus import conky
+from barpyrus import trayer
 import sys
 import os
 import subprocess
@@ -23,7 +24,7 @@ if is_hidpi:
     height = 28
 
 width = monitor_w # width of the panel
-gap = int(hc(['get', 'frame_gap'])) if 'x1' == socket.gethostname() else 0
+gap = int(hc(['get', 'frame_gap']))  # if 'x1' == socket.gethostname() else 0
 x += gap
 width -= 2 * gap
 top = True
@@ -184,8 +185,9 @@ conky_widget = conky.ConkyWidget(str(cg))
 #xwin.loop()
 
 # Widget configuration:
+panel_geometry = (x,y,width,height)
 lemonbar_options = {
-    'geometry': (x,y,width,height),
+    'geometry': panel_geometry,
     'foreground': '#CDCDCD',
     'background': '#CC101010',
 }
@@ -238,6 +240,12 @@ class Jgmenu(W.Widget):
 
 bar = lemonbar.Lemonbar(**lemonbar_options)
 
+
+if int(monitor) == 0:
+    maybe_systray = trayer.StalonetrayWidget(panel_geometry)
+else:
+    maybe_systray = W.RawLabel('')
+
 bar.widget = W.ListLayout([
     W.RawLabel('%{l}'),
     Jgmenu(),
@@ -262,6 +270,7 @@ bar.widget = W.ListLayout([
         ], tab_renderer = zip_renderer),
     conky.ConkyWidget(text= conky_text),
     W.DateTime('%H:%M '),
+    maybe_systray,
 ])
 
 

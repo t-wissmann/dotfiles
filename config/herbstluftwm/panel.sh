@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 
-if [ $HOSTNAME = hoth ] ; then
+if false ; then # [ $HOSTNAME = hoth ] ; then
     geo=$(herbstclient attr monitors."$1".geometry)
     x_coord=${geo#*+}
     y_coord=${x_coord#*+}
