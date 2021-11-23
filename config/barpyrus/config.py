@@ -244,10 +244,10 @@ bar = lemonbar.Lemonbar(**lemonbar_options)
 
 if int(monitor) == 0:
     args = [
-        '--background', '#101010',
-        #'-t-',
-        #'--tint-color', '#101010',
-        #'--tint-level', '204',
+        #'--background', '#101010',
+        '-t',
+        '--tint-color', '#101010',
+        '--tint-level', '204',
     ]
     if is_hidpi:
         factor = 0.27  # found out by experiement
