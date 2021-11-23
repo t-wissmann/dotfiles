@@ -196,6 +196,7 @@ if is_hidpi:
     lemonbar_options['font'] = 'Dejavu Sans:size=8'
     lemonbar_options['symbol_font'] = \
         '-wuncon-siji-medium-r-normal--10-100-75-75-c-80-iso10646-1'
+    lemonbar_options['spacing_font'] = (0.5, 'Dejavu Sans:size=1')
     tag_renderer = simple_tag_renderer
 else:
     tag_renderer = hlwm.underlined_tags
@@ -249,7 +250,12 @@ if int(monitor) == 0:
         #'--tint-color', '#101010',
         '--tint-level', '204',
     ]
-    maybe_systray = trayer.StalonetrayWidget(panel_geometry, args=args)
+    factor = 1
+    if is_hidpi:
+        factor = 0.27  # found out by experiement
+    maybe_systray = trayer.StalonetrayWidget(panel_geometry,
+                                             args=args,
+                                             width_factor=factor)
 else:
     maybe_systray = W.RawLabel('')
 
