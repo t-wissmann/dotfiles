@@ -244,20 +244,25 @@ bar = lemonbar.Lemonbar(**lemonbar_options)
 
 if int(monitor) == 0:
     args = [
-        #'--background', '#101010',
-        '--background', '#363935',
+        '--background', '#101010',
         #'-t-',
         #'--tint-color', '#101010',
-        '--tint-level', '204',
+        #'--tint-level', '204',
     ]
-    factor = 1
     if is_hidpi:
         factor = 0.27  # found out by experiement
-    maybe_systray = trayer.StalonetrayWidget(panel_geometry,
-                                             args=args,
-                                             width_factor=factor)
+    else:
+        factor = 1
+    maybe_systray = [
+        #W.RawLabel('%{F' + bgcolor + '}' + chr(0xe1ab) + '%{B' + bgcolor + '}'),
+        W.RawLabel('%{T3}%{F#878787}\ue1ac%{T2}%{T-}'),
+        trayer.StalonetrayWidget(panel_geometry,
+                                 args=args,
+                                 width_factor=factor),
+        W.RawLabel('%{B-}'),
+    ]
 else:
-    maybe_systray = W.RawLabel('')
+    maybe_systray = []
 
 bar.widget = W.ListLayout([
     W.RawLabel('%{l}'),
@@ -283,7 +288,6 @@ bar.widget = W.ListLayout([
         ], tab_renderer = zip_renderer),
     conky.ConkyWidget(text= conky_text),
     W.DateTime('%H:%M '),
-    maybe_systray,
-])
+] + maybe_systray)
 
 
