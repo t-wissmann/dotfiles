@@ -242,7 +242,14 @@ bar = lemonbar.Lemonbar(**lemonbar_options)
 
 
 if int(monitor) == 0:
-    maybe_systray = trayer.StalonetrayWidget(panel_geometry)
+    args = [
+        #'--background', '#101010',
+        '--background', '#363935',
+        #'-t-',
+        #'--tint-color', '#101010',
+        '--tint-level', '204',
+    ]
+    maybe_systray = trayer.StalonetrayWidget(panel_geometry, args=args)
 else:
     maybe_systray = W.RawLabel('')
 
