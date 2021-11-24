@@ -135,6 +135,7 @@ Icon=text-editor
 #gui_app emacsclient\ -n\ -c\ --alternate-editor=\ '' \
 for s in \
     $(mimes 'text/.*'|grep -v '^\.'| grep -vE 'text/html') \
+    text/x-perl \
     text/x-shellscript \
     text/x-c \
     application/x-shellscript \
