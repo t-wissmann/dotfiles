@@ -154,6 +154,20 @@ for keyidx in l,+1 Right,+1 h,-1 Left,-1 ; do
             chain , move_index $idx --skip-visible \
                   , jumpto W
 done
+
+# on $Mod-i do the first thing that succeeds:
+hc keybind $Mod-i or \
+    : substitute WINID clients.focus.winid and \
+        . jumpto urgent \
+        . try new_attr string clients.my_oldfocus \
+        . set_attr clients.my_oldfocus WINID \
+    : jumpto urgent \
+    : substitute WINID clients.my_oldfocus and \
+        . jumpto WINID \
+        . remove_attr clients.my_oldfocus \
+        . spawn notify-send -t 1000 -i edit-undo HLWM 'Jump to previously focused window' \
+    : spawn notify-send -t 1000 -i messagebox_warning HLWM 'No urgent or formerly focused window'
+
 hc keybind $Mod-Escape use_previous
 hc keybind XF86Eject spawn eject -T
 
@@ -507,13 +521,13 @@ hc attr theme.title_font '-*-fixed-medium-r-*-*-14-*-*-*-*-*-*-*'
 hc attr theme.floating.outer_width 1
 
 hc set frame_border_active_color '#101010dd'
-hc set frame_border_normal_color '#404040dd'
+hc set frame_border_normal_color '#101010dd'
 hc set frame_bg_normal_color '#30303087'
-hc set frame_bg_active_color '#86AB5F'
+hc set frame_bg_active_color '#86AB5FFF'
 hc set frame_border_width 1
 hc set frame_bg_transparent 1
 hc set frame_transparent_width 4
-hc set frame_active_opacity 50
+hc set frame_active_opacity 100
 
 hc set smart_frame_surroundings 0
 hc set frame_padding 0
