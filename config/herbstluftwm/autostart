@@ -130,6 +130,11 @@ for i in "${!tag_keys[@]}" ; do
     hc keybind "$Mod-Shift-$key" move_index "$i"
 done
 
+tab_index=0
+for tab_key in {1..9} 0 ; do
+    hc keybind "Mod4-Mod1-${tab_key}" focus_nth "$((tab_index++))"
+done
+
 if [[ $HOSTNAME = hoth ]] ; then
     hc load irc     '(split horizontal:0.5:0 (clients max:0) (clients max:0))'
 else
@@ -172,7 +177,7 @@ hc keybind $Mod-Escape use_previous
 hc keybind XF86Eject spawn eject -T
 
 # layouting
-hc keybind $Mod-i toggle always_show_frame
+hc keybind $Mod-Shift-i toggle always_show_frame
 hc keybind $Mod-r remove
 hc keybind $Mod-s floating toggle
 hc keybind $Mod-Shift-d attr clients.focus.decorated toggle
