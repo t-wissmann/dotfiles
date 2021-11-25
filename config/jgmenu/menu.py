@@ -259,6 +259,7 @@ def main():
     if socket.gethostname() == 'x1' and os.path.exists(netctl_path):
         maybe_netctl = [Item('netctl', 'network-wired', netctl_path)]
     menu = Menu('root', [
+      Item('Thunar', 'system-file-manager', 'thunar'),
       Item('Audio', 'audio-card',
            Menu('audio', [
               Item('Pavucontrol', 'preferences-desktop', 'pavucontrol'),
@@ -268,7 +269,6 @@ def main():
            ] + PulseAudio.source_items())),
       Sep(),
       Item('Dolphin', 'go-home', 'dolphin'),
-      Item('Thunar', 'system-file-manager', 'thunar'),
       Item('Terminal', 'utilities-terminal', 'urxvt'),
       ] + maybe_netctl + [
       Sep(),
