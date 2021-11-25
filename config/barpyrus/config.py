@@ -19,7 +19,7 @@ hc = hlwm.connect()
 # get the geometry of the monitor
 monitor = sys.argv[1] if len(sys.argv) >= 2 else 0
 (x, monitor_y, monitor_w, monitor_h) = hc.monitor_rect(monitor)
-height = 18 # height of the panel
+height = 18  # height of the panel
 if is_hidpi:
     height = 28
 
@@ -124,24 +124,41 @@ def simple_tag_renderer(self, painter): # self is a HLWMTagInfo object
     #painter.ol('#ffffff' if self.focused else None)
     painter.set_flag(painter.underline, True if self.visible else False)
     painter.fg('#a0a0a0' if self.occupied else '#909090')
+    ol = None
     if self.urgent:
-        painter.ol('#FF7F27')
+        ol = '#FF7F27'
         painter.fg('#FF7F27')
         painter.set_flag(painter.underline, True)
         painter.bg('#57000F')
     elif self.here:
         painter.fg('#ffffff')
-        painter.ol(self.activecolor if self.focused else '#ffffff')
+        ol = self.activecolor if self.focused else '#ffffff'
         painter.bg(self.emphbg)
     else:
-        painter.ol('#454545')
-    painter.space(1)
-    painter += self.name
-    painter.space(1)
+        painter.bg('#101010')
+        ol = '#454545'
+    painter.ol(ol)
+
+    painter.space(1 if is_hidpi else 3)
+    name2icon = {
+        'irc': 0xe1ef,
+        'vim': 0xe1cf,
+        'web': 0xe19c,
+        'mail': 0xe071,
+        'scratchpad': 0xe022,
+        'music': 0xe05c,
+    }
+    painter += str(self.index + 1)
+    painter.space(1 if is_hidpi else 3)
+    if self.name in name2icon and not is_hidpi:
+        painter.symbol(name2icon[self.name])
+    else:
+        painter += self.name
+    painter.space(1 if is_hidpi else 3)
     painter.bg()
     painter.ol()
     painter.set_flag(painter.underline, False)
-    painter.space(1)
+    painter.space(1 if is_hidpi else 2)
 
 
 # you can define custom themes
@@ -199,8 +216,9 @@ if is_hidpi:
     lemonbar_options['spacing_font'] = (0.5, 'Dejavu Sans:size=1')
     tag_renderer = simple_tag_renderer
 else:
-    tag_renderer = hlwm.underlined_tags
-    tag_renderer.activecolor = 'red'
+    tag_renderer = simple_tag_renderer
+    # tag_renderer = hlwm.underlined_tags
+    # tag_renderer.activecolor = 'red'
 
 def run_gdmflexi(button):
     cmd = ['urxvt']
