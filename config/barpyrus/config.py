@@ -265,7 +265,7 @@ if int(monitor) == 0:
         #'--background', '#101010',
         '-t',
         '--tint-color', '#101010',
-        '--tint-level', '204',
+        '--tint-level', str(0xCC),
     ]
     if is_hidpi:
         factor = 0.27  # found out by experiement

@@ -10,7 +10,7 @@ keys = [
     ('j', 'Down'),
     ('k', 'Up'),
     ('l', 'Right'),
-    ('Shift+4', 'Ctrl+E'),
+    ('Shift+4', 'End'),
     ('0', 'Home'),
     ('Ctrl+f', 'Next'),
     ('Ctrl+b', 'Prior'),
