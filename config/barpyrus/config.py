@@ -265,8 +265,6 @@ class Jgmenu(W.Widget):
 
 bar = lemonbar.Lemonbar(**lemonbar_options)
 
-# bar.clickareas.update(cg.clickareas)
-
 if int(monitor) == 0:
     args = [
         #'--background', '#101010',
