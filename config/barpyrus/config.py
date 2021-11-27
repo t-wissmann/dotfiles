@@ -38,13 +38,17 @@ else:
 network_devices = os.listdir('/sys/class/net/')
 network_devices = [ n for n in network_devices if n != "lo"]
 
+def spawn_htop(button):
+    subprocess.call(['urxvt', '-e', 'htop'])
+
 cg = conky.ConkyGenerator(lemonbar.textpainter())
-with cg.temp_fg('#B7CE42'):
-    cg.symbol(0xe026);
-cg += ' '; cg.var('cpu'); cg += '% '
-with cg.temp_fg('#6F99B4'):
-    cg.symbol(0xe021);
-cg += ' '; cg.var('memperc'); cg += '% '
+with cg.clickable([1], spawn_htop):
+    with cg.temp_fg('#B7CE42'):
+        cg.symbol(0xe026);
+    cg += ' '; cg.var('cpu'); cg += '% '
+    with cg.temp_fg('#6F99B4'):
+        cg.symbol(0xe021);
+    cg += ' '; cg.var('memperc'); cg += '% '
 
 for net in network_devices:
     wireless_icons = [ 0xe218, 0xe219, 0xe21a ]
@@ -197,7 +201,7 @@ def zip_renderer(self, painter):
         painter.space(2)
     #painter.space(3)
 
-conky_widget = conky.ConkyWidget(str(cg))
+conky_widget = conky.ConkyWidget(cg)
 
 #barpyrus/windowframe.py
 #xwin = windowframe.WindowFrame((x,y+20,width,height), 1);
@@ -261,6 +265,7 @@ class Jgmenu(W.Widget):
 
 bar = lemonbar.Lemonbar(**lemonbar_options)
 
+# bar.clickareas.update(cg.clickareas)
 
 if int(monitor) == 0:
     args = [
