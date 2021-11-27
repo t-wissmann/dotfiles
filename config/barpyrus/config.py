@@ -148,8 +148,10 @@ def simple_tag_renderer(self, painter): # self is a HLWMTagInfo object
         'scratchpad': 0xe022,
         'music': 0xe05c,
     }
-    painter += str(self.index + 1)
-    painter.space(1 if is_hidpi else 3)
+    index_str = str(self.index + 1)
+    if index_str != self.name:
+        painter += index_str
+        painter.space(1 if is_hidpi else 3)
     if self.name in name2icon and not is_hidpi:
         painter.symbol(name2icon[self.name])
     else:
