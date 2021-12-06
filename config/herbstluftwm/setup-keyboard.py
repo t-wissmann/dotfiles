@@ -32,6 +32,12 @@ models = [
         'usb_name': 'ARCHISS PTR66 ARCHISS PTR66',
         'options': ['compose:menu', 'compose:rctrl', 'ctrl:nocaps'],
     },
+    {
+        'name': 'PS/2 keyboard via USB adapter',
+        'id': '0a81:0205',
+        'usb_name': 'Chesen Electronics Corp. PS/2 Keyboard+Mouse Adapter',
+        'options': ['compose:ralt', 'compose:rwin'],
+    },
 ]
 
 
@@ -58,6 +64,7 @@ class XInputDevice:
         self.vendor_id = None
         self.model_id = None
         self.event_path = None  # /dev/input/eventX
+        self.input_type = None  # master/slave pointer/keyboard
 
     def usb_id(self):
         """a device ID as listed in lsusb"""
@@ -70,7 +77,18 @@ def xinput_devices():
     """return a list of all xinput devices with additional
     information about the event path and vendor/model ids"""
     # get xinput IDs of connected devices:
-    xinput_ids = get_stdout(['xinput', 'list', '--id-only']).splitlines()
+    xinput_ids = []
+    id2type = {}
+    id_line_re = re.compile(r'.*\tid=([0-9]*)\t\[(.*) \([0-9]*\)\]')
+    _RE_COMBINE_WHITESPACE = re.compile(r"\s+")
+    for line in get_stdout(['xinput', 'list']).splitlines():
+        m = id_line_re.match(line)
+        if m:
+            cur_id = m.group(1)
+            cur_type = _RE_COMBINE_WHITESPACE.sub(" ", m.group(2)).strip()
+            xinput_ids.append(cur_id)
+            id2type[cur_id] = cur_type
+
     # get their /dev/input/event.. filepath:
     path_re = re.compile(r'\tDevice Node \([0-9]*\):\t"([^"]*)"$')
     section_re = re.compile(r"^Device '(.*)':$")
@@ -88,6 +106,7 @@ def xinput_devices():
     assert len(xinput_ids) == len(devices)
     for xid, dev in zip(xinput_ids, devices):
         dev.id = xid
+        dev.input_type = id2type[xid]
 
     # read usb vendor and model IDs from udev:
     udev_cmd = ['udevadm', 'info']
@@ -136,8 +155,9 @@ def main():
             # look for name:
             devs = [d for d in devices if d.name == known_kbd['xinput_name']]
         if devs:
-            ids = [d.id for d in devs]
-            log('==> Found "{}" on xinput {}'.format(known_kbd['name'], ' '.join(ids)))
+            ids = [d.id for d in devs if d.input_type == 'slave keyboard']
+            log('==> Found keyboard "{}" on xinput {}'
+                .format(known_kbd['name'], ' '.join(ids)))
             options = []
             for arg in known_kbd['options']:
                 options += ['-option', arg]
@@ -151,9 +171,9 @@ main()
 # has-kbd() {
 #     lsusb | grep "ID $*" > /dev/null
 # }
-# 
+#
 # hc keyunbind --all
-# 
+#
 # keyboard=
 # if has-kbd 04d9:0134 Holtek Semiconductor ; then # pure kbtalking
 #     setxkbmap us -variant altgr-intl -option compose:menu -option ctrl:nocaps -option compose:ralt -option compose:rwin
@@ -170,4 +190,3 @@ main()
 # else
 #     setxkbmap us -variant altgr-intl -option compose:menu -option ctrl:nocaps -option compose:ralt -option compose:rwin
 # fi
-
