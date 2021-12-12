@@ -28,6 +28,7 @@ hc setenv FREETYPE_PROPERTIES "truetype:interpreter-version=35"
 hc set frame_gap 8
 hc set snap_gap 8
 hc set default_frame_layout max
+hc set ellipsis ''
 # raindrops
 #feh --bg-center ~/Documents/wallpaper/water/rain.jpg
 case "$HOSTNAME" in
@@ -518,7 +519,7 @@ hc attr theme.urgent.outer_color '#E279A9'
 hc attr theme.urgent.inner_color '#E279A9'
 
 hc and , attr theme.title_height 15 \
-       , attr theme.padding_top 3 \
+       , attr theme.title_depth 3 \
        , attr theme.title_color white \
        , attr theme.normal.title_color '#dedede'
 
@@ -564,6 +565,8 @@ case "$HOSTNAME" in
         ;;
     *) green_i3_like_theme ;;
 esac
+#hc attr theme.title_when always  # multiple_tabs
+#hc attr theme.floating.title_when always
 hc attr theme.title_align center
 hc attr theme.background_color '#181818cc'
 
