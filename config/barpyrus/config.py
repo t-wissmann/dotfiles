@@ -4,6 +4,7 @@ from barpyrus.core import Theme
 from barpyrus import lemonbar
 from barpyrus import conky
 from barpyrus import trayer
+from barpyrus import playerctl
 import sys
 import os
 import subprocess
@@ -296,7 +297,7 @@ bar.widget = W.ListLayout([
             hlwm.HLWMMonitorFocusLayout(hc, monitor,
                 # this widget is shown on the focused monitor:
                 # grey_frame(hlwm.HLWMWindowTitle(hc, maxlen = 70)),
-                conky_widget,
+                playerctl.Playerctl(),
                 # this widget is shown on all unfocused monitors:
                 conky_widget,
             )]),
