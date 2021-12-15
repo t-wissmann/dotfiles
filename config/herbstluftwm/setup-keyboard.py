@@ -38,6 +38,12 @@ models = [
         'usb_name': 'Chesen Electronics Corp. PS/2 Keyboard+Mouse Adapter',
         'options': ['compose:ralt', 'compose:rwin'],
     },
+    {
+        'name': 'HHKB Lite2',
+        'id': '04fe:0006',
+        'usb_name': 'PFU, Ltd Happy Hacking Keyboard Lite2',
+        'options': ['compose:ralt', 'compose:rwin'],
+    },
 ]
 
 
