@@ -4,16 +4,16 @@
  */
 ::-webkit-scrollbar {
     /* width: 0px; height: 0px; */
-    background: #343434;
+    background: #efefef;
     width: 10px;
     height: 10px;
 }
 ::-webkit-scrollbar-thumb {
     background: #989898;
-    border: 4px solid #343434;
+    border: 4px solid #efefef;
 }
 ::-webkit-scrollbar-corner {
-    background: #121212;
+    background: #efefef;
 }
 
 
