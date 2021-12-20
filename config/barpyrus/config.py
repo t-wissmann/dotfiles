@@ -84,8 +84,8 @@ bat_delta = 100 / len(bat_icons)
 #conky_sep = '%{T2}  %{T-}%{F\\#FEA63C}|%{T2} %{T-}'
 #conky_sep = '%{T3}%{F\\#FEA63C}\ue1b1%{T-}'
 conky_sep = '%{T3}%{F\\#878787}\ue1ac%{T2} %{T-}'
-if is_hidpi:
-    conky_sep = '%{T3}%{F\\#878787} / %{T2} %{T-}'
+# if is_hidpi:
+#     conky_sep = '%{T3}%{F\\#878787} / %{T2} %{T-}'
 conky_text = ""
 conky_text += "${if_existing /sys/class/power_supply/BAT0}"
 conky_text += conky_sep
@@ -249,10 +249,8 @@ class Jgmenu(W.Widget):
         painter.bg('#243423')
         painter.fg('#efefef')
         if is_hidpi:
-            painter.space(2)
-            painter += '☃️'
-        else:
-            painter.symbol(0xe142)  # ghost
+            painter.space(1)
+        painter.symbol(0xe142)  # ghost
         painter.space(2)
         painter.bg(None)
         painter.space(2)
@@ -307,11 +305,11 @@ bar.widget = W.ListLayout([
     ])), tab_renderer = tab_renderer),
     W.RawLabel('%{r}'),
     gdmflexiserver,
-    # something like a tabbed widget with the tab labels '>' and '<'
-    W.TabbedLayout([
-        ('0', W.RawLabel('')),
-        ('1', hlwm.HLWMLayoutSwitcher(hc, xkblayouts, command = setxkbmap.split(' '))),
-        ], tab_renderer = zip_renderer),
+    # # something like a tabbed widget with the tab labels '>' and '<'
+    # W.TabbedLayout([
+    #     ('0', W.RawLabel('')),
+    #     ('1', hlwm.HLWMLayoutSwitcher(hc, xkblayouts, command = setxkbmap.split(' '))),
+    #     ], tab_renderer = zip_renderer),
     conky.ConkyWidget(text= conky_text),
     W.DateTime('%H:%M '),
 ] + maybe_systray)
