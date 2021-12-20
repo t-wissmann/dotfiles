@@ -217,10 +217,12 @@ lemonbar_options = {
 }
 
 if is_hidpi:
-    lemonbar_options['font'] = 'Dejavu Sans:size=8'
+    lemonbar_options['font'] = 'Bitstream Vera Sans Mono:size=8'
+    lemonbar_options['font'] = 'Source Code Pro:size=8'
     lemonbar_options['symbol_font'] = \
         '-wuncon-siji-medium-r-normal--10-100-75-75-c-80-iso10646-1'
     lemonbar_options['spacing_font'] = (0.5, 'Dejavu Sans:size=1')
+    lemonbar_options['symbol_vert_offset'] = 4
     tag_renderer = simple_tag_renderer
 else:
     tag_renderer = simple_tag_renderer
