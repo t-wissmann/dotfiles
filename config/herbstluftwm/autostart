@@ -505,6 +505,8 @@ hc attr theme.tiling.reset 1
 hc attr theme.floating.reset 1
 
 hc attr theme.color '#202020de'
+hc attr theme.tab_color '#141414de'
+hc attr theme.tab_outer_color '#707070'
 hc attr theme.border_width 4
 hc attr theme.inner_width 1
 hc attr theme.outer_width 1
@@ -514,6 +516,9 @@ hc attr theme.inner_color '#808080'
 hc attr theme.active.inner_color '#74A171'
 hc attr theme.active.outer_color '#74A171'
 hc attr theme.active.color '#345F0Cef'
+hc attr theme.active.tab_color '#27450Bef'
+hc attr theme.active.tab_outer_color '#61875F'
+hc attr theme.active.tab_title_color '#cecece'
 hc attr theme.urgent.color '#C71364de'
 hc attr theme.urgent.outer_color '#E279A9'
 hc attr theme.urgent.inner_color '#E279A9'
@@ -528,6 +533,7 @@ hc and , attr theme.title_height 15 \
 #hc attr theme.title_font '-*-fixed-*-*-*-*-*-*-*-*-*-*-*-*'
 hc attr theme.title_font '-*-fixed-medium-r-*-*-14-*-*-*-*-*-*-*'
 #hc attr theme.active.title_font '-*-fixed-bold-r-*-*-13-*-*-*-*-*-*-*'
+
 
 hc attr theme.floating.outer_width 1
 
