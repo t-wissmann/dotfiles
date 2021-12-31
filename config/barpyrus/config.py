@@ -110,6 +110,16 @@ conky_text += " $battery_percent% "
 conky_text += "${endif}" # endif: if BAT0 exists
 conky_text += "%{B-}%{F-}"
 conky_text += conky_sep
+
+if os.path.exists('/proc/acpi/ibm/thermal'):
+    conky_text += '%{F\\#FF3E33}'
+    conky_text += "${if_match ${ibm_temps 0} > 39}%{B\\#980000}${endif}"
+    conky_text += chr(0xe0a4)
+    conky_text += '%{F\\#CDCDCD}'
+    # conky_text += chr(0xe0a5)
+    conky_text += '${ibm_temps 0}°%{B-}'
+    conky_text += conky_sep
+
 conky_text += '%{F\\#CDCDCD}${time %d. %B}'
 conky_text += conky_sep
 conky_text += '%{F\\#CDCDCD}'
