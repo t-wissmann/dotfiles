@@ -7,7 +7,7 @@ setopt interactivecomments
 bindkey -e
 zstyle :compinstall filename "$HOME/.zshrc"
 
-autoload -Uz compinit promptinit
+autoload -Uz compinit promptinit vcs_info
 compinit
 zstyle ':completion:*' menu select
 
@@ -16,6 +16,9 @@ prompt adam2 8bit 'red}%F{white' green yellow default
 
 # let small letters match capital letters in a completion suggestion
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+
+zstyle ':vcs_info:git:*' formats '%b'
+
 
 source ~/dotfiles/shellutils.sh
 
@@ -104,10 +107,10 @@ preexec() {
 }
 
 precmd() {
+  myprompt=''
   if [ $timer ]; then
     timer_show=$(($SECONDS - $timer))
     if [ ${timer_show} -eq 0 ] ; then
-        export RPROMPT=""
         unset timer
     else
         #timer_show=400000 # for testing
@@ -125,10 +128,13 @@ precmd() {
                 break
             fi
         done
-        export RPROMPT="%F{cyan}${timer_show}${timer_suffix}%{$reset_color%}"
+        myprompt+="%F{cyan}${timer_show}${timer_suffix}%{$reset_color%}"
         unset timer
     fi
   fi
+  vcs_info
+  myprompt+=" %F{blue}${vcs_info_msg_0_}"
+  export RPROMPT="${myprompt}"
 }
 
 
