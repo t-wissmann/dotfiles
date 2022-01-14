@@ -278,6 +278,7 @@ def main():
       Item('Telegram', 'telegram', 'killall telegram-desktop ; QT_QPA_PLATFORMTHEME= telegram-desktop'),
       # Item('Applications', 'start-here', XdgMenu()),
       Sep(),
+      Item('Screen off', 'xscreensaver', 'xset dpms force off'),
       Item('Suspend', 'gnome-logout', 'systemctl suspend -i'),
     ])
 
