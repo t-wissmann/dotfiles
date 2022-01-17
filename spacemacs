@@ -598,6 +598,7 @@ before packages are loaded."
   (load-file "~/git/katarakt/share/katarakt.el")
   (setq TeX-view-program-list '(("katarakt" katarakt-view)))
   (setq TeX-view-program-selection '((output-pdf "katarakt")))
+
   ;; (defun my-LaTeX-mode-evince()
   ;;   (add-to-list 'TeX-view-program-list '("Evince" "evince --page-index=%(outpage) %o"))
   ;;   (setq TeX-view-program-selection '((output-pdf "Evince")))
@@ -623,6 +624,12 @@ before packages are loaded."
       ))
 
 
+  ;; disable smartparens mode in latex, because it messes everything up and because
+  ;; smartparens (or at least this behaviour) work anyway:
+  ;; https://github.com/syl20bnr/spacemacs/issues/14175
+  (add-hook 'LaTeX-mode-hook (lambda () (smartparens-mode -1)) 90)
+  ;; do not expand " to ``
+  (setq TeX-quote-after-quote t)
 
   (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
   (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
