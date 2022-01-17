@@ -535,8 +535,6 @@ This function is called immediately after `dotspacemacs/init', before layer
 configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
-
-
 )
 
 
@@ -627,9 +625,10 @@ before packages are loaded."
   ;; disable smartparens mode in latex, because it messes everything up and because
   ;; smartparens (or at least this behaviour) work anyway:
   ;; https://github.com/syl20bnr/spacemacs/issues/14175
-  (add-hook 'LaTeX-mode-hook (lambda () (smartparens-mode -1)) 90)
+  ;; (add-hook 'LaTeX-mode-hook (lambda () (smartparens-mode -1)) 90)
   ;; do not expand " to ``
-  (setq TeX-quote-after-quote t)
+  ;; (setq TeX-quote-after-quote t)
+
 
   (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
   (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
