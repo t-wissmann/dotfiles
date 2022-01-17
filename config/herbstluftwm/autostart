@@ -668,6 +668,7 @@ hc rule class=Lxpanel floatplacement=none
 hc rule class=Totem tag=video index=/ focus=off
 hc rule class=Gmrun floating=on focus=on
 hc rule instance=sun-awt-X11-XWindowPeer focus=off
+hc rule fixedsize floating=on
 
 hc rule class='logout-dialog' floating=on focus=on
 hc rule instance=irc tag=irc
