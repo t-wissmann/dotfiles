@@ -1,0 +1,90 @@
+#!/usr/bin/env python3
+import argparse
+import time
+import re
+import math
+
+
+def parse_duration(text):
+    reg = r'([0-9]+(\.[0-9]+)?)([hmds]?)'
+    m = re.fullmatch(reg, text)
+    if m is None:
+        raise Exception(f'Can not parse: {reg} does not match "{text}"')
+    value = float(m.group(1))
+    suffix2factor = {
+        '': 1,
+        's': 1,
+        'm': 60,
+        'h': 60 * 60,
+        'd': 24 * 60 * 60,
+    }
+    value *= suffix2factor[m.group(3)]
+    return value
+
+
+def format_duration(seconds_float):
+    # round up, such that the count down really ends when printing '0:00'
+    s = math.ceil(seconds_float)
+    m = s // 60
+    s = s % 60
+    h = m // 60
+    m = m % 60
+    msg = ''
+    print_all_fields = False
+    if h > 0 or print_all_fields:
+        msg += f'{h}:'
+        print_all_fields = True
+    if m > 0 or print_all_fields:
+        if print_all_fields:
+            msg += f'{m:02d}:'
+        else:
+            msg += f'{m}:'
+        print_all_fields = True
+    if print_all_fields:
+        msg += f'{s:02d}'
+    else:
+        msg += f'{s:2d}'
+    return msg
+
+
+def print_duration(title, seconds_float):
+    msg = format_duration(seconds_float)
+    # the message will get shorter by at most 3 characters
+    space = 3 * ' '
+    msg = msg.replace(':', '\033[0;37m:\033[1;33m')
+    msg_with_escapes = f'\r\033[0;35m{title}\033[0;0m: \033[1;33m{msg}\033[0m{space}'
+    print(msg_with_escapes, end='', flush=True)
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-m', default='Time remaining', help='message to show')
+    parser.add_argument('--no-alert', default=False, action='store_true', help='do not send alert/beep on timeout')
+    parser.add_argument('TIME', help='time duration to count down')
+
+    args = parser.parse_args()
+
+    time_to_wait = parse_duration(args.TIME)
+
+    start_time = time.time()
+    end_time = start_time + time_to_wait
+    columns = 40
+    while True:
+        try:
+            remaining = end_time - time.time()
+            if remaining <= 0:
+                remaining = 0
+            print_duration(args.m, remaining)
+            if remaining <= 0:
+                break
+            # wait until the moment when the seconds will
+            # change again:
+            time.sleep(remaining - math.floor(remaining))
+        except KeyboardInterrupt:
+            break
+
+    print('', flush=True)
+    if not args.no_alert:
+        print('\a', flush=True, end='')
+
+main()
