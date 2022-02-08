@@ -33,6 +33,8 @@ window:
   # Setting this to false will result in window without borders and title bar.
   decorations: Full
 
+  opacity: 0.93
+
 # Display tabs using this many cells (changes require restart)
 tabspaces: 8
 
@@ -78,7 +80,7 @@ font:
     style: Italic
 
   # Point size of the font
-  size: 10.0
+  size: 8.0
 
   # Offset is the extra space around each character. offset.y can be thought of
   # as modifying the linespacing, and offset.x as modifying the letter spacing.
@@ -115,7 +117,7 @@ custom_cursor_colors: true
 colors:
   # Default colors
   primary:
-    background: '0x282828'
+    background: '0x181818'
     foreground: '0xffffff'
 
     # (Optional) Bright and Dim foreground colors
@@ -190,9 +192,6 @@ colors:
 visual_bell:
   animation: EaseOutExpo
   duration: 0
-
-# Background opacity
-background_opacity: 0.91
 
 # Mouse bindings
 #

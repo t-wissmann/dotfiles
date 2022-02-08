@@ -36,6 +36,7 @@ c.tabs.show = 'multiple'
 
 
 c.tabs.title.alignment = 'center'
+c.tabs.title.format = '{index} | {audio} {current_title}'
 c.tabs.padding = {
     'top': 2,
     'bottom': 2,
@@ -170,14 +171,14 @@ c.colors.prompts.bg = '#625B00'
 
 #monospace = [ 'xos4 Terminus', 'Terminus', 'Monospace', "DejaVu Sans Mono", 'Monaco', "Bitstream Vera Sans Mono", "Andale Mono", "Courier New", 'Courier', "Liberation Mono", 'monospace', 'Fixed', 'Consolas', 'Terminal' ]
 guifont = 'bold 8pt "Bitstream Vera Sans" bold'
-c.fonts.completion.category = guifont
-c.fonts.completion.entry = guifont
-c.fonts.tabs.selected = guifont
-c.fonts.tabs.unselected = guifont
-c.fonts.statusbar = 'bold 8pt "Bitstream Vera Sans"'
-c.fonts.downloads = '8pt bold "Bitstream Vera Sans"'
-c.fonts.hints = 'bold 12px "Bitstream Vera Sans"'
-c.fonts.web.family.fixed = 'Bitstream Vera Sans Mono'
+# c.fonts.completion.category = guifont
+# c.fonts.completion.entry = guifont
+# c.fonts.tabs.selected = guifont
+# c.fonts.tabs.unselected = guifont
+# c.fonts.statusbar = 'bold 8pt "Bitstream Vera Sans"'
+# c.fonts.downloads = '8pt bold "Bitstream Vera Sans"'
+# c.fonts.hints = 'bold 12px "Bitstream Vera Sans"'
+# c.fonts.web.family.fixed = 'Bitstream Vera Sans Mono'
 
 import socket
 if socket.gethostname() == 'x1':

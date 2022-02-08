@@ -10,6 +10,8 @@ import subprocess
 import re
 import sys
 
+caps2control = ['ctrl:nocaps']
+
 models = [
     # all keyboards, with rising preference (later keyboards
     # possibly overwrite previous keyboards' options if multiple
@@ -18,25 +20,25 @@ models = [
         'name': 'thinkpad x1 keyboard',
         'id': '???',
         'xinput_name': 'AT Translated Set 2 keyboard',
-        'options': ['compose:prsc'],
+        'options': ['compose:prsc'] + caps2control,
     },
     {
         'name': 'pure kb talking 60%',
         'id': '04d9:0134',
         'usb_name': "Holtek Semiconductor, Inc. USB Keyboard",
-        'options': ['compose:ralt', 'compose:rctrl', 'compose:rwin'],
+        'options': ['compose:ralt', 'compose:rctrl', 'compose:rwin'] + caps2control,
     },
     {
         'name': 'progrestouch retro tiny (black 60% arrow keys)',
         'id': '2be8:0004',
         'usb_name': 'ARCHISS PTR66 ARCHISS PTR66',
-        'options': ['compose:menu', 'compose:rctrl', 'ctrl:nocaps'],
+        'options': ['compose:menu', 'compose:rctrl'] + caps2control,
     },
     {
         'name': 'PS/2 keyboard via USB adapter',
         'id': '0a81:0205',
         'usb_name': 'Chesen Electronics Corp. PS/2 Keyboard+Mouse Adapter',
-        'options': ['compose:ralt', 'compose:rwin'],
+        'options': ['compose:ralt', 'compose:rwin'] + caps2control,
     },
     {
         'name': 'HHKB Lite2',
@@ -149,7 +151,7 @@ def main():
     # set some default:
     global_options = [
         '-variant', 'altgr-intl',
-        '-option', 'ctrl:nocaps', '-option', 'compose:menu',
+        '-option', 'compose:menu',
     ]
     get_stdout(['setxkbmap', 'us'] + global_options)
     # go through all know 'models' and see whether they are connected.

@@ -66,7 +66,11 @@ fi
 hc keybind $Mod-Shift-r reload
 hc keybind $Mod-Shift-c close
 ~/.config/herbstluftwm/closeorkill.sh
-hc keybind $Mod-Return spawn ~/dotfiles/utils/with-same-pwd urxvt
+if which alacritty &> /dev/null ; then
+    hc keybind $Mod-Return spawn ~/dotfiles/utils/with-same-pwd alacritty
+else
+    hc keybind $Mod-Return spawn ~/dotfiles/utils/with-same-pwd urxvt
+fi
 hc keybind $Mod-Shift-Return spawn ~/dotfiles/utils/with-same-pwd --pwd-as-arg dolphin
 hc keybind $Mod-a spawn ~/.config/jgmenu/menu.py --target=jgmenu
 hc keybind $Mod-x spawn rofi -columns 3 -show drun

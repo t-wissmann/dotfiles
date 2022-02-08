@@ -1,12 +1,12 @@
 configuration {
     modi: "window,drun,ssh";
-/*    font: "mono 12";*/
+    font: "bitstream vera sans mono bold 10";
     location: 0;
     yoffset: 8;
     xoffset: 8;
 /*    fixed-num-lines: true;*/
     show-icons: true;
-    terminal: "urxvt";
+    terminal: "alacritty";
 /*    ssh-client: "ssh";*/
 /*    ssh-command: "{terminal} -e {ssh-client} {host} [-p {port}]";*/
     run-command: "/home/thorsten/.config/herbstluftwm/exec_on_tag.sh '' {cmd}";
