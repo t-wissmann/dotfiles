@@ -267,6 +267,7 @@ def main():
            ] + PulseAudio.sink_items() + [
               Sep(),
            ] + PulseAudio.source_items())),
+      Item('xkill', 'edit-delete', 'xkill'),
       Sep(),
       Item('Dolphin', 'go-home', 'dolphin'),
       Item('Terminal', 'utilities-terminal', 'urxvt'),
