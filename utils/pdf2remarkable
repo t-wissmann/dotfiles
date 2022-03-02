@@ -1,0 +1,208 @@
+#!/usr/bin/env python3
+import argparse
+import datetime
+import json
+import io
+import re
+import tarfile
+import uuid
+
+import subprocess
+import tempfile
+import textwrap
+import shlex
+import shutil
+import sys
+import os
+
+def debug(message):
+    print(f'\033[1;33m:: \033[0;1;30m{message}\033[0m', file=sys.stderr)
+
+
+class Metadata:
+    def __init__(self):
+        self.data = {}
+
+    @staticmethod
+    def from_buf(tar_bytes):
+        fileobj = io.BytesIO(tar_bytes)
+        tarobj = tarfile.TarFile(fileobj=fileobj)
+        result = Metadata()
+        name_re = re.compile(r'(|.*/)([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\.metadata$',
+                             flags=re.IGNORECASE)
+        for member in tarobj.getmembers():
+            m = name_re.match(member.name)
+            if not m:
+                debug(f'skipping file {member.name}')
+                continue
+            name = m.group(2)
+            result.data[name.lower()] = json.loads(tarobj.extractfile(member).read())
+
+        tarobj.close()
+        fileobj.close()
+        return result
+
+    def print_json(self, file=sys.stdout):
+        print(json.dumps(self.data), file=file)
+
+    def find_folder(self, folder_name):
+        """return uuid of a folder with the given name"""
+        for member_uuid, member in self.data.items():
+            if member['type'] == 'CollectionType' and member['visibleName'] == folder_name:
+                return member_uuid
+        return None
+
+
+def read_pdfinfo(pdfpath):
+    proc = subprocess.run(['pdfinfo', pdfpath],
+                          stdin=subprocess.DEVNULL,
+                          stdout=subprocess.PIPE,
+                          universal_newlines=True)
+    result = {}
+    line_re = re.compile('^([^:]*):[ ]*(|[^ ].*)$', flags=re.IGNORECASE)
+    for line in proc.stdout.splitlines():
+        m = line_re.match(line)
+        if not m:
+            debug("Can not parse pdfinfo line: {}".format(line))
+            continue
+        result[m.group(1)] = m.group(2)
+    return result
+
+
+
+def fetch_metadata_tar(hostname, basedir):
+    quotedir = shlex.quote(basedir)
+    debug(f"Fetching metadata from {hostname}...")
+    cmd = ['ssh', hostname, f'cd {quotedir} && tar c *.metadata']
+    proc = subprocess.run(cmd, input=b'', stdout=subprocess.PIPE)
+    debug(f'len = {len(proc.stdout)}')
+    return proc.stdout
+
+
+def write_json_file(directory, filename, json_data):
+    with open(os.path.join(directory, filename), 'w') as fp:
+        json.dump(json_data, fp=fp, indent=2)
+
+
+def create_file(tempdir, source_path, pdfinfo, target_folder_uuid, metadata):
+    file_uuid = uuid.uuid1()
+    basename, extension = os.path.splitext(os.path.basename(source_path))
+    if extension == '.pdf':
+        write_json_file(tempdir, f'{file_uuid}.content', {
+            "extraMetadata": { },
+            "fileType": "pdf",
+            "fontName": "",
+            "lastOpenedPage": 0,
+            "lineHeight": -1,
+            "margins": 100,
+            "pageCount": 1,
+            "textScale": 1,
+            "transform": {
+                "m11": 1,
+                "m12": 1,
+                "m13": 1,
+                "m21": 1,
+                "m22": 1,
+                "m23": 1,
+                "m31": 1,
+                "m32": 1,
+                "m33": 1,
+            },
+        })
+        os.mkdir(os.path.join(tempdir, f'{file_uuid}.cache'))
+        os.mkdir(os.path.join(tempdir, f'{file_uuid}.highlights'))
+        os.mkdir(os.path.join(tempdir, f'{file_uuid}.thumbnails'))
+    elif extension == '.epub':
+        write_json_file(tempdir, f'{file_uuid}.content', {
+            "fileType": "epub",
+        })
+    else:
+        debug(f'unknown extension {extension}')
+        return
+    shutil.copy(source_path, os.path.join(tempdir, f'{file_uuid}{extension}'))
+    write_json_file(tempdir, f'{file_uuid}.metadata', {
+        "deleted": False,
+        "lastModified": datetime.datetime.now().strftime('%s000'),
+        "metadatamodified": False,
+        "modified": False,
+        "parent": target_folder_uuid,
+        "pinned": False,
+        "synced": False,
+        "type": "DocumentType",
+        "version": 1,
+        "visibleName": pdfinfo.get('Title', basename),
+    })
+
+
+def main():
+    """
+    Copy pdf files to a reMarkable tablet.
+    Inspired by the shell script
+    https://github.com/adaerr/reMarkableScripts/blob/master/pdf2remarkable.sh
+
+    It is recommended to have an ssh config entry of the form:
+
+        Host remarkable
+            User root
+            PubkeyAcceptedKeyTypes +ssh-rsa
+            HostKeyAlgorithms +ssh-rsa
+            ForwardX11 no
+            ForwardAgent no
+    """
+
+    class Formatter(argparse.ArgumentDefaultsHelpFormatter, argparse.RawDescriptionHelpFormatter):
+        pass
+
+    parser = argparse.ArgumentParser(description=textwrap.dedent(main.__doc__),
+                                     formatter_class=Formatter)
+    parser.add_argument('--hostname', default='remarkable', help='target ssh hostname to copy files to')
+    parser.add_argument('--restart', action='store_true', default=True, help='restart gui after copying')
+    parser.add_argument('--no-restart', action='store_false', dest='restart', default='inactive',
+                        help='do not restart gui after copying')
+    parser.add_argument('--dry-run', default=False, action='store_true', help='do not copy anything to the remarkable')
+    parser.add_argument('--xochitl-dir', metavar='DIR', default='.local/share/remarkable/xochitl/', help='xochitl directory')
+    parser.add_argument('--metadata-tar', metavar='TARFILE', help='''
+    use static metadata instead of reading the metadata live. Create the tar via:
+
+        ssh remarkable 'cd .local/share/remarkable/xochitl/ && tar c *.metadata' > metadata.tar
+    ''')
+    parser.add_argument('PDFFILE', nargs='*', help='pdf files to copy')
+    parser.add_argument('--folder', default='', help='folder to copy to')
+    args = parser.parse_args()
+
+    if args.metadata_tar:
+        with open(args.metadata_tar, 'rb') as fh:
+            metadata_tar_buf = fh.read()
+    else:
+        metadata_tar_buf = fetch_metadata_tar(args.hostname, args.xochitl_dir)
+
+    metadata = Metadata.from_buf(metadata_tar_buf)
+    # metadata.print_json()
+    folder_uuid = ''
+    if args.folder:
+        folder_uuid = metadata.find_folder(args.folder)
+        if folder_uuid is None:
+            debug('error: no such folder: {}'.format(args.folder))
+            return 1
+
+    tempdir = tempfile.mkdtemp(prefix='pdf2remarkable-')
+    debug(f'filling temp directory {tempdir}')
+    for filepath in args.PDFFILE:
+        pdfinfo = read_pdfinfo(filepath)
+        create_file(source_path=filepath,
+                    tempdir=tempdir,
+                    pdfinfo=pdfinfo,
+                    metadata=metadata,
+                    target_folder_uuid=folder_uuid,
+                    )
+    scp_cmd = f'scp -r {tempdir}/* {args.hostname}:{shlex.quote(args.xochitl_dir)}'
+    restart_cmd = ['ssh', args.hostname, "systemctl restart xochitl"]
+    if not args.dry_run:
+        debug(f'{scp_cmd}')
+        subprocess.run(scp_cmd, shell=True, stdin=subprocess.DEVNULL)
+        debug(f'{restart_cmd}')
+        subprocess.run(restart_cmd, stdin=subprocess.DEVNULL)
+
+
+
+main()
