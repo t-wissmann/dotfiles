@@ -129,10 +129,18 @@ colors:
     # dim_foreground: '0x9a9a9a'
     # bright_foreground: '0xffffff'
 
+  line_indicator:
+    foreground: '#121212'
+    background: '#9fbc00'
+
   # Colors the cursor will use if `custom_cursor_colors` is true
   cursor:
     text: '0x000000'
     cursor: '0xff9900'
+
+  vi_mode_cursor:
+    foreground: '#121212'
+    background: '#F10000'
 
   # Normal colors
   normal:
@@ -166,6 +174,10 @@ colors:
     magenta: '0xcc99cc'
     cyan:    '0x66cccc'
     white:   '0xdddddd'
+
+  selection:
+    text: '#dedede'
+    background: '#965E00'
 
 # Visual Bell
 #
@@ -243,7 +255,12 @@ hide_cursor_when_typing: true
 # - Block
 # - Underline
 # - Beam
-cursor_style: Block
+#
+cursor:
+  style:
+    shape: Block
+    blinking: Off
+  vi_mode_style: Block
 
 # Whether the cursor should be a hollow block on window focus loss
 unfocused_hollow_cursor: true
@@ -316,6 +333,7 @@ key_bindings:
   - { key: Home,                    chars: "\x1b[H",   mode: ~AppCursor  }
   - { key: End,                     chars: "\x1bOF",   mode: AppCursor   }
   - { key: End,                     chars: "\x1b[F",   mode: ~AppCursor  }
+  - { key: Key4,   mods: Shift,         mode: Vi|~Search, action: Last   }
   - { key: PageUp,   mods: Shift,   chars: "\x1b[5;2~"                   }
   - { key: PageUp,   mods: Control, chars: "\x1b[5;5~"                   }
   - { key: PageUp,                  chars: "\x1b[5~"                     }

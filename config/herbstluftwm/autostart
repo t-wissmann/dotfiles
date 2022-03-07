@@ -64,8 +64,22 @@ if [ $HOSTNAME = faui03a ] || [ $DISPLAY = :13 ] ; then
     Mod=Mod1
 fi
 hc keybind $Mod-Shift-r reload
-hc keybind $Mod-Shift-c close
-~/.config/herbstluftwm/closeorkill.sh
+
+# try to close the window, if it is ignored for three times, kill it.
+hc keybind $Mod-Shift-c and \
+    , close \
+    , try silent new_attr int clients.focus.my_close_count 0 \
+    , set_attr clients.focus.my_close_count '+=1' \
+    , compare clients.focus.my_close_count ge 3 \
+    , try sprintf BODY \
+      "Killing »%s« (%s)" \
+          clients.focus.title clients.focus.winid \
+          spawn notify-send BODY \
+    , substitute WIN clients.focus.winid spawn xkill -id WIN
+
+
+# ~/.config/herbstluftwm/closeorkill.sh
+
 if which alacritty &> /dev/null ; then
     hc keybind $Mod-Return spawn ~/dotfiles/utils/with-same-pwd alacritty
 else
