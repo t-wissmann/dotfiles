@@ -81,6 +81,9 @@ hc keybind $Mod-Shift-c and \
 # ~/.config/herbstluftwm/closeorkill.sh
 
 if which alacritty &> /dev/null ; then
+    if [ $HOSTNAME == xi ] ; then
+        hc export WINIT_X11_SCALE_FACTOR=1.66
+    fi
     hc keybind $Mod-Return spawn ~/dotfiles/utils/with-same-pwd alacritty
 else
     hc keybind $Mod-Return spawn ~/dotfiles/utils/with-same-pwd urxvt
@@ -671,7 +674,8 @@ case "$HOSTNAME" in
         ;;
 esac
 
-hc or , compare monitors.count  != 0 , detect_monitors
+hc or , compare monitors.count != 0 , detect_monitors
+
 panel=~/.config/herbstluftwm/panel.sh
 ~/git/herbstluftwm/share/restartpanels.sh $panel
 
