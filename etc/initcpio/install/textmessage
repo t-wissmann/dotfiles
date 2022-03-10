@@ -1,0 +1,15 @@
+# vim: set ft=sh:
+
+build() {
+    SCRIPT="textmessage"
+    add_binary /bin/bash
+    add_file /etc/textmessage.sh
+    add_runscript
+}
+
+help ()
+{
+cat<<HELPEOF
+    This hook shows a nice ascii logo on startup (and a optional help message).
+HELPEOF
+}

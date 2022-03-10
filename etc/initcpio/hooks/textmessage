@@ -1,0 +1,6 @@
+# vim:set ft=sh:
+
+run_hook() {
+    /bin/bash /etc/textmessage.sh
+}
+
