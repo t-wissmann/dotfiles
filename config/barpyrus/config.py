@@ -120,7 +120,7 @@ if os.path.exists('/proc/acpi/ibm/thermal'):
     conky_text += '${ibm_temps 0}°%{B-}'
     conky_text += conky_sep
 
-conky_text += '%{F\\#CDCDCD}${time %d. %B}'
+conky_text += '%{F\\#CDCDCD}${time %d. %B \'%y}'
 conky_text += conky_sep
 conky_text += '%{F\\#CDCDCD}'
 
