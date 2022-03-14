@@ -243,6 +243,9 @@ class PulseAudio:
 
 # print(json.dumps(PulseAudio().list_sources(), indent=4, sort_keys=True))
 
+def run_in_terminal(command):
+    return "alacritty -e {}".format(command)
+
 def main():
     parser = argparse.ArgumentParser(
         description='Config for jgmenu',
@@ -257,7 +260,10 @@ def main():
     maybe_netctl = []
     netctl_path = os.path.expanduser('~/dotfiles/menu/rofi-netctl')
     if socket.gethostname() == 'x1' and os.path.exists(netctl_path):
-        maybe_netctl = [Item('netctl', 'network-wired', netctl_path)]
+        maybe_netctl = [
+            Item('netctl', 'network-wired', netctl_path),
+            Item('Docking Station', 'computer', run_in_terminal(os.path.expanduser('~/dotfiles/config/herbstluftwm/x1-docking-station.sh'))),
+        ]
     menu = Menu('root', [
       Item('Thunar', 'system-file-manager', 'thunar'),
       Item('Audio', 'audio-card',

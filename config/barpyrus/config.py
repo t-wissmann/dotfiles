@@ -113,7 +113,7 @@ conky_text += conky_sep
 
 if os.path.exists('/proc/acpi/ibm/thermal'):
     conky_text += '%{F\\#FF3E33}'
-    conky_text += "${if_match ${ibm_temps 0} > 39}%{B\\#980000}${endif}"
+    conky_text += "${if_match ${ibm_temps 0} > 44}%{B\\#980000}${endif}"
     conky_text += chr(0xe0a4)
     conky_text += '%{F\\#CDCDCD}'
     # conky_text += chr(0xe0a5)

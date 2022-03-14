@@ -10,6 +10,13 @@
 if :: lsusb |grep "043e:9a39 LG Electronics USA, Inc. USB Controls" > /dev/null ; then
     # get last word of last line
     output=$(xrandr | grep -v primary | grep -E ' connected|disconnected 3840x2160'| cut -d' ' -f1)
+    if [ -z "$output" ] ; then
+        echo "Error: no output found!" >&2
+        xrandr
+        exit 1
+    else
+        echo "Output detected: $output"
+    fi
     :: xrandr --output eDP1 --auto --pos 0x0 --primary \
         --output "$output" --off
     sleep 1
@@ -19,7 +26,7 @@ if :: lsusb |grep "043e:9a39 LG Electronics USA, Inc. USB Controls" > /dev/null 
     :: herbstclient set_monitors "$resolution"
     :: herbstclient reload
 else
-    for output in $(xrandr --listmonitors|grep -oE ': +[^ ]*'|sed 's,^: +,,') ; do
+    for output in $(xrandr --listmonitors|grep -oE ': \+[^ *]+'|sed 's,^: +,,') ; do
         if [[ "$output" != "eDP1" ]] ; then
             :: xrandr --output "$output" --off
         fi

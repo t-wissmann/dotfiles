@@ -25,8 +25,13 @@ fi
 hc setenv FREETYPE_PROPERTIES "truetype:interpreter-version=35"
 
 #xsetroot -solid '#D47A55'
-hc set frame_gap 8
-hc set snap_gap 8
+if [[ $HOSTNAME == x1 ]] ; then
+    hc set frame_gap 16
+    hc set snap_gap 16
+else
+    hc set frame_gap 8
+    hc set snap_gap 8
+fi
 hc set default_frame_layout max
 hc set ellipsis ''
 # raindrops
