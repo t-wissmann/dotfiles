@@ -29,8 +29,8 @@ if [[ $HOSTNAME == x1 ]] ; then
     hc set frame_gap 16
     hc set snap_gap 16
 else
-    hc set frame_gap 8
-    hc set snap_gap 8
+    hc set frame_gap 12
+    hc set snap_gap 12
 fi
 hc set default_frame_layout max
 hc set ellipsis ''
@@ -158,11 +158,11 @@ for tab_key in {1..9} 0 ; do
     hc keybind "Mod4-Mod1-${tab_key}" focus_nth "$((tab_index++))"
 done
 
-if [[ $HOSTNAME = hoth ]] ; then
-    hc load irc     '(split horizontal:0.5:0 (clients max:0) (clients max:0))'
-else
-    hc load irc     '(clients max:0)'
-fi
+# if [[ $HOSTNAME = hoth ]] ; then
+#     hc load irc     '(split horizontal:0.5:0 (clients max:0) (clients max:0))'
+# else
+#     hc load irc     '(clients max:0)'
+# fi
 #hc load vim     '(split vertical:0.700000:1 (clients max:0) (clients max:0))'
 hc load web     '(clients max:0)'
 #hc load mail    '(split vertical:0.200000:1 (clients horizontal:0) (clients max:0))'
@@ -216,7 +216,7 @@ hc keybind $Mod-Control-m jumpto longest-minimized
 # The following cycles through the available layouts within a frame, but skips
 # layouts, if the layout change wouldn't affect the actual window positions.
 # I.e. if there are two windows within a frame, the grid layout is skipped.
-hc keybind $Mod-space cycle_layout +1 vertical max grid
+hc keybind $Mod-space cycle_layout +1 max grid
 # hc keybind $Mod-space                                                           \
 #             or , and . compare tags.focus.curframe_wcount = 2                   \
 #                      . cycle_layout +1 vertical horizontal max vertical grid    \
