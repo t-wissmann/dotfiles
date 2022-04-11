@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+import re
+from PyQt5.QtCore import QUrl
+from qutebrowser.api import interceptor
+
 config.load_autoconfig()
 
 c.editor.command = 'urxvt -e vim {}'.split(' ')
@@ -214,4 +218,28 @@ for m in ['normal', 'insert']:
 for k,v in binds.items():
     #config.bind(k, v, force=True)
     config.bind(k, v)
+
+
+blocked_hosts = [
+    r'.*\.facebook\.com',
+    r'.*\.instagram\.com',
+    r'.*\.youtube\.(com|de)',
+    r'.*\.pr0gramm\.com',
+]
+blocked_hosts_re = [re.compile(h) for h in blocked_hosts]
+
+def redirect_certain_hosts(info: interceptor.Request):
+    """keep me productive by redirecting certain hosts"""
+    global blocked_hosts_re
+    requested_host = info.request_url.host()
+    if any([host.match(requested_host) for host in blocked_hosts_re]):
+        new_url = QUrl('https://gitlab.science.ru.nl/dashboard/projects/starred')
+        # new_url = QUrl(info.request_url)
+        # new_url.setHost('localhost')
+        try:
+            info.redirect(new_url)
+        except interceptors.interceptors.RedirectFailedException:
+            pass
+
+interceptor.register(redirect_certain_hosts)
 
