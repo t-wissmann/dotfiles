@@ -298,11 +298,10 @@ if int(monitor) == 0:
 else:
     maybe_systray = []
 
-bar.widget = W.ListLayout([
-    W.RawLabel('%{l}'),
-    Jgmenu(),
-    hlwm.HLWMTags(hc, monitor, tag_renderer = tag_renderer),
-    W.TabbedLayout(list(enumerate([
+if socket.gethostname() == 'x1':
+    center_widget = W.ListLayout([ W.RawLabel('%{c}'), conky_widget ])
+else:
+    center_widget = W.TabbedLayout(list(enumerate([
         W.ListLayout([ W.RawLabel('%{c}'),
             hlwm.HLWMMonitorFocusLayout(hc, monitor,
                 # this widget is shown on the focused monitor:
@@ -312,7 +311,13 @@ bar.widget = W.ListLayout([
                 conky_widget,
             )]),
         W.ListLayout([ W.RawLabel('%{c}'), conky_widget ]),
-    ])), tab_renderer = tab_renderer),
+    ])), tab_renderer = tab_renderer)
+
+bar.widget = W.ListLayout([
+    W.RawLabel('%{l}'),
+    Jgmenu(),
+    hlwm.HLWMTags(hc, monitor, tag_renderer = tag_renderer),
+    center_widget,
     W.RawLabel('%{r}'),
     gdmflexiserver,
     # # something like a tabbed widget with the tab labels '>' and '<'
