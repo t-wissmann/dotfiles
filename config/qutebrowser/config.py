@@ -3,6 +3,8 @@
 import re
 from PyQt5.QtCore import QUrl
 from qutebrowser.api import interceptor
+from qutebrowser.api import message
+import qutebrowser
 
 config.load_autoconfig()
 
@@ -127,6 +129,7 @@ c.aliases['data-href'] = 'spawn --userscript data-href'
 c.aliases['user-agent'] = 'spawn --userscript user-agent-switcher'
 c.aliases['pr0'] = 'spawn --userscript pr0gramm-up-downvotes'
 c.aliases['reload-config'] = 'spawn --userscript reload-config'
+c.aliases['r'] = 'config-source'
 
 
 c.colors.completion.even.bg = '#242424'
@@ -221,25 +224,36 @@ for k,v in binds.items():
 
 
 blocked_hosts = [
-    r'.*\.facebook\.com',
-    r'.*\.instagram\.com',
-    r'.*\.youtube\.(com|de)',
-    r'.*\.pr0gramm\.com',
+    # r'.*\.facebook\.com',
+    # r'.*\.instagram\.com',
+    # r'.*\.youtube\.(com|de)',
+    # r'.*\.pr0gramm\.com',
 ]
+
+# attach variable to global namespace that is not evaluated again on :config-source
 blocked_hosts_re = [re.compile(h) for h in blocked_hosts]
+
+def get_blocked_hosts_re():
+    global blocked_hosts_re
+    return blocked_hosts_re
 
 def redirect_certain_hosts(info: interceptor.Request):
     """keep me productive by redirecting certain hosts"""
-    global blocked_hosts_re
     requested_host = info.request_url.host()
-    if any([host.match(requested_host) for host in blocked_hosts_re]):
+    if any([host.match(requested_host) for host in get_blocked_hosts_re()]):
         new_url = QUrl('https://gitlab.science.ru.nl/dashboard/projects/starred')
+        message.info(f"Redirecting {requested_host} -> {new_url.url()}")
         # new_url = QUrl(info.request_url)
         # new_url.setHost('localhost')
         try:
             info.redirect(new_url)
-        except interceptors.interceptors.RedirectFailedException:
+        except Exception:
             pass
 
-interceptor.register(redirect_certain_hosts)
+if not hasattr(qutebrowser.api, 'custom_interceptor'):
+    def custom_interceptor(info: interceptor.Request):
+        qutebrowser.api.custom_interceptor(info)
+    # message.info("installing interceptor")
+    interceptor.register(custom_interceptor)
 
+qutebrowser.api.custom_interceptor = redirect_certain_hosts
