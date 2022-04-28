@@ -33,6 +33,11 @@ else
     hc set snap_gap 12
 fi
 hc set default_frame_layout max
+hc substitute ALGO settings.default_frame_layout \
+    foreach T tags.by-name. \
+    sprintf ATTR '%c.tiling.root.algorithm' T \
+    set_attr ATTR ALGO
+
 hc set ellipsis ''
 # raindrops
 #feh --bg-center ~/Documents/wallpaper/water/rain.jpg

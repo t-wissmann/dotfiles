@@ -200,8 +200,9 @@ def main():
     if not args.dry_run:
         debug(f'{scp_cmd}')
         subprocess.run(scp_cmd, shell=True, stdin=subprocess.DEVNULL)
-        debug(f'{restart_cmd}')
-        subprocess.run(restart_cmd, stdin=subprocess.DEVNULL)
+        if args.restart:
+            debug(f'{restart_cmd}')
+            subprocess.run(restart_cmd, stdin=subprocess.DEVNULL)
 
 
 
