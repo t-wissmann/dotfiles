@@ -99,8 +99,11 @@ require('lspconfig').texlab.setup({
             build = _G.TeXMagicBuildConfig,
             --      ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑
             forwardSearch = {
-                 executable = "evince_synctex.py",
-                 args = {"-f", "%l", "%p", "\"code -g %f:%l\""},
+                 -- executable = "evince_synctex.py",
+                 -- args = {"-f", "%l", "%p", "gvim %f +%l"},
+                 executable = "okular",
+                 args = {"--unique", "file:%p#src:%l%f", "--editor-cmd",
+                         "nvim --server " .. vim.v.servername .. " --remote-send \"%lG\""},
             }
         }
     }
@@ -142,4 +145,12 @@ return require('packer').startup(function()
       config = function()
       end
   })
+  -- use({
+  --     'f3fora/nvim-texlabconfig',
+  --     config = function()
+  --         require('texlabconfig').setup(config)
+  --     end,
+  --     ft = { 'tex', 'bib' },
+  --     cmd = { 'TexlabInverseSearch' },
+  -- })
 end)
