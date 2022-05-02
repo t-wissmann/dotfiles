@@ -101,9 +101,12 @@ require('lspconfig').texlab.setup({
             forwardSearch = {
                  -- executable = "evince_synctex.py",
                  -- args = {"-f", "%l", "%p", "gvim %f +%l"},
+                 --
+                 -- okular: either forward or backward, but not both.
                  executable = "okular",
-                 args = {"--unique", "file:%p#src:%l%f", "--editor-cmd",
-                         "nvim --server " .. vim.v.servername .. " --remote-send \"%lG\""},
+                 args = {"--unique",
+                         -- "--editor-cmd", "nvim --server " .. vim.v.servername .. " --remote-send \"%lG\"",
+                         "file:%p#src:%l%f", },
             }
         }
     }
