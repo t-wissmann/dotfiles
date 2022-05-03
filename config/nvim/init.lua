@@ -1,6 +1,12 @@
 -- 
 vim.api.nvim_exec(
 [[
+
+if has('mouse')
+    set mouse=a
+endif
+
+
 au VimEnter *.clj set ft=clojure
 au VimEnter *.fr set ft=haskell
 au VimEnter *.scala set ft=scala
@@ -58,6 +64,7 @@ hi StatusLineNC ctermbg=black ctermfg=white cterm=NONE
 hi StatusLine ctermbg=black ctermfg=green cterm=bold
 hi CursorLine ctermbg=black term=NONE cterm=NONE
 hi LineNr ctermbg=black term=NONE ctermfg=gray cterm=NONE
+hi SignColumn ctermbg=black term=NONE ctermfg=gray cterm=NONE
 hi CursorLineNr ctermbg=black term=NONE ctermfg=green cterm=bold
 
 set fillchars+=vert:│
@@ -95,9 +102,6 @@ require('lspconfig').texlab.setup({
         },
         texlab = {
             rootDirectory = nil,
-            --      ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓
-            build = _G.TeXMagicBuildConfig,
-            --      ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑
             forwardSearch = {
                  -- executable = "evince_synctex.py",
                  -- args = {"-f", "%l", "%p", "gvim %f +%l"},
@@ -128,10 +132,44 @@ vim.api.nvim_create_autocmd('FileType', {
     desc = 'LaTeX specific settings'
 })
 
+require('lualine').setup {
+  options = {
+    icons_enabled = true,
+    theme = 'auto',
+    component_separators = { left = '', right = ''},
+    section_separators = { left = '', right = ''},
+    disabled_filetypes = {},
+    always_divide_middle = true,
+    globalstatus = false,
+  },
+  sections = {
+    lualine_a = {'mode'},
+    lualine_b = {'branch', 'diff'},
+    lualine_c = {'filename'},
+    lualine_x = {},
+    lualine_y = {'encoding'},
+    lualine_z = {'progress', 'location'}
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = {'filename'},
+    lualine_x = {'location'},
+    lualine_y = {},
+    lualine_z = {}
+  },
+  tabline = {},
+  extensions = {}
+}
+
 return require('packer').startup(function()
   -- configuration of packer https://github.com/wbthomason/packer.nvim
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
+  use {
+      'nvim-lualine/lualine.nvim',
+      requires = { 'kyazdani42/nvim-web-devicons', opt = true}
+  }
   use 'morhetz/gruvbox'
   -- use({'jakewvincent/texmagic.nvim',
   --      config = function()
@@ -154,12 +192,4 @@ return require('packer').startup(function()
       config = function()
       end
   })
-  -- use({
-  --     'f3fora/nvim-texlabconfig',
-  --     config = function()
-  --         require('texlabconfig').setup(config)
-  --     end,
-  --     ft = { 'tex', 'bib' },
-  --     cmd = { 'TexlabInverseSearch' },
-  -- })
 end)

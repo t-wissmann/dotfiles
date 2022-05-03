@@ -22,6 +22,6 @@ ruid="${ruid//$'\t'/}"
 psfile=/tmp/print.ps
 
 :: pdftops -paper A4 -duplex "$1" "$psfile"
-:: smbclient -U 'ru\'"${ruid,,}" //print.hosting.ru.nl/FollowMe -c "print $psfile"
+:: smbclient --configfile=/dev/null -U 'ru\'"${ruid,,}" //print.hosting.ru.nl/FollowMe -c "print $psfile"
 
 :: rm /tmp/print.ps
