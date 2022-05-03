@@ -103,10 +103,16 @@ require('lspconfig').texlab.setup({
                  -- args = {"-f", "%l", "%p", "gvim %f +%l"},
                  --
                  -- okular: either forward or backward, but not both.
-                 executable = "okular",
-                 args = {"--unique",
-                         -- "--editor-cmd", "nvim --server " .. vim.v.servername .. " --remote-send \"%lG\"",
-                         "file:%p#src:%l%f", },
+                 -- executable = "okular",
+                 -- args = {"--unique",
+                 --         -- "--editor-cmd", "nvim --server " .. vim.v.servername .. " --remote-send \"%lG\"",
+                 --         "file:%p#src:%l%f", },
+                 executable = "synctex-katarakt.py",
+                 args = {"--editor-command",
+                         "nvim --server " .. vim.v.servername.. " --remote-expr "
+                         .. "\"and(execute('e %{input}'), cursor(%{line}+1, %{column}+1))\"",
+                         "--view-line", "%l",
+                         "%f"},
             }
         }
     }
