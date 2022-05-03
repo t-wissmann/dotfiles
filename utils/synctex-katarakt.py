@@ -97,6 +97,8 @@ def main():
     parser.add_argument('--view-line', help="tex source line number to show in PDF",
                         type=int,
                         metavar='NUMBER')
+    parser.add_argument('--output',
+                        help="Latex's output pdf file. If not supplied, it will be derived from the input latex file path")
     parser.add_argument('--synctex', help="The synctex command",
                         metavar='synctex', default='synctex')
     args = parser.parse_args()
@@ -107,7 +109,10 @@ def main():
 
     main_tex_file = args.TEX_FILE
     main_tex_file_name = os.path.splitext(main_tex_file)[0]
-    pdf_path = os.path.abspath(main_tex_file_name + '.pdf')
+    if args.output is not None:
+        pdf_path = args.output
+    else:
+        pdf_path = os.path.abspath(main_tex_file_name + '.pdf')
     katarakt_pid, katarakt_iface = dbus_find_katarakt_with_pdf(bus, pdf_path)
     katarakt_proc = None
     if katarakt_iface:
