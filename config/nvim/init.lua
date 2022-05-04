@@ -61,10 +61,12 @@ hi VertSplit ctermbg=NONE ctermfg=black cterm=NONE
 hi Visual ctermbg=black cterm=None
 hi StatusLineNC ctermbg=black ctermfg=white cterm=NONE
 hi StatusLine ctermbg=black ctermfg=green cterm=bold
-hi CursorLine ctermbg=black term=NONE cterm=NONE
 hi LineNr ctermbg=black term=NONE ctermfg=gray cterm=NONE
 hi SignColumn ctermbg=black term=NONE ctermfg=gray cterm=NONE
 hi CursorLineNr ctermbg=black term=NONE ctermfg=green cterm=bold
+hi CursorLine ctermbg=black term=NONE cterm=NONE
+hi CursorLine ctermbg=233 term=NONE cterm=NONE
+hi CursorLineNr ctermbg=233 term=NONE ctermfg=green cterm=bold
 
 set fillchars+=vert:│
 
