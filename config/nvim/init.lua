@@ -16,7 +16,6 @@ au BufRead,BufNewFile *.v set ft=coq
 set t_Co=256
 
 set encoding=utf-8
-set ttimeoutlen=50
 
 set scrolloff=2
 
@@ -72,10 +71,6 @@ set fillchars+=vert:│
 
 noremap  <buffer> <silent> k gk
 noremap  <buffer> <silent> j gj
-" some spacemacs keys
-noremap <space>w <C-w>
-map <space>bp :bp<CR>
-map <space>bn :bn<CR>
 
 
 ]],
@@ -122,6 +117,26 @@ require('lspconfig').texlab.setup({
     }
 })
 
+
+
+vim.keymap.set("n", "<Space>", ":WhichKey ' '<CR>", { silent = true })
+vim.keymap.set("n", ",", ":WhichKey ','<CR>", { silent = true })
+vim.g.mapleader = " "
+vim.o.timeout = true
+vim.o.timeoutlen = 100
+-- buffers:
+vim.keymap.set("n", "<C-o>", ":CtrlPBuffer<CR>")
+vim.keymap.set("n", "<Leader>bn", ":bnext<CR>")
+vim.keymap.set("n", "<Leader>bp", ":bprevious<CR>")
+vim.keymap.set("n", "<Leader>bw", ":CtrlPBuffer<CR>")
+-- git
+vim.keymap.set("n", "<Leader>gc", ":Git commit -v<CR>")
+vim.keymap.set("n", "<Leader>gC", ":Git commit -va<CR>")
+vim.keymap.set("n", "<Leader>gP", ":Git push<CR>")
+vim.keymap.set("n", "<Leader>gf", ":Git pull --rebase<CR>")
+vim.keymap.set("n", "<Leader>gs", ":Git status<CR>")
+vim.keymap.set("n", "<Leader>ga", ":Git add<CR>")
+
 vim.api.nvim_create_autocmd('FileType', {
     pattern = {'plaintex', 'tex'},
     callback = function()
@@ -132,10 +147,11 @@ vim.api.nvim_create_autocmd('FileType', {
     desc = 'LaTeX specific settings'
 })
 
+
 require('lualine').setup {
   options = {
     icons_enabled = true,
-    theme = 'auto',
+    theme = 'onedark',
     component_separators = { left = '', right = ''},
     section_separators = { left = '', right = ''},
     disabled_filetypes = {},
@@ -162,7 +178,7 @@ require('lualine').setup {
   extensions = {}
 }
 
-vim.keymap.set("n", "<C-o>", ":CtrlPBuffer<CR>")
+
 
 return require('packer').startup(function()
   -- configuration of packer https://github.com/wbthomason/packer.nvim
@@ -181,4 +197,6 @@ return require('packer').startup(function()
       config = function()
       end
   })
+  use 'tpope/vim-fugitive'
+  use 'liuchengxu/vim-which-key'
 end)
