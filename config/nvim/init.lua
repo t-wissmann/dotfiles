@@ -1,4 +1,4 @@
--- 
+-- vim: sw=2 ts=2
 vim.api.nvim_exec(
 [[
 
@@ -162,6 +162,8 @@ require('lualine').setup {
   extensions = {}
 }
 
+vim.keymap.set("n", "<C-o>", ":CtrlPBuffer<CR>")
+
 return require('packer').startup(function()
   -- configuration of packer https://github.com/wbthomason/packer.nvim
   -- Packer can manage itself
@@ -171,23 +173,10 @@ return require('packer').startup(function()
       requires = { 'kyazdani42/nvim-web-devicons', opt = true}
   }
   use 'morhetz/gruvbox'
-  -- use({'jakewvincent/texmagic.nvim',
-  --      config = function()
-  --         require('texmagic').setup({
-  --             -- Config goes here; leave blank for defaults
-  --             engines = {
-  --               pdflatex = {    -- This has the same name as a default engine but would
-  --                               -- be preferred over the same-name default if defined
-  --                   executable = "latexmk",
-  --                   args = {
-  --                       "%f"
-  --                   },
-  --                   isContinuous = false,
-  --               },
-  --             },
-  --         })
-  --      end
-  -- })
+  use({'ctrlpvim/ctrlp.vim',
+    config = function()
+    end
+  })
   use({'neovim/nvim-lspconfig',
       config = function()
       end
