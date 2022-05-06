@@ -98,6 +98,7 @@ vim.keymap.set("n", "<Leader>gP", ":Git push<CR>")
 vim.keymap.set("n", "<Leader>gf", ":Git pull --rebase<CR>")
 vim.keymap.set("n", "<Leader>gs", ":Git status<CR>")
 vim.keymap.set("n", "<Leader>ga", ":Git add<CR>")
+vim.keymap.set("n", "<Leader>gl", ":Git log<CR>")
 
 vim.api.nvim_create_autocmd('FileType', {
     pattern = {'plaintex', 'tex'},
@@ -109,87 +110,44 @@ vim.api.nvim_create_autocmd('FileType', {
     desc = 'LaTeX specific settings'
 })
 
-
-require('lualine').setup {
-  options = {
-    icons_enabled = true,
-    theme = 'onedark',
-    component_separators = { left = '', right = ''},
-    section_separators = { left = '', right = ''},
-    disabled_filetypes = {},
-    always_divide_middle = true,
-    globalstatus = false,
-  },
-  sections = {
-    lualine_a = {'mode'},
-    lualine_b = {'branch', 'diff'},
-    lualine_c = {'filename'},
-    lualine_x = {},
-    lualine_y = {'encoding'},
-    lualine_z = {'progress', 'location'}
-  },
-  inactive_sections = {
-    lualine_a = {},
-    lualine_b = {},
-    lualine_c = {'filename'},
-    lualine_x = {'location'},
-    lualine_y = {},
-    lualine_z = {}
-  },
-  tabline = {},
-  extensions = {}
-}
-
-
-
-
-require('lspconfig').texlab.setup({
-    cmd = {"texlab"},
-    filetypes = {"tex", "bib"},
-    settings = {
-        latex = {
-          build = {
-            args = {  },
-            executable = "latexmk",
-            onSave = false
-          },
-          forwardSearch = {
-            args = {},
-            onSave = false
-          },
-          lint = {
-            onChange = false
-          },
-        },
-        texlab = {
-            rootDirectory = nil,
-            forwardSearch = {
-                 -- executable = "evince_synctex.py",
-                 -- args = {"-f", "%l", "%p", "gvim %f +%l"},
-                 --
-                 -- okular: either forward or backward, but not both.
-                 -- executable = "okular",
-                 -- args = {"--unique",
-                 --         -- "--editor-cmd", "nvim --server " .. vim.v.servername .. " --remote-send \"%lG\"",
-                 --         "file:%p#src:%l%f", },
-                 executable = "synctex-katarakt.py",
-                 args = {"--editor-command",
-                         "nvim --server " .. vim.v.servername.. " --remote-expr "
-                         .. "\"and(execute('e %{input}'), cursor(%{line}+1, %{column}+1))\"",
-                         "--view-line", "%l",
-                         "%f"},
-            }
-        }
-    }
-})
-
 return require('packer').startup(function()
   -- configuration of packer https://github.com/wbthomason/packer.nvim
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
   use {
       'nvim-lualine/lualine.nvim',
-      requires = { 'kyazdani42/nvim-web-devicons', opt = true}
+      requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+      config = function()
+        require('lualine').setup {
+          options = {
+            icons_enabled = true,
+            theme = 'onedark',
+            component_separators = { left = '', right = ''},
+            section_separators = { left = '', right = ''},
+            disabled_filetypes = {},
+            always_divide_middle = true,
+            globalstatus = false,
+          },
+          sections = {
+            lualine_a = {'mode'},
+            lualine_b = {'branch', 'diff'},
+            lualine_c = {'filename'},
+            lualine_x = {},
+            lualine_y = {'encoding'},
+            lualine_z = {'progress', 'location'}
+          },
+          inactive_sections = {
+            lualine_a = {},
+            lualine_b = {},
+            lualine_c = {'filename'},
+            lualine_x = {'location'},
+            lualine_y = {},
+            lualine_z = {}
+          },
+          tabline = {},
+          extensions = {}
+        }
+      end
   }
   use 'morhetz/gruvbox'
   use({'ctrlpvim/ctrlp.vim',
@@ -198,6 +156,45 @@ return require('packer').startup(function()
   })
   use({'neovim/nvim-lspconfig',
       config = function()
+        require('lspconfig').texlab.setup({
+            cmd = {"texlab"},
+            filetypes = {"tex", "bib"},
+            settings = {
+                latex = {
+                  build = {
+                    args = {  },
+                    executable = "latexmk",
+                    onSave = false
+                  },
+                  forwardSearch = {
+                    args = {},
+                    onSave = false
+                  },
+                  lint = {
+                    onChange = false
+                  },
+                },
+                texlab = {
+                    rootDirectory = nil,
+                    forwardSearch = {
+                         -- executable = "evince_synctex.py",
+                         -- args = {"-f", "%l", "%p", "gvim %f +%l"},
+                         --
+                         -- okular: either forward or backward, but not both.
+                         -- executable = "okular",
+                         -- args = {"--unique",
+                         --         -- "--editor-cmd", "nvim --server " .. vim.v.servername .. " --remote-send \"%lG\"",
+                         --         "file:%p#src:%l%f", },
+                         executable = "synctex-katarakt.py",
+                         args = {"--editor-command",
+                                 "nvim --server " .. vim.v.servername.. " --remote-expr "
+                                 .. "\"and(execute('e %{input}'), cursor(%{line}+1, %{column}+1))\"",
+                                 "--view-line", "%l",
+                                 "%f"},
+                    }
+                }
+            }
+        })
       end
   })
   use 'tpope/vim-fugitive'
