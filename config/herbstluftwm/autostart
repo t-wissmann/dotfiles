@@ -119,36 +119,27 @@ hc keybind Mod4-y spawn bash -c 'mpv --force-window=immediate --keep-open=yes --
 hc keybind $Mod-z spawn ~/.config/herbstluftwm/omnivim.py
 
 # tags
-if [[ $HOSTNAME = hoth ]] ; then
 BINDS=(
     1:irc
     2:vim
     3:web
-    4:four
-    5:five
-    6:six
 )
-else
-BINDS=(
-    1:irc
-    2:vim
-    3:web
-    4:mail
-    5:music
-    6:pdf
-    7:tmp
-    8:video
-    9:doc
-    w:firefox
-    e:tmux
-)
-fi
 
-hc silent attr tags.by-name.default && hc rename default "irc"
+
+# remove empty tags
+hc foreach T tags.by-name \
+   sprintf ATTR_client_count '%c.client_count' T \
+   and , compare ATTR_client_count = 0 \
+       , sprintf ATTR_NAME '%c.name' T \
+         substitute NAME ATTR_NAME merge_tag NAME
+
+idx=0
 for i in "${BINDS[@]}" ; do
     key="${i%%:*}"
     tag="${i#*:}"
     hc add "$tag"
+    hc set_attr tags.by-name."$tag".index "$idx"
+    idx=$((idx+1))
 done
 
 tag_keys=( {1..9} 0 )
