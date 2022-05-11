@@ -79,6 +79,7 @@ export PAGER="less"
 if [[ -x /usr/bin/nvim ]] ; then
     export EDITOR="nvim"
     alias vi=nvim
+    alias vim=nvim
 fi
 
 alias abook='~/.abook/abook.sh'
