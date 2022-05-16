@@ -90,6 +90,7 @@ vim.o.timeoutlen = 100
 vim.keymap.set("n", "<C-o>", ":CtrlPBuffer<CR>")
 vim.keymap.set("n", "<Leader>bn", ":bnext<CR>")
 vim.keymap.set("n", "<Leader>bp", ":bprevious<CR>")
+vim.keymap.set("n", "<Leader>bd", ":bdelete<CR>")
 vim.keymap.set("n", "<Leader>bw", ":CtrlPBuffer<CR>")
 -- git
 vim.keymap.set("n", "<Leader>gc", ":Git commit -v<CR>")
@@ -99,6 +100,7 @@ vim.keymap.set("n", "<Leader>gf", ":Git pull --rebase<CR>")
 vim.keymap.set("n", "<Leader>gs", ":Git status<CR>")
 vim.keymap.set("n", "<Leader>ga", ":Git add<CR>")
 vim.keymap.set("n", "<Leader>gl", ":Git log<CR>")
+vim.keymap.set("n", "<Leader>gS", ":terminal git show --word-diff=color<CR>")
 
 vim.api.nvim_create_autocmd('FileType', {
     pattern = {'plaintex', 'tex'},
