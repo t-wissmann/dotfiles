@@ -65,6 +65,7 @@ hi LineNr ctermbg=233 guibg=Black
 hi Normal ctermbg=NONE term=NONE
 hi VertSplit ctermbg=NONE ctermfg=black cterm=NONE
 hi Visual ctermbg=black cterm=None
+hi Spellbad ctermbg=red cterm=None
 hi StatusLineNC ctermbg=black ctermfg=white cterm=NONE
 hi StatusLine ctermbg=black ctermfg=green cterm=bold
 hi LineNr ctermbg=black term=NONE ctermfg=gray cterm=NONE
@@ -101,6 +102,7 @@ vim.keymap.set("n", "<Leader>gs", ":Git status<CR>")
 vim.keymap.set("n", "<Leader>ga", ":Git add<CR>")
 vim.keymap.set("n", "<Leader>gl", ":Git log<CR>")
 vim.keymap.set("n", "<Leader>gS", ":terminal git show --word-diff=color<CR>")
+vim.keymap.set("n", "<Leader>sn", ":Git log<CR>")
 
 vim.api.nvim_create_autocmd('FileType', {
     pattern = {'plaintex', 'tex'},
