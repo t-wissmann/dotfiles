@@ -1,0 +1,94 @@
+#!/usr/bin/env python3
+import os.path
+import subprocess
+import sys
+import textwrap
+
+
+def debug(message, color=True):
+    if color:
+        fullmsg = '\033[1;33m:: \033[0;34m' + message + '\033[0m'
+    else:
+        fullmsg = ':: ' + message
+    print(fullmsg, flush=True, file=sys.stderr)
+
+
+def checkfile(filepath, checksum):
+    if not os.path.isfile(filepath):
+        debug(f'{filepath} does not exist')
+        return False
+    cmd = ['sha256sum', filepath]
+    debug(f'Running {cmd}')
+    proc = subprocess.run(cmd,
+                          stdin=subprocess.DEVNULL,
+                          stdout=subprocess.PIPE,
+                          universal_newlines=True)
+    words = proc.stdout.split(' ')
+    if len(words) < 1:
+        debug('no output.')
+        return False
+    else:
+        if checksum == words[0]:
+            debug(f'checksum match: {checksum}')
+            return True
+        else:
+            debug(f'checksum mismatch: expected {checksum} but got {words[0]}')
+            return False
+
+
+def download_iso(iso_url, checksum):
+    basedir = '/var/tmp/qemu-docker/'
+    filename = os.path.basename(iso_url)
+    isopath = os.path.join(basedir, filename)
+    if checkfile(isopath, checksum):
+        return isopath
+    debug(f'Downloading {iso_url} to {isopath}')
+    os.makedirs(os.path.abspath(basedir), exist_ok=True)
+    subprocess.call(['chmod', 'go-rwx', basedir])
+    cmd = ['wget', '-O', isopath, iso_url]
+    subprocess.call(cmd, stdin=subprocess.DEVNULL)
+    if checkfile(isopath, checksum):
+        return isopath
+    else:
+        sys.exit(1)
+    return isopath
+
+
+def some_notes():
+    notes = textwrap.dedent(
+    """
+    # In order to copy commands into the window, run:
+    # sleep 2 ; xdotool type "$(xclip -o -selection clipboard)" 
+    # In the VM:
+    # add the docker repository
+    export DEBIAN_FRONTEND=noninteractive ;
+    apt-get -yq update ;
+    apt-get -yq install docker.io apparmor ;
+    systemctl start docker ;
+    git clone https://github.com/herbstluftwm/herbstluftwm
+    docker build -t hlwm/ci:focal - < herbstluftwm/ci/Dockerfile.ci-focal
+    docker login
+    docker push hlwm/ci:focal
+
+    """)
+
+
+def main():
+    iso_url = 'https://download.grml.org/grml64-full_2021.07.iso'
+    checksum = '7cec5cb3816edd55164d8d1cdfc315ecdda1ea26e5daa52fc8462f8d5bdd888d'
+
+    isopath = download_iso(iso_url, checksum)
+
+    command = [
+        'qemu-system-x86_64',
+        '-boot', 'd',
+        '-cdrom', isopath,
+        '-m', '8200',  # ram
+    ]
+    subprocess.call(command)
+
+    # in the docker image, do:
+    # apt-get update
+    # 
+
+main()
