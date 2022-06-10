@@ -58,6 +58,8 @@ set showbreak=..
 set clipboard=unnamedplus
 set showcmd
 
+filetype indent off
+
 set cursorline
 colorscheme gruvbox
 
@@ -110,6 +112,8 @@ vim.api.nvim_create_autocmd('FileType', {
         vim.wo.linebreak = true
         vim.keymap.set("n", ",v", ":TexlabForward<CR>", { silent = true })
         vim.keymap.set("n", ",b", ":w<CR>:TexlabBuild<CR>", { silent = false })
+        vim.o.sw = 2
+        vim.o.ts = 2
     end,
     desc = 'LaTeX specific settings'
 })
@@ -180,6 +184,11 @@ return require('packer').startup(function()
                 },
                 texlab = {
                     rootDirectory = nil,
+                    latexFormatter = 'latexindent',
+                    latexindent = {
+                      ['local'] = nil, -- local is a reserved keyword
+                      modifyLineBreaks = false,
+                    },
                     forwardSearch = {
                          -- executable = "evince_synctex.py",
                          -- args = {"-f", "%l", "%p", "gvim %f +%l"},
