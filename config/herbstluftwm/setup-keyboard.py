@@ -12,6 +12,14 @@ import sys
 
 caps2control = ['ctrl:nocaps']
 
+default_layout = 'us'
+
+global_options = [
+        '-variant', 'altgr-intl',
+        '-option', 'compose:menu',
+]
+
+
 models = [
     # all keyboards, with rising preference (later keyboards
     # possibly overwrite previous keyboards' options if multiple
@@ -154,11 +162,8 @@ def main():
     # clear existing keyboard options:
     get_stdout(['setxkbmap', '-option'])
     # set some default:
-    global_options = [
-        '-variant', 'altgr-intl',
-        '-option', 'compose:menu',
-    ]
-    get_stdout(['setxkbmap', 'us'] + global_options)
+    global global_options, default_layout
+    get_stdout(['setxkbmap', default_layout] + global_options)
     # go through all know 'models' and see whether they are connected.
     # if so, apply the specified options:
     global models

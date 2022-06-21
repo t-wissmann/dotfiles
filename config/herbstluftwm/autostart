@@ -94,7 +94,8 @@ if which alacritty &> /dev/null ; then
     if [ $HOSTNAME == xi ] ; then
         hc export WINIT_X11_SCALE_FACTOR=1.66
     fi
-    hc keybind $Mod-Return spawn ~/dotfiles/utils/with-same-pwd alacritty
+    # Disable XMODIFIERS because sometimes it hangs after suspend
+    hc keybind $Mod-Return spawn env XMODIFIERS= ~/dotfiles/utils/with-same-pwd alacritty
 else
     hc keybind $Mod-Return spawn ~/dotfiles/utils/with-same-pwd urxvt
 fi
@@ -578,6 +579,8 @@ hc set frame_padding 0
 hc unlock
 }
 
+custom_style=$(< ~/.config/herbstluftwm/themes/separate-tabs.css)
+if ! hc attr theme.custom_style "$custom_style" ; then
 # new colors
 case "$HOSTNAME" in
     x40)    colors_thin_red ;;
@@ -597,6 +600,8 @@ case "$HOSTNAME" in
         ;;
     *) green_i3_like_theme ;;
 esac
+fi
+
 #hc attr theme.title_when always  # multiple_tabs
 #hc attr theme.floating.title_when always
 hc attr theme.title_align center
