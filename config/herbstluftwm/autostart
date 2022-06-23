@@ -95,7 +95,7 @@ if which alacritty &> /dev/null ; then
         hc export WINIT_X11_SCALE_FACTOR=1.66
     fi
     # Disable XMODIFIERS because sometimes it hangs after suspend
-    hc keybind $Mod-Return spawn env XMODIFIERS= ~/dotfiles/utils/with-same-pwd alacritty
+    hc keybind $Mod-Return spawn ~/dotfiles/utils/with-same-pwd env XMODIFIERS= alacritty
 else
     hc keybind $Mod-Return spawn ~/dotfiles/utils/with-same-pwd urxvt
 fi
@@ -579,27 +579,30 @@ hc set frame_padding 0
 hc unlock
 }
 
-custom_style=$(< ~/.config/herbstluftwm/themes/separate-tabs.css)
-if ! hc attr theme.custom_style "$custom_style" ; then
-# new colors
-case "$HOSTNAME" in
-    x40)    colors_thin_red ;;
-    #faui0*) colors_thin_purple ;;
-    dachs)  colors_snow ;;
-    parker)
-        new_theme
-        hc attr theme.active.color '#9fbc00'
-        hc attr theme.normal.color '#2D2D2D'
-        hc set frame_bg_active_color '#9fbc00'
-        ;;
-    x1)
-        green_i3_like_theme
-        hc attr theme.title_font 'bitstream vera sans:pixelsize=18'
-        hc attr theme.title_height '19'
-        hc attr theme.title_depth '4'
-        ;;
-    *) green_i3_like_theme ;;
-esac
+theme_path=$HOME/.config/herbstluftwm/themes/separate-tabs.css
+if hc attr theme.name "$theme_path" ; then
+    hc set frame_border_width 0
+    hc set frame_transparent_width 10
+else
+    # new colors
+    case "$HOSTNAME" in
+        x40)    colors_thin_red ;;
+        #faui0*) colors_thin_purple ;;
+        dachs)  colors_snow ;;
+        parker)
+            new_theme
+            hc attr theme.active.color '#9fbc00'
+            hc attr theme.normal.color '#2D2D2D'
+            hc set frame_bg_active_color '#9fbc00'
+            ;;
+        x1)
+            green_i3_like_theme
+            hc attr theme.title_font 'bitstream vera sans:pixelsize=18'
+            hc attr theme.title_height '19'
+            hc attr theme.title_depth '4'
+            ;;
+        *) green_i3_like_theme ;;
+    esac
 fi
 
 #hc attr theme.title_when always  # multiple_tabs

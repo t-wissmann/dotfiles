@@ -1,0 +1,58 @@
+
+.client-decoration {
+    background-color: #343434;
+    outline-width: 1px;
+    outline-style: solid;
+    outline-color: #2B2B2B;
+    margin: 1px; /* make outline visible */
+    border: 1px solid #494949;
+}
+.client-decoration .tab {
+    margin: 3px;
+    margin-bottom: 0px;
+    padding: 0px 2px;
+    color: white;
+    text-align: center;
+}
+.client-decoration .tab + .tab {
+    border-left: 1px solid #494949;
+}
+
+.client-decoration .tabbar {
+    border-width: 2px 0px;
+    outline-width: 2px 0px;
+    margin: 2px 0px;
+    padding-top: -4px;
+    padding-bottom: -2px;
+    outline-style: solid;
+    /* gradient for the poor: */
+    outline-top-color: #2d2d2d;
+    border-top-color: #303030;
+    border-bottom-color: #363636;
+    outline-bottom-color: #383838;
+}
+
+.client-decoration.multiple-tabs .tab.focus {
+    /* color: white; */
+    /* background-color: #2e2b2e; */
+}
+
+.client-decoration .tab.focus {
+}
+
+.client-decoration.focus .tab.focus {
+    color: #B1CD94;
+    font: Dejavu Sans:pixelsize=12:bold;
+}
+
+.client-decoration .tab.urgent {
+    color: #FF6F6F;
+    font: Dejavu Sans:pixelsize=12:bold;
+}
+
+
+* {
+    /* font: -*-fixed-medium-r-*-*-13-*-*-*-*-*-*-*; */
+    font: Dejavu Sans:pixelsize=12;
+}
+
