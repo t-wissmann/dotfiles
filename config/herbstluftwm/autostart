@@ -580,9 +580,11 @@ hc unlock
 }
 
 theme_path=$HOME/.config/herbstluftwm/themes/separate-tabs.css
+theme_path=$HOME/.config/herbstluftwm/themes/black-bar.css
 if hc attr theme.name "$theme_path" ; then
     hc set frame_border_width 0
     hc set frame_transparent_width 10
+    hc set frame_bg_active_color '#86AB5F54'
 else
     # new colors
     case "$HOSTNAME" in
