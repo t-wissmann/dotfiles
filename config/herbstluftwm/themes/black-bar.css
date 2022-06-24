@@ -40,7 +40,11 @@
 }
 
 
-.client-decoration .tab.focus {
+/* make a tab a bit darker if it needs to be highlighted:
+ * either because it's the focused tab in a multi-tab
+ * title, or because it is the focused decoration */
+.client-decoration.multiple-tabs .tab.focus ,
+.client-decoration.focus .tab.focus {
     /* color: white; */
     background-color: #2e2b2e;
     /* gradient for the poor: */
