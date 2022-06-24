@@ -1,0 +1,91 @@
+
+/* normal decoration */
+.client-decoration {
+    background-color: #FBF8F1;
+    border: 1px solid #27391B;
+}
+
+.client-decoration .tabbar {
+    border-top: 1px solid white;
+    border-left: 1px solid white;
+
+    outline-bottom-width: 1px;
+    outline-style: solid;
+    outline-bottom-color: #9D8959;
+    margin-bottom: 1px;
+}
+
+.tab {
+    padding: 2px;
+}
+
+.client-decoration .tab + .tab {
+    border-left: 1px solid white;
+}
+
+.client-decoration .tab.focus + .tab {
+    border-left-color: #9D8959;
+}
+
+.client-decoration .tab.focus {
+    border-left-width: 1px;
+    border-top-width: 1px;
+    border-style: solid;
+    border-left-color: #9D8959;
+    border-top-color: #9D8959;
+    margin-top: -1px;
+}
+
+.client-decoration .tab.focus:first-child {
+    margin-left: -1px;
+}
+
+
+.client-decoration .tab.normal {
+    background-color: #F0E7D3;
+    color: #85785B;
+}
+
+
+.client-decoration .tab.focus {
+    /* overwrite border-bottom of the tab bar */
+    outline-bottom-width: 1px;
+    outline-style: solid;
+    outline-bottom-color: #FBF8F1;
+}
+
+/* focused container */
+.client-decoration.focus.multiple-tabs .tab.focus {
+    background-color: #6CB03E;
+}
+
+.client-decoration.focus.multiple-tabs .tab ,
+.client-decoration.focus {
+    background-color: #436A29;
+}
+
+.client-decoration.focus .tabbar {
+    outline-bottom-color: #2D3E22;
+    border-color: #B5C7A9;
+}
+.client-decoration.focus .tab.focus {
+    /* overwrite border-bottom of the tab bar */
+    outline-bottom-color: #2D3E22;
+}
+
+.client-decoration.focus .tab.focus + .tab {
+    border-left-color: #98BE7E;
+}
+.client-decoration.focus .tab.focus {
+    border-color: #98BE7E;
+}
+
+.client-decoration.focus .tab {
+    color: white;
+}
+
+* {
+    /* font: -*-fixed-medium-r-*-*-13-*-*-*-*-*-*-*; */
+    font: Dejavu Sans:pixelsize=12;
+}
+
