@@ -7,6 +7,12 @@
     margin: 1px; /* make outline visible */
     border: 1px solid #494949;
 }
+
+.client-decoration.focus {
+    outline-color: #0b0b0b;
+    border-color: #5b5b5b;
+}
+
 .client-decoration .tab {
     margin: 3px;
     margin-bottom: 0px;
@@ -14,11 +20,8 @@
     color: white;
     text-align: center;
 }
-.client-decoration .tab + .tab {
-    border-left: 1px solid #494949;
-}
 
-.client-decoration .tabbar {
+.client-decoration .tabbar .tab {
     border-width: 2px 0px;
     outline-width: 2px 0px;
     margin: 2px 0px;
@@ -32,9 +35,19 @@
     outline-bottom-color: #383838;
 }
 
-.client-decoration.multiple-tabs .tab.focus {
+.client-decoration .tab + .tab {
+    border-left: 1px solid #494949;
+}
+
+
+.client-decoration .tab.focus {
     /* color: white; */
-    /* background-color: #2e2b2e; */
+    background-color: #2e2b2e;
+    /* gradient for the poor: */
+    outline-top-color: #242124;
+    border-top-color: #292629;
+    border-bottom-color: #302D30;
+    outline-bottom-color: #333033;
 }
 
 .client-decoration .tab.focus {
@@ -42,7 +55,7 @@
 
 .client-decoration.focus .tab.focus {
     color: #B1CD94;
-    font: Dejavu Sans:pixelsize=12:bold;
+    /* font: Dejavu Sans:pixelsize=12:bold; */
 }
 
 .client-decoration .tab.urgent {
