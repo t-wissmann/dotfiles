@@ -78,9 +78,9 @@ font:
   # The italic font face
   italic:
     # family: Bitstream Vera Sans Mono # should be "Menlo" or something on macOS.
-    family: terminus bold # should be "Menlo" or something on macOS.
+    family: terminus # should be "Menlo" or something on macOS.
     # Style can be specified to pick a specific face.
-    style: Italic
+    style: Bold
 
   # Point size of the font
   size: 8.0
