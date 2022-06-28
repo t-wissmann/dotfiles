@@ -12,10 +12,10 @@ import sys
 
 caps2control = ['ctrl:nocaps']
 
-default_layout = 'us'
+default_layout = 'eu'
 
 global_options = [
-        '-variant', 'altgr-intl',
+        # '-variant', 'altgr-intl',
         '-option', 'compose:menu',
 ]
 
