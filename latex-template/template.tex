@@ -1,15 +1,26 @@
 \documentclass[a4paper,11pt]{article}
-\usepackage[showframe,margin=2cm]{geometry}
+\usepackage{ifthen}
+\usepackage[margin=2cm]{geometry}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{hyperref}
 \usepackage[ngerman]{babel}
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+
+\usepackage{hyperref}
 
 % natbib:
 % \usepackage[square,numbers]{natbib}
 % \bibliographystyle{abbrvnat}
 % \bibliography{refs}
+
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+%\fancyfoot[L]{\footnotesize }
+\fancyfoot[C]{\footnotesize Page \thepage\ / \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+
 
 \setlength{\parindent}{0em}
 \setlength{\parskip}{0.5em}
@@ -33,6 +44,8 @@
 \makeatother
 
 \begin{document}
+\maketitle\thispagestyle{fancy}
+
 Content
 \end{document}
 % another dictionary:

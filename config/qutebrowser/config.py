@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import re
+import os.path
 from PyQt5.QtCore import QUrl
 from qutebrowser.api import interceptor
 from qutebrowser.api import message
@@ -223,12 +224,18 @@ for k,v in binds.items():
     config.bind(k, v)
 
 
-blocked_hosts = [
-    # r'.*\.facebook\.com',
-    # r'.*\.instagram\.com',
-    # r'.*\.youtube\.(com|de)',
-    # r'.*\.pr0gramm\.com',
-]
+blocked_hosts = []
+blocked_hosts_path = '~/.config/qutebrowser/block-hosts.txt'
+
+try:
+    with open(os.path.expanduser(blocked_hosts_path)) as fh:
+        lines = [l.strip() for l in fh.readlines()]
+        lines = [l for l in lines if not l.startswith('#')]
+        blocked_hosts = lines
+except Exception:
+    pass
+
+
 
 # attach variable to global namespace that is not evaluated again on :config-source
 blocked_hosts_re = [re.compile(h) for h in blocked_hosts]
