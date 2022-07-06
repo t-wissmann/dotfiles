@@ -60,6 +60,10 @@ set showcmd
 
 filetype indent off
 
+autocmd FileType text syn match   plainTextComment "#.*$"
+autocmd FileType text hi def link plainTextComment Comment
+
+
 set cursorline
 colorscheme gruvbox
 
