@@ -34,7 +34,7 @@ models = [
         'name': 'pure kb talking 60%',
         'id': '04d9:0134',
         'usb_name': "Holtek Semiconductor, Inc. USB Keyboard",
-        'options': ['compose:ralt', 'compose:rctrl', 'compose:rwin'] + caps2control,
+        'options': ['compose:rctrl', 'compose:rwin'] + caps2control,
     },
     {
         'name': 'progrestouch retro tiny (black 60% arrow keys)',
@@ -54,11 +54,11 @@ models = [
         'usb_name': 'PFU, Ltd Happy Hacking Keyboard Lite2',
         'options': ['compose:ralt', 'compose:rwin'],
     },
-    {
-        'name': 'ibm/lenovo full width keyboard',
-        'id': '04b3:3025',
-        'options': ['compose:rwin', 'ctrl:nocaps', 'altwin:swap_alt_win'],
-    },
+    # {
+    #     'name': 'ibm/lenovo full width keyboard',
+    #     'id': '04b3:3025',
+    #     'options': ['compose:rwin', 'ctrl:nocaps', 'altwin:swap_alt_win'],
+    # },
 ]
 
 

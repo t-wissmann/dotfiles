@@ -1,6 +1,7 @@
 personal_ws-1.1 en 1 
 adjoint
 adjunction
+adjunctions
 automata
 bijective
 bisimilar
@@ -38,6 +39,8 @@ functoriality
 functors
 homomorphism
 homomorphisms
+automorphism
+automorphisms
 iff
 invertible
 isomorphism
@@ -117,3 +120,20 @@ instantiation
 arity
 multisorted
 invariantly
+monadic
+monadicity
+bijection
+bijections
+presheaf
+presheaves
+semantical
+superset
+submonoid
+presentability
+quasitopos
+determinization
+semilattice
+semilattices
+extremal
+representable
+contrapositive

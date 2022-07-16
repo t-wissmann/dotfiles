@@ -142,6 +142,10 @@ for i in "${BINDS[@]}" ; do
     hc set_attr tags.by-name."$tag".index "$idx"
     idx=$((idx+1))
 done
+if [[ "$(hc attr tags.focus.name)" = "default" ]] ; then
+    hc use_index 0
+    hc merge_tag default
+fi
 
 tag_keys=( {1..9} 0 )
 for i in "${!tag_keys[@]}" ; do
