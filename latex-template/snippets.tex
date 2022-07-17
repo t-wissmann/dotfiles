@@ -47,6 +47,16 @@
             ]{geometry}
 \else
 \fi
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newboolean{spellingmode} \setboolean{spellingmode}{false}
+\ifspellingmode
+  \hyphenpenalty=9000
+  \pagestyle{empty}
+  \thispagestyle{empty}
+\fi
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
