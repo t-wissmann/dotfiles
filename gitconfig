@@ -10,6 +10,8 @@
 	st = status
 	wdiff = diff --color-words
 	bdiff = diff --color-words=.
+	wshow = show --color-words
+	bshow = show --color-words=.
 	hug = push
 	ca = commit -av
 	c = commit -v
