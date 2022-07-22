@@ -212,6 +212,7 @@ hc keybind $Mod-Shift-f attr clients.focus.floating toggle
 hc keybind $Mod-u split vertical 0.5
 hc keybind $Mod-o split horizontal 0.5
 hc keybind $Mod-v split explode
+hc keybind $Mod-Shift-v cycle_value tags.focus.tiling.root.fraction 0.5 0.66666 0.3333
 hc keybind $Mod-m spawn ~/git/herbstluftwm/scripts/maximize.sh
 hc keybind $Mod-Shift-m set_attr clients.focus.minimized toggle
 hc keybind $Mod-Control-m jumpto longest-minimized

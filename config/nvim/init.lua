@@ -38,6 +38,8 @@ set et shiftwidth=4 tabstop=4 nojoinspaces
 " show a readable Beep! e.g. if finding a char via fx fails
 "set debug=beep
 
+set ignorecase smartcase
+
 
 " highlight whitespaces and trailing spaces
 set list
@@ -249,6 +251,14 @@ return require('packer').startup(function()
                 }
             }
         })
+        -- require('lspconfig').hls.setup({
+        --   on_attach = on_attach,
+        --   root_dir = vim.loop.cwd,
+        --   capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+        --   settings = {
+        --     rootMarkers = {"./git/"}
+        --   }
+        -- })
       end
   })
   use 'tpope/vim-fugitive'
