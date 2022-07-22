@@ -261,8 +261,9 @@ def main():
     netctl_path = os.path.expanduser('~/dotfiles/menu/rofi-netctl')
     if socket.gethostname() == 'x1' and os.path.exists(netctl_path):
         maybe_netctl = [
-            Item('netctl', 'network-wired', netctl_path),
+            Item('Network', 'network-wired', netctl_path),
             Item('Docking Station', 'computer', run_in_terminal(os.path.expanduser('~/dotfiles/config/herbstluftwm/x1-docking-station.sh'))),
+            Item('Bluetooth', 'bluetooth', 'blueman-applet'),
         ]
     menu = Menu('root', [
       Item('Thunar', 'system-file-manager', 'thunar'),
