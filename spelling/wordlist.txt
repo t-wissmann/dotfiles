@@ -137,3 +137,10 @@ semilattices
 extremal
 representable
 contrapositive
+invariance
+inequivalent
+inequivalence
+disjunction
+subformula
+nullary
+splitter
