@@ -11,6 +11,16 @@ utils=$HOME/dotfiles/utils
     "$@"
 }
 
+ask() {
+    echo -n "==> $1 [y/n] "
+    read -n 1 reply
+    if [[ "${reply^^}" == 'Y' ]] ; then
+        return 0
+    else
+        return 1
+    fi
+}
+
 if [[ -z "$dpi" ]] ; then
     dpi=$(
         pdfimages -list "$sourcefile" |
@@ -21,7 +31,18 @@ fi
 
 :: gs -dBATCH -dNOPAUSE -sDEVICE=jpeg -r"${dpi}x${dpi}" -sOutputFile="$tmpdir/p-%03d.jpg" "$sourcefile"
 
-if read -n 1 -p "Make background white? [yN]" res && [[ "${res//Y/y}" = y ]] ; then
+if ask "Create scan effect?" ; then
+    echo
+    for img in "$tmpdir"/p-*.jpg ; do
+        rotation_values=( 0.1 0.15 -0.1 0.02 -0.02 -0.15 )
+        rotation=${rotation_values[$((RANDOM%${#rotation_values[@]}))]}
+        :: mogrify -background '#989898' -rotate "$rotation" -attenuate 0.25 +noise Gaussian "$img"
+    done
+else
+    echo
+fi
+
+if ask "Make background white?" ; then
     echo
     export THRESHOLD=${THRESHOLD:-80}
     :: $utils/scan-fix-white-bg.sh "$tmpdir"/p-*.jpg
