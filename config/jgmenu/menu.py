@@ -283,6 +283,7 @@ def main():
       Item('Qutebrowser', 'qutebrowser', 'qutebrowser'),
       Item('Firefox', 'web-browser', 'firefox'),
       Item('gedit', 'accessories-text-editor', 'gedit --standalone'),
+      Item('KDE Connect', 'kdeconnect', 'killall kdeconnect-indicator ; kdeconnect-indicator '),
       Item('Telegram', 'telegram', 'killall telegram-desktop ; QT_QPA_PLATFORMTHEME= telegram-desktop'),
       # Item('Applications', 'start-here', XdgMenu()),
       Sep(),
