@@ -52,7 +52,9 @@ models = [
         'name': 'HHKB Lite2',
         'id': '04fe:0006',
         'usb_name': 'PFU, Ltd Happy Hacking Keyboard Lite2',
-        'options': ['compose:rwin'],
+        'options': [
+            'lv3:rwin_switch', 'compose:ralt',  # swap right win and alt
+        ],
     },
     # {
     #     'name': 'ibm/lenovo full width keyboard',
