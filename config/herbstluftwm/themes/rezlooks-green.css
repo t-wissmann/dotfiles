@@ -71,9 +71,10 @@
 .client-decoration .client-content {
     border-top: 1px solid #494949;
 }
-.client-decoration.focus .client-content {
-    border-top: 1px solid #94A683;
-}
+
+// .client-decoration.focus .client-content {
+//     border-top: 1px solid #94A683;
+// }
 
 
 * {
