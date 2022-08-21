@@ -591,6 +591,15 @@ if hc and , set_attr theme.name "$theme_path" , compare theme.name != '' ; then
     hc set frame_border_width 0
     hc set frame_transparent_width 10
     hc set frame_bg_active_color '#86AB5F54'
+    case "$HOSTNAME" in
+        x1)
+            hc set_attr theme.style_override '
+            * {
+                font: bitstream vera sans:pixelsize=18;
+            }
+            '
+        ;;
+    esac
 else
     # new colors
     case "$HOSTNAME" in
