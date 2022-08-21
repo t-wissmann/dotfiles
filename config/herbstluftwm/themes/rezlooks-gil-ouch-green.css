@@ -5,7 +5,7 @@
     border: 1px solid #27391B;
 }
 
-.client-decoration .tabbar {
+.client-decoration .tabs {
     border-top: 1px solid white;
     border-left: 1px solid white;
 
@@ -48,7 +48,7 @@
 
 
 .client-decoration .tab.focus {
-    /* overwrite border-bottom of the tab bar */
+    /* overwrite border-bottom of the tab panel */
     outline-bottom-width: 1px;
     outline-style: solid;
     outline-bottom-color: #FBF8F1;
@@ -64,12 +64,12 @@
     background-color: #436A29;
 }
 
-.client-decoration.focus .tabbar {
+.client-decoration.focus .tabs {
     outline-bottom-color: #2D3E22;
     border-color: #B5C7A9;
 }
 .client-decoration.focus .tab.focus {
-    /* overwrite border-bottom of the tab bar */
+    /* overwrite border-bottom of the tab panel */
     outline-bottom-color: #2D3E22;
 }
 
