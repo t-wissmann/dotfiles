@@ -1,5 +1,5 @@
 
-.client-decoration {
+.client-decoration.regular {
     background-color: #343434;
     outline-width: 1px;
     outline-style: solid;
@@ -8,12 +8,12 @@
     border: 1px solid #494949;
 }
 
-.client-decoration.focus {
+.client-decoration.regular.focus {
     outline-color: #0b0b0b;
     border-color: #5b5b5b;
 }
 
-.client-decoration .tab {
+.client-decoration.regular .tab {
     margin: 3px;
     margin-bottom: 0px;
     padding: 0px 2px;
@@ -21,7 +21,7 @@
     text-align: center;
 }
 
-.client-decoration .tabs .tab {
+.client-decoration.regular .tabs .tab {
     border-width: 2px 0px;
     outline-width: 2px 0px;
     margin: 2px 0px;
@@ -35,17 +35,17 @@
     outline-bottom-color: #383838;
 }
 
-.client-decoration .tab + .tab {
+.client-decoration.regular .tab + .tab {
     border-left: 1px solid #494949;
 }
 
-.client-decoration.focus .tab.focus + .tab ,
-.client-decoration.focus .tab + .tab.focus {
+.client-decoration.regular.focus .tab.focus + .tab ,
+.client-decoration.regular.focus .tab + .tab.focus {
     border-left-color: #dedede;
 }
 
 
-.client-decoration.focus .tab.focus {
+.client-decoration.regular.focus .tab.focus {
     /* gradient for the poor: */
     outline-top-color: #51693A;
     border-top-color: #57703E;
@@ -54,30 +54,30 @@
     outline-bottom-color: #658248;
 }
 
-.client-decoration.focus {
+.client-decoration.regular.focus {
     outline-color: #333E27;
     border-color: #94A683;
 }
 
-.client-decoration.focus .tab.focus {
+.client-decoration.regular.focus .tab.focus {
     /* font: Dejavu Sans:pixelsize=12:bold; */
     color: #f8f8f8;
 }
 
-.client-decoration .tab.urgent {
+.client-decoration.regular .tab.urgent {
     color: #FF6F6F;
 }
 
-.client-decoration .client-content {
+.client-decoration.regular .client-content {
     border-top: 1px solid #494949;
 }
 
-// .client-decoration.focus .client-content {
+// .client-decoration.regular.focus .client-content {
 //     border-top: 1px solid #94A683;
 // }
 
 
-* {
+.regular .tab {
     /* font: -*-fixed-medium-r-*-*-13-*-*-*-*-*-*-*; */
     font: Dejavu Sans:pixelsize=12;
 }
