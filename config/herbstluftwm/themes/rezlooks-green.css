@@ -72,9 +72,25 @@
     border-top: 1px solid #494949;
 }
 
-// .client-decoration.regular.focus .client-content {
-//     border-top: 1px solid #94A683;
-// }
+/* .client-decoration.regular.focus .client-content {
+    border-top: 1px solid #94A683;
+} */
+
+/** hide decoration for minimal and fullscreen clients */
+.client-decoration.minimal .panel ,
+.client-decoration.fullscreen .panel {
+    display: none;
+}
+
+.client-decoration.minimal ,
+.client-decoration.fullscreen ,
+.client-decoration.fullscreen > * {
+    border-width: 0px;
+    background-color: black;
+    padding: 0px;
+    margin: 0px;
+}
+
 
 
 .regular .tab {

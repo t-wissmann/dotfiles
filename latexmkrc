@@ -9,9 +9,9 @@ $pdf_mode = 1;
 $pdflatex = 'bash -c "pdflatex < /dev/null -file-line-error -interaction=halt-on-error -synctex=1 \"\$@\"" -- %O %S';
 
 
-# always use an out-of-source aux dir
-$git_root = "";
-#$git_root = `git rev-parse --show-toplevel 2> /dev/null`;
+# # always use an out-of-source aux dir
+# $git_root = "";
+$git_root = `git rev-parse --show-toplevel 2> /dev/null`;
 if ($git_root eq "") {
     # if we are not in a git directory, then save 
     my $dir = getcwd;
@@ -25,6 +25,7 @@ push @generated_exts, "run.xml";
 push @generated_exts, "bbl";
 push @generated_exts, "vtc";
 push @generated_exts, "synctex.gz";
+
 
 # OVERWRITE move_out_files_from_aux() in order to keep .fls in the aux_dir
 sub move_out_files_from_aux {
