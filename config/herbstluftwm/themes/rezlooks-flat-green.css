@@ -50,6 +50,7 @@
 
 /*** COLORS *****/
 
+/* unfocused decoration */
 .client-decoration.regular .panel .tab {
     border-color: #484849;
 }
@@ -64,6 +65,8 @@
     background-color: #181818ee;
 }
 
+/* urgent colors */
+
 .client-decoration.regular.urgent .panel ,
 .client-decoration.regular.urgent .panel .tab.focus ,
 .client-decoration.regular.urgent ,
@@ -74,6 +77,7 @@
     background-color: #F95C49;
 }
 
+/* focused decoration */
 .client-decoration.regular.focus .panel ,
 .client-decoration.regular.focus .panel .tab.focus ,
 .client-decoration.regular.focus {
@@ -88,6 +92,7 @@
     border-color: #61714A;
 }
 
+/* text colors */
 
 .client-decoration.regular .tab {
     color: #ababab;

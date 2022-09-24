@@ -587,6 +587,7 @@ hc unlock
 theme_path=$HOME/.config/herbstluftwm/themes/separate-tabs.css
 theme_path=$HOME/.config/herbstluftwm/themes/black-bar.css
 theme_path=$HOME/.config/herbstluftwm/themes/rezlooks-green.css
+theme_path=$HOME/.config/herbstluftwm/themes/rezlooks-flat-green.css
 if hc and , set_attr theme.name "$theme_path" , compare theme.name != '' ; then
     hc set frame_border_width 0
     hc set frame_transparent_width 10
