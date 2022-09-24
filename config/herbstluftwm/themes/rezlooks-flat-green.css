@@ -1,0 +1,129 @@
+
+/*** LAYOUT *****/
+.client-decoration.regular {
+    outline-width: 1px;
+    outline-style: solid;
+    outline-color: #2B2B2B;
+    margin: 1px; /* make outline visible */
+    border: 1px solid #494949;
+    background-color: #181818de;
+}
+
+.client-decoration.regular .panel {
+    margin: -1px;
+    margin-bottom: 0px;
+    border-bottom: 1px solid red;
+}
+
+.client-decoration.regular .panel .tab {
+    border: 0px solid blue;
+    border-top-width: 1px;
+    padding: 0px 1px;
+}
+
+.client-decoration.regular .panel .tab:first-child {
+    border-left-width: 1px;
+    padding-left: 0px;
+}
+.client-decoration.regular .panel .tab:last-child {
+    border-right-width: 1px;
+    padding-right: 0px;
+}
+
+.client-decoration.regular .panel .tab.focus {
+    padding-bottom: 1px;
+    margin-bottom: -1px;
+    background-color: black;
+    border-width: 1px;
+    border-bottom-width: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    /*
+    border-color: red;
+    border-bottom-width: 0px;
+    */
+}
+
+.client-decoration.regular .panel .tab .content {
+    padding: 0px 4px;
+}
+
+/*** COLORS *****/
+
+.client-decoration.regular .panel .tab {
+    border-color: #484849;
+}
+
+.client-decoration.regular .panel ,
+.client-decoration.regular .panel .tab.focus ,
+.client-decoration.regular {
+    border-color: #545454;
+}
+
+.client-decoration.regular .panel .tab.focus {
+    background-color: #181818ee;
+}
+
+.client-decoration.regular.urgent .panel ,
+.client-decoration.regular.urgent .panel .tab.focus ,
+.client-decoration.regular.urgent ,
+.client-decoration.regular .panel .tab.urgent {
+    border-color: #FFA59A;
+}
+.client-decoration.regular .panel .tab.urgent {
+    background-color: #F95C49;
+}
+
+.client-decoration.regular.focus .panel ,
+.client-decoration.regular.focus .panel .tab.focus ,
+.client-decoration.regular.focus {
+    border-color: #66853B;
+}
+.client-decoration.regular.focus .panel .tab.focus {
+    background-color: #3E5124;
+}
+
+.client-decoration.regular.focus .tab {
+    background-color: #3A4629;
+    border-color: #61714A;
+}
+
+
+.client-decoration.regular .tab {
+    color: #ababab;
+}
+
+.client-decoration.regular.focus .tab {
+    color: #cecece;
+}
+
+.client-decoration.regular .tab.focus {
+    color: white;
+}
+
+.client-decoration.regular .tab.urgent {
+    color: #721509;
+}
+
+/** hide decoration for minimal and fullscreen clients */
+.client-decoration.minimal .panel ,
+.client-decoration.fullscreen .panel {
+    display: none;
+}
+
+.client-decoration.minimal ,
+.client-decoration.fullscreen ,
+.client-decoration.fullscreen > * {
+    border-width: 0px;
+    background-color: black;
+    padding: 0px;
+    margin: 0px;
+}
+
+
+
+* {
+    /* font: -*-fixed-medium-r-*-*-13-*-*-*-*-*-*-*; */
+    font: Dejavu Sans:pixelsize=12;
+}
+
