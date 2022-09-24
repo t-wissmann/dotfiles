@@ -595,13 +595,16 @@ if hc and , set_attr theme.name "$theme_path" , compare theme.name != '' ; then
     case "$HOSTNAME" in
         x1)
             hc set_attr theme.style_override '
-            /*
-            .tab {
-                text-align: center;
+            .tab .content {
+                /* text-align: center; */
+                padding: 4px 7px;
             }
-            */
             * {
-                font: bitstream vera sans:pixelsize=16;
+                /* font: bitstream vera sans:pixelsize=17; */
+                font: terminus:pixelsize=18;
+            }
+            .client-decoration.focus .tab.focus .content * {
+                font: terminus:bold:pixelsize=18;
             }
             '
         ;;
