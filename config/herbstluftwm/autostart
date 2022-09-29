@@ -250,7 +250,7 @@ hc mousebind $Mod-Control-B4 call cycle_value frame_gap "${frame_gap_steps[@]}" 
 hc mousebind $Mod-Control-B5 call cycle_value frame_gap "${reversed_frame_gap_steps[@]}" "${frame_gap_steps[0]}" 
 
 # focus
-hc keybind $Mod-BackSpace cycle_monitor
+hc keybind $Mod-BackSpace attr tags.focus.floating_focused toggle
 hc keybind Alt-Tab          cycle_all 1
 hc keybind Alt-Shift-Tab    cycle_all -1
 hc keybind $Mod-c substitute FS clients.focus.fullscreen \
