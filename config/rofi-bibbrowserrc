@@ -22,6 +22,7 @@ bib_dirs.append(BibDir('~/uni/publications', bib=publications_bib))
 
 # additional directories with PDFs but without bibtex files:
 additional_paths = [
+    '~/uni/publications/',
     '~/git/papers/Bars-RNNA/literature',
     '~/git/papers/COAX-Literature',
     '~/git/papers/coalgpartref/literature',

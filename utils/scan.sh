@@ -25,13 +25,28 @@ if [ -z "$outfile" ] ; then
     exit 1
 fi
 
-if [ -e "$outfile" ] ; then
-    echo "Warning: $outfile exists already. Override?"
-    read -n 1 -p " yn?" answer
-    if [ ! "$answer" = y ] ; then
-        exit 1
+while [ -e "$outfile" ] ; do
+    # get the last number in the string $outfile,
+    # and break otherwise
+    number=$(sed 's,^.*\([0-9]\+\)[^0-9]*$,\1,' <<< "$outfile") || break
+    if [[ "$number" = "$outfile" ]] ; then
+        break
     fi
-fi
+    # compute +1, but preserve the number of digits
+    number_inc=$(printf "%0${#number}d" $((number+1)))
+    outfile=$(sed "s,$number\\([^0-9]*\\)$,${number_inc}\\1," <<< "$outfile")
+    echo "Incrementing: $number to $number_inc: --> $outfile"
+done
+
+# exit 1
+# 
+# if [ -e "$outfile" ] ; then
+#     echo "Warning: $outfile exists already. Override?"
+#     read -n 1 -p " yn?" answer
+#     if [ ! "$answer" = y ] ; then
+#         exit 1
+#     fi
+# fi
 
 vendor_product_id=04b8:0881
 

@@ -140,3 +140,6 @@ precmd() {
 
 trysource ~/.zshrc-host-specific
 
+bindkey -v
+
+
