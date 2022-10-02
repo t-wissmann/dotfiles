@@ -1,11 +1,28 @@
 #!/bin/bash -e
 
 
+WINDOW_TITLE=""
+while [[ -n "$*" ]] ; do
+    case "$1" in
+        --title=*)
+            WINDOW_TITLE="${1#--title=}"
+            ;;
+        *)
+            break
+            ;;
+    esac
+    shift
+done
+
 command=( "$@" )
 
 if [ -z "$command" ] ; then
     # defaulting to tmux a
-    command=( tmux a -d )
+    command=( tmux new-session -A -D -s shell )
+fi
+
+if [[ -z "$WINDOW_TITLE" ]] ; then
+    WINDOW_TITLE="$HOSTNAME - ${command[*]}"
 fi
 
 
@@ -99,7 +116,7 @@ setWindowTitle(){
 }
 
 print_window_title() {
-    setWindowTitle "$HOSTNAME - ${command[*]}"
+    setWindowTitle "$WINDOW_TITLE"
 }
 
 trap 'print_msg' WINCH
