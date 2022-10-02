@@ -94,12 +94,21 @@ print_msg() {
     sed "s,^,$prefix," <<< "$msg" |  awk 'NR>1{print PREV} {PREV=$0} END{printf("%s",$0)}' 
 }
 
+setWindowTitle(){
+    echo -ne '\033]0;'$1'\007'
+}
+
+print_window_title() {
+    setWindowTitle "$HOSTNAME - ${command[*]}"
+}
+
 trap 'print_msg' WINCH
 
 while
     "${command[@]}" || true
     lastattach=$(date +'%d. %B %y, %H:%M')
     recreate_message
+    print_window_title
     print_msg
     read -s -n 1 input
 do
