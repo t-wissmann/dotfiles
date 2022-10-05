@@ -1,0 +1,119 @@
+#!/usr/bin/env python3
+import textwrap
+import argparse
+import os
+import re
+import sys
+import zipfile
+import subprocess
+
+
+def debug(msg):
+    colormsg = msg
+    print(colormsg, file=sys.stderr, flush=True)
+
+
+def main():
+    """
+    This script requires an .fls file such that it knows which files to include.
+    This .fls file is generated if the flag -recorder is passed to pdflatex.
+    The following files will be included in the output zip:
+
+      - all files mentioned as 'INPUT', which sit within the same directory as the .fls
+      - ... except those mentioned as 'OUTPUT'
+      - all .bib files mentioned in 'INPUT' files via bibtex / biblatex macros
+    """
+    description = "Create a zip for a paper to be uploaded on arxiv.org"
+    parser = argparse.ArgumentParser(description=description,
+                                     epilog=textwrap.dedent(main.__doc__),
+                                     formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument('mainfile',
+                        help='main .tex or .fls file')
+    parser.add_argument('--output', default='arxiv.zip',
+                        help='target output .zip file, the default is arxiv.zip')
+    parser.add_argument('--dry-run', default=False, action='store_true',
+                        help='do not write output .zip file (Warning: the filtering command is still called!)')
+    parser.add_argument('--filter-tex',
+                        help="""
+                        shell command to filter .tex files before adding.
+                        The command should accept the tex source on stdin and print
+                        the modified source on stdout.
+                        Example: 'latex-strip-comments.py /dev/stdin'
+                        """)
+    parser.add_argument('--no-readme', default=False, action='store_true',
+                        help='include no 00README.XXX file')
+    args = parser.parse_args()
+
+    fls_file = os.path.splitext(args.mainfile)[0] + '.fls'
+    with open(fls_file) as fh:
+        fls_content = [l.strip().split(' ') for l in fh.readlines()]
+
+    debug(f'scanning {fls_file}')
+    output_files = set()
+    input_files = set()
+    source_dir = os.path.dirname(args.mainfile)
+    for action_type, filepath in fls_content:
+        if action_type == 'INPUT':
+            relpath = os.path.relpath(filepath, start=source_dir)
+            if not relpath.startswith('../'):
+                new_item = relpath
+                if new_item not in input_files:
+                    debug(f'- input: {new_item}')
+                    input_files.add(new_item)
+        if action_type == 'OUTPUT':
+            new_item = os.path.relpath(filepath, start=source_dir)
+            if new_item not in output_files:
+                debug(f'- ignoring output file: {new_item}')
+                output_files.add(filepath)
+
+    # scan source files for bibliography files
+    bib_files = set()
+    for texfile in input_files:
+        with open(texfile, 'rb') as fh:
+            texsource = fh.read().decode(errors='ignore')
+            matches = re.finditer(r'\\bibliography{([^}]*)}', texsource, flags=re.MULTILINE)
+            for m in matches:
+                new_item = m.group(1) + '.bib'
+                debug(f'- {texfile} uses bib: {new_item}')
+                bib_files.add(new_item)
+            matches = re.finditer(r'\\addbibresource{([^}]*)}', texsource, flags=re.MULTILINE)
+            for m in matches:
+                new_item = m.group(1)
+                debug(f'- {texfile} uses bib: {new_item}')
+                bib_files.add(new_item)
+
+    written_files = []
+    for i in input_files:
+        if i not in output_files:
+            if os.path.splitext(i)[1] == '.tex' and args.filter_tex:
+                with open(i, 'rb') as input_fh:
+                    proc = subprocess.run(args.filter_tex,
+                                          shell=True,
+                                          stdout=subprocess.PIPE,
+                                          stdin=input_fh)
+                written_files.append((i, 'text', proc.stdout))
+            else:
+                written_files.append((i, 'file', os.path.join(source_dir, i)))
+    for i in bib_files:
+        written_files.append((i, 'file', os.path.join(source_dir, i)))
+
+    if not args.no_readme:
+        written_files.append(('00README.XXX', 'text', 'nostamp'))
+
+    print(f'content of {args.output}:')
+    for i, kind, source in written_files:
+        print(f'- {i} (from {kind})')
+
+    if not args.dry_run:
+        debug(f'writing {args.output}')
+        with zipfile.ZipFile(args.output, 'w') as target:
+            for arcname, kind, source in written_files:
+                if kind == 'file':
+                    target.write(source, arcname=arcname)
+                else:
+                    assert kind == 'text'
+                    target.writestr(arcname, source)
+
+
+if __name__ == "__main__":
+    main()
