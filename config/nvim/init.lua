@@ -118,6 +118,7 @@ vim.api.nvim_create_autocmd('FileType', {
         vim.wo.linebreak = true
         vim.keymap.set("n", ",v", ":TexlabForward<CR>", { silent = true })
         vim.keymap.set("n", ",b", ":w<CR>:TexlabBuild<CR>", { silent = false })
+        vim.keymap.set("n", ",c", ":!latexmk -cd -c %:p<CR>", { silent = false })
         vim.o.sw = 2
         vim.o.ts = 2
     end,
