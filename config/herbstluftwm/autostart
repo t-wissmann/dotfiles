@@ -325,12 +325,12 @@ if pactl list > /dev/null 2>&1 ; then
     hc keybind XF86AudioMute        spawn ponymix toggle
     hc keybind XF86AudioMicMute     spawn ponymix --source toggle
     for key in XF86AudioLowerVolume $Mod-d ; do
-        hc keybind $key spawn bash -c 'ponymix decrease 4 ; ponymix set-balance 0'
-        hc keybind Shift-$key spawn ponymix decrease 2
+        hc keybind $key spawn bash -c 'ponymix decrease 1 ; ponymix set-balance 0'
+        hc keybind Shift-$key spawn ponymix decrease 4
     done
     for key in XF86AudioRaiseVolume $Mod-e ; do
-        hc keybind $key spawn bash -c 'ponymix increase 4 ; ponymix set-balance 0'
-        hc keybind Shift-$key spawn ponymix increase 2
+        hc keybind $key spawn bash -c 'ponymix increase 1 ; ponymix set-balance 0'
+        hc keybind Shift-$key spawn ponymix increase 4
     done
 else
     audioaction() {
