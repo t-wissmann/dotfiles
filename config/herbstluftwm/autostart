@@ -297,20 +297,22 @@ hc keybind $Mod-Shift-l or / shift right / \
 #     # so make this a key without any action
 #     hc keybind Pause true
 # else
-    hc keybind Pause spawn ~/dotfiles/menu/playerctl.sh play-pause
+playerctl=$HOME/dotfiles/menu/playerctl.sh
+#playerctl=playerctl
+    hc keybind Pause spawn "$playerctl" play-pause
 # fi
 #hc keybind Mod4-q spawn ~/scripts/mpd/dmenu.sh play
 #hc keybind Mod4-w spawn ~/scripts/mpd/dmenu.sh totem
 #hc keybind Mod4-t spawn ~/scripts/utils/iptv/watch-dmenu.sh
-hc keybind Mod1+Mod4+y spawn ~/dotfiles/menu/playerctl.sh menu
-hc keybind Mod1+Mod4+u spawn ~/dotfiles/menu/playerctl.sh previous
-hc keybind Mod1+Mod4+i spawn ~/dotfiles/menu/playerctl.sh play-pause
-hc keybind Mod1+Mod4+o spawn ~/dotfiles/menu/playerctl.sh next
-hc keybind XF86AudioPlay spawn ~/dotfiles/menu/playerctl.sh play-pause
-hc keybind XF86AudioPause spawn ~/dotfiles/menu/playerctl.sh pause
-hc keybind XF86AudioNext spawn ~/dotfiles/menu/playerctl.sh next
-hc keybind XF86AudioPrev spawn ~/dotfiles/menu/playerctl.sh previous
-hc keybind XF86AudioStop spawn ~/dotfiles/menu/playerctl.sh stop
+hc keybind Mod1+Mod4+y spawn "$playerctl" menu
+hc keybind Mod1+Mod4+u spawn "$playerctl" previous
+hc keybind Mod1+Mod4+i spawn "$playerctl" play-pause
+hc keybind Mod1+Mod4+o spawn "$playerctl" next
+hc keybind XF86AudioPlay spawn "$playerctl" play-pause
+hc keybind XF86AudioPause spawn "$playerctl" pause
+hc keybind XF86AudioNext spawn "$playerctl" next
+hc keybind XF86AudioPrev spawn "$playerctl" previous
+hc keybind XF86AudioStop spawn "$playerctl" stop
 hc keybind Alt-Super-0 spawn xrandr --auto
 
 #hc keybind XF86AudioStop spawn mpc -q random

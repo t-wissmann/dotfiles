@@ -18,6 +18,9 @@ If the selected player is not active anymore, the selection menu is shown
 before the given playerctl-command is executed (in particular on the first
 run).
 
+Also, if exactly one player is playing currently, then all actions are sent to
+that unique player.
+
 Example usage:
 
     $prog play-pause
@@ -39,15 +42,28 @@ selected_player_exists() {
     playerctl -l | grep -x "$PLAYERCTL_SELECTION" > /dev/null
 }
 
+set_player_selection() {
+    #echo "Switching to player: $1" >&2
+    PLAYERCTL_SELECTION="$1"
+    herbstclient export PLAYERCTL_SELECTION="$1"
+}
+
 PLAYERCTL_SELECTION=${PLAYERCTL_SELECTION:-$(herbstclient getenv PLAYERCTL_SELECTION)}
 
 if [[ "$1" = menu ]] || ! selected_player_exists ; then
     p=$(playerctl -l | rofi -dmenu -p "Select a default player")
     if [[ $? -eq 0 ]] ; then
-        PLAYERCTL_SELECTION="$p"
-        herbstclient export PLAYERCTL_SELECTION="$p"
+        set_player_selection "$p"
     else
         exit 1
+    fi
+else
+    mapfile -t playing < <(playerctl -a -f '{{status}}:{{playerInstance}}' status|grep '^Playing:'|sed 's,[^:]*:,,')
+    echo "playing count: ${#playing[@]} (${playing[@]})"
+
+    if [[ "${#playing[@]}" -eq 1 ]] && [[ "${playing[0]}" != "$PLAYERCTL_SELECTION" ]] ; then
+        # if exactly one player is playing, then automatically switch to that one
+        set_player_selection "${playing[0]}"
     fi
 fi
 
