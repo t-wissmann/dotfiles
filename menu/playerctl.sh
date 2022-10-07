@@ -43,14 +43,21 @@ selected_player_exists() {
 }
 
 set_player_selection() {
-    #echo "Switching to player: $1" >&2
+    echo "Switching to player: $1" >&2
     PLAYERCTL_SELECTION="$1"
     herbstclient export PLAYERCTL_SELECTION="$1"
 }
 
 PLAYERCTL_SELECTION=${PLAYERCTL_SELECTION:-$(herbstclient getenv PLAYERCTL_SELECTION)}
+mapfile -t playing < <(playerctl -a -f '{{status}}:{{playerInstance}}' status|grep '^Playing:'|sed 's,[^:]*:,,')
 
-if [[ "$1" = menu ]] || ! selected_player_exists ; then
+unique_player() {
+    [[ "${#playing[@]}" -eq 1 ]]
+}
+
+if [[ "$1" = menu ]] || { ! unique_player && ! selected_player_exists ; } ; then
+    # enter selection if 'menu' was requested, or if it is not clear which
+    # player is meant.
     p=$(playerctl -l | rofi -dmenu -p "Select a default player")
     if [[ $? -eq 0 ]] ; then
         set_player_selection "$p"
@@ -58,8 +65,7 @@ if [[ "$1" = menu ]] || ! selected_player_exists ; then
         exit 1
     fi
 else
-    mapfile -t playing < <(playerctl -a -f '{{status}}:{{playerInstance}}' status|grep '^Playing:'|sed 's,[^:]*:,,')
-    echo "playing count: ${#playing[@]} (${playing[@]})"
+    # echo "playing count: ${#playing[@]} (${playing[@]})"
 
     if [[ "${#playing[@]}" -eq 1 ]] && [[ "${playing[0]}" != "$PLAYERCTL_SELECTION" ]] ; then
         # if exactly one player is playing, then automatically switch to that one
