@@ -275,22 +275,14 @@ hc keybind $Mod-Left or / focus left   #/ chain , focus_monitor -1 , focus_edge 
 hc keybind $Mod-Down or / focus down   #/ chain , focus_monitor +1 , focus_edge up
 hc keybind $Mod-Up or / focus up     #/ chain , focus_monitor -1 , focus_edge down
 hc keybind $Mod-Right or / focus right  #/ chain , focus_monitor +1 , focus_edge left
-hc keybind $Mod-Shift-Left or / shift left / \
-    chain , lock , shift_to_monitor -l , focus_monitor -l , unlock
-hc keybind $Mod-Shift-Down or / shift down / \
-    chain , lock , shift_to_monitor -d , focus_monitor -d , unlock
-hc keybind $Mod-Shift-Up or / shift up / \
-    chain , lock , shift_to_monitor -u , focus_monitor -u , unlock
-hc keybind $Mod-Shift-Right or / shift right / \
-    chain , lock , shift_to_monitor -r , focus_monitor -r , unlock
-hc keybind $Mod-Shift-h or / shift left / \
-    chain , lock , shift_to_monitor -l , focus_monitor -l , unlock
-hc keybind $Mod-Shift-j or / shift down / \
-    chain , lock , shift_to_monitor -d , focus_monitor -d , unlock
-hc keybind $Mod-Shift-k or / shift up / \
-    chain , lock , shift_to_monitor -u , focus_monitor -u , unlock
-hc keybind $Mod-Shift-l or / shift right / \
-    chain , lock , shift_to_monitor -r , focus_monitor -r , unlock
+hc keybind $Mod-Shift-Left shift --level=tabs left
+hc keybind $Mod-Shift-Down  shift --level=tabs down
+hc keybind $Mod-Shift-Up  shift --level=tabs up
+hc keybind $Mod-Shift-Right  shift --level=tabs right
+hc keybind $Mod-Shift-h  shift --level=tabs left
+hc keybind $Mod-Shift-j  shift --level=tabs down
+hc keybind $Mod-Shift-k  shift --level=tabs up
+hc keybind $Mod-Shift-l  shift --level=tabs right
 
 # if [[ "$keyboard" = "v60mini" ]] ; then
 #     # i keep hitting this accidentally on my v60 mini
