@@ -64,6 +64,14 @@ bindkey '^[^[[A'      cdParentKey
 bindkey '^[^[[D'      cdUndoKey
 bindkey \^U backward-kill-line
 
+# let 'delete word' stop at slashes: https://unix.stackexchange.com/a/250700/156880
+my-backward-delete-word() {
+    local WORDCHARS=${WORDCHARS/\//}
+    zle backward-delete-word
+}
+zle -N my-backward-delete-word
+bindkey '^W' my-backward-delete-word
+
 autoload -Uz add-zsh-hook
 
 function xterm_title_precmd () {
