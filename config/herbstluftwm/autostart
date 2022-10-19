@@ -714,6 +714,8 @@ esac
 
 hc or , compare monitors.count != 0 , detect_monitors
 
+hc set_attr panels.geometry_fallback true
+
 panel=~/.config/herbstluftwm/panel.sh
 ~/git/herbstluftwm/share/restartpanels.sh $panel
 

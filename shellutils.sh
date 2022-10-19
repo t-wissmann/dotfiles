@@ -22,6 +22,7 @@ alias uns='unison -auto srv'
 alias urldecode=$'python2 -c "import sys, urllib as ul;\nfor line in sys.stdin: print ul.unquote_plus(line)"'
 alias urlencode=$'python2 -c "import sys, urllib as ul;\nfor line in sys.stdin: print ul.quote_plus(line)"'
 alias hc=herbstclient
+alias 2clipboard='xclip -i -selection clipboard'
 
 alias pdfcrop-lncs='pdfjam --trim "30mm 25mm 30mm 20mm" --suffix cropped'
 # fop is broken and always has been a mess...

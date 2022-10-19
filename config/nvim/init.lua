@@ -66,23 +66,6 @@ autocmd FileType text syn match   plainTextComment "#.*$"
 autocmd FileType text hi def link plainTextComment Comment
 
 
-set cursorline
-colorscheme gruvbox
-
-hi LineNr ctermbg=233 guibg=Black
-hi Normal ctermbg=NONE term=NONE
-hi VertSplit ctermbg=NONE ctermfg=black cterm=NONE
-hi Visual ctermbg=black cterm=None
-hi Spellbad ctermbg=red cterm=None
-hi StatusLineNC ctermbg=black ctermfg=white cterm=NONE
-hi StatusLine ctermbg=black ctermfg=green cterm=bold
-hi LineNr ctermbg=black term=NONE ctermfg=gray cterm=NONE
-hi SignColumn ctermbg=black term=NONE ctermfg=gray cterm=NONE
-hi CursorLineNr ctermbg=black term=NONE ctermfg=green cterm=bold
-hi CursorLine ctermbg=black term=NONE cterm=NONE
-hi CursorLine ctermbg=233 term=NONE cterm=NONE
-hi CursorLineNr ctermbg=233 term=NONE ctermfg=green cterm=bold
-
 noremap  <buffer> <silent> k gk
 noremap  <buffer> <silent> j gj
 
@@ -124,6 +107,29 @@ vim.api.nvim_create_autocmd('FileType', {
     end,
     desc = 'LaTeX specific settings'
 })
+
+function setup_colorscheme()
+  -- This function should be called in the colorscheme's config function
+  colorscheme_lua_code = [[
+  set cursorline
+  colorscheme gruvbox
+
+  hi LineNr ctermbg=233 guibg=Black
+  hi Normal ctermbg=NONE term=NONE
+  hi VertSplit ctermbg=NONE ctermfg=black cterm=NONE
+  hi Visual ctermbg=black cterm=None
+  hi Spellbad ctermbg=red cterm=None
+  hi StatusLineNC ctermbg=black ctermfg=white cterm=NONE
+  hi StatusLine ctermbg=black ctermfg=green cterm=bold
+  hi LineNr ctermbg=black term=NONE ctermfg=gray cterm=NONE
+  hi SignColumn ctermbg=black term=NONE ctermfg=gray cterm=NONE
+  hi CursorLineNr ctermbg=black term=NONE ctermfg=green cterm=bold
+  hi CursorLine ctermbg=black term=NONE cterm=NONE
+  hi CursorLine ctermbg=233 term=NONE cterm=NONE
+  hi CursorLineNr ctermbg=233 term=NONE ctermfg=green cterm=bold
+  ]]
+  vim.api.nvim_exec(colorscheme_lua_code, true)
+end
 
 return require('packer').startup(function()
   -- configuration of packer https://github.com/wbthomason/packer.nvim
@@ -197,7 +203,11 @@ return require('packer').startup(function()
       })
     end
   })
-  use 'morhetz/gruvbox'
+  use({'morhetz/gruvbox',
+    config = function()
+      setup_colorscheme()
+    end
+  })
   use({'ctrlpvim/ctrlp.vim',
     config = function()
     end
