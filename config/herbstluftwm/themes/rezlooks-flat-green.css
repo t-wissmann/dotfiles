@@ -46,6 +46,12 @@
 
 .client-decoration.regular .panel .tab .content {
     padding: 0px 4px;
+    padding-top: 2px;
+}
+
+.client-decoration .client-content {
+    margin: 2px;
+    border: 1px solid red;
 }
 
 /*** COLORS *****/
@@ -57,12 +63,18 @@
 
 .client-decoration.regular .panel ,
 .client-decoration.regular .panel .tab.focus ,
-.client-decoration.regular {
+.client-decoration.regular ,
+.client-decoration.regular .client-content {
     border-color: #545454;
 }
 
-.client-decoration.regular .panel .tab.focus {
-    background-color: #181818ee;
+.client-decoration.regular .panel .tab.focus ,
+.client-decoration.regular {
+    background-color: #323232;
+}
+
+.client-decoration.regular .panel {
+    background-color: #242424;
 }
 
 /* urgent colors */
@@ -70,20 +82,24 @@
 .client-decoration.regular.urgent .panel ,
 .client-decoration.regular.urgent .panel .tab.focus ,
 .client-decoration.regular.urgent ,
-.client-decoration.regular .panel .tab.urgent {
+.client-decoration.regular .panel .tab.urgent ,
+.client-decoration.regular.urgent .client-content {
     border-color: #FFA59A;
 }
-.client-decoration.regular .panel .tab.urgent {
+.client-decoration.regular .panel .tab.urgent ,
+.client-decoration.regular.urgent {
     background-color: #F95C49;
 }
 
 /* focused decoration */
 .client-decoration.regular.focus .panel ,
 .client-decoration.regular.focus .panel .tab.focus ,
-.client-decoration.regular.focus {
+.client-decoration.regular.focus ,
+.client-decoration.regular.focus .client-content {
     border-color: #66853B;
 }
-.client-decoration.regular.focus .panel .tab.focus {
+.client-decoration.regular.focus .panel .tab.focus ,
+.client-decoration.regular.focus {
     background-color: #3E5124;
 }
 
