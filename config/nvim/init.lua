@@ -219,7 +219,8 @@ return require('packer').startup(function()
             on_attach = on_attach,
             cmd = {"texlab"},
             filetypes = {"tex", "bib"},
-            capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+            -- now (2022-10-22) works without setting capabilities.
+            -- capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()),
             init_options = { documentFormatting = true },
             settings = {
                 latex = {
