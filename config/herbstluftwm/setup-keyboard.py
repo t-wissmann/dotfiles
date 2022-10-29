@@ -56,6 +56,14 @@ models = [
             'lv3:rwin_switch', 'compose:ralt',  # swap right win and alt
         ],
     },
+    {
+        'name': 'HHKB Pro2',
+        'id': '0853:0100',
+        'usb_name': 'Topre Corporation HHKB Professional',
+        'options': [
+            'lv3:rwin_switch', 'compose:ralt',  # swap right win and alt
+        ],
+    },
     # {
     #     'name': 'ibm/lenovo full width keyboard',
     #     'id': '04b3:3025',
