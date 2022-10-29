@@ -348,7 +348,7 @@ fi
 
 
 # some settings
-hc set focus_follows_mouse on
+hc set focus_follows_mouse off
 hc set hide_covered_windows on
 hc set mouse_recenter_gap 20
 
