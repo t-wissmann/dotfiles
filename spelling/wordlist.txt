@@ -12,6 +12,8 @@ Coalg
 coalgebra
 coalgebraic
 coalgebraic
+computable
+contravariant
 coalgebras
 cocomplete
 cocone
