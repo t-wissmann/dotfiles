@@ -11,9 +11,9 @@ xkb_symbols "basic"  {
     key <AE01>	{[            1,          exclam,           exclamdown,          onesuperior  ]};
     key <AE02>	{[            2,              at,          ordfeminine,          twosuperior  ]};
     key <AE03>	{[            3,      numbersign,            masculine,        threesuperior  ]};
-    key <AE04>	{[            4,          dollar,             sterling,                  yen  ]};
+    key <AE04>	{[            4,          dollar,             End,                  yen  ]};
     key <AE05>	{[            5,         percent,             EuroSign,                 cent  ]};
-    key <AE06>	{[            6,     asciicircum,      dead_circumflex,           dead_caron  ]};
+    key <AE06>	{[            6,     asciicircum,             Home,           dead_caron  ]};
     key <AE07>	{[            7,       ampersand,       dead_abovering,          dead_macron  ]};
     key <AE08>	{[            8,        asterisk,   doublelowquotemark,   singlelowquotemark  ]};
     key <AE09>	{[            9,       parenleft,  leftdoublequotemark,  leftsinglequotemark  ]};
