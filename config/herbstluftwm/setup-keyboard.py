@@ -9,6 +9,7 @@ name.
 import subprocess
 import re
 import sys
+import argparse
 
 caps2control = ['ctrl:nocaps']
 
@@ -79,7 +80,7 @@ def log(log_line):
 
 def get_stdout(command):
     """execute a command and return its stdout"""
-    # log(":: {}".format(' '.join(command)))
+    log(":: {}".format(' '.join(command)))
     proc = subprocess.run(command,
                           stdout=subprocess.PIPE,
                           universal_newlines=True)
@@ -168,6 +169,9 @@ def xinput_devices():
 
 def main():
     devices = xinput_devices()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--verbose', help='show commands that are run')
+    args = parser.parse_args()
 
     # clear existing keyboard options:
     get_stdout(['setxkbmap', '-option'])
