@@ -80,7 +80,8 @@ def log(log_line):
 
 def get_stdout(command):
     """execute a command and return its stdout"""
-    log(":: {}".format(' '.join(command)))
+    if hasattr(get_stdout, 'verbose') and get_stdout.verbose:
+        log(":: {}".format(' '.join(command)))
     proc = subprocess.run(command,
                           stdout=subprocess.PIPE,
                           universal_newlines=True)
@@ -170,8 +171,10 @@ def xinput_devices():
 def main():
     devices = xinput_devices()
     parser = argparse.ArgumentParser()
-    parser.add_argument('--verbose', help='show commands that are run')
+    parser.add_argument('--verbose', default=False, action='store_true', help='show commands that are run')
     args = parser.parse_args()
+
+    get_stdout.verbose = args.verbose
 
     # clear existing keyboard options:
     get_stdout(['setxkbmap', '-option'])
