@@ -9,11 +9,13 @@ name.
 import subprocess
 import re
 import sys
+import os
 import argparse
 
 caps2control = ['ctrl:nocaps']
 
-default_layout = 'eu'
+default_layout = os.path.expanduser('~/.config/herbstluftwm/xkb/symbols/eu-hjkl')
+# default_layout = 'eu'
 
 global_options = [
         # '-variant', 'altgr-intl',
@@ -29,7 +31,7 @@ models = [
         'name': 'thinkpad x1 keyboard',
         'id': '???',
         'xinput_name': 'AT Translated Set 2 keyboard',
-        'options': ['compose:prsc'] + caps2control,
+        'options': ['compose:prsc', 'lv3:ralt'] + caps2control,
     },
     {
         'name': 'pure kb talking 60%',
@@ -78,12 +80,13 @@ def log(log_line):
     print(log_line, file=sys.stderr)
 
 
-def get_stdout(command):
+def get_stdout(command, stdin=None):
     """execute a command and return its stdout"""
     if hasattr(get_stdout, 'verbose') and get_stdout.verbose:
         log(":: {}".format(' '.join(command)))
     proc = subprocess.run(command,
                           stdout=subprocess.PIPE,
+                          input=stdin,
                           universal_newlines=True)
     return proc.stdout
 
@@ -167,6 +170,26 @@ def xinput_devices():
 
     return devices
 
+def setxkbmap_layout_file(layout_name_or_path, setxkbmap_options, xinput_id=None):
+    if '/' not in layout_name_or_path:
+        # a plain setxkbmap suffices:
+        setxkbmap_cmd = ['setxkbmap']
+        if xinput_id is not None:
+            setxkbmap_cmd += ['-device', xinput_id]
+        setxkbmap_cmd += [layout_name_or_path] + setxkbmap_options
+        get_stdout(setxkbmap_cmd)
+    else:
+        path_re = r'^(.*)/symbols/[^/]*'
+        assert re.match(path_re, layout_name_or_path), \
+            'layout file must sit below a symbols directory (otherwise, xkbcomp will not find it)'
+        directory = re.match(path_re, layout_name_or_path).group(1)
+        layout_name = os.path.basename(layout_name_or_path)
+        xkb_keymap = get_stdout(['setxkbmap', layout_name, '-print'] + setxkbmap_options)
+        xkbcomp_cmd = ['xkbcomp']
+        if xinput_id is not None:
+            xkbcomp_cmd += ['-i', xinput_id]
+        xkbcomp_cmd += ['-w', '0', f'-I{directory}', '-', os.environ['DISPLAY']]
+        get_stdout(xkbcomp_cmd, stdin=xkb_keymap)
 
 def main():
     devices = xinput_devices()
@@ -180,7 +203,7 @@ def main():
     get_stdout(['setxkbmap', '-option'])
     # set some default:
     global global_options, default_layout
-    get_stdout(['setxkbmap', default_layout] + global_options)
+    setxkbmap_layout_file(default_layout, global_options)
     # go through all know 'models' and see whether they are connected.
     # if so, apply the specified options:
     global models
@@ -197,7 +220,8 @@ def main():
             for arg in known_kbd['options']:
                 options += ['-option', arg]
             for xinput_id in ids:
-                get_stdout(['setxkbmap', '-device', xinput_id] + options)
+                # get_stdout(['setxkbmap', '-device', xinput_id] + options)
+                setxkbmap_layout_file(default_layout, options, xinput_id=xinput_id)
 
 
 main()
