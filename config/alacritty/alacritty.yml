@@ -336,7 +336,8 @@ key_bindings:
   - { key: Home,                    chars: "\x1b[H",   mode: ~AppCursor  }
   - { key: End,                     chars: "\x1bOF",   mode: AppCursor   }
   - { key: End,                     chars: "\x1b[F",   mode: ~AppCursor  }
-  - { key: Key4,   mods: Shift,         mode: Vi|~Search, action: Last   }
+  - { key: Key4,                        mode: Vi|~Search, action: Last   }
+  - { key: E,   mods: Control,         mode: Vi|~Search, action: Last   }
   - { key: PageUp,   mods: Shift,   chars: "\x1b[5;2~"                   }
   - { key: PageUp,   mods: Control, chars: "\x1b[5;5~"                   }
   - { key: PageUp,                  chars: "\x1b[5~"                     }
