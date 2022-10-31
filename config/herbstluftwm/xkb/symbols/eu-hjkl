@@ -38,7 +38,7 @@ xkb_symbols "basic"  {
     key <AC01>	{[            a,               A,           adiaeresis,           Adiaeresis  ]};
     key <AC02>	{[            s,               S,               ssharp,              section  ]};
     key <AC03>	{[            d,               D,                  eth,                  ETH  ]};
-    key <AC04>	{[            f,               F,               egrave,               Egrave  ]};
+    key <AC04>	{[            f,               F,                 Next,               Egrave  ]};
     key <AC05>	{[            g,               G,               eacute,               Eacute  ]};
     key <AC06>	{[            h,               H,                 Left,               Ugrave  ]};
     key <AC07>	{[            j,               J,                 Down,               Uacute  ]};
@@ -51,7 +51,7 @@ xkb_symbols "basic"  {
     key <AB02>	{[            x,               X,               aacute,               Aacute  ]};
     key <AB03>	{[            c,               C,             ccedilla,             Ccedilla  ]};
     key <AB04>	{[            v,               V,               igrave,               Igrave  ]};
-    key <AB05>	{[            b,               B,               iacute,               Iacute  ]};
+    key <AB05>	{[            b,               B,                Prior,               Iacute  ]};
     key <AB06>	{[            n,               N,               ntilde,               Ntilde  ]};
     key <AB07>	{[            m,               M,           dead_greek,            Multi_key  ]};
     key <AB08>	{[        comma,            less,               ograve,               Ograve  ]};
