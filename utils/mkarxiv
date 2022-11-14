@@ -22,6 +22,9 @@ def main():
       - all files mentioned as 'INPUT', which sit within the same directory as the .fls
       - ... except those mentioned as 'OUTPUT'
       - all .bib files mentioned in 'INPUT' files via bibtex / biblatex macros
+
+    A longer example:
+    mkarxiv --filter-tex="latex-strip-comments.py /dev/stdin | sed '"'/\\\\begin{proofappendix}/,/\\\\end{proofappendix}/d'"'" MAINFILE.tex
     """
     description = "Create a zip for a paper to be uploaded on arxiv.org"
     parser = argparse.ArgumentParser(description=description,
