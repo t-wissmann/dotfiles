@@ -76,7 +76,9 @@ def main():
             texsource = fh.read().decode(errors='ignore')
             matches = re.finditer(r'\\bibliography{([^}]*)}', texsource, flags=re.MULTILINE)
             for m in matches:
-                new_item = m.group(1) + '.bib'
+                new_item = m.group(1)
+                if not new_item.endswith('.bib'):
+                    new_item += '.bib'
                 debug(f'- {texfile} uses bib: {new_item}')
                 bib_files.add(new_item)
             matches = re.finditer(r'\\addbibresource{([^}]*)}', texsource, flags=re.MULTILINE)
