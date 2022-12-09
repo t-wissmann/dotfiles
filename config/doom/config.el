@@ -57,9 +57,14 @@
      '(proof-queue-face
        ((t :weight bold)))
      '(proof-locked-face
-       ((t (:background "#122812")
+       ((t (:background "#1F2912")
            )))
      )
+
+;; kill processes on exit without asking
+(setq confirm-kill-processes nil)
+;; exit emacs without confirmation
+(setq confirm-kill-emacs nil)
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
