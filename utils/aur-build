@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+# vim: ft=bash
+
+cmdname=$0
+printhelp() {
+cat <<EOF
+Useage: $cmdname [--asdeps] PKGNAME
+
+This is just a simple aur-helper which usually helps to install
+a more advanced aur helper such as yay.
+EOF
+}
+
+set -e
+
+pkgname="$1"
+makepkgflags_unquoted=""
+if [[ "$1" = --asdeps ]] ; then
+    pkgname="$2"
+    makepkgflags_unquoted="--asdeps"
+fi
+if [[ "$pkgname" = --help ]] || [[ "$pkgname" = -h ]] ; then
+    printhelp
+    exit 0
+fi
+if [[ -z "$pkgname" ]] || [[ "$pkgname" = -h ]] ; then
+    printhelp >&2
+    exit 1
+fi
+
+buildpath="$HOME/.aur-build/$pkgname/"
+EDITOR=${EDITOR:-vim}
+
+fail() {
+    echo "error: $*" >&2
+    exit 1
+}
+
+mkdir -p "$buildpath" && cd "$buildpath" || fail "Can not enter $buildpath"
+
+wget http://aur.archlinux.org/cgit/aur.git/snapshot/$pkgname.tar.gz -O - \
+    | tar xzv --strip-components=1
+
+$EDITOR PKGBUILD
+source PKGBUILD
+[ -f "$install" ] && $EDITOR "$install"
+
+missing=$(pacman -T "${depends[@]}" "${makedepends[@]}"|sort|uniq)
+echo "Missing dependencies: $missing"
+missingrepo=""
+missingaur=""
+for i in $missing ; do
+    if pacman -Siq $i > /dev/null ; then
+        missingrepo+=" $i"
+    else
+        missingaur+=" $i"
+    fi
+done
+echo "Available in repositories: $missingrepo"
+echo "Probably only in aur: $missingaur"
+
+if [[ -n "$missingrepo" ]] ; then
+    sudo pacman --asdeps -S $missingrepo
+fi
+makepkg -cfi $makepkgflags_unquoted
+
+
