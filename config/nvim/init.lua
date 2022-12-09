@@ -276,4 +276,22 @@ return require('packer').startup(function()
   })
   use 'tpope/vim-fugitive'
   use 'liuchengxu/vim-which-key'
+  --
+  -- use({'tounaishouta/coq.vim',
+  --   -- this coq plugin does not work well for me; it is unclear what the current goal is,
+  --   -- and when opening a new line (via 'o'), the current line sometimes gets copied.
+  --   config = function()
+  --     vim.api.nvim_create_autocmd('FileType', {
+  --         pattern = {'coq', 'v'},
+  --         callback = function()
+  --             vim.wo.linebreak = true
+  --             vim.o.sw = 2
+  --             vim.o.ts = 2
+  --             vim.keymap.set("n", ",c", ":w<CR>:CoqRunToCursor<CR>", { silent = false })
+  --             vim.keymap.set("n", ",w", ":w<CR>", { silent = false })
+  --         end,
+  --         desc = 'COQ specific settings'
+  --     })
+  --   end
+  -- })
 end)
