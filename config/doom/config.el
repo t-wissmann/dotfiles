@@ -43,6 +43,23 @@
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/org/")
 
+;;(set-face-attribute
+;;    proof-colour-locked :height
+;;    )
+;;(after! proof-general
+;;)
+
+    (custom-set-faces
+     ;;'(proof-queue-face
+     ;;  ((t :weight bold)))
+     ;;'(proof-locked-face
+     ;;  ((t :weight bold)))
+     '(proof-queue-face
+       ((t :weight bold)))
+     '(proof-locked-face
+       ((t (:background "#122812")
+           )))
+     )
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
