@@ -6,8 +6,10 @@
     "$@"
 }
 
+docking_station='043e:9a39 LG Electronics USA, Inc. USB Controls'
+docking_station='17ef:30ad Lenovo USB3.1 Hub'
 
-if :: lsusb |grep "043e:9a39 LG Electronics USA, Inc. USB Controls" > /dev/null ; then
+if :: lsusb |grep "$docking_station" > /dev/null ; then
     # get last word of last line
     output=$(xrandr | grep -v primary | grep -E ' connected|disconnected 3840x2160'| cut -d' ' -f1)
     if [ -z "$output" ] ; then
