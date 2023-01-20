@@ -4,7 +4,7 @@ values=(
    'Bitstream Vera Sans Mono'
    'terminus'
 )
-font="${values[1]}"
+font="${values[0]}"
 
 for socket in /run/user/`id -u`/Alacritty-${DISPLAY}-*.sock ; do
     if [ -e "$socket" ] ; then

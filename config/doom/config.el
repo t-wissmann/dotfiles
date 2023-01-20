@@ -59,9 +59,18 @@
      '(proof-locked-face
        ((t (:background "#1F2912")
            )))
+     '(proof-tactics-name-face
+       ((t (:foreground "#9DDAA1")
+           )))
      )
 (set-fontset-font "fontset-default" nil
                   (font-spec :name "DejaVu Sans"))
+
+;; (xterm-mouse-mode 1)
+(menu-bar-mode 1)
+;; (after! core-ui (menu-bar-mode 1))
+(map! :map evil-window-map
+      "z" #'doom/window-zoom)
 
 ;; kill processes on exit without asking
 (setq confirm-kill-processes nil)
