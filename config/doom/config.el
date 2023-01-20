@@ -60,6 +60,8 @@
        ((t (:background "#1F2912")
            )))
      )
+(set-fontset-font "fontset-default" nil
+                  (font-spec :name "DejaVu Sans"))
 
 ;; kill processes on exit without asking
 (setq confirm-kill-processes nil)
