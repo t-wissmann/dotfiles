@@ -36,6 +36,7 @@ else
             :: xrandr --output "$output" --off
         fi
     done
+    :: xrandr --output eDP1 --auto
     herbstclient detect_monitors
     herbstclient reload
 fi
