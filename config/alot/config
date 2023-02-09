@@ -1,0 +1,9 @@
+# vim: ft=ini
+
+theme = tw
+quit_on_last_bclose = True
+
+[bindings]
+  / = prompt 'search '
+  q = bclose
+  x = exit
