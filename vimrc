@@ -175,6 +175,7 @@ au VimEnter *.tex :call EnterTexFile()
 au VimEnter *.csv :call EnterCSVFile()
 au VimEnter *.hs  :call EnterHsFile()
 au VimEnter /tmp/mutt* :call ComposeMessage()
+au VimEnter /var/tmp/mutt* :call ComposeMessage()
 au VimEnter *.tex set nocursorline
 
 
