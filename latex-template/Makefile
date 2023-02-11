@@ -24,7 +24,7 @@ fast: $(src)
 
 clean:
 	rm -f $(wildcard *.out *.bbl *.bcf *.vtc *.fls *.log *.aux *.blg)
-	rm -f $(wildcard  *.fdb_latexmk)
+	rm -f $(wildcard *.fdb_latexmk *.toc *.vrb *.run.xml *.snm *.nav)
 	rm -f $(wildcard *.synctex.gz)
 	rm -f $(pdftrimmed) $(pdf)
 

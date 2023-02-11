@@ -146,3 +146,10 @@ disjunction
 subformula
 nullary
 splitter
+formalism
+formalisms
+preorder
+adaptor
+adaptors
+encoding
+encodings
