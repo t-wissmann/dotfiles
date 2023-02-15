@@ -38,7 +38,7 @@ fail() {
 
 mkdir -p "$buildpath" && cd "$buildpath" || fail "Can not enter $buildpath"
 
-wget http://aur.archlinux.org/cgit/aur.git/snapshot/$pkgname.tar.gz -O - \
+wget https://aur.archlinux.org/cgit/aur.git/snapshot/$pkgname.tar.gz -O - \
     | tar xzv --strip-components=1
 
 $EDITOR PKGBUILD
