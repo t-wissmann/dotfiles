@@ -1,6 +1,18 @@
 # Configuration for Alacritty, the GPU enhanced terminal emulator
 
 
+# Imports are loaded in order, skipping all missing files, with the importing
+# file being loaded last. If a field is already present in a previous import, it
+# will be replaced.
+#
+# All imports must either be absolute paths starting with `/`, or paths relative
+# to the user's home directory starting with `~/`.
+import:
+  # first load fonts from a separate file:
+  - ~/.config/alacritty/font.yml
+  # such that we can then overwrite some parts:
+  - ~/.config/alacritty/font-overwrite.yml
+
 # Any items in the `env` entry below will be added as
 # environment variables. Some entries may override variables
 # set by alacritty it self.
@@ -41,73 +53,6 @@ tabspaces: 8
 # When true, bold text is drawn using the bright variant of colors.
 draw_bold_text_with_bright_colors: true
 
-# Font configuration (changes require restart)
-#
-# Important font attributes like antialiasing, subpixel aa, and hinting can be
-# controlled through fontconfig. Specifically, the following attributes should
-# have an effect:
-#
-# * hintstyle
-# * antialias
-# * lcdfilter
-# * rgba
-#
-# For instance, if you wish to disable subpixel antialiasing, you might set the
-# rgba property to "none". If you wish to completely disable antialiasing, you
-# can set antialias to false.
-#
-# Please see these resources for more information on how to use fontconfig
-#
-# * https://wiki.archlinux.org/index.php/font_configuration#Fontconfig_configuration
-# * file:///usr/share/doc/fontconfig/fontconfig-user.html
-font:
-  # The normal (roman) font face to use.
-  # family: Bitstream Vera Sans Mono # should be "Menlo" or something on macOS.
-  normal:
-    # family: terminus # should be "Menlo" or something on macOS.
-    family: Bitstream Vera Sans Mono # should be "Menlo" or something on macOS.
-      #family: terminus
-    # Style can be specified to pick a specific face.
-    style: Regular
-
-  # The bold font face
-  bold:
-    # family: terminus # should be "Menlo" or something on macOS.
-    # Style can be specified to pick a specific face.
-    style: Bold
-
-  # The italic font face
-  italic:
-    # family: terminus # should be "Menlo" or something on macOS.
-    # Style can be specified to pick a specific face.
-    style: Bold
-
-  # Point size of the font
-  size: 8.0
-
-  # Offset is the extra space around each character. offset.y can be thought of
-  # as modifying the linespacing, and offset.x as modifying the letter spacing.
-  offset:
-    x: 0
-    y: 0
-
-  # Glyph offset determines the locations of the glyphs within their cells with
-  # the default being at the bottom. Increase the x offset to move the glyph to
-  # the right, increase the y offset to move the glyph upward.
-  glyph_offset:
-    x: 0
-    y: 0
-
-  # Scale the font size based on the monitor's DPI. This will lead to bigger text on HiDPI
-  # screens and make reading text a little easier.
-  # On X11 it is possible to change the DPI for each instance of alacritty by using
-  # `WINIT_HIDPI_FACTOR=1.0 alacritty` to scale the font.
-  scale_with_dpi: true
-
-  # OS X only: use thin stroke font rendering. Thin strokes are suitable
-  # for retina displays, but for non-retina you probably want this set to
-  # false.
-  # use_thin_strokes: true
 
 # Should display the render timer
 render_timer: false
@@ -429,3 +374,4 @@ key_bindings:
   - { key: F10,      mods: Super,   chars: "\x1b[21;3~"                  }
   - { key: F11,      mods: Super,   chars: "\x1b[23;3~"                  }
   - { key: F12,      mods: Super,   chars: "\x1b[24;3~"                  }
+

@@ -6,7 +6,7 @@
     "$@"
 }
 
-docking_station='043e:9a39 LG Electronics USA, Inc. USB Controls'
+# docking_station='043e:9a39 LG Electronics USA, Inc. USB Controls'
 docking_station='17ef:30ad Lenovo USB3.1 Hub'
 
 if :: lsusb |grep "$docking_station" > /dev/null ; then
@@ -30,6 +30,7 @@ if :: lsusb |grep "$docking_station" > /dev/null ; then
     resolution=$(xrandr --listmonitors | grep "$output" | sed 's,/[0-9]\+,,g' | grep -oE '[0-9]+x[0-9]+\+0\+0' | tail -n 1)
     :: herbstclient set_monitors "$resolution"
     :: herbstclient reload
+    :: ~/.config/alacritty/set-font.sh monospace
 else
     for output in $(xrandr --listmonitors|grep -oE ': \+[^ *]+'|sed 's,^: +,,') ; do
         if [[ "$output" != "eDP1" ]] ; then
@@ -39,6 +40,7 @@ else
     :: xrandr --output eDP1 --auto
     herbstclient detect_monitors
     herbstclient reload
+    :: ~/.config/alacritty/set-font.sh default
 fi
 
 
