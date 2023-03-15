@@ -1,0 +1,12 @@
+# Put this in ~/.local/share/kservices5/ServiceMenus/
+# It will create a context menu entry in dolphin
+[Desktop Entry]
+Type=Service
+X-KDE-ServiceTypes=KonqPopupMenu/Plugin,inode/directory
+Actions=openQTerminalHere;
+X-KDE-AuthorizeAction=shell_access
+
+[Desktop Action openQTerminalHere]
+Name=Open Alacritty here
+Icon=utilities-terminal
+Exec=/usr/bin/alacritty --working-directory %f
