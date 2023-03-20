@@ -1,60 +1,82 @@
-#!/usr/bin/env bash
+#!/usr/bin/env python3
+
+import argparse
+import requests
+import sys
+import textwrap
+import os
+import re
+import subprocess
+
+def debug(msg):
+    print(":: " + str(msg), file=sys.stderr)
+
+def github_api_request(object_path):
+    """
+    send a get-request to github's rest api:
+    https://docs.github.com/en/rest/pulls/pulls?apiVersion=2022-11-28
+    """
+    headers = {
+        'Accept': 'application/vnd.github+json',
+        'X-GitHub-Api-Version': '2022-11-28',
+    }
+    full_url = f'https://api.github.com/{object_path}'
+    debug(f"github: GET {full_url}")
+    r = requests.get(full_url, headers=headers)
+    r.raise_for_status()
+    return r.json()
+
+def git_cmd(*cmd):
+    debug("Running git {}".format(' '.join(cmd)))
+    proc = subprocess.run(
+        ['git'] + list(cmd),
+        stdout=subprocess.PIPE,
+        check=True,
+        universal_newlines=True,
+        )
+    return proc.stdout
 
 
-set -e
+def main():
+    parser = argparse.ArgumentParser(description="Create a branch for a github pull request")
+    parser.add_argument('PULLID', help="number of the pull request")
+    parser.add_argument('--branchname', help="name of the local branch")
+    args = parser.parse_args()
 
-::() {
-    echo -e "\e[1;33m:: \e[0;32m$*\e[0m" >&2
-    "$@"
-}
+    pull_id = args.PULLID.strip('#')
 
-# try to fetch new branches
-:: git fetch -p || true
+    local_branchname = args.branchname
+    if local_branchname is None:
+        local_branchname = f'pr-{pull_id}'
 
-remotebranch="$1"
+    current_branch = git_cmd('name-rev', '--name-only', 'HEAD').strip()
+    remote_name = git_cmd('config', '--get', f'branch.{current_branch}.remote').strip()
+    remote_url = git_cmd('config', '--get', f'remote.{remote_name}.url').strip()
+    match = re.match(r'([^/]*:|[a-z]*::/[^/]*/)(.*)', remote_url)
+    if not match:
+        raise Exception(f'Error: can not parse repo path from remote url: {remote_url}')
+    if 'github.com' not in remote_url:
+        raise Exception(f'Error: Remote url {remote_url} is not a github url!')
+    repo_path = match.group(2).strip('/')
+    if repo_path.endswith('.git'):
+        repo_path = repo_path[0:-len('.git')]
+    debug(f"Using github repo {repo_path}")
+    pr = github_api_request(os.path.join('repos', repo_path, 'pulls', pull_id))
+    debug(f"Creating branch for PR # {pr['number']}\"{pr['title']}\"")
+    # where to push to:
+    upstream_url = pr['head']['repo']['ssh_url']
+    upstream_ref = pr['head']['ref']
+    git_cmd('fetch', upstream_url, upstream_ref)
+    git_cmd('branch', local_branchname, pr['head']['sha'])
+    git_cmd('config', f'branch.{local_branchname}.remote', upstream_url)
+    git_cmd('config', f'branch.{local_branchname}.merge', f'refs/heads/{upstream_ref}')
+    git_cmd('checkout', local_branchname)
+    if git_cmd('config', 'push.default').strip() != 'upstream':
+        print(textwrap.dedent("""\
+        Warning: you need to set
 
-if [[ -z "$remotebranch" ]] ; then
-    # if no branch is given, take one using fzf
-    remotebranch=$(git branch -r \
-                    --format '%(committerdate:format:%Y-%m-%d) %(refname)' \
-                   | sed 's, refs/remotes/, ,'|sort -r|fzf --no-sort|cut -d' ' -f2)
-fi
+            git config push.default upstream
 
-if [[ "$remotebranch" = "--clean" ]] ; then
-    echo "Cleaning remote branches.."
-    for branch in $(git branch --list | sed 's,..,,') ; do
-        fromPR=$(git config branch."$branch".from-pull-request) || continue
-        if [[ "$fromPR" = true ]] ; then
-            remote=$(git config branch."$branch".remote) || true
-            merge=$(git config branch."$branch".merge) || true
-            remotebranchname="$remote/${merge#refs/heads/}"
-            # git fetch -p removes this config entry if the branch is deleted
-            # on the remote side
-            if ! git branch --remote | grep -x "  $remotebranchname" > /dev/null ; then
-                echo "Removing PR $branch because its remote was removed"
-                git branch -D "$branch"
-            fi
-        fi
-    done
-    exit 0
-fi
+        in order to be able to run "git push" without further parameters."""))
 
-branches=$(git branch --contains refs/remotes/"$remotebranch" | sed 's,^..,,')
-
-if [[ -n "$branches" ]] ; then
-    echo "$remotebranch is already contained in: $branches"
-else
-    # if remote is something like 'origin/foo', then run 'git checkout foo'
-    localbranchname="${remotebranch#*/}"
-    exists=no
-    if git branch --list | sed 's,^..,,' | grep -x "$localbranchname" > /dev/null ; then
-        echo "Using existing branch $localbranchname"
-        exists=yes
-    fi
-    git checkout "$localbranchname"
-    if [[ "$exists" = no ]] ; then
-        git config branch."$localbranchname".from-pull-request true
-    fi
-fi
-
-
+main()
