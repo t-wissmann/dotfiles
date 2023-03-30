@@ -103,6 +103,7 @@ injective
 naturality
 localizability
 coinduction
+coinductive
 powerset
 cardinality
 epimorphic
@@ -153,3 +154,4 @@ adaptor
 adaptors
 encoding
 encodings
+monotonicity

@@ -6,7 +6,6 @@ import os.path
 
 bib_dirs = [
     BibDir('~/uni/literatur/refs.bib'),
-    BibDir('~/uni/publications/wissmann-publications.bib'),
 ]
 
 def tryBibDir(path):
@@ -18,7 +17,7 @@ def tryBibDir(path):
 
 publications_bib = os.path.expanduser('~/git/homepage/wissmann-publications.bib')
 if not os.path.exists(publications_bib):
-    publications_bib = '/dev/null'
+    publications_bib = '~/uni/publications/wissmann-publications.bib'
 bib_dirs.append(BibDir('~/uni/publications', bib=publications_bib))
 
 # additional directories with PDFs but without bibtex files:
