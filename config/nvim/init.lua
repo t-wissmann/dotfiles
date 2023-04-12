@@ -101,7 +101,7 @@ vim.api.nvim_create_autocmd('FileType', {
         vim.wo.linebreak = true
         vim.keymap.set("n", ",v", ":TexlabForward<CR>", { silent = true })
         vim.keymap.set("n", ",b", ":w<CR>:TexlabBuild<CR>", { silent = false })
-        vim.keymap.set("n", ",w", ":w<CR>", { silent = false })
+        -- vim.keymap.set("n", ",w", ":w<CR>", { silent = false })
         vim.keymap.set("n", ",c", ":!latexmk -cd -c %:p<CR>", { silent = false })
         vim.o.sw = 2
         vim.o.ts = 2
@@ -130,6 +130,38 @@ function setup_colorscheme()
   hi CursorLineNr ctermbg=233 term=NONE ctermfg=green cterm=bold
   ]]
   vim.api.nvim_exec(colorscheme_lua_code, true)
+end
+
+function on_lsp_attach(ev)
+  -- Enable completion triggered by <c-x><c-o>
+  vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+
+  -- Buffer local mappings.
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  local opts = { buffer = ev.buf }
+  -- this would be nicer but produces an error message:
+  -- vim.keymap.set('n', ',d', vim.lsp.buf.definition, { buffer = ev.buf, desc = "go to definition" })
+  -- Warning: 'vim-which-key' does not support lua-callbacks
+  vim.keymap.set('n', ',D', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  vim.keymap.set('n', ',d', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  vim.keymap.set('n', ',K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  vim.keymap.set('n', ',i', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  vim.keymap.set('n', ',s', '<cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
+  vim.keymap.set('n', ',p', '<cmd>lua vim.lsp.buf.peek_definition()<CR>', opts)
+  vim.keymap.set('n', ',r', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  -- vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+  -- vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
+  -- vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
+  -- vim.keymap.set('n', '<space>wl', function()
+  --   print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  -- end, opts)
+  -- vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
+  -- vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
+  -- vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
+  -- vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+  -- vim.keymap.set('n', '<space>f', function()
+  --   vim.lsp.buf.format { async = true }
+  -- end, opts)
 end
 
 return require('packer').startup(function()
@@ -272,10 +304,15 @@ return require('packer').startup(function()
         --     rootMarkers = {"./git/"}
         --   }
         -- })
-      end
+      vim.api.nvim_create_autocmd('LspAttach', {
+        group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+        callback = on_lsp_attach
+      })
+      end -- end of config-function
   })
   use 'tpope/vim-fugitive'
   use 'liuchengxu/vim-which-key'
+  use 'jiangmiao/auto-pairs'
   --
   -- use({'tounaishouta/coq.vim',
   --   -- this coq plugin does not work well for me; it is unclear what the current goal is,
