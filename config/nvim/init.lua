@@ -298,10 +298,10 @@ return require('packer').startup(function()
         })
         -- require('lspconfig').hls.setup({
         --   on_attach = on_attach,
-        --   root_dir = vim.loop.cwd,
-        --   capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+        --   -- root_dir = vim.loop.cwd,
+        --   -- capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()),
         --   settings = {
-        --     rootMarkers = {"./git/"}
+        --     rootMarkers = {".git/"}
         --   }
         -- })
       vim.api.nvim_create_autocmd('LspAttach', {
