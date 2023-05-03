@@ -40,7 +40,7 @@ def git_cmd(*cmd):
 def main():
     parser = argparse.ArgumentParser(description="Create a branch for a github pull request")
     parser.add_argument('PULLID', help="number of the pull request")
-    parser.add_argument('--branchname', help="name of the local branch")
+    parser.add_argument('-b', '--branchname', help="name of the local branch")
     args = parser.parse_args()
 
     pull_id = args.PULLID.strip('#')
@@ -52,7 +52,7 @@ def main():
     current_branch = git_cmd('name-rev', '--name-only', 'HEAD').strip()
     remote_name = git_cmd('config', '--get', f'branch.{current_branch}.remote').strip()
     remote_url = git_cmd('config', '--get', f'remote.{remote_name}.url').strip()
-    match = re.match(r'([^/]*:|[a-z]*::/[^/]*/)(.*)', remote_url)
+    match = re.match(r'([^/]*:|[a-z]*://[^/]*/)([^@:]*)$', remote_url)
     if not match:
         raise Exception(f'Error: can not parse repo path from remote url: {remote_url}')
     if 'github.com' not in remote_url:
@@ -62,7 +62,7 @@ def main():
         repo_path = repo_path[0:-len('.git')]
     debug(f"Using github repo {repo_path}")
     pr = github_api_request(os.path.join('repos', repo_path, 'pulls', pull_id))
-    debug(f"Creating branch for PR # {pr['number']}\"{pr['title']}\"")
+    debug(f"Creating branch for PR #{pr['number']} \"{pr['title']}\"")
     # where to push to:
     upstream_url = pr['head']['repo']['ssh_url']
     upstream_ref = pr['head']['ref']
