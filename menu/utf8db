@@ -70,6 +70,7 @@ sqrt √
 llbracket ⟦
 rrbracket ⟧
 coproduct ∐
+ell ℓ
 
 # relations
 subgroup ◅
@@ -114,6 +115,7 @@ Projective space ℙ
 Q rational ℚ
 R real ℝ
 N natural ℕ
+bool bb 𝔹
 C complex ℂ
 infty infinity ∞
 
@@ -346,3 +348,4 @@ handraise ✋
 thumbsup 👍
 lneqq ≨
 gneqq ≩
+

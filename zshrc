@@ -14,6 +14,18 @@ zstyle ':completion:*' menu select
 promptinit
 prompt adam2 8bit 'red}%F{white' green yellow default
 
+
+paste-prompt() {
+    # setup a prompt that is nicer for copy & pasting terminal content
+    prompt restore
+    PS1='%F{green}%~%F{blue}> %f'
+    # disable prompt command
+    precmd() {
+        true
+    }
+    RPROMPT=''
+}
+
 # let small letters match capital letters in a completion suggestion
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
