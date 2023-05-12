@@ -6,25 +6,34 @@ set -o pipefail
 export srcdir="$1"
 export destdir=.
 
+flac2ogg() {
+    oggenc -q 7 -o "$2" "$1"
+}
+export -f flac2ogg
+
 importfile() {
     shopt -s nocasematch
     case "$1" in
-        *.ogg|*.mp3|*.jpg|*.lyrics|*.txt)
+        *.ogg|*.mp3|*.lyrics|*.txt)
             outfile="$1"
             CMD=( ln -f )
             ;;
-        *.jpeg)
-            outfile="${1%.jpeg}.jpg"
+        *.jpg|*.jpeg)
+            outfile="${1%/*}/folder.jpg"
             CMD=( ln -f )
             ;;
         *.png|*.gif|*.bmp)
-            outfile="${1%.*}.jpg"
+            outfile="${1%/*}/folder.jpg"
             CMD=( convert )
             ;;
         *.flac)
             outfile="${1%.*}.mp3"
             CMD=( ~/dotfiles/utils/flac2mp3.sh )
             ;;
+        # *.flac)
+        #     outfile="${1%.*}.ogg"
+        #     CMD=( flac2ogg ) # -o missing...
+        #     ;;
         # *.ogg)
         #     # temporarily ignore ogg files
         #     return
