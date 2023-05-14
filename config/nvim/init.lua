@@ -69,6 +69,9 @@ autocmd FileType text hi def link plainTextComment Comment
 noremap  <buffer> <silent> k gk
 noremap  <buffer> <silent> j gj
 
+" Disable linting via vim-ale:
+let g:ale_enabled = 0
+
 ]],
 true)
 
@@ -292,7 +295,11 @@ return require('packer').startup(function()
                                  .. "\"and(execute('e %{input}'), cursor(%{line}+1, %{column}+1))\"",
                                  "--view-line", "%l",
                                  "%f"},
-                    }
+                    },
+                    chktex = {
+                      onEdit = false,
+                      onOpenAndSave = false,
+                    },
                 }
             }
         })

@@ -77,6 +77,14 @@
 ;; exit emacs without confirmation
 (setq confirm-kill-emacs nil)
 
+(setq doom-localleader-key ",")
+;; Also use SPC m for localleader
+(defun my/call-localleader ()
+  (interactive)
+  (setq unread-command-events (listify-key-sequence ",")))
+
+(map! :leader (:desc "localleader" "m" #'my/call-localleader))
+
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
 ;;
