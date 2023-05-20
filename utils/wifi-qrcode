@@ -9,4 +9,4 @@ Key="${KEY:-2}"
 
 QRSOURCE="WIFI:S:${ESSID};T:${Security};P:${Key};;"
 
-qrencode -o - -t svg "${QRSOURCE}"
+qrencode -o - --size=10 -t png "${QRSOURCE}" | display
