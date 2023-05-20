@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+Security=${Security:-wpa} # or wep
+
+# convert to upper case:
+Security="${Security^^}"
+ESSID="${ESSID:-$1}"
+Key="${KEY:-2}"
+
+QRSOURCE="WIFI:S:${ESSID};T:${Security};P:${Key};;"
+
+qrencode -o - -t svg "${QRSOURCE}"
