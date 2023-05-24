@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+#
+# usage: pan2man FILE.md
+#
+# Preview a markdown (or anything pandoc-compatible) as a man page!
+input="$1"
+date=$(date '+%Y-%m-%d')
+
+{
+# first write metadata
+cat <<EOF
+.TH "${input}" "PREVIEW" "$date" "\ \& PREVIEW" "\ \&"
+EOF
+# then use pandoc to convert.
+pandoc -t man "$input"
+# Actually, I would like to make all inline 'Code' snippets strong,
+# but replacing t=Code by t=Strong (not affecting t=CodeBlock) via
+#
+#   jq '(.. | select(.t? == "Code")).t = "Strong"' \
+#
+# breaks the json syntax because 'Code' objects are slightly different to 'Strong' ones.
+# So instead, we 'sed' in the roff source and hope that it does not break anything:
+} | sed 's,\\f\[V\],\\f[B],g' | man -l -
