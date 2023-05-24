@@ -1,13 +1,31 @@
 #!/usr/bin/env bash
-#
-# usage: pan2man FILE.md
-#
-# Preview a markdown (or anything pandoc-compatible) as a man page!
+
+cmdname="$0"
+print-usage(){
+cat <<EOF
+Usage: $cmdname FILE
+
+Preview any document supported by pandoc (e.g. markdown) as a man page!
+This turns pandoc into a terminal based document viewer.
+
+Written by Thorsten Wissmann (thorsten-wissmann.de) in May 2023.
+EOF
+}
+
 input="$1"
 date=$(date '+%Y-%m-%d')
 
+if [[ "$input" = '-h' ]] ; then
+    print-usage
+    exit 0
+fi
+if [[ -z "$input" ]] ; then
+    print-usage >&2
+    exit 1
+fi
+
 {
-# first write metadata
+# First write metadata
 cat <<EOF
 .TH "${input}" "PREVIEW" "$date" "\ \& PREVIEW" "\ \&"
 EOF
