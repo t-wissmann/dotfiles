@@ -25,17 +25,17 @@ if [[ -z "$input" ]] ; then
 fi
 
 {
-# First write metadata
-cat <<EOF
+    # First write metadata
+    cat <<EOF
 .TH "${input}" "PREVIEW" "$date" "\ \& PREVIEW" "\ \&"
 EOF
-# then use pandoc to convert.
-pandoc -t man "$input"
-# Actually, I would like to make all inline 'Code' snippets strong,
-# but replacing t=Code by t=Strong (not affecting t=CodeBlock) via
-#
-#   jq '(.. | select(.t? == "Code")).t = "Strong"' \
-#
-# breaks the json syntax because 'Code' objects are slightly different to 'Strong' ones.
-# So instead, we 'sed' in the roff source and hope that it does not break anything:
+    # then use pandoc to convert.
+    pandoc -t man "$input"
+    # Actually, I would like to make all inline 'Code' snippets strong,
+    # but replacing t=Code by t=Strong (not affecting t=CodeBlock) via
+    #
+    #   jq '(.. | select(.t? == "Code")).t = "Strong"' \
+    #
+    # breaks the json syntax because 'Code' objects are slightly different to 'Strong' ones.
+    # So instead, we 'sed' in the roff source and hope that it does not break anything:
 } | sed 's,\\f\[V\],\\f[B],g' | man -l -
