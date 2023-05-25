@@ -12,6 +12,8 @@ Written by Thorsten Wissmann (thorsten-wissmann.de) in May 2023.
 EOF
 }
 
+set -o pipefail
+
 input="$1"
 date=$(date '+%Y-%m-%d')
 
@@ -31,6 +33,10 @@ fi
 EOF
     # then use pandoc to convert.
     pandoc -t man "$input"
+    if [[ "$pancode" -ne 0 ]] ; then
+        # TODO: kill things later in the pipe
+        exit "$?"
+    fi
     # Actually, I would like to make all inline 'Code' snippets strong,
     # but replacing t=Code by t=Strong (not affecting t=CodeBlock) via
     #
