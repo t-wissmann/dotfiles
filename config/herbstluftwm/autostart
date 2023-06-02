@@ -108,6 +108,7 @@ hc keybind $Mod-Shift-bracketleft spawn ~/git/rofi-bibbrowser/rofi-bibbrowser --
 hc keybind $Mod-apostrophe spawn ~/dotfiles/menu/rofi-mpd.sh
 hc keybind $Mod-backslash spawn ~/dotfiles/menu/rofi-pass.sh
 hc keybind $Mod-Shift-backslash spawn ~/dotfiles/menu/rofi-pass.sh
+hc keybind $Mod-Alt-space spawn ~/dotfiles/menu/hlwm-windowmenu.sh
 
 videodir=/mnt/unterhaltung/video/
 [[ -d ~/video ]] && videodir=$HOME/video/
@@ -638,8 +639,8 @@ if ! [ -d "$SCRIPTSDIR" ] ; then
 fi
 
 if [ -d "$SCRIPTSDIR" ] ; then
-    hc keybind $Mod-Alt-space spawn $SCRIPTSDIR/execwith.sh \
-        ~/.bash_settings $SCRIPTSDIR/dmenu.sh set_layout
+    #hc keybind $Mod-Alt-space spawn $SCRIPTSDIR/execwith.sh \
+    #    ~/.bash_settings $SCRIPTSDIR/dmenu.sh set_layout
     terminal_options='WIDTH_PERC=100'
     if [[ "$HOSTNAME" == x1 ]] ; then
         terminal_options+=' HEIGHT_PIXELS=600'

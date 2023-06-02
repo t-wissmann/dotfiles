@@ -259,7 +259,8 @@ def main():
 
     maybe_netctl = []
     netctl_path = os.path.expanduser('~/dotfiles/menu/rofi-netctl')
-    if socket.gethostname() == 'x1' and os.path.exists(netctl_path):
+    # if socket.gethostname() == 'x1' and os.path.exists(netctl_path):
+    if os.path.exists(netctl_path):
         maybe_netctl = [
             Item('Network', 'network-wired', netctl_path),
             Item('Docking Station', 'computer', run_in_terminal(os.path.expanduser('~/dotfiles/config/herbstluftwm/x1-docking-station.sh'))),
