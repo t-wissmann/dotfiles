@@ -41,7 +41,6 @@ trysource() {
 }
 trysource /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 trysource /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-trysource /usr/share/fzf/key-bindings.zsh
 
 bindkey    "^[[3~"          delete-char
 bindkey    "^[3;5~"         delete-char
@@ -96,10 +95,10 @@ alias -g G="| grep -iE"
 alias -g L=" 2>&1 | less -R"
 alias -g C=" --color=always"
 
-zstyle ':completion:*:*:kill:*' menu yes select
+#zstyle ':completion:*:*:kill:*' menu yes select
 #zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 #zstyle ':completion:*:*:kill:*:processes' command 'ps xo pid,user:10,cmd | ack-grep -v "sshd:|-zsh$"'
-zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm -w -w"
+#zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm -w -w"
 
 # add running command to title
 #function xterm_title_preexec () {
@@ -162,6 +161,22 @@ zle -N edit-command-line
 bindkey "^X^E" edit-command-line
 
 trysource ~/.zshrc-host-specific
+trysource /usr/share/fzf/key-bindings.zsh
+trysource /usr/share/fzf/completion.zsh
+
+# Always trigger the fzf completion routine
+export FZF_COMPLETION_TRIGGER=''
+# However, the fzf completion routine falls back to
+# dir and path based completion, even if more advanced
+# completion systems in zsh are available. For those cases
+# I overwrite dir/path completion such that the usual zsh
+# completion is called.
+_fzf_dir_completion() {
+    zle ${fzf_default_completion:-expand-or-complete}
+}
+_fzf_path_completion() {
+    zle ${fzf_default_completion:-expand-or-complete}
+}
 
 #bindkey -v # vi mode
 

@@ -35,6 +35,7 @@ fetch() {
 
 :: mkdir -p ~/.urxvt/ext/
 fetch https://github.com/regnarg/urxvt-config-reload
+#fetch https://github.com/gessen/zsh-fzf-kill
 :: ln -sf $HOME/dotfiles/3rd-party/urxvt-config-reload/config-reload ~/.urxvt/ext/
 
 # example:
