@@ -1,2 +1,44 @@
 metadata:
-  geometry: margin=2cm
+  geometry: margin=2.5cm
+
+variables:
+  documentclass: article
+  classoption:
+    - twoside
+  header-includes:
+  # it is very important that this is in 'variables'
+  # and not in metadata!
+  - |
+    \usepackage{fancyhdr}
+    \usepackage{lastpage}
+    \fancypagestyle{plain}{%
+      \renewcommand{\headrulewidth}{0pt}%
+      \fancyhf{}% clear all
+      %\fancyhead[LO,LE]{}
+      %\fancyfoot[C]{}
+      % outer:
+      \fancyfoot[LE,RO]{\thepage\ / \pageref{LastPage}}
+      % inner:
+      \fancyfoot[LO,RE]{\textcolor{black!50}{\today}}
+    }
+    \pagestyle{plain}%
+    \usepackage{newunicodechar}
+    \newunicodechar{→}{\ensuremath{\rightarrow}}
+    \newunicodechar{⇒}{\ensuremath{\Rightarrow}}
+    \newunicodechar{⊗}{\ensuremath{\otimes}}
+    \newunicodechar{〈}{\ensuremath{\langle}}
+    \newunicodechar{〉}{\ensuremath{\rangle}}
+    \DeclareUnicodeCharacter{8989}{\ensuremath{\urcorner}}
+    \DeclareUnicodeCharacter{211D}{\ensuremath{\mathbb R}}
+    \DeclareUnicodeCharacter{2124}{\ensuremath{\mathbb Z}}
+    \DeclareUnicodeCharacter{2203}{\ensuremath{\exists}}
+    \DeclareUnicodeCharacter{2200}{\ensuremath{\forall}}
+    \DeclareUnicodeCharacter{2192}{\ensuremath{\to}}
+    \DeclareUnicodeCharacter{2208}{\ensuremath{\in}}
+    \DeclareUnicodeCharacter{D7}{\ensuremath{\times}}
+    \DeclareUnicodeCharacter{2205}{\ensuremath{\emptyset}}
+    \DeclareUnicodeCharacter{2286}{\ensuremath{\subseteq}}
+    \DeclareUnicodeCharacter{2218}{\ensuremath{\circ}}
+    \DeclareUnicodeCharacter{27E6}{\ensuremath{\llbracket}} % ⟦
+    \DeclareUnicodeCharacter{27E7}{\ensuremath{\rrbracket}} % ⟧
+    \DeclareUnicodeCharacter{2264}{\ensuremath{\le}} % ≤
