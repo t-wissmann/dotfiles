@@ -66,6 +66,7 @@ files=(
     ncmpcpp-config
     mplayer.conf
     gpg.conf
+    pandoc
     openbox-themes/*/
 )
 
@@ -81,6 +82,7 @@ relpath2target=(
     "s,^config/qutebrowser/userscripts,$HOME/.local/share/qutebrowser/userscripts,"
     "s,^config/qutebrowser/greasemonkey,$HOME/.local/share/qutebrowser/greasemonkey,"
     "s#^config/\(.*\)\$#$HOME/.config/\1#"
+    "s,^pandoc$,$HOME/.local/share/pandoc,"
     "s#^openbox-themes/\(.*\)\$#$HOME/.themes/\1#"
 )
 
