@@ -117,12 +117,13 @@ normpages() {
     bc -l <<< "$strokecount / 1500"
 }
 
-spellcheck-pdf() {
-    wordlist=$HOME/dotfiles/spelling/wordlist.txt 
-    pdftotext -layout "$1" - \
-        | spellcast -- -t --lang=en_GB --variety ize -p "$wordlist" \
-        | less -r
-}
+# spellcast now directly supports PDF via pdftotext
+# spellcheck-pdf() {
+#     wordlist=$HOME/dotfiles/spelling/wordlist.txt 
+#     pdftotext -layout "$1" - \
+#         | spellcast -- -t --lang=en_GB --variety ize -p "$wordlist" \
+#         | less -r
+# }
 
 alias dfh="df -h | grep --color=none '^[/A-Z]'"
 alias mounth="mount | grep --color=none '^[/A-Z]'"

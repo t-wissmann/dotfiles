@@ -20,7 +20,7 @@ mypdf2text() {
 # to remove running headers and footers the -W and -H parameters are
 # from pdfinfo of the page and we skip the first 62 (points or pixels, I
 # don't know) such that the runnig header is removed
-pdftotext -nopgbrk \
+pdftotext -layout -nopgbrk \
     "$1" - \
     | sed 's,ﬁ,fi,g' \
     | sed 's,ﬂ,fl,g' \
