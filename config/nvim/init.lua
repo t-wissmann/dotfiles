@@ -290,9 +290,11 @@ return require('packer').startup(function()
                          --         -- "--editor-cmd", "nvim --server " .. vim.v.servername .. " --remote-send \"%lG\"",
                          --         "file:%p#src:%l%f", },
                          executable = "synctex-katarakt.py",
+                         -- with some update '%{input}' etc had to be replaced with
+                         -- '%%{input}'.. I don't know why -- 2023-06-14
                          args = {"--editor-command",
                                  "nvim --server " .. vim.v.servername.. " --remote-expr "
-                                 .. "\"and(execute('e %{input}'), cursor(%{line}+1, %{column}+1))\"",
+                                 .. "\"and(execute('e %%{input}'), cursor(%%{line}+1, %%{column}+1))\"",
                                  "--view-line", "%l",
                                  "%f"},
                     },
