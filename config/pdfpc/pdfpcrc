@@ -1,2 +1,4 @@
 option toolbox true
 option windowed-mode both
+option next-height 40
+option pointer-size 15
