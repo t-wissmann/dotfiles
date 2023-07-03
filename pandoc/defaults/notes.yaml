@@ -42,3 +42,5 @@ variables:
     \DeclareUnicodeCharacter{27E6}{\ensuremath{\llbracket}} % ⟦
     \DeclareUnicodeCharacter{27E7}{\ensuremath{\rrbracket}} % ⟧
     \DeclareUnicodeCharacter{2264}{\ensuremath{\le}} % ≤
+    %
+    % WARNING: combining strike-out text and href breaks!
