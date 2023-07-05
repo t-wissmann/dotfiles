@@ -33,16 +33,16 @@ fi
 
 for t in "${input_files[@]}" ; do
     fls=${t%%.tex}.fls
-    if ! [[ -e "$fls" ]] ; then
-        fail "no file $fls found for $t"
+    if [[ -e "$fls" ]] ; then
+        mapfile -t output_files < <(grep '^OUTPUT ' "$fls"|cut -d ' ' -f2)
     fi
-    mapfile -t output_files < <(grep '^OUTPUT ' "$fls"|cut -d ' ' -f2)
     output_files+=(
         "${t%%.tex}.blg"
         "${t%%.tex}.bbl"
         "${t%%.tex}.fdb_latexmk"
         "${t%%.tex}.synctex"
         "${t%%.tex}.synctex.gz"
+        "${t%%.tex}."{nav,run.xml,snm,toc}
         "$fls"
     )
     existing_output_files=( )
