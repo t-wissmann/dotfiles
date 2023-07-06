@@ -259,22 +259,23 @@ return require('packer').startup(function()
             -- capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()),
             init_options = { documentFormatting = true },
             settings = {
-                latex = {
-                  build = {
-                    args = {  },
-                    executable = "latexmk",
-                    onSave = false
-                  },
-                  forwardSearch = {
-                    args = {},
-                    onSave = false
-                  },
-                  lint = {
-                    onChange = false
-                  },
-                },
+                -- latex = {
+                -- },
                 texlab = {
-                    rootDirectory = nil,
+                    build = {
+                      args = {  },
+                      executable = "latexmk",
+                      onSave = false
+                    },
+                    forwardSearch = {
+                      args = {},
+                      onSave = false
+                    },
+                    lint = {
+                      onChange = false
+                    },
+                    --rootDirectory = '/home/thorsten/git/papers/action-codes/icalp-talk/', -- cf https://github.com/latex-lsp/texlab/issues/106
+                    rootDirectory = vim.fn.getcwd() .. '/', -- cf https://github.com/latex-lsp/texlab/issues/106
                     -- latexFormatter = 'latexindent',
                     -- latexindent = {
                     --   ['local'] = '/dev/null', -- local is a reserved keyword
