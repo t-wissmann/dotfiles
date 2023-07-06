@@ -43,6 +43,7 @@ for t in "${input_files[@]}" ; do
         "${t%%.tex}.synctex"
         "${t%%.tex}.synctex.gz"
         "${t%%.tex}."{nav,run.xml,snm,toc}
+        "${t%%.tex}."aux
         "$fls"
     )
     existing_output_files=( )
