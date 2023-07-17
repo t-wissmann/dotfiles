@@ -30,7 +30,7 @@ if :: lsusb |grep "$docking_station" > /dev/null ; then
     resolution=$(xrandr --listmonitors | grep "$output" | sed 's,/[0-9]\+,,g' | grep -oE '[0-9]+x[0-9]+\+0\+0' | tail -n 1)
     :: herbstclient set_monitors "$resolution"
     :: herbstclient reload
-    :: ~/.config/alacritty/set-font.sh monospace
+    #:: ~/.config/alacritty/set-font.sh monospace
 else
     for output in $(xrandr --listmonitors|grep -oE ': \+[^ *]+'|sed 's,^: +,,') ; do
         if [[ "$output" != "eDP1" ]] ; then
@@ -40,7 +40,7 @@ else
     :: xrandr --output eDP1 --auto
     herbstclient detect_monitors
     herbstclient reload
-    :: ~/.config/alacritty/set-font.sh default
+    #:: ~/.config/alacritty/set-font.sh default
 fi
 
 
