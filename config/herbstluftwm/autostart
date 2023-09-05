@@ -192,7 +192,6 @@ hc keybind $Mod-i or \
         . jumpto urgent \
         . try new_attr string clients.my_oldfocus \
         . set_attr clients.my_oldfocus WINID \
-    : jumpto urgent \
     : substitute WINID clients.my_oldfocus and \
         . jumpto WINID \
         . remove_attr clients.my_oldfocus \
