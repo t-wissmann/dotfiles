@@ -259,8 +259,8 @@ def main():
 
     maybe_netctl = []
     netctl_path = os.path.expanduser('~/dotfiles/menu/rofi-netctl')
-    # if socket.gethostname() == 'x1' and os.path.exists(netctl_path):
-    if os.path.exists(netctl_path):
+    if socket.gethostname() == 'x1' and os.path.exists(netctl_path):
+        #if os.path.exists(netctl_path):
         maybe_netctl = [
             Item('Network', 'network-wired', netctl_path),
             Item('Docking Station', 'computer', run_in_terminal(os.path.expanduser('~/dotfiles/config/herbstluftwm/x1-docking-station.sh'))),
@@ -288,8 +288,13 @@ def main():
       Item('Telegram', 'telegram', 'killall telegram-desktop ; QT_QPA_PLATFORMTHEME= telegram-desktop'),
       # Item('Applications', 'start-here', XdgMenu()),
       Sep(),
-      Item('Lock', 'lock', 'i3lock.sh'),
-      Item('Screen off', 'xscreensaver', 'xset dpms force off'),
+      Item('Power', 'computer',
+           Menu('power', [
+              Item('Lock', 'lock', 'i3lock.sh'),
+              Item('Screen off', 'xscreensaver', 'xset dpms force off'),
+              Sep(),
+              Item('Shutdown', 'gnome-shutdown', 'systemctl poweroff -i'),
+           ])),
       Item('Suspend', 'gnome-logout', 'systemctl suspend -i'),
     ])
 
