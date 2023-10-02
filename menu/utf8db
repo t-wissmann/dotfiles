@@ -249,7 +249,8 @@ snowman ☃
 warning dreieck ⚠
 keyboard ⌨
 compose mac ⌘
-return enter ⏎
+return enter ↵
+return enter double ⏎
 eject ⏏
 # TODO: http://en.wikipedia.org/wiki/Miscellaneous_Symbols
 recycling ♲
