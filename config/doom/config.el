@@ -72,6 +72,7 @@
 			   "Mathematical Operators"
 			   "Miscellaneous Mathematical Symbols-A"
 			   "Miscellaneous Mathematical Symbols-B"
+			   "Letterlike Symbols" ;; for ℰ
 			   "Miscellaneous Symbols"
 			   "Miscellaneous Symbols and Arrows"
 			   "Miscellaneous Symbols and Pictographs"))
