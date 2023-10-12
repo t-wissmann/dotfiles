@@ -65,7 +65,18 @@
            )))
      )
 (set-fontset-font "fontset-default" nil
-                  (font-spec :name "DejaVu Sans"))
+   (font-spec :name "Bitstream Vera Sans Mono" :size 8))
+
+(after! unicode-fonts
+  (dolist (unicode-block '("Mathematical Alphanumeric Symbols"
+			   "Mathematical Operators"
+			   "Miscellaneous Mathematical Symbols-A"
+			   "Miscellaneous Mathematical Symbols-B"
+			   "Miscellaneous Symbols"
+			   "Miscellaneous Symbols and Arrows"
+			   "Miscellaneous Symbols and Pictographs"))
+      (push "DejaVu Math TeX Gyre" (cadr (assoc unicode-block unicode-fonts-block-font-mapping)))))
+
 
 ;; (xterm-mouse-mode 1)
 (menu-bar-mode 1)
