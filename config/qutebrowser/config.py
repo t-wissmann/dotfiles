@@ -194,9 +194,9 @@ if socket.gethostname() == 'x1':
     c.zoom.default = '125%'
 
 binds = {
-    'O' : 'set-cmd-text :open {url}',
-    't' : 'set-cmd-text -s :open -t ',
-    'T' : 'set-cmd-text :open -t {url}',
+    'O' : 'cmd-set-text :open {url}',
+    't' : 'cmd-set-text -s :open -t ',
+    'T' : 'cmd-set-text :open -t {url}',
     'gT' : 'tab-prev',
     'gt' : 'tab-next',
     '<' : 'tab-move -',
@@ -207,14 +207,14 @@ binds = {
     '$' : 'scroll-perc -x 100',
     '<end>' : 'scroll-perc',
     'yy' : 'yank ;; yank -s',
-    'M' : 'set-cmd-text -s :quickmark-load',
+    'M' : 'cmd-set-text -s :quickmark-load',
     'm' : 'enter-mode set_mark',
     '\'' : 'enter-mode jump_mark',
     'zl' : 'spawn --userscript password_fill',
     'sd' : "spawn --userscript /bin/bash -c 'DOWNLOAD_DIR=~/downloads ~/.config/qutebrowser/userscripts/open_download'",
     '<Ctrl-Shift-j>' : "spawn --userscript dict-jp-lookup",
     ';v' : "hint links userscript view_in_mpv",
-    'b' : "set-cmd-text -s :tab-select",
+    'b' : "cmd-set-text -s :tab-select",
 }
 
 for m in ['normal', 'insert']:
