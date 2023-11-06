@@ -5,8 +5,10 @@ Security=${Security:-wpa} # or wep
 # convert to upper case:
 Security="${Security^^}"
 ESSID="${ESSID:-$1}"
-Key="${KEY:-2}"
-
+Key="${Key:-2}"
+output="${output:--}"
 QRSOURCE="WIFI:S:${ESSID};T:${Security};P:${Key};;"
 
-qrencode -o - --size=10 -t png "${QRSOURCE}" | display
+echo "$QRSOURCE"
+
+qrencode -o "$output" --size=10 -t png "${QRSOURCE}" | display

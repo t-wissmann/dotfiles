@@ -103,6 +103,9 @@ export LESS_TERMCAP_so=$'\e[0;43;30m' # begin standout-mode -- statusbar and sea
 export LESS_TERMCAP_se=$'\e[0m' # end standout-mode first and last row background
 export LESS_TERMCAP_us=$'\e[0;32m' # begin underline "variables"
 export LESS_TERMCAP_ue=$'\e[0m'    # end underline background
+# since 2023, this also seems to be necessary:
+export MANROFFOPT="-P -c"
+# export MANPAGER="less -R --use-color"
 
 # for openoffice .... -.-
 export OOO_FORCE_DESKTOP='gnome'
