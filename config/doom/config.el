@@ -98,6 +98,11 @@
 
 (map! :leader (:desc "localleader" "m" #'my/call-localleader))
 
+;; Agda-input mode everywhere!
+;; https://emacs.stackexchange.com/a/27023/16063
+(add-hook 'evil-insert-state-entry-hook (lambda () (set-input-method "Agda")))
+(add-hook 'evil-insert-state-exit-hook (lambda () (set-input-method nil)))
+
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
 ;;
