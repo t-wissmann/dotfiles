@@ -6,6 +6,7 @@ from PyQt5.QtCore import QUrl
 from qutebrowser.api import interceptor
 from qutebrowser.api import message
 import qutebrowser
+from qutebrowser.misc.objects import commands
 
 config.load_autoconfig()
 
@@ -193,8 +194,11 @@ import socket
 if socket.gethostname() == 'x1':
     c.zoom.default = '125%'
 
-cmd_set_text = 'cmd-set-text '  # newer versions
-cmd_set_text = 'set-cmd-text '  # old qutebrowser
+if 'cmd-set-text' in commands:
+    cmd_set_text = 'cmd-set-text '  # newer versions
+else:
+    cmd_set_text = 'set-cmd-text '  # old qutebrowser
+
 binds = {
     'O' : cmd_set_text + ':open {url}',
     't' : cmd_set_text + '-s :open -t ',
