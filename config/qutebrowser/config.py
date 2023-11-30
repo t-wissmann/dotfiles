@@ -192,7 +192,7 @@ guifont = 'bold 8pt "Bitstream Vera Sans" bold'
 
 import socket
 if socket.gethostname() == 'x1':
-    c.zoom.default = '125%'
+    c.zoom.default = '90%'
 
 if 'cmd-set-text' in commands:
     cmd_set_text = 'cmd-set-text '  # newer versions
