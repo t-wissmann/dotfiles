@@ -285,6 +285,7 @@ def main():
       Item('Firefox', 'web-browser', 'firefox'),
       Item('gedit', 'accessories-text-editor', 'gedit --standalone'),
       Item('KDE Connect', 'kdeconnect', 'killall kdeconnect-indicator ; kdeconnect-indicator '),
+      Item('Move Cursor', 'input-mouse', 'xdotool mousemove 0 0'),
       Item('Telegram', 'telegram', 'killall telegram-desktop ; QT_QPA_PLATFORMTHEME= telegram-desktop'),
       # Item('Applications', 'start-here', XdgMenu()),
       Sep(),
