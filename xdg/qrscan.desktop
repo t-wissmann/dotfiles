@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Name=Scan QR Code content to clipboard
+GenericName=Scan QR Code content to clipboard
+Comment=Decode QR Code from screen and copy its content to clipboard
+Exec=bash -c 'maim --hidecursor -b -3 -s | zbarimg - | xclip -i -selection clipboard'
+Icon=screensaver
+Terminal=false
+Type=Application
+Categories=
+MimeType=
