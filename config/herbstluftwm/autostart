@@ -596,8 +596,8 @@ if hc and , set_attr theme.name "$theme_path" , compare theme.name != '' ; then
             * {
                 /* font: Scheherazade New:pixelsize=15; */ /* for arabic fonts */
                 /* font: hanamina:pixelsize=17; */ /* for japanese fonts */
-                font: bitstream vera sans:pixelsize=17;
-                /* font: terminus:pixelsize=18; */
+                /* font: bitstream vera sans:pixelsize=17; */
+                font: terminus:pixelsize=18;
             }
             .client-decoration.focus .tab.focus .content * {
                 font: terminus:bold:pixelsize=18;
