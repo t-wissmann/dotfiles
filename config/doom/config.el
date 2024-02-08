@@ -34,6 +34,8 @@
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 ;;(setq doom-theme 'doom-one)
+;; (setq doom-theme 'doom-gruvbox)
+;; -> M-x load-theme! or SPC h t
 (setq doom-theme 'doom-gruvbox)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
@@ -50,20 +52,22 @@
 ;;(after! proof-general
 ;;)
 
-    (custom-set-faces
-     ;;'(proof-queue-face
-     ;;  ((t :weight bold)))
-     ;;'(proof-locked-face
-     ;;  ((t :weight bold)))
-     '(proof-queue-face
-       ((t :weight bold)))
-     '(proof-locked-face
-       ((t (:background "#1F2912")
-           )))
-     '(proof-tactics-name-face
-       ((t (:foreground "#9DDAA1")
-           )))
-     )
+;; ;; the following only makes sense on dark backrounds
+;;     (custom-set-faces
+;;      ;;'(proof-queue-face
+;;      ;;  ((t :weight bold)))
+;;      ;;'(proof-locked-face
+;;      ;;  ((t :weight bold)))
+;;      '(proof-queue-face
+;;        ((t :weight bold)))
+;;      '(proof-locked-face
+;;        ((t (:background "#1F2912")
+;;            )))
+;;      '(proof-tactics-name-face
+;;        ((t (:foreground "#9DDAA1")
+;;            )))
+;;      )
+
 (set-fontset-font "fontset-default" nil
    (font-spec :name "Bitstream Vera Sans Mono" :size 8))
 
