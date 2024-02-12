@@ -1,14 +1,168 @@
-#!/usr/bin/env bash
+#!/usr/bin/env python3
+import argparse
+import sys
+import os
+import re
+import textwrap
+import tempfile
+import shutil
+import subprocess
 
-Security=${Security:-wpa} # or wep
+# Security=${Security:-wpa} # or wep
+# 
+# # convert to upper case:
+# Security="${Security^^}"
+# ESSID="${ESSID:-$1}"
+# Key="${Key:-2}"
+# output="${output:--}"
+# QRSOURCE="WIFI:S:${ESSID};T:${Security};P:${Key};;"
+# 
+# echo "$QRSOURCE"
+# 
+# qrencode -o "$output" --size=10 -t png "${QRSOURCE}" | display
 
-# convert to upper case:
-Security="${Security^^}"
-ESSID="${ESSID:-$1}"
-Key="${Key:-2}"
-output="${output:--}"
-QRSOURCE="WIFI:S:${ESSID};T:${Security};P:${Key};;"
+def debug(msg):
+    print(f':: {msg}', file=sys.stderr)
 
-echo "$QRSOURCE"
+class WifiProfile:
+    def __init__(self):
+        self.ssid = ''
+        self.security = ''
+        self.key = ''
 
-qrencode -o "$output" --size=10 -t png "${QRSOURCE}" | display
+    def make_security_upper(self):
+        self.security = self.security.upper()
+
+
+def unquote(quoted_str):
+    return re.sub(r'\\(.)', '\1', quoted_str)
+
+def latex_verb(s):
+    """print the given string using \\verb|...|"""
+    codes_for_verbatim = "<,./<>!|"
+    verbcode = None
+    # find a character that is not contained in s:
+    for c in codes_for_verbatim:
+        if c not in s:
+            verbcode = c
+            break
+    return r'\verb' + verbcode + s + verbcode
+
+def latex_quote(s):
+    """make the given string printable in latex"""
+    return s.replace('_', r'\_').replace('$', r'\$')
+
+def parse_netctl(file_handle):
+    d = {}
+    for line in file_handle.readlines():
+        # key, value:
+        k, v = line.rstrip().split('=', 1)
+        # see examples of 'quoting rules' in `man netctl.profile`
+        if v.startswith("\'"):
+            v = v[1:-1]  # no-quoted:  X='"string'
+        elif v.startswith("\""):
+            v = unquote(v[1:-1])  # quoted X="\"string"
+        else:
+            v = unquote(v)  # quoted X=\"string
+
+        d[k] = v
+    wifi = WifiProfile()
+    wifi.ssid = d.get('ESSID', '')
+    wifi.security = d.get('Security', 'wpa')
+    wifi.key = d.get('Key', 'wpa')
+    return wifi
+
+
+def main():
+    help_str = textwrap.dedent("""
+    Turn ssid/password of a wireless network in a scannable qr code.
+    The input can be a netctl.profile and the data can be adjusted
+    using the command line flags.
+    """)
+    parser = argparse.ArgumentParser('Create qr-codes containing wifi credentials',
+            description=help_str)
+    parser.add_argument('--netctl', help="Read netctl profile (allowing - for stdin)")
+    parser.add_argument('--ssid', help='ssid wifi name')
+    parser.add_argument('--key', help='password key')
+    parser.add_argument('--qr-size', default='4.5cm', help='e.g. 4cm')
+    parser.add_argument('--security', help="'wpa' or 'wep', mostly 'wpa'")
+    parser.add_argument('--show-qr-source', default=False, action='store_true', help="Show exact qr content")
+    parser.add_argument('--show-latex', default=False, action='store_true', help="Show latex source")
+    parser.add_argument('--pdf', help='write pdf')
+    args = parser.parse_args()
+
+
+    wifi = WifiProfile()
+    if args.netctl:
+        if args.netctl == '-':
+            wifi = parse_netctl(sys.stdin)
+        else:
+            with open(args.netctl) as fh:
+                wifi = parse_netctl(sys.stdin)
+
+
+    if args.ssid:
+        wifi.ssid = args.ssid
+    if args.security:
+        wifi.security = args.security
+    if args.key:
+        wifi.key = args.key
+
+    wifi.make_security_upper()
+
+    qrsource = f'WIFI:S:{wifi.ssid};T:{wifi.security};P:{wifi.key};;'
+    font = r'\sffamily\scalefont{1.5}'
+
+    latex_source = r"""
+\documentclass[border={0pt 0pt 0pt 2pt}]{standalone}
+% \nofiles % do auxiliary files
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{scalefnt}
+\usepackage{qrcode}
+\usepackage{fontawesome}
+\begin{document}
+    """.strip()
+    latex_source += '\n'
+    latex_source += f"""
+    \\begin{{tabular}}{{c}}
+    \\qrcode[height={args.qr_size}]{{{qrsource}}}%
+    \\vspace{{2mm}}
+    \\\\
+    \\begin{{tabular}}{{c@{{~}}l}}
+    {font}\\faWifi & {font}{latex_verb(wifi.ssid)} \\\\
+    {font}\\faLock & {font}{latex_verb(wifi.key)}\\\\
+    \\end{{tabular}}
+    \\end{{tabular}}
+    """.strip()
+    latex_source += '\n'
+    latex_source += r"""
+\end{document}
+    """.strip()
+
+    if args.show_qr_source:
+        print(qrsource)
+
+    if args.show_latex:
+        print(latex_source)
+
+    if args.pdf:
+        tmp_dir = tempfile.mkdtemp()
+        debug(f'Creating directory {tmp_dir}')
+        pdflatex_cmd = [
+            'pdflatex',
+            '-output-directory', tmp_dir,
+            '-jobname', 'qr'
+            ]
+        try:
+            debug('running: ' + ' '.join(pdflatex_cmd))
+            proc = subprocess.run(pdflatex_cmd,
+                                  text=True,
+                                  input=latex_source)
+            shutil.copy(os.path.join(tmp_dir, 'qr.pdf'), args.pdf)
+        finally:
+            shutil.rmtree(tmp_dir)
+            # pass
+
+if __name__ == "__main__":
+    main()
