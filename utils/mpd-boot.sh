@@ -39,5 +39,5 @@ while sleep 1 ; do
     fi
 done
 start_or_restart mpdscribble
-start_or_restart cantata
+#start_or_restart cantata
 ~/dotfiles/utils/mpd-volume2pulse.py &
