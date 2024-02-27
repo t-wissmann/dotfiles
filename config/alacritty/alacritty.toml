@@ -1,10 +1,12 @@
-custom_cursor_colors = true
-dynamic_title = false
-hide_cursor_when_typing = true
+import = ["~/.config/alacritty/font.toml"]
+# custom_cursor_colors = true
+# dynamic_title = false
+# hide_cursor_when_typing = true
 live_config_reload = true
-render_timer = false
-tabspaces = 8
-unfocused_hollow_cursor = true
+#render_timer = false
+# tabspaces = 8
+# unfocused_hollow_cursor = true
+
 
 [colors]
 draw_bold_text_with_bright_colors = true
@@ -581,25 +583,16 @@ chars = "\u001B[24;3~"
 key = "F12"
 mods = "Super"
 
-[mouse]
-faux_scrollback_lines = 1
-
 [[mouse.bindings]]
 action = "PasteSelection"
 mouse = "Middle"
 
-[mouse.double_click]
-threshold = 300
-
-[mouse.triple_click]
-threshold = 300
-
 [selection]
 semantic_escape_chars = ",│`|:\"' ()[]{}<>"
 
-[visual_bell]
-animation = "EaseOutExpo"
-duration = 0
+# [visual_bell]
+# animation = "EaseOutExpo"
+# duration = 0
 
 [window]
 decorations = "Full"
