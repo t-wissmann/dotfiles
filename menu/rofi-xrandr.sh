@@ -10,8 +10,16 @@
 internal=LVDS1
 ext=VGA1
 
-internal=$(xrandr|grep primary|cut -d' ' -f1)
-ext=$(xrandr |grep ' 'connected| grep -v primary | head -n 1| cut -d' ' -f1)
+xrandr_output=$(xrandr)
+internal=$(echo "$xrandr_output"|grep primary|cut -d' ' -f1)
+ext=$(echo "$xrandr_output"|grep ' 'connected| grep -v primary | head -n 1| cut -d' ' -f1)
+
+all_other_outputs_off=( )
+for output in $(echo "$xrandr_output"|grep -E ' (dis|)'connected|cut -d' ' -f1) ; do
+    if [[ "$output" != "$internal" ]] && [[ "$output" != "$ext" ]] ; then
+        all_other_outputs_off+=( --output "$output" --off )
+    fi
+done
 
 
 external_on_top() {
@@ -53,7 +61,7 @@ EOF
 external_off() {
 cat <<EOF
 ┌───────┐ ╭┄┄┄┄╮
-│       │ ┆    ┆   External monitor ($ext) disabled
+│       │ ┆    ┆   Disable all external monitors ($ext)
 │       │ ╰┄┄┄┄╯
 └───────┘
 EOF
@@ -83,7 +91,7 @@ internal_off
 update_hlwm() {
     herbstclient detect_monitors
     herbstclient reload
-    setxkbmap us -variant altgr-intl -option compose:menu -option ctrl:nocaps -option compose:ralt -option compose:rctrl
+    # setxkbmap us -variant altgr-intl -option compose:menu -option ctrl:nocaps -option compose:ralt -option compose:rctrl
     xset -b
     # no tag locking if only one monitor
     herbstclient try and , compare monitors.count = 1 , unlock_tag
@@ -123,32 +131,40 @@ fi
 
 case "$res" in
     0)
-        xrandr --output $ext --off --output $internal --auto --primary
+        if [[ -z "$ext" ]] ; then
+            xrandr "${all_other_outputs_off[@]}" --output "$internal" --auto --primary
+        else
+            xrandr --output "$ext" --off --output "$internal" --auto --primary
+        fi
         enable_screensaver
-        fix_hdmi_audio force-disable
+        update_hlwm
+        fix_hdmi_audio force-disable || true
         ;;
     1)
         xrandr --output $internal --auto --primary --output $ext --auto --right-of $internal
+        update_hlwm
         disable_screensaver
-        fix_hdmi_audio
+        fix_hdmi_audio || true
         ;;
     2)
         xrandr --output $internal --auto --primary --output $ext --auto --left-of $internal
+        update_hlwm
         disable_screensaver
-        fix_hdmi_audio
+        fix_hdmi_audio || true
         ;;
     3)
         xrandr --output $internal --auto --primary --output $ext --auto --pos 0x0
+        update_hlwm
         disable_screensaver
-        fix_hdmi_audio
+        fix_hdmi_audio || true
         ;;
     4)
         xrandr --output $ext --auto --output $internal --off
+        update_hlwm
         enable_screensaver
-        fix_hdmi_audio
+        fix_hdmi_audio || true
         ;;
     *)
         ;;
 esac
-update_hlwm
 
