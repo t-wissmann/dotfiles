@@ -1,3 +1,4 @@
+# use via: pandoc -d notes -o output.pdf input.md
 metadata:
   geometry: margin=2.5cm
 
