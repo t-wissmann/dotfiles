@@ -2,6 +2,9 @@
 HISTFILE=~/.histfile
 HISTSIZE=1000000
 SAVEHIST=1000000
+
+setopt HIST_IGNORE_SPACE  # don't put commands with space in history
+
 setopt appendhistory autocd beep nomatch notify
 setopt interactivecomments
 bindkey -e

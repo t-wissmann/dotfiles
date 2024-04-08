@@ -81,6 +81,12 @@ vim.g.mapleader = " "
 vim.o.timeout = true
 vim.o.title = true
 vim.o.timeoutlen = 100
+-- vim.diagnostic.disable()
+vim.diagnostic.config({
+    update_in_insert = false,
+    float = true,
+    signs = false,
+  })
 -- buffers:
 vim.keymap.set("n", "<C-o>", ":CtrlPBuffer<CR>")
 vim.keymap.set("n", "<Leader>bn", ":bnext<CR>")
@@ -165,6 +171,55 @@ function on_lsp_attach(ev)
   -- vim.keymap.set('n', '<space>f', function()
   --   vim.lsp.buf.format { async = true }
   -- end, opts)
+end
+
+function spell_cycle()
+  spelling_options = {
+    '',
+    'de',
+    'en',
+  }
+  cur_value = ''
+  if vim.opt.spell._value == true then
+    cur_value = vim.opt.spelllang._value
+  end
+  -- print("cur val: " .. cur_value .. "x")
+  -- print("cur val: " .. tostring(vim.opt.spelllang) .. "x")
+  for idx, value in pairs(spelling_options) do
+    if value == cur_value then
+      new_value = spelling_options[idx % #(spelling_options) + 1] -- 1-based indices?
+      print("Spelling Language: \"" .. tostring(new_value) .. "\"")
+      if new_value ~= '' then
+         vim.opt.spelllang = new_value
+      end
+      -- print(new_value)
+      vim.opt.spell = new_value ~= ''
+      break
+    end
+  end
+end
+vim.keymap.set("n", "<F7>", spell_cycle)
+
+-- For debugging:
+-- vim.lsp.set_log_level('debug')
+-- and then run: tail -f ~/.local/state/nvim/lsp.log
+function TexlabShowDependencyGraph()
+    t = "called"
+    -- vim.lsp.buf.execute_command({
+    --   command = "texlab.showDependencyGraph",
+    --   arguments = {},
+    -- })
+    function handler(err, result, ctx, config)
+        print(result or err)
+        t = result
+    end
+    cmd_and_args = {
+      command = "texlab.showDependencyGraph",
+      -- command = {"texlab.cleanArtifacts"},
+      arguments = {},
+      -- workDoneToken = {"some-arbitrary-text"},
+    }
+    res = vim.lsp.buf_request(0, 'workspace/executeCommand', cmd_and_args, handler)
 end
 
 return require('packer').startup(function()
