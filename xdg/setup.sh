@@ -141,6 +141,7 @@ for s in \
     application/x-shellscript \
     application/ecmascript \
     application/csv \
+    message/rfc822 \
     application/javascript
 do
     :: xdg-mime default "gvim.desktop" "$s"
