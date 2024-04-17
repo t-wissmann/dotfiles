@@ -31,6 +31,11 @@ if :: lsusb |grep "$docking_station" > /dev/null ; then
     :: herbstclient set_monitors "$resolution"
     :: herbstclient reload
     #:: ~/.config/alacritty/set-font.sh monospace
+    if ls /sys/class/net/ | grep "^enp" > /dev/null ; then
+        # activate wired network
+        :: sudo -S netctl stop-all < dev/null
+        :: sudo -S netctl start ethernet-dhcp < dev/null
+    fi
 else
     for output in $(xrandr --listmonitors|grep -oE ': \+[^ *]+'|sed 's,^: +,,') ; do
         if [[ "$output" != "eDP1" ]] ; then
@@ -40,6 +45,10 @@ else
     :: xrandr --output eDP1 --auto
     herbstclient detect_monitors
     herbstclient reload
+    if [[ "$(netctl is-active ethernet-dhcp)" = active ]] ; then
+        # disable wired network
+        :: sudo -S netctl stop-all < dev/null
+    fi
     #:: ~/.config/alacritty/set-font.sh default
 fi
 
