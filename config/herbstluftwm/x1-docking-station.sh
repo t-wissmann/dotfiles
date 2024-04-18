@@ -29,6 +29,7 @@ if :: lsusb |grep "$docking_station" > /dev/null ; then
         --output "$output" --pos 0x0 --auto
     resolution=$(xrandr --listmonitors | grep "$output" | sed 's,/[0-9]\+,,g' | grep -oE '[0-9]+x[0-9]+\+0\+0' | tail -n 1)
     :: herbstclient set_monitors "$resolution"
+    :: herbstclient unlock_tag
     :: herbstclient reload
     #:: ~/.config/alacritty/set-font.sh monospace
     if ls /sys/class/net/ | grep "^enp" > /dev/null ; then
