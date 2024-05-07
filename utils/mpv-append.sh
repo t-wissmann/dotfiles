@@ -28,7 +28,8 @@ EOF
 else
     # otherwise, start mpd
     debug "Opening in new instance"
-    mpv --keep-open=yes --force-window=immediate --input-unix-socket="$socket" "$@" || true
+    # old option name: --input-unix-socket
+    mpv --keep-open=yes --force-window=immediate --input-ipc-server="$socket" "$@" || true
     # and clean up the socket afterwards
     rm "$socket"
 fi
