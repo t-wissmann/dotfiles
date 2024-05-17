@@ -31,6 +31,7 @@ endofunctor
 endofunctors
 epimorphism
 epimorphisms
+endomorphism
 equivariant
 factorization
 factorizations
@@ -155,3 +156,5 @@ adaptors
 encoding
 encodings
 monotonicity
+Agda
+lossy
