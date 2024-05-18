@@ -183,7 +183,7 @@ gui_app "chromium --incognito https://web.skype.com"
 xdg-mime default Thunar-folder-handler.desktop inode/directory
 
 xdg-mime default libreoffice-base.desktop \
-    application/vnd.oasis.opendocument.text
+    application/vnd.oasis.opendocument.text text/rtf
 
 # Check your mail-setup with:
 # xdg-open 'mailto:test@example.de?cc=C1&cc=C2&subject=subject'
