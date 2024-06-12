@@ -1,0 +1,30 @@
+#!/usr/bin/env python3
+import argparse
+import textwrap
+
+def convert_timestamp_str(seconds_float):
+    """convert an audacity timestamp to the usual mm:ss:xx triple """
+    sec_str , frac_str = seconds_float.split('.')
+    sec = int(sec_str)
+    frac = int(frac_str)
+    mm = sec // 60
+    ss = sec % 60
+    ff = frac // 10000
+    return f'{mm:02d}:{ss:02d}:{ff:02d}'
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('TXT', help='the txt file containing the audacity marks')
+    args = parser.parse_args()
+    with open(args.TXT) as fh:
+        lines = fh.readlines()
+    lines = [l.split('\t') for l in lines]
+    for idx, l in enumerate(lines):
+        print(textwrap.dedent(f"""\
+        TRACK {idx+1:02d} AUDIO
+          TITLE "{l[2].strip()}"
+          INDEX 01 {convert_timestamp_str(l[0])}
+        """), end='')
+
+
+main()
