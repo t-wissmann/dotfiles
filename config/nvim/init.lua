@@ -120,13 +120,13 @@ vim.api.nvim_create_autocmd('FileType', {
 
 function setup_colorscheme()
   -- This function should be called in the colorscheme's config function
+  vim.cmd.colorscheme('gruvbox')
   colorscheme_lua_code = [[
   set cursorline
-  colorscheme gruvbox
 
   hi LineNr ctermbg=233 guibg=Black
-  hi Normal ctermbg=NONE term=NONE
-  hi VertSplit ctermbg=NONE ctermfg=black cterm=NONE
+  hi Normal ctermbg=NONE term=NONE guibg=NONE
+  hi VertSplit ctermbg=NONE ctermfg=black cterm=NONE guibg=NONE
   hi Visual ctermbg=black cterm=None
   hi Spellbad ctermbg=red cterm=None
   hi StatusLineNC ctermbg=black ctermfg=white cterm=NONE
@@ -294,7 +294,8 @@ return require('packer').startup(function()
   --     })
   --   end
   -- })
-  use({'morhetz/gruvbox',
+  use({'ellisonleao/gruvbox.nvim',
+    -- until neovim 10 I've used 'morhetz/gruvbox', but then: https://github.com/morhetz/gruvbox/issues/459
     config = function()
       setup_colorscheme()
     end
