@@ -75,6 +75,16 @@ let g:ale_enabled = 0
 ]],
 true)
 
+if vim.g.neovide then
+    -- Put anything you want to happen only in Neovide here
+    vim.o.guifont = "Source Code Pro:h12" -- text below applies for VimScript
+    -- g:neovide_transparency should be 0 if you want to unify transparency of content and title bar.
+    vim.g.neovide_transparency = 0.95
+    vim.g.neovide_background_color = "#9fbc0000"
+    vim.g.neovide_cursor_animation_length = 0.08
+    vim.g.neovide_cursor_trail_size = 0.0
+end
+
 vim.keymap.set("n", "<Space>", ":WhichKey ' '<CR>", { silent = true })
 vim.keymap.set("n", ",", ":WhichKey ','<CR>", { silent = true })
 vim.g.mapleader = " "
@@ -139,6 +149,12 @@ function setup_colorscheme()
   hi CursorLineNr ctermbg=233 term=NONE ctermfg=green cterm=bold
   ]]
   vim.api.nvim_exec(colorscheme_lua_code, true)
+
+  if vim.g.neovide then
+      vim.api.nvim_set_hl(0, "Normal", {bg='#181818'})
+      vim.api.nvim_set_hl(0, "Cursor", {fg='#cc9900', bg='#339966'})
+      vim.api.nvim_set_hl(0, "CursorReset", {fg='#9fbc00', bg='#008800'})
+  end
 end
 
 function on_lsp_attach(ev)
