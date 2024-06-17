@@ -7,3 +7,16 @@ koalgebraisch
 koalgebraische
 zustandsbasierte
 zustandsbasierten
+Äquivarianz
+äquivariant
+Strukturerhaltung
+Kategorientheorie
+Bindungsfunktor
+Transposition
+Transpositionen
+Gruppenoperation
+Gruppenoperationen
+Infix
+Variablennamen
+Potenzmenge
+Strukturerhaltung
