@@ -22,7 +22,7 @@ c.statusbar.padding = {
     'right': 1,
 }
 
-c.qt.force_software_rendering = 'qt-quick'
+# c.qt.force_software_rendering = 'qt-quick'
 
 c.input.insert_mode.auto_enter = True
 c.input.insert_mode.auto_leave = False
