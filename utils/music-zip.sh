@@ -14,7 +14,7 @@ export -f flac2ogg
 importfile() {
     shopt -s nocasematch
     case "$1" in
-        *.ogg|*.mp3|*.lyrics|*.txt)
+        *.ogg|*.mp3|*.lyrics|*.txt|*.cue)
             outfile="$1"
             CMD=( ln -f )
             ;;
@@ -38,7 +38,7 @@ importfile() {
         #     # temporarily ignore ogg files
         #     return
         #     ;;
-        *.py|*.wav|*.mood|*.log|*.cue|*.AVI|*.mid|*.md5|*.ffp|*.sh|*.m3u|*.pdf|*.css|*.nzb|*.sfv|*.nfo)
+        *.py|*.wav|*.mood|*.log|*.AVI|*.mid|*.md5|*.ffp|*.sh|*.m3u|*.pdf|*.css|*.nzb|*.sfv|*.nfo)
             # silently ignore some file types
             return
             ;;
