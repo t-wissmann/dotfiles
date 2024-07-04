@@ -1,4 +1,5 @@
 -- vim: sw=2 ts=2
+
 vim.api.nvim_exec(
 [[
 
@@ -85,6 +86,66 @@ if vim.g.neovide then
     vim.g.neovide_cursor_trail_size = 0.0
 end
 
+
+function find_tex_main_for_buffer()
+    bufnr = 0
+    if vim.b[bufnr].main_tex_file == nil then
+        local command = {}
+        -- table.insert(command, '--print-all')
+        table.insert(command, '--candidates')
+        --- from https://codereview.stackexchange.com/a/282183
+        for i, buf_hndl in ipairs(vim.api.nvim_list_bufs()) do
+            table.insert(command, vim.api.nvim_buf_get_name(buf_hndl))
+        end
+        table.insert(command, '--')
+        -- add the current buffer's name as the needle:
+        table.insert(command, vim.api.nvim_buf_get_name(bufnr))
+        -- run the command:
+        local Job = require'plenary.job'
+
+        -- alternatively: local output = vim.fn.system { 'echo', 'hi' }
+        job_stdout = ''
+        Job:new({
+          command = '/home/thorsten/.config/nvim/find-tex-main.py',
+          args = command,
+          -- cwd = '/usr/bin',
+          -- env = { ['a'] = 'b' },
+          on_stderr = function(error, data, j)
+            print(data)
+          end,
+          on_stdout = function(error, more_job_stdout, j)
+            job_stdout = job_stdout .. more_job_stdout
+            -- print(job_stdout)
+            -- vim.b[bufnr].main_tex_file = job_stdout
+          end,
+        }):sync()
+        if job_stdout ~= '' then
+            vim.b[bufnr].main_tex_file = job_stdout
+        end
+    end
+    return vim.b[bufnr].main_tex_file
+end
+
+function build_latex_buffer()
+    local tex_file = find_tex_main_for_buffer()
+    local Job = require'plenary.job'
+
+    -- alternatively: local output = vim.fn.system { 'echo', 'hi' }
+    Job:new({
+      command = 'latexmk',
+      args = {'-cd', tex_file},
+      -- cwd = '/usr/bin',
+      -- env = { ['a'] = 'b' },
+      on_stderr = function(error, data, j)
+        print(data)
+      end,
+      on_stdout = function(error, data, j)
+        print(data)
+      end,
+    }):sync()
+end
+
+
 vim.keymap.set("n", "<Space>", ":WhichKey ' '<CR>", { silent = true })
 vim.keymap.set("n", ",", ":WhichKey ','<CR>", { silent = true })
 vim.g.mapleader = " "
@@ -119,7 +180,10 @@ vim.api.nvim_create_autocmd('FileType', {
     callback = function()
         vim.wo.linebreak = true
         vim.keymap.set("n", ",v", ":TexlabForward<CR>", { silent = true })
-        vim.keymap.set("n", ",b", ":w<CR>:TexlabBuild<CR>", { silent = false })
+        -- vim.keymap.set("n", ",b", ":w<CR>:TexlabBuild<CR>", { silent = false })
+        -- this does not work: vim.keymap.set("n", ",b", build_latex_buffer)
+        vim.keymap.set("n", ",b", ":w<CR>:lua build_latex_buffer()<CR>", { silent = false })
+
         -- vim.keymap.set("n", ",w", ":w<CR>", { silent = false })
         vim.keymap.set("n", ",c", ":!latexmk -cd -c %:p<CR>", { silent = false })
         vim.o.sw = 2
@@ -241,6 +305,7 @@ end
 return require('packer').startup(function()
   -- configuration of packer https://github.com/wbthomason/packer.nvim
   -- Packer can manage itself
+  use 'nvim-lua/plenary.nvim'
   use 'wbthomason/packer.nvim'
   use {
       'nvim-lualine/lualine.nvim',
