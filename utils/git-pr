@@ -1,0 +1,93 @@
+#!/usr/bin/env python3
+
+import re
+import sys
+import subprocess
+import requests
+import json
+
+class PullRequest:
+    def __init__(self):
+        self.number = None  # the number
+        self.shortlabel = None # some short label for easy identification
+        self.remoteref = None  # the ref on the remote
+        self.url = None  # the web url of this pullrequest
+        self.remote = None  # the remote
+
+    def info(self):
+        return f'PR {self.number} ({self.shortlabel}) branch {self.remoteref} url {self.url}'
+
+    def suggest_remote_branch(self):
+        return f'{self.remote}/pull/{self.number}'
+
+    def suggestedname(self):
+        suffix = ''
+        if self.remoteref is not None:
+            suffix = f'-{self.shortlabel}'.replace(':', '-').replace('/', '-')
+        return f'pr{self.number}{suffix}'
+
+
+def print_debug_cmd(cmd):
+    print(':: ' + ' '.join(cmd), file=sys.stderr)
+
+def github_open_prs(repo):
+    # see https://docs.github.com/en/free-pro-team@latest/rest/reference/pulls
+    url = 'https://api.github.com/repos/{}/pulls'.format(repo)
+    r = requests.get(url, data={'state': 'open'})
+    res = []
+    for p in json.loads(r.text):
+        pr = PullRequest()
+        pr.number = p['number']
+        pr.remoteref = f'refs/pull/{pr.number}/head'
+        pr.shortlabel = p['head']['ref']
+        pr.url = p['url']
+        res.append(pr)
+
+    return res
+
+def main():
+    # get the main git url
+    remote = 'origin'
+    url = subprocess.run(['git', 'config', f'remote.{remote}.url'],
+                         stdout=subprocess.PIPE,
+                         universal_newlines=True).stdout.rstrip()
+
+    # get host and repo identifier
+    m = re.match(r'([^:]*://)?([^@/]*@)?([^/@]*)/(.*)', url)
+    if m is None:
+        print(f'Unknown url {url}', file=sys.stderr)
+        sys.exit(1)
+    host = m.group(3)
+    repo = m.group(4)
+    if repo.endswith('.git'):
+        repo = repo[0:-len('.git')]
+    print(f'Detected repo »{repo}« on »{host}«', file=sys.stderr)
+
+    pulls = github_open_prs(repo)
+    for p in pulls:
+        p.remote = remote
+
+    # fetch for updates
+    cmd = ['git', 'fetch', remote]
+    for p in pulls:
+        cmd += ['+' + p.remoteref + ':remotes/' + p.suggest_remote_branch()]
+    print_debug_cmd(cmd)
+
+    for p in pulls:
+        print(p.suggestedname())
+        cmd = [
+            'git',
+            'branch',
+            '--track',
+            p.suggestedname(),
+            p.suggest_remote_branch(),
+        ]
+        print_debug_cmd(cmd)
+        #subprocess.call(cmd)
+        name = p.suggestedname()
+        cmd_r = ['git', 'config', f'branch.{name}.remote', p.remote]
+        cmd_m = ['git', 'config', f'branch.{name}.merge', p.remoteref]
+        print_debug_cmd(cmd_r)
+        print_debug_cmd(cmd_m)
+
+main()
