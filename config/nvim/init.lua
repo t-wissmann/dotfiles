@@ -102,11 +102,12 @@ function find_tex_main_for_buffer()
         table.insert(command, vim.api.nvim_buf_get_name(bufnr))
         -- run the command:
         local Job = require'plenary.job'
+        local command_path = vim.fn.stdpath("config") .. '/find-tex-main.py'
 
         -- alternatively: local output = vim.fn.system { 'echo', 'hi' }
         job_stdout = ''
         Job:new({
-          command = '/home/thorsten/.config/nvim/find-tex-main.py',
+          command = command_path,
           args = command,
           -- cwd = '/usr/bin',
           -- env = { ['a'] = 'b' },
@@ -128,9 +129,14 @@ end
 
 function build_latex_buffer()
     local tex_file = find_tex_main_for_buffer()
+    if tex_file == nil or tex_file == '' then
+        print('No main tex file found for ' .. vim.api.nvim_buf_get_name(0))
+        return
+    end
     local Job = require'plenary.job'
 
     -- alternatively: local output = vim.fn.system { 'echo', 'hi' }
+    -- print('Compiling ' .. tex_file)
     Job:new({
       command = 'latexmk',
       args = {'-cd', tex_file},
@@ -142,7 +148,7 @@ function build_latex_buffer()
       on_stdout = function(error, data, j)
         print(data)
       end,
-    }):sync()
+    }):start() -- do not :sync() or the ui might block
 end
 
 
