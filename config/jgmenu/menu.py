@@ -168,7 +168,7 @@ class PulseAudio:
         default_sink_name = PulseAudio.get_default_sink_name()
         entries = []
         all_sinks = PulseAudio.list_sinks()
-        volume_percent_re = re.compile('([0-9]+)\%')
+        volume_percent_re = re.compile(r'([0-9]+)\%')
         for sink in all_sinks:
             icon = ''
             if default_sink_name == sink['Name']:
@@ -213,7 +213,7 @@ class PulseAudio:
     @staticmethod
     def source_items():
         #default_source_name = PulseAudio.get_default_source_name()
-        volume_percent_re = re.compile('([0-9]+)\%')
+        volume_percent_re = re.compile(r'([0-9]+)\%')
         entries = []
         all_sources = PulseAudio.list_sources()
         for source in all_sources:
