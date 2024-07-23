@@ -148,6 +148,14 @@ function build_latex_buffer()
       on_stdout = function(error, data, j)
         print(data)
       end,
+      on_exit = function(error, exit_code, j)
+        if exit_code ~= 0 then
+            vim.schedule(function()
+                vim.cmd("messages")
+                -- vim.api.nvim_command('messages')
+            end)
+        end
+      end,
     }):start() -- do not :sync() or the ui might block
 end
 

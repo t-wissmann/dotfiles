@@ -326,9 +326,9 @@ bar.widget = W.ListLayout([
     #     ('1', hlwm.HLWMLayoutSwitcher(hc, xkblayouts, command = setxkbmap.split(' '))),
     #     ], tab_renderer = zip_renderer),
     conky.ConkyWidget(text= conky_text),
-    W.DateTime('%H:%M'),
-    # W.DateTime('DE %H:%M', timezone='Europe/Berlin'),
-    # W.DateTime(' / AU %H:%M ', timezone='Australia/Canberra'),
+    # W.DateTime('%H:%M'),
+    W.DateTime('%H:%M', timezone='Europe/Berlin'),
+    # W.DateTime(' / %H:%M ', timezone='Europe/Tallinn'),
 ] + maybe_systray)
 
 
