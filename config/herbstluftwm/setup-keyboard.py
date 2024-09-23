@@ -199,7 +199,9 @@ def main():
 
     get_stdout.verbose = args.verbose
 
+
     # clear existing keyboard options:
+    get_stdout(['xdotool', 'key', '--clearmodifiers', ''])
     get_stdout(['setxkbmap', '-option'])
     # set some default:
     global global_options, default_layout
