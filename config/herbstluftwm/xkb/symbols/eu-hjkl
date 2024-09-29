@@ -2,6 +2,8 @@
 // of a basic American layout.  Based on <https://eurkey.steffen.bruentjen.eu>.
 // Copyright 2012 Steffen Bruentjen (eurkey (at) steffen dot bruentjen dot de)
 
+// Temporarily: make rctrl a shift key
+
 default partial alphanumeric_keys modifier_keys
 xkb_symbols "basic"  {
 
@@ -57,6 +59,8 @@ xkb_symbols "basic"  {
     key <AB08>	{[        comma,            less,               ograve,               Ograve  ]};
     key <AB09>	{[       period,         greater,               oacute,               Oacute  ]};
     key <AB10>	{[        slash,        question,         questiondown,                U2026  ]}; // …
+
+    key <RCTL> { [ Shift_R ] };
 
     include "level3(ralt_switch)"
 };
