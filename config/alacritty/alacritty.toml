@@ -11,6 +11,24 @@ live_config_reload = true
 [colors]
 draw_bold_text_with_bright_colors = true
 
+[colors.cursor]
+cursor = "0xff9900"
+text = "0x000000"
+
+[colors.line_indicator]
+background = "#9fbc00"
+foreground = "#121212"
+
+[colors.normal]
+black = "0x000000"
+blue = "0xFE8019"
+cyan = "0x689d6a"
+green = "0x4DA539"
+magenta = "0xC52A48"
+red = "0xcc241d"
+white = "0xF8F0E6"
+yellow = "0xFACF2A"
+
 [colors.bright]
 black = "0x928374"
 blue = "0xD65D0E"
@@ -20,10 +38,6 @@ magenta = "0xF74B5F"
 red = "0xfb4934"
 white = "0xebdbb2"
 yellow = "0xfabd2f"
-
-[colors.cursor]
-cursor = "0xff9900"
-text = "0x000000"
 
 [colors.dim]
 black = "0x333333"
@@ -35,19 +49,6 @@ red = "0xf2777a"
 white = "0xdddddd"
 yellow = "0xffcc66"
 
-[colors.line_indicator]
-background = "#9fbc00"
-foreground = "#121212"
-
-[colors.normal]
-black = "0x000000"
-blue = "0xFE8019"
-cyan = "0x689d6a"
-green = "0xD6D533"
-magenta = "0xC52A48"
-red = "0xcc241d"
-white = "0xa89984"
-yellow = "0xFACF2A"
 
 [colors.primary]
 background = "0x181818"

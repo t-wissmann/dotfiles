@@ -13,11 +13,11 @@ URxvt.highlightTextColor: black
 URxvt.cursorColor: #FF9900
 
 !#include ".Xdefaults.d/tw-colors"
-#include ".Xdefaults.d/gruvbox-dark.xresources"
+!#include ".Xdefaults.d/gruvbox-dark.xresources"
 !#include ".Xdefaults.d/gruvbox-light.xresources"
 !#include ".Xdefaults.d/tango.colors"
 !#include ".Xdefaults.d/tangobright.colors"
-!#include ".Xdefaults.d/default.colors"
+#include ".Xdefaults.d/default.colors"
 
 ! disable bold font
 URxvt.cursorBlink: true
