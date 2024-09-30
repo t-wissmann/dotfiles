@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 colornames=(
-    default
+    black
     red
     green
     yellow
@@ -43,4 +43,43 @@ for i in "${!colornames[@]}" ; do
     printcol " \\e[1;3${i}m"
     echo -n -e "\e[0m"
     echo
+done
+
+echo
+
+for i in -1 "${!colornames[@]}" ; do
+    for brightness in '' ';1' ; do
+        if [[ "$brightness" = "" ]] ; then
+            if [[ "$i" -eq -1 ]] ; then
+                name='default'
+            else
+                name="${colornames[$i]}"
+            fi
+        else
+            name=''
+        fi
+        printf "%-10s" " ${name} "
+        # columns = backgrounds
+        for j in '' 0 7 black-fg white-fg ; do
+            escseq="[0${brightness}"
+            case "$j" in
+                black-fg)
+                    escseq+=";0;$((40+i))"
+                    ;;
+                white-fg)
+                    escseq+=";37;$((40+i))"
+                    ;;
+                '')
+                    escseq+=";$((30+i))"
+                    ;;
+                *)
+                    escseq+=";$((30+i));$((40+j))"
+                    ;;
+            esac
+            escseq+="m"
+            echo -ne -e "\e${escseq}"
+            printf "%-14s" " ${escseq} "
+        done
+        echo -e "\e[0m"
+    done
 done
