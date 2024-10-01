@@ -64,7 +64,7 @@ for i in -1 "${!colornames[@]}" ; do
             escseq="[0${brightness}"
             case "$j" in
                 black-fg)
-                    escseq+=";0;$((40+i))"
+                    escseq+=";30;$((40+i))"
                     ;;
                 white-fg)
                     escseq+=";37;$((40+i))"

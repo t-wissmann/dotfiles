@@ -41,7 +41,7 @@ if [ "$selection" = "$stop_all" ] ; then
     sudo netctl stop-all
 else
     connect() {
-        ::() { echo -e "\e[1;32m::\e[1;37m $*\e[0m" ; }
+        ::() { echo -e "\e[1;32m::\e[1;37m $*\e[0m" >&2 ; }
         :: sudo journalctl -f  --unit='system-netctl.slice' '&'
         sudo journalctl -f  --unit='system-netctl.slice' &
         journalctl_pid=$!

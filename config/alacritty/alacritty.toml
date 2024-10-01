@@ -21,9 +21,9 @@ foreground = "#121212"
 
 [colors.normal]
 black = "0x000000"
-blue = "0xFE8019"
-cyan = "0x689d6a"
-green = "0x4DA539"
+blue = "0x6528DE"
+cyan = "0xFF8000"
+green = "0x52BE3B"
 magenta = "0xC52A48"
 red = "0xcc241d"
 white = "0xF8F0E6"
