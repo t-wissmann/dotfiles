@@ -23,6 +23,8 @@
 	ff = merge --ff-only
 	mff = merge --ff-only
 	ldiff = latexdiff --latexmk --ignore-makefile --subtree
+    # Why didn't this beautiful acronym come to my mind?
+	wlog = log -p --word-diff=color
 [merge]
 	tool = vimdiff
 [push]
