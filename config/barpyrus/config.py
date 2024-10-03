@@ -106,7 +106,8 @@ conky_text += "%{T-}"
 conky_text += "${if_match $battery_percent < 8}%{B\\#57000F}%{F\\#FF7F27}${else}"
 conky_text += "${if_match $battery_percent < 15}%{F\\#FF7F27}${else}"
 conky_text += "%{F\\#CDCDCD}${endif}${endif}"
-conky_text += " $battery_percent% "
+# format_time only works if times_in_seconds is activated
+conky_text += " $battery_percent% (${format_time $battery_time \"\\h:\\2m\"})"
 conky_text += "${endif}" # endif: if BAT0 exists
 conky_text += "%{B-}%{F-}"
 conky_text += conky_sep
@@ -325,7 +326,7 @@ bar.widget = W.ListLayout([
     #     ('0', W.RawLabel('')),
     #     ('1', hlwm.HLWMLayoutSwitcher(hc, xkblayouts, command = setxkbmap.split(' '))),
     #     ], tab_renderer = zip_renderer),
-    conky.ConkyWidget(text= conky_text),
+    conky.ConkyWidget(text=conky_text, config={'times_in_seconds': 'true'}),
     W.DateTime('%H:%M'),
     # W.DateTime('%H:%M', timezone='Europe/Berlin'),
     # W.DateTime(' / %H:%M ', timezone='Europe/Tallinn'),
