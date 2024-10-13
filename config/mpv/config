@@ -1,6 +1,7 @@
 # For pitch correction:
 #   -af scaletempo=speed=pitch --audio-pitch-correction=no
 
+hwdec=auto
 
 [big-cache]
 #cache=123400
