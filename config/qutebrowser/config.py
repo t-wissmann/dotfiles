@@ -10,7 +10,7 @@ from qutebrowser.misc.objects import commands
 
 config.load_autoconfig()
 
-c.editor.command = 'urxvt -e vim {}'.split(' ')
+c.editor.command = 'alacritty -e nvim {}'.split(' ')
 c.auto_save.session = True
 c.content.user_stylesheets = [ '~/.config/qutebrowser/style.css' ]
 c.downloads.remove_finished = 0
