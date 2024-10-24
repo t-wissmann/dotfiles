@@ -42,13 +42,13 @@ if [ "$selection" = "$stop_all" ] ; then
 else
     connect() {
         ::() { echo -e "\e[1;32m::\e[1;37m $*\e[0m" >&2 ; }
-        :: sudo journalctl -f  --unit='system-netctl.slice' '&'
-        sudo journalctl -f  --unit='system-netctl.slice' &
-        journalctl_pid=$!
         :: sudo netctl stop-all
         sudo netctl stop-all
         :: sudo netctl start "$selection"
         sudo netctl start "$selection"
+        :: sudo journalctl -f  --unit='system-netctl.slice' '&'
+        sudo journalctl -f  --unit='system-netctl.slice' &
+        journalctl_pid=$!
         sudo netctl wait-online "$selection"
         :: Press any key to close… | tr -d '\n'
         read -n 1
@@ -56,7 +56,9 @@ else
     }
     export selection
     export -f connect
-    urxvt -title "netctl start $selection" -e bash -c connect
+    #urxvt -title "netctl start $selection" -e bash -c connect
+    # alacritty --command bash -c connect
+    alacritty --title 'netctl start eduroam' --command bash -c connect
 fi
 
 
