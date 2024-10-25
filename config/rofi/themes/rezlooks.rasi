@@ -35,7 +35,7 @@
     alternate-active-foreground: @active-foreground;
     active-background:           #A0C29A;
     alternate-active-background: #A0C29A;
-    font: "Bitstream Vera Sans 10";
+    font: "Bitstream Vera Sans Mono 10";
     monospace: "Bitstream Vera Sans Mono 10";
 }
 
