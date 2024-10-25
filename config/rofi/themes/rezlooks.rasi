@@ -7,7 +7,7 @@
     selected-normal-foreground:  rgba ( 245, 245, 245, 100 % );
     foreground:                  #3d3d3d;
     normal-foreground:           @foreground;
-    textbox-background:          rgba( 255, 255, 255, 95% );
+    textbox-background:          rgba( 255, 255, 255, 100 % ); /* Reduce opacity here if desired */
     alternate-normal-background: rgba ( 150, 150, 150, 20%) ;
     red:                         rgba ( 220, 50, 47, 100 % );
     selected-urgent-foreground:  rgba ( 245, 245, 245, 100 % );
@@ -24,6 +24,7 @@
     normal-background:           transparent;
     lightfg:                     rgba ( 88, 104, 117, 100 % );
     selected-normal-background:  rgba ( 152, 177, 127, 100 % );
+    selected-active-background:  rgba ( 152, 177, 127, 100 % ); /* #A0C29A; #2B591C; */
     border-color:                rgba ( 80, 80,80, 100%) ;
     spacing:                     2;
     separatorcolor:               #D3C8AE;
@@ -34,7 +35,6 @@
     alternate-active-foreground: @active-foreground;
     active-background:           #A0C29A;
     alternate-active-background: #A0C29A;
-    selected-active-background:  #A0C29A; /* #2B591C; */
     font: "Bitstream Vera Sans 10";
     monospace: "Bitstream Vera Sans Mono 10";
 }
