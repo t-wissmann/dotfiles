@@ -1,6 +1,7 @@
 configuration {
     modi: "window,drun,ssh";
     font: "bitstream vera sans mono bold 10";
+    monospace: "bitstream vera sans mono bold 10";
     location: 0;
     yoffset: 8;
     xoffset: 8;
@@ -146,7 +147,7 @@ configuration {
   }
 }
 
-@theme "plain-grey"
+@theme "rezlooks"
 
 /* vim: ft=css
 */

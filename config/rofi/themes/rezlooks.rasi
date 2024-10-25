@@ -16,8 +16,7 @@
     alternate-urgent-background: rgba ( 208, 208, 208, 100 % );
     active-foreground:           #2D661A ;
     lightbg:                     rgba ( 238, 232, 213, 100 % );
-    selected-active-foreground:  rgba ( 245, 245, 245, 100 % );
-    alternate-active-background: rgba ( 208, 208, 208, 100 % );
+    selected-active-foreground:  #dedede;
     /*background:                  rgba ( 245, 245, 245, 100 % ); */
     background:                  #F2F2F2;
     alternate-normal-foreground: @foreground;
@@ -33,10 +32,11 @@
     alternate-urgent-foreground: @urgent-foreground;
     background-color:            transparent;
     alternate-active-foreground: @active-foreground;
-    active-background:           rgba ( 245, 245, 245, 100 % );
-    selected-active-background:  #2B591C;
-    font: "Bitstream Vera Sans 8";
-    monospace: "Bitstream Vera Sans Mono 8";
+    active-background:           #A0C29A;
+    alternate-active-background: #A0C29A;
+    selected-active-background:  #A0C29A; /* #2B591C; */
+    font: "Bitstream Vera Sans 10";
+    monospace: "Bitstream Vera Sans Mono 10";
 }
 
 #window {
