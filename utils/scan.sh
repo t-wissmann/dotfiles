@@ -25,6 +25,11 @@ if [ -z "$outfile" ] ; then
     exit 1
 fi
 
+if [[ "${outfile%.pdf}" != "${outfile}" ]] ; then
+    echo "Adjusting output file from PDF to JPG"
+    outfile="${outfile%.pdf}.jpg"
+fi
+
 while [ -e "$outfile" ] ; do
     # get the last number in the string $outfile,
     # and break otherwise
