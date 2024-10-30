@@ -27,8 +27,8 @@ trysource ~/.bash.d/functions
 trysource ~/.bash_private
 
 #load some settings
-if [ -f "$HOME/.bash.d/settings.$(hostname)" ] ; then
-    trysource "$HOME/.bash.d/settings.$(hostname)"
+if [ -f "$HOME/.bash.d/settings.${HOSTNAME}" ] ; then
+    trysource "$HOME/.bash.d/settings.${HOSTNAME}"
 else
     trysource ~/.bash.d/settings
 fi

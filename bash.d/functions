@@ -26,8 +26,8 @@ function mkcd()
 
 function unison-sync-all(){
     local PROFILES=( uni scripts dev internet privat )
-    [ `hostname` != morgentau ] && local PROFILES=( ${PROFILES[@]} musik )
-    [ `hostname` != ameise ] && local PROFILES=( ${PROFILES[@]} biz themes )
+    [ "$HOSTNAME" != morgentau ] && local PROFILES=( ${PROFILES[@]} musik )
+    [ "$HOSTNAME" != ameise ] && local PROFILES=( ${PROFILES[@]} biz themes )
     # do normal thins first -> batch
     # do critical thins interactive -> -auto
     for mode in batch auto ; do
@@ -732,8 +732,8 @@ function timediff() {
     local remote=${1:-cip}
     local format="%-10s: %s\\n"
     printf "$format" HOSTNAME DATE
-    echo "printf \"$format\" \$(hostname) \$(date +%s)" | ssh $remote bash
-    echo "printf \"$format\" \$(hostname) \$(date +%s)" | bash
+    echo "printf \"$format\" \${HOSTNAME} \$(date +%s)" | ssh $remote bash
+    echo "printf \"$format\" \${HOSTNAME} \$(date +%s)" | bash
 }
 
 function get_git_clone_url() {
