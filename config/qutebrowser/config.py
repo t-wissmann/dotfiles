@@ -191,7 +191,7 @@ guifont = 'bold 8pt "Bitstream Vera Sans" bold'
 # c.fonts.web.family.fixed = 'Bitstream Vera Sans Mono'
 
 import socket
-if socket.gethostname() == 'x1':
+if socket.gethostname() in ['x1g5']:
     c.zoom.default = '90%'
 
 if 'cmd-set-text' in commands:

@@ -25,7 +25,7 @@ fi
 hc setenv FREETYPE_PROPERTIES "truetype:interpreter-version=35"
 
 #xsetroot -solid '#D47A55'
-if [[ $HOSTNAME == x1 ]] ; then
+if [[ $HOSTNAME == x1g5 ]] ; then
     hc set frame_gap 16
     hc set snap_gap 16
 else
@@ -60,7 +60,7 @@ case "$HOSTNAME" in
         #feh --bg-tile ~/Documents/wallpaper/patterns/black-pattern-ob.png
         #feh --bg-tile ~/Documents/wallpaper/patterns/rXuLc2TI.gif
         ;;
-    hoth|towi04|x1)
+    hoth|towi04|x1*)
         nitrogen --restore
         ;;
     *)
@@ -587,7 +587,7 @@ if hc and , set_attr theme.name "$theme_path" , compare theme.name != '' ; then
     hc set frame_transparent_width 10
     hc set frame_bg_active_color '#86AB5F54'
     case "$HOSTNAME" in
-        x1)
+        x1*)
             hc set_attr theme.style_override '
             .tab .content {
                 /* text-align: center; */
@@ -617,7 +617,7 @@ else
             hc attr theme.normal.color '#2D2D2D'
             hc set frame_bg_active_color '#9fbc00'
             ;;
-        x1)
+        x1*)
             green_i3_like_theme
             hc attr theme.title_font 'bitstream vera sans:pixelsize=18'
             hc attr theme.title_height '19'
@@ -643,7 +643,7 @@ if [ -d "$SCRIPTSDIR" ] ; then
     #hc keybind $Mod-Alt-space spawn $SCRIPTSDIR/execwith.sh \
     #    ~/.bash_settings $SCRIPTSDIR/dmenu.sh set_layout
     terminal_options='WIDTH_PERC=100'
-    if [[ "$HOSTNAME" == x1 ]] ; then
+    if [[ "$HOSTNAME" == x1g5 ]] ; then
         terminal_options+=' HEIGHT_PIXELS=600'
     fi
     hc keybind $Mod-t spawn env $terminal_options $SCRIPTSDIR/q3terminal.sh
@@ -697,7 +697,7 @@ case "$HOSTNAME" in
         hc keybind $Mod-Control-q quit
         xset -b
         ;;
-    x1)
+    x1*)
         hc keybind XF86MonBrightnessDown spawn xbacklight -dec 10
         hc keybind XF86MonBrightnessUp spawn xbacklight -inc 10
         hc keybind XF86Tools spawn ~/dotfiles/menu/rofi-netctl

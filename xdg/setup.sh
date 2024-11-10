@@ -133,6 +133,11 @@ done
 Icon=text-editor
 #cli_app vim \
 #gui_app emacsclient\ -n\ -c\ --alternate-editor=\ '' \
+
+gui_text_edit='gvim.desktop'
+if which neovide &> /dev/null ; then
+    gui_text_edit='neovide.desktop'
+fi
 for s in \
     $(mimes 'text/.*'|grep -v '^\.'| grep -vE 'text/html') \
     text/x-perl \
@@ -144,7 +149,7 @@ for s in \
     message/rfc822 \
     application/javascript
 do
-    :: xdg-mime default "gvim.desktop" "$s"
+    :: xdg-mime default "$gui_text_edit" "$s"
 done
 
 Icon=x-office-document
