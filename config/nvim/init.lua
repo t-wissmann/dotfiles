@@ -186,7 +186,7 @@ vim.keymap.set("n", "<Leader>gP", ":Git push<CR>")
 vim.keymap.set("n", "<Leader>gf", ":Git pull --rebase<CR>")
 vim.keymap.set("n", "<Leader>gs", ":Git status<CR>")
 vim.keymap.set("n", "<Leader>ga", ":Git add<CR>")
-vim.keymap.set("n", "<Leader>gl", ":Git log<CR>")
+vim.keymap.set("n", "<Leader>gl", ":Git log --decorate=short<CR>")
 vim.keymap.set("n", "<Leader>gS", ":terminal git show --word-diff=color<CR>")
 vim.keymap.set("n", "<Leader>sn", ":Git log<CR>")
 

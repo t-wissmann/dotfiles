@@ -9,8 +9,18 @@ base-devel
 xorg-xinit
 arandr
 ntp
+
+git
+
+# basic network:
 ethtool
 dnsutils
+dhclient
+dhcpcd
+net-tools
+wpa_supplicant
+netctl
+openresolv
 
 
 # packages of daily use
@@ -26,7 +36,7 @@ figlet
 feh
 calc
 nitrogen
-transset-df
+# transset-df # :-(
 curl
 ghc
 git
@@ -38,19 +48,20 @@ gvim
 #gpicview
 viewnior
 sxiv
-lxappearance
+# lxappearance # :-(
 ghostscript
 herbstluftwm
 imagemagick
 i3lock
 mutt
-task
+#task
 net-tools
 openssh
 #pidgin
 #libpurple
 rubber
 rxvt-unicode
+alacritty
 xdotool
 screen
 thunar
@@ -70,8 +81,8 @@ wget
 htop
 xclip
 wmctrl
-youtube-dl
 mpv
+yt-dlp # youtube-dl
 inkscape
 sshfs
 graphviz
