@@ -299,7 +299,7 @@ if int(monitor) == 0:
 else:
     maybe_systray = []
 
-if socket.gethostname() == 'x1':
+if False:  # socket.gethostname() == 'x1g5':
     center_widget = W.ListLayout([ W.RawLabel('%{c}'), conky_widget ])
 else:
     center_widget = W.TabbedLayout(list(enumerate([
