@@ -106,7 +106,7 @@ function find_tex_main(source_file_path)
     local command_path = vim.fn.stdpath("config") .. '/find-tex-main.py'
 
     -- alternatively: local output = vim.fn.system { 'echo', 'hi' }
-    job_stdout = nil
+    job_stdout = ''
     Job:new({
       command = command_path,
       args = command,
@@ -130,10 +130,16 @@ end
 function find_tex_main_for_buffer(action_on_main_tex_file)
     bufnr = 0
     tex_file = vim.api.nvim_buf_get_name(bufnr)
+    if vim.b[bufnr].main_tex_file ~= nil then
+        action_on_main_tex_file(action_on_main_tex_file)
+        return
+    end
     if vim.b[bufnr].main_tex_file == nil then
-        vim.b[bufnr].main_tex_file = find_tex_main(tex_file)
-        if input ~= nil then
-            action_on_main_tex_file(vim.b[bufnr].main_tex_file)
+        main_tex_file = find_tex_main(tex_file)
+        if main_tex_file ~= nil then
+            vim.b[bufnr].main_tex_file = main_tex_file
+            action_on_main_tex_file(main_tex_file)
+            return
         end
     end
     -- if still no main tex file has been found,
