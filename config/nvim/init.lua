@@ -131,7 +131,7 @@ function find_tex_main_for_buffer(action_on_main_tex_file)
     bufnr = 0
     tex_file = vim.api.nvim_buf_get_name(bufnr)
     if vim.b[bufnr].main_tex_file ~= nil then
-        action_on_main_tex_file(action_on_main_tex_file)
+        action_on_main_tex_file(tex_file)
         return
     end
     if vim.b[bufnr].main_tex_file == nil then
@@ -169,9 +169,16 @@ function build_latex_buffer()
 
         -- alternatively: local output = vim.fn.system { 'echo', 'hi' }
         -- print('Compiling ' .. tex_file)
+        command = 'latexmk'
+        args = {'-cd', tex_file}
+        command_str = command .. ''  -- force a new copy
+        for k, v in pairs(args) do
+            command_str = command_str .. ' ' .. tostring(v)
+        end
+        print('Running: ' .. command_str)
         Job:new({
-          command = 'latexmk',
-          args = {'-cd', tex_file},
+          command = command,
+          args = args,
           -- cwd = '/usr/bin',
           -- env = { ['a'] = 'b' },
           on_stderr = function(error, data, j)
