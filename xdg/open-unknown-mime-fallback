@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+# (currently unused)
+
+file="$1"
+# make file path absolute
+if [[ "${file:0:1}" != / ]] ; then
+    file="$PWD/$file"
+fi
+basename="${file##*/}"
+extension="${file##*.}"
+
+case "$extension" in
+    gp3|gp4)
+        exec tuxguitar-bin "$file"
+        ;;
+    *)
+        notify-send "Unknown extension $extension" \
+            "No application for $basename"
+        ;;
+esac
+
+

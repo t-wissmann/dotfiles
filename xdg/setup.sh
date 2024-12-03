@@ -70,6 +70,9 @@ mkdir -p "$appdir"
 app() {
     terminal="$1"
     cmd="$2"
+    if [[ "${cmd:0:2}" == "./" ]] ; then
+        cmd="$PWD/${cmd:2}"
+    fi
     cmd_name="${cmd%% *}"
     shift 2
     local tmp=${cmd_name##*/}
@@ -182,6 +185,13 @@ gui_app ~/dotfiles/utils/mpv-append.sh \
     $(mimes 'video/.*') \
     $(mimes 'audio/.*')
 
+# gui_app ./open-unknown-mime-fallback \
+#     application/octet-stream
+
+gui_app tuxguitar.desktop \
+    application/x-wine-extension-gp3 \
+    application/x-wine-extension-gp4
+
 FileName="skype-web-chromium"
 EntryName="Skype Web (in Chromium)"
 gui_app "chromium --incognito https://web.skype.com"
@@ -208,5 +218,11 @@ for i in *.desktop ; do
     fi
     :: ln -s "`pwd`/$i" "$targetdir"
 done
-:: update-desktop-database "$targetdir"
 
+if [[ -d /opt/tuxguitar/ ]] ; then
+    :: sed 's/^Exec=tuxguitar /Exec=tuxguitar-bin /' /opt/tuxguitar/share/applications/tuxguitar.desktop > "$targetdir/tuxguitar.desktop"
+    xdg-mime default tuxguitar.desktop \
+        audio/x-gtp
+    :: xdg-mime install --novendor /opt/tuxguitar/share/mime/packages/tuxguitar.xml
+fi
+:: update-desktop-database "$targetdir"
