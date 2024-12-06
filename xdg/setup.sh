@@ -25,7 +25,8 @@ desktop_entry() {
     local terminal="$2"
     prefix=""
     if [ "$terminal" = true ] ; then
-        prefix="urxvt +hold -e "
+        #prefix="urxvt +hold -e "
+        prefix="alacritty -e "  # --hold is a bit cumbersome to use
         terminal=false
     fi
     local name="${1%% *}"
