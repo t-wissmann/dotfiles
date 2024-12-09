@@ -16,7 +16,7 @@ url   = sys.argv[1]
 o     = urllib.parse.urlparse(url)
 query = urllib.parse.parse_qs(o.query)
 
-address = o.netloc + o.path # one of them is empty
+address = urllib.parse.unquote(o.netloc + o.path) # one of them is empty
 
 # >>> from urllib.parse import urlparse
 # >>> urlparse('mailto:bla@blub.com')
