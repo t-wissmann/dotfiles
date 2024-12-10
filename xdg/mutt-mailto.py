@@ -27,7 +27,10 @@ address = urllib.parse.unquote(o.netloc + o.path) # one of them is empty
 draft = None
 if 'body' in query:
     draft = tempfile.NamedTemporaryFile(mode='w',delete=False)
-    draft.write(query['body'][0].replace("\r","") + '\n')
+    body_str = query['body'][0].replace("\r","")
+    if not body_str.endswith("\n"):
+        body_str += "\n"
+    draft.write(body_str)
     draft.close()
 
 
