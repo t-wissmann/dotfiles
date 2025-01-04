@@ -165,7 +165,6 @@ bindkey "^X^E" edit-command-line
 
 trysource ~/.zshrc-host-specific
 trysource /usr/share/fzf/key-bindings.zsh
-trysource /usr/share/fzf/completion.zsh
 
 # Always trigger the fzf completion routine
 export FZF_COMPLETION_TRIGGER=''
