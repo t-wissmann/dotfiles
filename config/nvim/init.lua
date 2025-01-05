@@ -151,6 +151,7 @@ function find_tex_main_for_buffer(action_on_main_tex_file)
             default = tex_file,
             completion = 'file',
         }, function(input)
+            print(' ')
             if input ~= nil and input ~= '' then
                 vim.b[bufnr].main_tex_file = input
                 action_on_main_tex_file(input)
@@ -175,7 +176,7 @@ function build_latex_buffer()
         for k, v in pairs(args) do
             command_str = command_str .. ' ' .. tostring(v)
         end
-        print('Running: ' .. command_str)
+        print(command_str)
         Job:new({
           command = command,
           args = args,
