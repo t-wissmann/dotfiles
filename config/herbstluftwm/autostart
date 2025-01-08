@@ -122,9 +122,10 @@ hc keybind $Mod-z spawn ~/.config/herbstluftwm/omnivim.py
 
 # tags
 BINDS=(
-    1:irc
-    2:vim
+    1:main
+    2:irc
     3:web
+    4:vim
 )
 
 

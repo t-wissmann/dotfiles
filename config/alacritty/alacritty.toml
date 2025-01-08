@@ -1,4 +1,3 @@
-[general]
 import = ["~/.config/alacritty/font.toml"]
 # custom_cursor_colors = true
 # dynamic_title = false
