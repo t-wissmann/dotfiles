@@ -86,6 +86,13 @@ if vim.g.neovide then
     vim.g.neovide_cursor_trail_size = 0.0
 end
 
+
+function make_path_relative(filepath)
+    local p = require'plenary.path'
+    return p:new(filepath):make_relative()
+end
+
+
 function find_tex_main(source_file_path)
     --- try to find the main tex file for the given source file
     --- which is possible included in some other tex file.
@@ -131,11 +138,14 @@ function find_tex_main_for_buffer(action_on_main_tex_file)
     bufnr = 0
     tex_file = vim.api.nvim_buf_get_name(bufnr)
     if vim.b[bufnr].main_tex_file ~= nil then
-        action_on_main_tex_file(tex_file)
+        action_on_main_tex_file(vim.b[bufnr].main_tex_file)
         return
     end
     if vim.b[bufnr].main_tex_file == nil then
         main_tex_file = find_tex_main(tex_file)
+        if main_tex_file ~= tex_file then
+            print('Auto detected main tex file ' .. make_path_relative(main_tex_file) .. ' for ' .. make_path_relative(tex_file))
+        end
         if main_tex_file ~= nil then
             vim.b[bufnr].main_tex_file = main_tex_file
             action_on_main_tex_file(main_tex_file)
