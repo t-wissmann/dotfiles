@@ -45,6 +45,8 @@ class InputFile:
         self.rel_targetpath = self.rel_basename + '.mp3'
         # remove '.' at end of directory names, it causes trouble in windows mounts
         self.rel_targetpath = self.rel_targetpath.replace('./', '/')
+        # also remove all question marks:
+        self.rel_targetpath = self.rel_targetpath.replace('?', '')
         remove_characters = r'*?\|,;:+=<>[]"' + "\'"
         # self.abs_targetpath = self.abs_targetpath.translate(str.maketrans(remove_characters, len(remove_characters) * '_'))
         self.abs_targetpath = os.path.join(args.TARGETDIR, self.rel_targetpath)
