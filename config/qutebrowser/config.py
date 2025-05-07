@@ -27,6 +27,7 @@ c.statusbar.padding = {
 c.input.insert_mode.auto_enter = True
 c.input.insert_mode.auto_leave = False
 c.input.insert_mode.auto_load = True
+c.input.insert_mode.leave_on_load = False
 c.input.insert_mode.plugins = True
 
 c.content.headers.accept_language = 'de-DE,en-US,en'
@@ -134,6 +135,9 @@ c.aliases['pr0'] = 'spawn --userscript pr0gramm-up-downvotes'
 c.aliases['reload-config'] = 'spawn --userscript reload-config'
 c.aliases['r'] = 'config-source'
 
+# c.content.headers.user_agent = {
+#     'www.sciencedirect.com': "Mozilla/5.0 ({os_info}) AppleWebKit/{webkit_version} (KHTML, like Gecko) {qt_key}/{qt_version} {upstream_browser_key}/122.0.0.0 Safari/{webkit_version}"
+# }
 
 c.colors.completion.even.bg = '#242424'
 c.colors.completion.odd.bg = c.colors.completion.even.bg
