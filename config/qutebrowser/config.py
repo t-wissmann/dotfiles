@@ -135,9 +135,6 @@ c.aliases['pr0'] = 'spawn --userscript pr0gramm-up-downvotes'
 c.aliases['reload-config'] = 'spawn --userscript reload-config'
 c.aliases['r'] = 'config-source'
 
-# c.content.headers.user_agent = {
-#     'www.sciencedirect.com': "Mozilla/5.0 ({os_info}) AppleWebKit/{webkit_version} (KHTML, like Gecko) {qt_key}/{qt_version} {upstream_browser_key}/122.0.0.0 Safari/{webkit_version}"
-# }
 
 c.colors.completion.even.bg = '#242424'
 c.colors.completion.odd.bg = c.colors.completion.even.bg
@@ -273,5 +270,7 @@ if not hasattr(qutebrowser.api, 'custom_interceptor'):
         qutebrowser.api.custom_interceptor(info)
     # message.info("installing interceptor")
     interceptor.register(custom_interceptor)
+
+config.set('content.headers.user_agent', 'Mozilla/5.0 ({os_info}) AppleWebKit/{webkit_version} (KHTML, like Gecko) {qt_key}/{qt_version} {upstream_browser_key}/122.0.0.0 Safari/{webkit_version}', 'www.sciencedirect.com')
 
 qutebrowser.api.custom_interceptor = redirect_certain_hosts
