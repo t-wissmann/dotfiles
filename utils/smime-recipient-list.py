@@ -129,7 +129,10 @@ def main():
         for i in recipients:
             #debug(f'mail encrypted for: {i}')
             if i in serialnum2cert:
+                debug(f'Mail encrypted for certificate {os.path.basename(serialnum2cert[i])}')
                 matching_keys.append(serialnum2cert[i])
+            else:
+                debug(f'Mail encrypted for unknown serian number {i}')
     if args.print_path:
         for i in matching_keys:
             print(i)

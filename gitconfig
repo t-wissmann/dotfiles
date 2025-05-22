@@ -37,7 +37,7 @@
 	noprefix = true # Warning: this breaks format-patch!
 # vim: noet
 [init]
-    #defaultBranch = master
+    defaultBranch = main
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
