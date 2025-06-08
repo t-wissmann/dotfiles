@@ -25,10 +25,11 @@ fi
 hc setenv FREETYPE_PROPERTIES "truetype:interpreter-version=35"
 
 #xsetroot -solid '#D47A55'
-if [[ $HOSTNAME == x1n1 ]] ; then
+if [[ $HOSTNAME == x1g5 ]] ; then
     hc set frame_gap 16
     hc set snap_gap 16
 else
+    # x1 nano with these settings:
     hc set frame_gap 12
     hc set snap_gap 12
 fi
