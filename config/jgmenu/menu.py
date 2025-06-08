@@ -259,7 +259,7 @@ def main():
 
     maybe_netctl = []
     netctl_path = os.path.expanduser('~/dotfiles/menu/rofi-netctl')
-    if socket.gethostname() in ['x1g5'] and os.path.exists(netctl_path):
+    if socket.gethostname() in ['x1g5', 'x1n1'] and os.path.exists(netctl_path):
         #if os.path.exists(netctl_path):
         maybe_netctl = [
             Item('Network', 'network-wired', netctl_path),

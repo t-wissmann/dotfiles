@@ -10,7 +10,7 @@ import os
 import subprocess
 import socket
 
-is_hidpi = socket.gethostname() in ['x1g5']
+is_hidpi = socket.gethostname() in ['x1g5', 'x1n1']
 # Copy this config to ~/.config/barpyrus/config.py
 
 # set up a connection to herbstluftwm in order to get events
