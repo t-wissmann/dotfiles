@@ -24,7 +24,7 @@ if :: lsusb |grep "$docking_station" > /dev/null ; then
     sleep 1
     # variable will be used without quotes:
     laptop_resolution='--auto'
-    laptop_resolution='--mode 1920x1200'
+    laptop_resolution='--mode 2160x1350'
     external_resolution='--mode 3840x2160'
     :: xrandr --output eDP1 $laptop_resolution --pos 0x0 --primary \
         --output "$output" --pos 0x0 $external_resolution
