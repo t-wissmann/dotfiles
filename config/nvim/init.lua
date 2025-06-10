@@ -66,7 +66,6 @@ filetype indent off
 autocmd FileType text syn match   plainTextComment "#.*$"
 autocmd FileType text hi def link plainTextComment Comment
 
-
 noremap  <buffer> <silent> k gk
 noremap  <buffer> <silent> j gj
 
@@ -120,7 +119,9 @@ function find_tex_main(source_file_path)
       -- cwd = '/usr/bin',
       -- env = { ['a'] = 'b' },
       on_stderr = function(error, data, j)
-        print(data)
+          if data ~= nil then
+            print(data)
+          end
       end,
       on_stdout = function(error, more_job_stdout, j)
         job_stdout = job_stdout .. more_job_stdout
@@ -193,10 +194,14 @@ function build_latex_buffer()
           -- cwd = '/usr/bin',
           -- env = { ['a'] = 'b' },
           on_stderr = function(error, data, j)
-            print(data)
+            if data ~= nil then
+                print(data)
+            end
           end,
           on_stdout = function(error, data, j)
-            print(data)
+            if data ~= nil then
+                print(data)
+            end
           end,
           on_exit = function(error, exit_code, j)
             if exit_code ~= 0 then
