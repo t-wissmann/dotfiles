@@ -91,6 +91,7 @@ function build_latex_buffer()
             return
         end
         local Job = require'plenary.job'
+        parentw = 0
 
         -- alternatively: local output = vim.fn.system { 'echo', 'hi' }
         -- print('Compiling ' .. tex_file)
@@ -101,19 +102,34 @@ function build_latex_buffer()
             command_str = command_str .. ' ' .. tostring(v)
         end
         -- see https://neovim.io/doc/user/api.html#api-floatwin
-        outputbuf = vim.api.nvim_create_buf(false, 'nomodified')
+        if vim.w[parentw].command_output_buf ~= nil and vim.api.nvim_buf_is_valid(vim.w[parentw].command_output_buf) then
+            outputbuf = vim.w[parentw].command_output_buf
+        else
+            outputbuf = vim.api.nvim_create_buf(false, 'nomodified')
+            vim.w[parentw].command_output_buf = outputbuf
+        end
+        vim.api.nvim_buf_set_name(outputbuf, command)
+        -- vim.api.nvim_buf_delete(0, { unload = true })
         output_linecount = 5
-        outputwin = vim.api.nvim_open_win(outputbuf, false,
-          { relative='win',
-            width=vim.api.nvim_win_get_width(0),
-            height=output_linecount,
-            focusable=true,
-            style='minimal',
-            border={ "", "─", "", "", "", "", "", "" },
-            anchor='NW',
-            bufpos={10000, 0}, -- some ridiculous large numer => glue it to the bottom
-            title=command_str,
-          })
+        if vim.w[parentw].command_output_win ~= nil and vim.api.nvim_win_is_valid(vim.w[parentw].command_output_win) then
+            outputwin = vim.w[parentw].command_output_win
+        else
+            outputwin = vim.api.nvim_open_win(outputbuf, false,
+              { --relative='win',
+                width=vim.api.nvim_win_get_width(0),
+                split='below',
+                height=output_linecount,
+                -- focusable=true,
+                -- style='minimal',
+                -- border={ "", "─", "", "", "", "", "", "" },
+                -- anchor='NW',
+                --bufpos={10000, 0}, -- some ridiculous large numer => glue it to the bottom
+                -- title=command_str,
+              })
+            vim.w[parentw].command_output_win = outputwin
+            vim.w[outputwin].command_output_win = outputwin
+            vim.w[outputwin].command_output_buf = outputbuf
+        end
         -- print(command_str)
         Job:new({
           command = command,
@@ -141,6 +157,9 @@ function build_latex_buffer()
                 vim.defer_fn(function()
                     -- vim.api.nvim_command('messages')
                       vim.api.nvim_win_close(outputwin, false)  -- do not force
+                      vim.api.nvim_buf_delete(outputbuf, { unload = true })
+                      vim.w[parentw].command_output_win = nil
+                      vim.w[parentw].command_output_buf = nil
                 end, 1200)
             end
           end,
