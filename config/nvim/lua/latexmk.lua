@@ -92,7 +92,7 @@ function build_latex_buffer()
         return {
             command = 'latexmk',
             args = {'-cd', tex_file},
-            title = 'Compiling tex file via latexmk',
+            title = 'Compiling ' .. vim.fs.basename(tex_file) .. ' via latexmk',
         }
     end)
 end
@@ -102,7 +102,7 @@ function clean_latex_buffer()
         return {
             command = 'latexmk',
             args = {'-cd', '-c', tex_file},
-            title = 'Cleaning tex output via latexmk',
+            title = 'Cleaning output of ' .. vim.fs.basename(tex_file) .. ' via latexmk',
         }
     end)
 end
@@ -138,6 +138,7 @@ function run_latex_command(parentw_id, tex_file, command_invocation)
         local cmd_obj = global_win2commands[parentw_id]
         if cmd_obj == nil then
             cmd_obj = {
+                job = nil,
                 outputbuf_id = nil,
                 outputwin_id = nil,
                 has_outputbuf = function(this)
@@ -214,7 +215,13 @@ function run_latex_command(parentw_id, tex_file, command_invocation)
             end
           end,
         }
+        
+        if cmd_obj.job ~= nil then
+            cmd_obj.job:shutdown()  -- kill any existing job
+            cmd_obj.job = nil
+        end
         j = Job:new(job_data)
+        cmd_obj.job = j
         j:start()
         --  = Job.new(Job, job_data)
         -- vim.w[outputwin_id].command_job:start() -- do not :sync() or the ui might block
