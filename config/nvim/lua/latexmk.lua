@@ -91,30 +91,41 @@ function build_latex_buffer()
             return
         end
         local Job = require'plenary.job'
-        parentw = 0
+        parentw_id = 0
+        parentw_obj = vim.w[parentw_id]
+        if parentw_obj.tex_command_obj == nil then
+            parentw_obj.tex_command_obj = {
+                parentw_id = 0,
+                outputbuf_id = nil,
+                outputwin_id = nil,
+                has_outputbuf = function(this)
+                    return this.outputbuf_id ~= nil and vim.api.nvim_buf_is_valid(this.outputbuf_id)
+                end,
+                has_outputwin = function(this)
+                    return this.outputwin_id ~= nil and vim.api.nvim_win_is_valid(this.outputwin_id)
+                end,
+            }
+        end
+        local cmd_obj = parentw_obj.tex_command_obj
 
         -- alternatively: local output = vim.fn.system { 'echo', 'hi' }
         -- print('Compiling ' .. tex_file)
         command = 'latexmk'
         args = {'-cd', tex_file}
+        cmd_obj.command = command
         command_str = command .. ''  -- force a new copy
         for k, v in pairs(args) do
             command_str = command_str .. ' ' .. tostring(v)
         end
         -- see https://neovim.io/doc/user/api.html#api-floatwin
-        if vim.w[parentw].command_output_buf ~= nil and vim.api.nvim_buf_is_valid(vim.w[parentw].command_output_buf) then
-            outputbuf = vim.w[parentw].command_output_buf
-        else
-            outputbuf = vim.api.nvim_create_buf(false, 'nomodified')
-            vim.w[parentw].command_output_buf = outputbuf
+        if not cmd_obj:has_outputbuf() then
+            cmd_obj.outputbuf_id = vim.api.nvim_create_buf(false, 'nomodified')
         end
-        vim.api.nvim_buf_set_name(outputbuf, command)
+        -- vim.api.nvim_buf_set_name(cmd_obj.outputbuf_id, command)
         -- vim.api.nvim_buf_delete(0, { unload = true })
         output_linecount = 5
-        if vim.w[parentw].command_output_win ~= nil and vim.api.nvim_win_is_valid(vim.w[parentw].command_output_win) then
-            outputwin = vim.w[parentw].command_output_win
-        else
-            outputwin = vim.api.nvim_open_win(outputbuf, false,
+        if not cmd_obj:has_outputwin() then
+            cmd_obj.outputwin_id = vim.api.nvim_open_win(cmd_obj.outputbuf_id, false,
               { --relative='win',
                 width=vim.api.nvim_win_get_width(0),
                 split='below',
@@ -126,12 +137,10 @@ function build_latex_buffer()
                 --bufpos={10000, 0}, -- some ridiculous large numer => glue it to the bottom
                 -- title=command_str,
               })
-            vim.w[parentw].command_output_win = outputwin
-            vim.w[outputwin].command_output_win = outputwin
-            vim.w[outputwin].command_output_buf = outputbuf
+            vim.w[cmd_obj.outputwin_id].tex_command_obj = cmd_obj
         end
         -- print(command_str)
-        Job:new({
+        job_data = {
           command = command,
           args = args,
           -- cwd = '/usr/bin',
@@ -139,31 +148,36 @@ function build_latex_buffer()
           on_stderr = function(error, data, j)
             if data ~= nil then
                 vim.schedule(function()
-                    vim.api.nvim_buf_set_lines(outputbuf, -1, -1, false, {data})
-                    vim.api.nvim_win_set_cursor(outputwin, {vim.api.nvim_buf_line_count(outputbuf) - 1, 0})
+                    vim.api.nvim_buf_set_lines(cmd_obj.outputbuf_id, -1, -1, false, {data})
+                    vim.api.nvim_win_set_cursor(cmd_obj.outputwin_id, {vim.api.nvim_buf_line_count(cmd_obj.outputbuf_id) - 1, 0})
                 end)
             end
           end,
           on_stdout = function(error, data, j)
             if data ~= nil then
                 vim.schedule(function()
-                    vim.api.nvim_buf_set_lines(outputbuf, -1, -1, false, {data})
-                    vim.api.nvim_win_set_cursor(outputwin, {vim.api.nvim_buf_line_count(outputbuf), 0})
+                    vim.api.nvim_buf_set_lines(cmd_obj.outputbuf_id, -1, -1, false, {data})
+                    vim.api.nvim_win_set_cursor(cmd_obj.outputwin_id, {vim.api.nvim_buf_line_count(cmd_obj.outputbuf_id), 0})
                 end)
             end
           end,
           on_exit = function(error, exit_code, j)
+            vim.w[parentw_id].tex_command_obj = nil
             if exit_code == 0 then
                 vim.defer_fn(function()
                     -- vim.api.nvim_command('messages')
-                      vim.api.nvim_win_close(outputwin, false)  -- do not force
-                      vim.api.nvim_buf_delete(outputbuf, { unload = true })
-                      vim.w[parentw].command_output_win = nil
-                      vim.w[parentw].command_output_buf = nil
+                    vim.api.nvim_win_close(cmd_obj.outputwin_id, false)  -- do not force
+                    vim.api.nvim_buf_delete(cmd_obj.outputbuf_id, { unload = true })
+                    vim.w[parentw_id].command_output_win = nil
+                    vim.w[parentw_id].command_output_buf = nil
                 end, 1200)
             end
           end,
-        }):start() -- do not :sync() or the ui might block
+        }
+        j = Job:new(job_data)
+        j:start()
+        --  = Job.new(Job, job_data)
+        -- vim.w[outputwin_id].command_job:start() -- do not :sync() or the ui might block
     end)
 end
 
