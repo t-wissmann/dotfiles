@@ -85,36 +85,88 @@ function find_tex_main_for_buffer(action_on_main_tex_file)
 end
 
 function build_latex_buffer()
-    find_tex_main_for_buffer(function(tex_file)
-        if tex_file == nil or tex_file == '' then
-            print('No main tex file found for ' .. vim.api.nvim_buf_get_name(0))
-            return
-        end
-        local Job = require'plenary.job'
-        parentw = 0
+    if vim.api.nvim_buf_get_option(0, 'modified') then
+        vim.cmd('write') -- write the file
+    end
+    run_latex_command_for_buffer(function(tex_file)
+        return {
+            command = 'latexmk',
+            args = {'-cd', tex_file},
+            title = 'Compiling tex file via latexmk',
+        }
+    end)
+end
 
-        -- alternatively: local output = vim.fn.system { 'echo', 'hi' }
-        -- print('Compiling ' .. tex_file)
-        command = 'latexmk'
-        args = {'-cd', tex_file}
-        command_str = command .. ''  -- force a new copy
-        for k, v in pairs(args) do
+function clean_latex_buffer()
+    run_latex_command_for_buffer(function(tex_file)
+        return {
+            command = 'latexmk',
+            args = {'-cd', '-c', tex_file},
+            title = 'Cleaning tex output via latexmk',
+        }
+    end)
+end
+
+global_win2commands = {}
+
+--
+-- get_invocation on file is a function receiving the main tex file name
+-- and it returns a table with fields 'command' and 'args'
+--
+function run_latex_command_for_buffer(get_invocation)
+    winid = vim.fn.win_getid(vim.api.nvim_win_get_number(0))
+    if global_win2commands[winid] ~= nil and global_win2commands[winid].outputwin_id == winid then
+        -- if the command is run while the output window is focused
+        cmd_obj = global_win2commands[winid]
+        run_latex_command(0, cmd_obj.tex_file, get_invocation(tex_file))
+    else
+        parentw_id = 0  -- id of parent window
+        find_tex_main_for_buffer(function(tex_file)
+            if tex_file == nil or tex_file == '' then
+                print('No main tex file found for ' .. vim.api.nvim_buf_get_name(0))
+                return
+            end
+            invocation = get_invocation(tex_file)
+            run_latex_command(parentw_id, tex_file, invocation)
+        end)
+    end
+end
+
+function run_latex_command(parentw_id, tex_file, command_invocation)
+        local Job = require'plenary.job'
+        parentw_id = vim.fn.win_getid(parentw_id) -- normalize window id
+        local cmd_obj = global_win2commands[parentw_id]
+        if cmd_obj == nil then
+            cmd_obj = {
+                outputbuf_id = nil,
+                outputwin_id = nil,
+                has_outputbuf = function(this)
+                    return this.outputbuf_id ~= nil and vim.api.nvim_buf_is_valid(this.outputbuf_id)
+                end,
+                has_outputwin = function(this)
+                    return this.outputwin_id ~= nil and vim.api.nvim_win_is_valid(this.outputwin_id)
+                end,
+            }
+            global_win2commands[parentw_id] = cmd_obj
+        end
+
+        cmd_obj.invocation = invocation
+        command_str = cmd_obj.invocation.command .. ''  -- force a new copy
+        for k, v in pairs(cmd_obj.invocation.args) do
             command_str = command_str .. ' ' .. tostring(v)
         end
         -- see https://neovim.io/doc/user/api.html#api-floatwin
-        if vim.w[parentw].command_output_buf ~= nil and vim.api.nvim_buf_is_valid(vim.w[parentw].command_output_buf) then
-            outputbuf = vim.w[parentw].command_output_buf
+        if not cmd_obj:has_outputbuf() then
+            cmd_obj.outputbuf_id = vim.api.nvim_create_buf(false, 'nomodified')
         else
-            outputbuf = vim.api.nvim_create_buf(false, 'nomodified')
-            vim.w[parentw].command_output_buf = outputbuf
+            -- otherwise, clear existing buffer:
+            vim.api.nvim_buf_set_lines(cmd_obj.outputbuf_id, 0, -1, false, {})
         end
-        vim.api.nvim_buf_set_name(outputbuf, command)
+        vim.api.nvim_buf_set_name(cmd_obj.outputbuf_id, cmd_obj.invocation.title)
         -- vim.api.nvim_buf_delete(0, { unload = true })
         output_linecount = 5
-        if vim.w[parentw].command_output_win ~= nil and vim.api.nvim_win_is_valid(vim.w[parentw].command_output_win) then
-            outputwin = vim.w[parentw].command_output_win
-        else
-            outputwin = vim.api.nvim_open_win(outputbuf, false,
+        if not cmd_obj:has_outputwin() then
+            cmd_obj.outputwin_id = vim.api.nvim_open_win(cmd_obj.outputbuf_id, false,
               { --relative='win',
                 width=vim.api.nvim_win_get_width(0),
                 split='below',
@@ -126,29 +178,28 @@ function build_latex_buffer()
                 --bufpos={10000, 0}, -- some ridiculous large numer => glue it to the bottom
                 -- title=command_str,
               })
-            vim.w[parentw].command_output_win = outputwin
-            vim.w[outputwin].command_output_win = outputwin
-            vim.w[outputwin].command_output_buf = outputbuf
+            global_win2commands[cmd_obj.outputwin_id] = cmd_obj
         end
+        -- print('Current output window with id ' .. cmd_obj.outputwin_id)
         -- print(command_str)
-        Job:new({
-          command = command,
-          args = args,
+        job_data = {
+          command = cmd_obj.invocation.command,
+          args = cmd_obj.invocation.args,
           -- cwd = '/usr/bin',
           -- env = { ['a'] = 'b' },
           on_stderr = function(error, data, j)
             if data ~= nil then
                 vim.schedule(function()
-                    vim.api.nvim_buf_set_lines(outputbuf, -1, -1, false, {data})
-                    vim.api.nvim_win_set_cursor(outputwin, {vim.api.nvim_buf_line_count(outputbuf) - 1, 0})
+                    vim.api.nvim_buf_set_lines(cmd_obj.outputbuf_id, -1, -1, false, {data})
+                    vim.api.nvim_win_set_cursor(cmd_obj.outputwin_id, {vim.api.nvim_buf_line_count(cmd_obj.outputbuf_id) - 1, 0})
                 end)
             end
           end,
           on_stdout = function(error, data, j)
             if data ~= nil then
                 vim.schedule(function()
-                    vim.api.nvim_buf_set_lines(outputbuf, -1, -1, false, {data})
-                    vim.api.nvim_win_set_cursor(outputwin, {vim.api.nvim_buf_line_count(outputbuf), 0})
+                    vim.api.nvim_buf_set_lines(cmd_obj.outputbuf_id, -1, -1, false, {data})
+                    vim.api.nvim_win_set_cursor(cmd_obj.outputwin_id, {vim.api.nvim_buf_line_count(cmd_obj.outputbuf_id), 0})
                 end)
             end
           end,
@@ -156,16 +207,19 @@ function build_latex_buffer()
             if exit_code == 0 then
                 vim.defer_fn(function()
                     -- vim.api.nvim_command('messages')
-                      vim.api.nvim_win_close(outputwin, false)  -- do not force
-                      vim.api.nvim_buf_delete(outputbuf, { unload = true })
-                      vim.w[parentw].command_output_win = nil
-                      vim.w[parentw].command_output_buf = nil
+                    vim.api.nvim_win_close(cmd_obj.outputwin_id, false)  -- do not force
+                    vim.api.nvim_buf_delete(cmd_obj.outputbuf_id, { unload = true })
+                    global_win2commands[parentw_id] = nil
                 end, 1200)
             end
           end,
-        }):start() -- do not :sync() or the ui might block
-    end)
+        }
+        j = Job:new(job_data)
+        j:start()
+        --  = Job.new(Job, job_data)
+        -- vim.w[outputwin_id].command_job:start() -- do not :sync() or the ui might block
 end
+
 
 -- For debugging:
 -- vim.lsp.set_log_level('debug')

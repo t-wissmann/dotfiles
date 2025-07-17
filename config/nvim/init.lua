@@ -128,10 +128,11 @@ vim.api.nvim_create_autocmd('FileType', {
         vim.keymap.set("n", ",v", ":TexlabForward<CR>", { silent = true })
         -- vim.keymap.set("n", ",b", ":w<CR>:TexlabBuild<CR>", { silent = false })
         -- this does not work: vim.keymap.set("n", ",b", build_latex_buffer)
-        vim.keymap.set("n", ",b", ":w<CR>:lua build_latex_buffer()<CR>", { silent = false })
+        -- vim.keymap.set("n", ",b", ":w<CR>:lua build_latex_buffer()<CR>", { silent = false })
+        vim.keymap.set("n", ",b", ":lua build_latex_buffer()<CR>", { silent = false })
+        vim.keymap.set("n", ",c", ":lua clean_latex_buffer()<CR>", { silent = false })
 
         -- vim.keymap.set("n", ",w", ":w<CR>", { silent = false })
-        vim.keymap.set("n", ",c", ":!latexmk -cd -c %:p<CR>", { silent = false })
         vim.o.sw = 2
         vim.o.ts = 2
     end,
