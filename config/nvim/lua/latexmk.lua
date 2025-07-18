@@ -165,11 +165,11 @@ function run_latex_command(parentw_id, tex_file, command_invocation)
         end
         vim.api.nvim_buf_set_name(cmd_obj.outputbuf_id, cmd_obj.invocation.title)
         -- vim.api.nvim_buf_delete(0, { unload = true })
-        output_linecount = 5
         if not cmd_obj:has_outputwin() then
+            output_linecount = math.floor(vim.api.nvim_win_get_height(parentw_id) * 0.33)
             cmd_obj.outputwin_id = vim.api.nvim_open_win(cmd_obj.outputbuf_id, false,
               { --relative='win',
-                width=vim.api.nvim_win_get_width(0),
+                width=vim.api.nvim_win_get_width(parentw_id),
                 split='below',
                 height=output_linecount,
                 -- focusable=true,
