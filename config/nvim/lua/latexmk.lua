@@ -188,7 +188,7 @@ function run_latex_command(parentw_id, tex_file, command_invocation)
           args = cmd_obj.invocation.args,
           -- cwd = '/usr/bin',
           -- env = { ['a'] = 'b' },
-          on_stderr = function(error, data, j)
+          on_stderr = function(j, data)
             if data ~= nil then
                 vim.schedule(function()
                     vim.api.nvim_buf_set_lines(cmd_obj.outputbuf_id, -1, -1, false, {data})
@@ -196,7 +196,7 @@ function run_latex_command(parentw_id, tex_file, command_invocation)
                 end)
             end
           end,
-          on_stdout = function(error, data, j)
+          on_stdout = function(j, data)
             if data ~= nil then
                 vim.schedule(function()
                     vim.api.nvim_buf_set_lines(cmd_obj.outputbuf_id, -1, -1, false, {data})
@@ -204,18 +204,22 @@ function run_latex_command(parentw_id, tex_file, command_invocation)
                 end)
             end
           end,
-          on_exit = function(error, exit_code, j)
+          on_exit = function(j, exit_code)
             if exit_code == 0 then
                 vim.defer_fn(function()
-                    -- vim.api.nvim_command('messages')
-                    vim.api.nvim_win_close(cmd_obj.outputwin_id, false)  -- do not force
-                    vim.api.nvim_buf_delete(cmd_obj.outputbuf_id, { unload = true })
-                    global_win2commands[parentw_id] = nil
+                    -- only delete window and buffer if no
+                    -- other (more recent) job is running in this window
+                    if cmd_obj.job == j then
+                        cmd_obj.job = nil
+                        -- vim.api.nvim_command('messages')
+                        vim.api.nvim_win_close(cmd_obj.outputwin_id, false)  -- do not force
+                        vim.api.nvim_buf_delete(cmd_obj.outputbuf_id, { unload = true })
+                        global_win2commands[parentw_id] = nil
+                    end
                 end, 1200)
             end
           end,
         }
-        
         if cmd_obj.job ~= nil then
             cmd_obj.job:shutdown()  -- kill any existing job
             cmd_obj.job = nil
