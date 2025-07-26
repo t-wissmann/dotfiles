@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+
+# load all albums into the playlist in the following order:
+#   1. sort by albumartist/artist
+#   2. sort their albums by date
+#   3. sort by discnumber
+#   4. sort by track number
+
+mpc listall -f '[%albumartist%|%artist%]/%date%/%album%/disc%disc%/track%track%/-///%file%' \
+    | sed 's,/disc\([0-9]\)/\(.*\)///,/disc0\1/\2///,'  \
+    | sed 's,/track\([0-9]\)/\(.*\)///,/track0\1/\2///,'  \
+    | sort \
+    | sed 's,.*///,,' \
+    | mpc add
+# we use '///' as a marker between the tags and the filepath.
+# this works, because we can assume that the filepath in %file% is normalized
+# and does not contain '///'. Also, .* is greedy, so the sed command drops
+# everything until the last occurrence of '///':
+#
+#   sed 's,.*///,,' <<< "foo///bar///baz"
+#
+# The first sed command replaces any one-digit track/disc numbers with two-digit numbers
+# such that the sorting is w.r.t. their numerical value. We ensure that we only adjust numbers
+# before '///'. This however implies that we can not replace all one-digit numbers simultaneously,
+# because the matches overlap.
