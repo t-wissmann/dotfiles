@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import textwrap
 import argparse
+import json
 import os
 import re
 import sys
@@ -43,6 +44,8 @@ def main():
                         the modified source on stdout.
                         Example: 'latex-strip-comments.py /dev/stdin'
                         """)
+    parser.add_argument('--readme-type', default='json', choices=['txt', 'json'],
+            help=""" format of the readme file (txt refers to .XXX)""")
     parser.add_argument('--no-readme', default=False, action='store_true',
                         help='include no 00README.XXX file')
     args = parser.parse_args()
@@ -103,7 +106,20 @@ def main():
         written_files.append((i, 'file', os.path.join(source_dir, i)))
 
     if not args.no_readme:
-        written_files.append(('00README.XXX', 'text', 'nostamp'))
+        if args.readme_type == 'json':
+            json_contents = {
+                'sources': [
+                    {'filename': os.path.basename(args.mainfile),
+                     'usage': 'toplevel',
+                    }
+                ],
+                'stamp': False,
+            }
+            readme_file = ('00README.json', 'text', json.dumps(json_contents))
+        else:
+            assert(args.readme_type == 'txt')
+            readme_file = ('00README.XXX', 'text', 'nostamp')
+        written_files.append(readme_file)
 
     print(f'content of {args.output}:')
     for i, kind, source in written_files:
