@@ -8,8 +8,9 @@
 }
 
 ask() {
-    echo "==> $1 [y/n]"
+    echo -n "==> $1 [y/n] "
     read -n 1 reply
+    echo
     if [[ "${reply^^}" == 'Y' ]] ; then
         return 0
     else
