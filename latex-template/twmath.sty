@@ -1,0 +1,153 @@
+\NeedsTeXFormat{LaTeX2e}
+
+\ProvidesPackage{twmath}[2025/09/10 Some Macros]
+
+\RequirePackage{ifthen}
+
+\newif\if@twmath@thmenv
+\DeclareOption{thmenv}{\@twmath@thmenvtrue}
+\DeclareOption{nothmenv}{\@twmath@envfalse}
+
+\newif\if@twmath@mathmacros
+\DeclareOption{mathmacros}{\@twmath@mathmacrostrue}
+\DeclareOption{nomathmacros}{\@twmath@mathmacrosfalse}
+
+\newif\if@twmath@identifiers
+\DeclareOption{identifiers}{\@twmath@identifierstrue}
+\DeclareOption{noidentifiers}{\@twmath@identifiersfalse}
+
+\@twmath@thmenvtrue
+\@twmath@mathmacrostrue
+\@twmath@identifierstrue
+\ProcessOptions\relax
+
+
+\RequirePackage{tikz}
+\RequirePackage{etoolbox}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\if@twmath@thmenv %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\RequirePackage{amsthm}
+
+\newcommand{\resetCurThmBraces}{%
+  \gdef\curThmBraceOpen{(}%
+  \gdef\curThmBraceClose{)}}
+\resetCurThmBraces
+\newcommand{\removeThmBraces}{%
+  \gdef\curThmBraceOpen{}%
+  \gdef\curThmBraceClose{}}
+
+\newenvironment{envcite}{\removeThmBraces}{\resetCurThmBraces}
+
+% patch amsthm and lipics:
+\patchcmd{\thmhead}{(#3)}{\curThmBraceOpen #3\curThmBraceClose }{}{}%
+% patch springer's theorem environment 
+\ifdef{\spnewtheorem}{%
+  \def\@spopargbegintheorem#1#2#3#4#5{\trivlist
+        \item[\hskip\labelsep{#4#1\ #2}]{#4{\theorembracketopen}#3{\theorembracketclose}\@thmcounterend\ }#5}
+}{}
+
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{observation}[theorem]{Observation}
+\else
+\fi
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\newcommand{\newbatchmacro}[2]{%
+  \foreach \curname in {#2}{%
+    \expandafter#1\curname
+  }
+}
+
+\newcommand{\newmathcalmacro}[1]{%
+    \csgdef{#1}{\ensuremath{\mathcal{#1}}}
+}
+
+\newcommand{\newmathcalmacros}[1]{\newbatchmacro{\newmathcalmacro}{#1}}
+
+
+\newcommand{\newmathsfmacro}[1]{%
+    \csgdef{#1}{\ensuremath{\mathsf{#1}}}
+}
+\newcommand{\newmathsfmacros}[1]{\newbatchmacro{\newmathcalmacro}{#1}}
+\newcommand{\newmathbbmacro}[1]{%
+    \csgdef{#1}{\ensuremath{\mathbb{#1}}}
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\if@twmath@mathmacros %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\set}[2][]{%
+  \ifthenelse{\equal{#2}{}}{%
+    \ensuremath{{#1\emptyset}}%
+  }{%
+    \ensuremath{{#1\{#2#1\}}}%
+  }%
+}
+
+\newsavebox{\mypullbackcorner}%
+\sbox{\mypullbackcorner}{%
+\begin{tikzpicture}
+    \draw[-] (0,0) -- (.5em,.5em) -- (0,1em);
+\end{tikzpicture}%
+}
+% usage: \pullbacklabel{angle}
+\newcommand{\pullbackangle}[2][]{\arrow[phantom,to path={
+                     -- ($ (\tikztostart)!1cm!#2:([xshift=8cm]\tikztostart) $)
+                        node[anchor=west,pos=0.0,rotate=#2,
+                        inner xsep = 0]
+                        {\begin{tikzpicture}[minimum
+                        height=1mm,baseline=0,#1]
+    \draw[-] (0,0) -- (.5em,.5em) -- (0,1em);
+                        \end{tikzpicture}}}]{}}
+\newcommand{\descto}[3][]{\arrow[phantom]{#2}[font=\footnotesize,#1]{\text{\begin{tabular}{c}{}#3\end{tabular}}}}
+
+
+\tikzstyle{shiftarr}=[
+        rounded corners,%
+        to path={--([#1]\tikztostart.center)
+                     -- ([#1]\tikztotarget.center) \tikztonodes
+                     -- (\tikztotarget)},
+]
+
+\newcommand{\textqt}[1]{`#1'}
+\newcommand{\fpair}[1]{\ensuremath{\langle #1 \rangle}}
+
+\else\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\if@twmath@identifiers %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Set}{\ensuremath{\mathsf{Set}}}
+\newcommand{\Coalg}{\ensuremath{\mathsf{Coalg}}}
+%\newcommand{\exp}{\ensuremath{\mathsf{exp}}}
+\newcommand{\Powf}{\ensuremath{\mathcal{P}_{\mathsf{f}}}}
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\Expected}{\ensuremath{\mathbb{E}}}
+
+\newcommand{\R}{\ensuremath{\mathbb{R}}}
+\newcommand{\Kl}{\ensuremath{\mathcal{K}\!\ell}}
+\newcommand{\hookto}{\ensuremath{\hookrightarrow}}
+\newcommand{\epito}{\ensuremath{\twoheadrightarrow}}
+\newcommand{\monoto}{\ensuremath{\rightarrowtail}}
+\newcommand{\inr}{\ensuremath{\mathsf{inr}}}
+\newcommand{\inl}{\ensuremath{\mathsf{inl}}}
+\newcommand{\prl}{\ensuremath{\mathsf{pr}_1}}
+\newcommand{\pr}{\ensuremath{\mathsf{pr}}}
+\newcommand{\prr}{\ensuremath{\mathsf{pr}_2}}
+\newcommand{\id}{\ensuremath{\mathsf{id}}}
+\renewcommand{\Im}{\mathord{\mathcal{I}\mathsf{m}}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
