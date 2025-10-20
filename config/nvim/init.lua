@@ -70,9 +70,6 @@ filetype indent off
 autocmd FileType text syn match   plainTextComment "#.*$"
 autocmd FileType text hi def link plainTextComment Comment
 
-noremap  <buffer> <silent> k gk
-noremap  <buffer> <silent> j gj
-
 " Disable linting via vim-ale:
 let g:ale_enabled = 0
 
@@ -104,6 +101,10 @@ vim.diagnostic.config({
     signs = false,
   })
 -- buffers:
+vim.keymap.set("n", "k", "gk", { noremap = true })
+vim.keymap.set("n", "j", "gj", { noremap = true })
+-- vim.keymap.set("n", "gk", "k", { noremap = true }) -- does not work
+-- vim.keymap.set("n", "gj", "j", { noremap = true }) -- does not work
 vim.keymap.set("n", "<C-o>", ":CtrlPBuffer<CR>")
 vim.keymap.set("n", "<Leader>bn", ":bnext<CR>")
 vim.keymap.set("n", "<Leader>bp", ":bprevious<CR>")
