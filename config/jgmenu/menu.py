@@ -299,8 +299,8 @@ def main():
               Item('Shutdown', 'gnome-shutdown', 'systemctl poweroff -i'),
            ])),
       Item('Suspend', 'gnome-logout',
-           ('killall qutebrowser ; ' if socket.gethostname() in ['hoth'] else '')
-           + 'systemctl suspend -i'),
+           # ('killall qutebrowser ; ' if socket.gethostname() in ['hoth'] else '') +
+           'systemctl suspend -i'),
     ])
 
 

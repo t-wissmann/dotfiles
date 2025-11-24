@@ -78,6 +78,7 @@ c.url.searchengines['gl'] = 'https://encrypted.google.com/search?btnI=1&q={}&sou
 c.url.searchengines['DEFAULT'] = c.url.searchengines['google']
 c.url.searchengines['gimg'] = 'http://www.google.de/search?tbm=isch&hl=de&source=hp&q={}'
 c.url.searchengines['doi2bib'] = 'https://doi2bib.org/bib/{}'
+c.url.searchengines['core'] = 'https://portal.core.edu.au/conf-ranks/?search={}&by=all&source=CORE2023&sort=atitle&page=1'
 
 c.url.searchengines['duckduckgo'] = 'https://duckduckgo.com/?q={}'
 c.url.searchengines['d'] = c.url.searchengines['duckduckgo']

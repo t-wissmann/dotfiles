@@ -107,6 +107,17 @@
 (add-hook 'evil-insert-state-entry-hook (lambda () (set-input-method "Agda")))
 (add-hook 'evil-insert-state-exit-hook (lambda () (set-input-method nil)))
 
+(defun agda2-normalized-goal-and-context-and-inferred ()
+  (interactive)
+  (agda2-goal-and-context-and-inferred '(3)))
+(eval-after-load "agda2-mode"
+  '(progn
+   (define-key agda2-mode-map (kbd "C-c C-,")
+      'agda2-normalized-goal-and-context)
+   (define-key agda2-mode-map (kbd "C-c C-.")
+      'agda2-normalized-goal-and-context-and-inferred)))
+
+
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
 ;;
