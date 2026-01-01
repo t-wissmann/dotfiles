@@ -110,6 +110,7 @@ hc keybind $Mod-apostrophe spawn ~/dotfiles/menu/rofi-mpd.sh
 hc keybind $Mod-backslash spawn ~/dotfiles/menu/rofi-pass.sh
 hc keybind $Mod-Shift-backslash spawn ~/dotfiles/menu/rofi-pass.sh
 hc keybind $Mod-Alt-space spawn ~/dotfiles/menu/hlwm-windowmenu.sh
+hc keybind $Mod-grave spawn ~/dotfiles/utils/i3lock.sh
 
 videodir=/mnt/unterhaltung/video/
 [[ -d ~/video ]] && videodir=$HOME/video/
