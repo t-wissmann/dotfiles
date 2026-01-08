@@ -43,6 +43,8 @@ set et shiftwidth=4 tabstop=4 nojoinspaces
 
 set ignorecase smartcase
 
+set nrformats-=octal " I'm never incrementing octal numbers
+
 
 " highlight whitespaces and trailing spaces
 set list

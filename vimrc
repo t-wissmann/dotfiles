@@ -28,6 +28,7 @@ set et
 set shiftwidth=4
 set tabstop=4
 set nojoinspaces
+set nrformats-=octal " I'm never incrementing octal numbers
 " only insert real tabs at the beginning of a line and fill with spaces
 " otherwise
 function! InsertTabWrapper()
