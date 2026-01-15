@@ -47,4 +47,4 @@ fi
 
 # create filesystem on first partiton
 :: mkfs.fat -n "$partitionname" -F32 "${drive}1"
-
+:: sync
