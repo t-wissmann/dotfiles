@@ -309,6 +309,8 @@ hc keybind XF86AudioPrev spawn "$playerctl" previous
 hc keybind XF86AudioStop spawn "$playerctl" stop
 hc keybind Alt-Super-0 spawn xrandr --auto
 
+hc attr monitors.tag_selection_strategy prefer_empty
+
 #hc keybind XF86AudioStop spawn mpc -q random
 #hc keybind XF86AudioPrev spawn mpc -q prev
 #hc keybind XF86AudioPlay spawn mpc -q toggle
