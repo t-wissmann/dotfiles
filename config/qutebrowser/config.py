@@ -126,6 +126,7 @@ c.url.searchengines['dictnl'] = 'https://denl.dict.cc/?s={}'
 c.url.searchengines['nl'] = 'https://de.pons.com/%C3%BCbersetzung/niederl%C3%A4ndisch-deutsch/{}'
 c.url.searchengines['wl'] = 'https://woordenlijst.org/#/?q={}'
 c.url.searchengines['dblp'] = 'https://dblp.org/search?q={}'
+c.url.searchengines['lics'] = 'https://submissions.floc26.org/lics/paper/{}'
 
 c.aliases['images'] = 'hint images tab'
 c.aliases['tabopen'] = 'open -t'
