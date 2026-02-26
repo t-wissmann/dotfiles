@@ -127,6 +127,8 @@ c.url.searchengines['nl'] = 'https://de.pons.com/%C3%BCbersetzung/niederl%C3%A4n
 c.url.searchengines['wl'] = 'https://woordenlijst.org/#/?q={}'
 c.url.searchengines['dblp'] = 'https://dblp.org/search?q={}'
 c.url.searchengines['lics'] = 'https://submissions.floc26.org/lics/paper/{}'
+c.url.searchengines['git8'] = 'https://git8.cs.fau.de/search?search={}'
+
 
 c.aliases['images'] = 'hint images tab'
 c.aliases['tabopen'] = 'open -t'
