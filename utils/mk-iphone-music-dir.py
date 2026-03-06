@@ -45,8 +45,9 @@ class InputFile:
         self.rel_targetpath = self.rel_basename + '.mp3'
         # remove '.' at end of directory names, it causes trouble in windows mounts
         self.rel_targetpath = self.rel_targetpath.replace('./', '/')
-        # also remove all question marks:
+        # also remove all question and qutotation marks:
         self.rel_targetpath = self.rel_targetpath.replace('?', '')
+        self.rel_targetpath = self.rel_targetpath.replace('"', '')
         remove_characters = r'*?\|,;:+=<>[]"' + "\'"
         # self.abs_targetpath = self.abs_targetpath.translate(str.maketrans(remove_characters, len(remove_characters) * '_'))
         self.abs_targetpath = os.path.join(args.TARGETDIR, self.rel_targetpath)
@@ -85,10 +86,11 @@ class InputFile:
             convert_cmd += [ self.abs_targetpath ]
         if os.path.exists(self.abs_targetpath):
             # debug(f'Skipping existing {self.abs_targetpath}')
-            return
+            return None
         os.makedirs(os.path.dirname(self.abs_targetpath), exist_ok=True)
         print(f'{" ".join(convert_cmd)}')
         subprocess.run(convert_cmd)
+        return self.abs_targetpath
 
 
 def convert_file(sourcefile, coverimg, targetfile):
@@ -103,8 +105,7 @@ def find_files(directory):
             yield os.path.join(root, fn)
 
 def convert_file(f):
-    f.convert()
-    return None
+    return f.convert()
 
 def main():
     """convert a music library to plain mp3 files with
@@ -156,8 +157,14 @@ def main():
     # for f in files:
     #     f.convert()
 
+    created_files = []
     with multiprocessing.Pool() as pool_obj:
-        pool_obj.map(convert_file, files)
+        created_files = pool_obj.map(convert_file, files)
+
+    print('Files created:')
+    created_files = [p for p in created_files if p is not None]
+    for p in created_files:
+        print(p)
 
 
 main()
