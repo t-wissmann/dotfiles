@@ -93,6 +93,7 @@ def main():
     parser.add_argument('--pdf', help='write pdf')
     args = parser.parse_args()
 
+    some_action = False
 
     wifi = WifiProfile()
     if args.netctl:
@@ -143,12 +144,15 @@ def main():
     """.strip()
 
     if args.show_qr_source:
+        some_action = True
         print(qrsource)
 
     if args.show_latex:
+        some_action = True
         print(latex_source)
 
     if args.pdf:
+        some_action = True
         tmp_dir = tempfile.mkdtemp()
         debug(f'Creating directory {tmp_dir}')
         pdflatex_cmd = [
@@ -165,6 +169,13 @@ def main():
         finally:
             shutil.rmtree(tmp_dir)
             # pass
+
+    if not some_action:
+        qrencode = [ 'qrencode', '-o', '-', '-t', 'UTF8' ]
+        print(qrsource)
+        proc = subprocess.run(qrencode,
+                              text=True,
+                              input=qrsource)
 
 if __name__ == "__main__":
     main()
