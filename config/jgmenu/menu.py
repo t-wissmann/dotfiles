@@ -284,7 +284,7 @@ def main():
       Item('Qutebrowser', 'qutebrowser', 'qutebrowser'),
       Item('Firefox', 'web-browser', 'firefox'),
       Item('gedit', 'accessories-text-editor', 'gedit --standalone'),
-      Item('KDE Connect', 'kdeconnect', 'killall kdeconnect-indicator ; kdeconnect-indicator '),
+      Item('KDE Connect', 'kdeconnect', 'kdeconnect-app'),
       Item('Move Cursor', 'input-mouse', 'xdotool mousemove 0 0'),
       Item('Telegram', 'org.telegram.desktop', 'killall Telegram ; QT_QPA_PLATFORMTHEME= Telegram')
         if os.path.exists('/usr/bin/Telegram')
