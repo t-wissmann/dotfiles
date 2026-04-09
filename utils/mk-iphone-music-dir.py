@@ -166,5 +166,5 @@ def main():
     for p in created_files:
         print(p)
 
-
-main()
+if __name__ == '__main__':
+    main()
