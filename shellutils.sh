@@ -133,3 +133,5 @@ normpages() {
 
 alias dfh="df -h | grep --color=none '^[/A-Z]'"
 alias mounth="mount | grep --color=none '^[/A-Z]'"
+
+alias table-pretty-print="column -t -s $'\t' -o ' | '"
