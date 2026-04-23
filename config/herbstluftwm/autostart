@@ -319,7 +319,7 @@ hc attr monitors.tag_selection_strategy prefer_empty
 
 hc keybind Mod4+n spawn ~/dotfiles/menu/utf8select.sh
 
-if pactl list > /dev/null 2>&1 ; then
+if pactl info > /dev/null 2>&1 ; then
     #hc keybind Shift+XF86AudioMute spawn ponymix
     hc keybind XF86AudioMute        spawn ponymix toggle
     hc keybind XF86AudioMicMute     spawn ponymix --source toggle
