@@ -201,6 +201,9 @@ xdg-mime default Thunar-folder-handler.desktop inode/directory
 xdg-mime default libreoffice-base.desktop \
     application/vnd.oasis.opendocument.text text/rtf
 
+xdg-mime default libreoffice-base.desktop \
+    application/vnd.ms-excel application/vnd.oasis.opendocument.spreadsheet
+
 # Check your mail-setup with:
 # xdg-open 'mailto:test@example.de?cc=C1&cc=C2&subject=subject'
 gitroot=$(git rev-parse --show-toplevel)
