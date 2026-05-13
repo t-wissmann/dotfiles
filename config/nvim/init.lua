@@ -234,7 +234,6 @@ vim.keymap.set("n", "<F7>", spell_cycle)
 return require('packer').startup(function()
   -- configuration of packer https://github.com/wbthomason/packer.nvim
   -- Packer can manage itself
-  use 'nvim-lua/plenary.nvim'
   use 'wbthomason/packer.nvim'
   use {
       'nvim-lualine/lualine.nvim',
@@ -271,39 +270,6 @@ return require('packer').startup(function()
         }
       end
   }
-  -- use {
-  --   'lervag/vimtex'
-  -- }
-  -- use({'hrsh7th/nvim-cmp',
-  --   requires = { 'hrsh7th/cmp-vsnip' },
-  --   requires = { 'hrsh7th/vim-vsnip' },
-  --   config = function()
-  --     local cmp = require('cmp')
-  --     cmp.setup({
-  --       snippet = {
-  --         expand = function(args)
-  --           vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-  --         end,
-  --       },
-  --       window = {
-  --         completion = cmp.config.window.bordered(),
-  --         documentation = cmp.config.window.bordered(),
-  --       },
-  --       mapping = cmp.mapping.preset.insert({
-  --         ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-  --         ['<C-f>'] = cmp.mapping.scroll_docs(4),
-  --         ['<C-Space>'] = cmp.mapping.complete(),
-  --         ['<C-e>'] = cmp.mapping.abort(),
-  --         ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-  --       }),
-  --       sources = cmp.config.sources({
-  --         { name = 'nvim_lsp' },
-  --       }, {
-  --         { name = 'buffer' },
-  --       })
-  --     })
-  --   end
-  -- })
   use({'ellisonleao/gruvbox.nvim',
     -- until neovim 10 I've used 'morhetz/gruvbox', but then: https://github.com/morhetz/gruvbox/issues/459
     config = function()
@@ -389,45 +355,4 @@ return require('packer').startup(function()
   use 'tpope/vim-fugitive'
   use 'liuchengxu/vim-which-key'
   use 'jiangmiao/auto-pairs'
-  --
-  -- use({'tounaishouta/coq.vim',
-  --   -- this coq plugin does not work well for me; it is unclear what the current goal is,
-  --   -- and when opening a new line (via 'o'), the current line sometimes gets copied.
-  --   config = function()
-  --     vim.api.nvim_create_autocmd('FileType', {
-  --         pattern = {'coq', 'v'},
-  --         callback = function()
-  --             vim.wo.linebreak = true
-  --             vim.o.sw = 2
-  --             vim.o.ts = 2
-  --             vim.keymap.set("n", ",c", ":w<CR>:CoqRunToCursor<CR>", { silent = false })
-  --             vim.keymap.set("n", ",w", ":w<CR>", { silent = false })
-  --         end,
-  --         desc = 'COQ specific settings'
-  --     })
-  --   end
-  -- })
-  -- use({'mrcjkb/haskell-tools.nvim',
-  --   config = function()
-  --       -- ~/.config/nvim/after/ftplugin/haskell.lua
-  --       local ht = require('haskell-tools')
-  --       local bufnr = vim.api.nvim_get_current_buf()
-  --       local opts = { noremap = true, silent = true, buffer = bufnr, }
-  --       -- haskell-language-server relies heavily on codeLenses,
-  --       vim.keymap.set('n', '<space>a', '<Plug>HaskellHoverAction')
-  --       -- so auto-refresh (see advanced configuration) is enabled by default
-  --       vim.keymap.set('n', '<space>cl', vim.lsp.codelens.run, opts)
-  --       -- Hoogle search for the type signature of the definition under the cursor
-  --       vim.keymap.set('n', '<space>hs', ht.hoogle.hoogle_signature, opts)
-  --       -- Evaluate all code snippets
-  --       vim.keymap.set('n', '<space>ea', ht.lsp.buf_eval_all, opts)
-  --       -- Toggle a GHCi repl for the current package
-  --       vim.keymap.set('n', '<leader>rr', ht.repl.toggle, opts)
-  --       -- Toggle a GHCi repl for the current buffer
-  --       vim.keymap.set('n', '<leader>rf', function()
-  --         ht.repl.toggle(vim.api.nvim_buf_get_name(0))
-  --       end, opts)
-  --       vim.keymap.set('n', '<leader>rq', ht.repl.quit, opts)
-  --   end
-  -- })
 end)
