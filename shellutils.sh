@@ -67,7 +67,7 @@ asciidoc2wiki() {
             -o "${1%%.txt}.md"
 }
 
-alias ts='~/dotfiles/utils/tmux-reattachloop.sh tmux new-session -A -D -s shell'
+alias ts='tmux setenv SSH_AUTH_SOCK "$SSH_AUTH_SOCK" 2> /dev/null ; ~/dotfiles/utils/tmux-reattachloop.sh tmux new-session -A -D -s shell'
 alias rm='gio trash'
 alias djvu2pdf='ddjvu -format=pdf -quality=85 -verbose'
 
