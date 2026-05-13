@@ -297,13 +297,45 @@ require("lazy").setup({
     {'liuchengxu/vim-which-key'},
     {'jiangmiao/auto-pairs'},
     {'neovim/nvim-lspconfig',
-      config = function()
-        vim.api.nvim_create_autocmd('LspAttach', {
-          group = vim.api.nvim_create_augroup('UserLspConfig', {}),
-          callback = on_lsp_attach
-        })
-        vim.lsp.enable('texlab')
-      end
+        config = function()
+          vim.api.nvim_create_autocmd('LspAttach', {
+            group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+            callback = on_lsp_attach,
+          })
+          vim.lsp.config('texlab', {
+            settings = {
+              texlab = {
+                rootDirectory = vim.fn.getcwd() .. '/',
+                build = {
+                  executable = 'latexmk',
+                  args = {},
+                  onSave = false,
+                },
+                forwardSearch = {
+                  executable = 'synctex-katarakt.py',
+                  -- with some update '%{input}' etc had to be replaced with
+                  -- '%%{input}'.. I don't know why -- 2023-06-14
+                  args = {
+                    '--editor-command',
+                    'nvim --server ' .. vim.v.servername .. ' --remote-expr '
+                      .. '"and(execute(\'e %%{input}\'), cursor(%%{line}+1, %%{column}+1))"',
+                    '--view-line', '%l',
+                    '%f',
+                  },
+                  onSave = false,
+                },
+                chktex = {
+                  onEdit = false,
+                  onOpenAndSave = false,
+                },
+                lint = {
+                  onChange = false,
+                },
+              },
+            },
+          })
+          vim.lsp.enable('texlab')
+        end,
     },
   },
   -- Configure any other settings here. See the documentation for more details.
