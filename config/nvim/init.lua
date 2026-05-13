@@ -297,25 +297,14 @@ require("lazy").setup({
     {'liuchengxu/vim-which-key'},
     {'jiangmiao/auto-pairs'},
     {'neovim/nvim-lspconfig',
-        optional = true,
-        opts = {
-          servers = {
-            texlab = {
-                on_attach = on_attach,
-                capabilities = capabilities,
-            },
-          },
-          --     keys = {
-          --       { "<Leader>K", "<plug>(vimtex-doc-package)", desc = "Vimtex Docs", silent = true },
-          --     },
-          --   },
-          -- },
-        },
+      config = function()
+        vim.api.nvim_create_autocmd('LspAttach', {
+          group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+          callback = on_lsp_attach
+        })
+        vim.lsp.enable('texlab')
+      end
     },
-    --    vim.api.nvim_create_autocmd('LspAttach', {
-    --      group = vim.api.nvim_create_augroup('UserLspConfig', {}),
-    --      callback = on_lsp_attach
-    --    })
   },
   -- Configure any other settings here. See the documentation for more details.
   -- colorscheme that will be used when installing plugins.
