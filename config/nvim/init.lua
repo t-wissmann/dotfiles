@@ -230,129 +230,174 @@ function spell_cycle()
 end
 vim.keymap.set("n", "<F7>", spell_cycle)
 
+-- Copy snipped from https://lazy.folke.io/installation
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+  if vim.v.shell_error ~= 0 then
+    vim.api.nvim_echo({
+      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+      { out, "WarningMsg" },
+      { "\nPress any key to exit..." },
+    }, true, {})
+    vim.fn.getchar()
+    os.exit(1)
+  end
+end
+vim.opt.rtp:prepend(lazypath)
 
-return require('packer').startup(function()
-  -- configuration of packer https://github.com/wbthomason/packer.nvim
-  -- Packer can manage itself
-  use 'wbthomason/packer.nvim'
-  use {
-      'nvim-lualine/lualine.nvim',
-      requires = { 'kyazdani42/nvim-web-devicons', opt = true },
-      config = function()
-        require('lualine').setup {
-          options = {
-            icons_enabled = true,
-            theme = 'onedark',
-            component_separators = { left = '', right = ''},
-            section_separators = { left = '', right = ''},
-            disabled_filetypes = {},
-            always_divide_middle = true,
-            globalstatus = false,
+-- Make sure to setup `mapleader` and `maplocalleader` before
+-- loading lazy.nvim so that mappings are correct.
+-- This is also a good place to setup other settings (vim.opt)
+vim.g.mapleader = " "
+vim.g.maplocalleader = "\\"
+
+-- Setup lazy.nvim
+require("lazy").setup({
+  spec = {
+      { "ellisonleao/gruvbox.nvim",
+        priority = 1000 , lazy = false, config = setup_colorscheme, opts = {}
+      },
+      {'ctrlpvim/ctrlp.vim'},
+      {
+       'nvim-lualine/lualine.nvim',
+       dependencies = { 'nvim-tree/nvim-web-devicons' },
+       opts = {
+           options = {
+             icons_enabled = true,
+             theme = 'onedark',
+             component_separators = { left = '', right = ''},
+             section_separators = { left = '', right = ''},
+             disabled_filetypes = {},
+             always_divide_middle = true,
+             globalstatus = false,
+           },
+           sections = {
+             lualine_a = {'mode'},
+             lualine_b = {'branch', 'diff'},
+             lualine_c = {'filename'},
+             lualine_x = {},
+             lualine_y = {'encoding'},
+             lualine_z = {'progress', 'location'}
+           },
+           inactive_sections = {
+             lualine_a = {},
+             lualine_b = {},
+             lualine_c = {'filename'},
+             lualine_x = {'location'},
+             lualine_y = {},
+             lualine_z = {}
+           },
+           tabline = {},
+           extensions = {}
+         }
+    },
+    {'tpope/vim-fugitive'},
+    {'liuchengxu/vim-which-key'},
+    {'jiangmiao/auto-pairs'},
+    {'neovim/nvim-lspconfig',
+        optional = true,
+        opts = {
+          servers = {
+            texlab = {
+                on_attach = on_attach,
+                capabilities = capabilities,
+            },
           },
-          sections = {
-            lualine_a = {'mode'},
-            lualine_b = {'branch', 'diff'},
-            lualine_c = {'filename'},
-            lualine_x = {},
-            lualine_y = {'encoding'},
-            lualine_z = {'progress', 'location'}
-          },
-          inactive_sections = {
-            lualine_a = {},
-            lualine_b = {},
-            lualine_c = {'filename'},
-            lualine_x = {'location'},
-            lualine_y = {},
-            lualine_z = {}
-          },
-          tabline = {},
-          extensions = {}
-        }
-      end
-  }
-  use({'ellisonleao/gruvbox.nvim',
-    -- until neovim 10 I've used 'morhetz/gruvbox', but then: https://github.com/morhetz/gruvbox/issues/459
-    config = function()
-      setup_colorscheme()
-    end
-  })
-  use({'ctrlpvim/ctrlp.vim',
-    config = function()
-    end
-  })
-  use({'neovim/nvim-lspconfig',
-      -- requires = { 'hrsh7th/cmp-nvim-lsp' },
-      config = function()
-        require('lspconfig').texlab.setup({
-            on_attach = on_attach,
-            cmd = {"texlab"},
-            filetypes = {"tex", "bib"},
-            -- now (2022-10-22) works without setting capabilities.
-            -- capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()),
-            init_options = { documentFormatting = true },
-            settings = {
-                -- latex = {
-                -- },
-                texlab = {
-                    build = {
-                      args = {  },
-                      executable = "latexmk",
-                      onSave = false
-                    },
-                    forwardSearch = {
-                      args = {},
-                      onSave = false
-                    },
-                    lint = {
-                      onChange = false
-                    },
-                    --rootDirectory = '/home/thorsten/git/papers/action-codes/icalp-talk/', -- cf https://github.com/latex-lsp/texlab/issues/106
-                    rootDirectory = vim.fn.getcwd() .. '/', -- cf https://github.com/latex-lsp/texlab/issues/106
-                    -- latexFormatter = 'latexindent',
-                    -- latexindent = {
-                    --   ['local'] = '/dev/null', -- local is a reserved keyword
-                    --   modifyLineBreaks = false,
-                    -- },
-                    forwardSearch = {
-                         -- executable = "evince_synctex.py",
-                         -- args = {"-f", "%l", "%p", "gvim %f +%l"},
-                         --
-                         -- okular: either forward or backward, but not both.
-                         -- executable = "okular",
-                         -- args = {"--unique",
-                         --         -- "--editor-cmd", "nvim --server " .. vim.v.servername .. " --remote-send \"%lG\"",
-                         --         "file:%p#src:%l%f", },
-                         executable = "synctex-katarakt.py",
-                         -- with some update '%{input}' etc had to be replaced with
-                         -- '%%{input}'.. I don't know why -- 2023-06-14
-                         args = {"--editor-command",
-                                 "nvim --server " .. vim.v.servername.. " --remote-expr "
-                                 .. "\"and(execute('e %%{input}'), cursor(%%{line}+1, %%{column}+1))\"",
-                                 "--view-line", "%l",
-                                 "%f"},
-                    },
-                    chktex = {
-                      onEdit = false,
-                      onOpenAndSave = false,
-                    },
-                }
-            }
-        })
-        -- require('lspconfig').hls.setup({
-        --   on_attach = on_attach,
-        --   -- root_dir = vim.loop.cwd,
-        --   -- capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()),
-        --   settings = {
-        --     rootMarkers = {".git/"}
-        --   }
-        -- })
-      vim.api.nvim_create_autocmd('LspAttach', {
-        group = vim.api.nvim_create_augroup('UserLspConfig', {}),
-        callback = on_lsp_attach
-      })
-      end -- end of config-function
-  })
-  use 'tpope/vim-fugitive'
-  use 'liuchengxu/vim-which-key'
-  use 'jiangmiao/auto-pairs'
-end)
+          --     keys = {
+          --       { "<Leader>K", "<plug>(vimtex-doc-package)", desc = "Vimtex Docs", silent = true },
+          --     },
+          --   },
+          -- },
+        },
+    },
+    --    vim.api.nvim_create_autocmd('LspAttach', {
+    --      group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+    --      callback = on_lsp_attach
+    --    })
+  },
+  -- Configure any other settings here. See the documentation for more details.
+  -- colorscheme that will be used when installing plugins.
+  install = { colorscheme = { "gruvbox" } },
+  -- automatically check for plugin updates
+  checker = { enabled = true },
+})
+
+
+-- -   use({'neovim/nvim-lspconfig',
+-- -       -- requires = { 'hrsh7th/cmp-nvim-lsp' },
+-- -       config = function()
+-- -         require('lspconfig').texlab.setup({
+-- -             on_attach = on_attach,
+-- -             cmd = {"texlab"},
+-- -             filetypes = {"tex", "bib"},
+-- -             -- now (2022-10-22) works without setting capabilities.
+-- -             -- capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+-- -             init_options = { documentFormatting = true },
+-- -             settings = {
+-- -                 -- latex = {
+-- -                 -- },
+-- -                 texlab = {
+-- -                     build = {
+-- -                       args = {  },
+-- -                       executable = "latexmk",
+-- -                       onSave = false
+-- -                     },
+-- -                     forwardSearch = {
+-- -                       args = {},
+-- -                       onSave = false
+-- -                     },
+-- -                     lint = {
+-- -                       onChange = false
+-- -                     },
+-- -                     --rootDirectory = '/home/thorsten/git/papers/action-codes/icalp-talk/', -- cf https://github.com/latex-lsp/texlab/issues/106
+-- -                     rootDirectory = vim.fn.getcwd() .. '/', -- cf https://github.com/latex-lsp/texlab/issues/106
+-- -                     -- latexFormatter = 'latexindent',
+-- -                     -- latexindent = {
+-- -                     --   ['local'] = '/dev/null', -- local is a reserved keyword
+-- -                     --   modifyLineBreaks = false,
+-- -                     -- },
+-- -                     forwardSearch = {
+-- -                          -- executable = "evince_synctex.py",
+-- -                          -- args = {"-f", "%l", "%p", "gvim %f +%l"},
+-- -                          --
+-- -                          -- okular: either forward or backward, but not both.
+-- -                          -- executable = "okular",
+-- -                          -- args = {"--unique",
+-- -                          --         -- "--editor-cmd", "nvim --server " .. vim.v.servername .. " --remote-send \"%lG\"",
+-- -                          --         "file:%p#src:%l%f", },
+-- -                          executable = "synctex-katarakt.py",
+-- -                          -- with some update '%{input}' etc had to be replaced with
+-- -                          -- '%%{input}'.. I don't know why -- 2023-06-14
+-- -                          args = {"--editor-command",
+-- -                                  "nvim --server " .. vim.v.servername.. " --remote-expr "
+-- -                                  .. "\"and(execute('e %%{input}'), cursor(%%{line}+1, %%{column}+1))\"",
+-- -                                  "--view-line", "%l",
+-- -                                  "%f"},
+-- -                     },
+-- -                     chktex = {
+-- -                       onEdit = false,
+-- -                       onOpenAndSave = false,
+-- -                     },
+-- -                 }
+-- -             }
+-- -         })
+-- -         -- require('lspconfig').hls.setup({
+-- -         --   on_attach = on_attach,
+-- -         --   -- root_dir = vim.loop.cwd,
+-- -         --   -- capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+-- -         --   settings = {
+-- -         --     rootMarkers = {".git/"}
+-- -         --   }
+-- -         -- })
+-- -       vim.api.nvim_create_autocmd('LspAttach', {
+-- -         group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+-- -         callback = on_lsp_attach
+-- -       })
+-- -       end -- end of config-function
+-- -   })
+-- -   use 'tpope/vim-fugitive'
+-- -   use 'liuchengxu/vim-which-key'
+-- -   use 'jiangmiao/auto-pairs'
+-- - end)
