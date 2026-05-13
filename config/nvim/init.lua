@@ -128,8 +128,8 @@ vim.api.nvim_create_autocmd('FileType', {
     pattern = {'plaintex', 'tex'},
     callback = function()
         vim.wo.linebreak = true
-        vim.keymap.set("n", ",v", ":TexlabForward<CR>", { silent = true })
-        -- vim.keymap.set("n", ",b", ":w<CR>:TexlabBuild<CR>", { silent = false })
+        vim.keymap.set("n", ",v", ":LspTexlabForward<CR>", { silent = true })
+        -- vim.keymap.set("n", ",b", ":w<CR>:LspTexlabBuild<CR>", { silent = false })
         -- this does not work: vim.keymap.set("n", ",b", build_latex_buffer)
         -- vim.keymap.set("n", ",b", ":w<CR>:lua build_latex_buffer()<CR>", { silent = false })
         vim.keymap.set("n", ",b", ":lua build_latex_buffer()<CR>", { silent = false })
