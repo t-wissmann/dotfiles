@@ -96,7 +96,7 @@ if which alacritty &> /dev/null ; then
         hc export WINIT_X11_SCALE_FACTOR=1.66
     fi
     # Disable XMODIFIERS because sometimes it hangs after suspend
-    hc keybind $Mod-Return spawn ~/dotfiles/utils/with-same-pwd env XMODIFIERS= alacritty
+    hc keybind $Mod-Return spawn ~/dotfiles/utils/with-same-pwd env XMODIFIERS= bash -c "alacritty msg create-window --working-directory=\"\$PWD\""
 else
     hc keybind $Mod-Return spawn ~/dotfiles/utils/with-same-pwd urxvt
 fi
