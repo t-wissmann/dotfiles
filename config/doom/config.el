@@ -115,7 +115,17 @@
    (define-key agda2-mode-map (kbd "C-c C-,")
       'agda2-normalized-goal-and-context)
    (define-key agda2-mode-map (kbd "C-c C-.")
-      'agda2-normalized-goal-and-context-and-inferred)))
+      'agda2-normalized-goal-and-context-and-inferred)
+   (define-key agda2-mode-map (kbd "C-.")
+      'agda2-goto-definition-keyboard)
+   (map! :map agda2-mode-map
+         :localleader
+         ;; :prefix "l"
+         ">" 'agda2-goto-definition-keyboard
+         ;; "m" #'lorem-function
+         )
+  ))
+
 
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
