@@ -286,6 +286,7 @@ def main():
       Item('gedit', 'accessories-text-editor', 'gedit --standalone'),
       Item('KDE Connect', 'kdeconnect', 'kdeconnect-app'),
       Item('Move Cursor', 'input-mouse', 'xdotool mousemove 0 0'),
+      Item('Port Forward', 'network-idle', 'alacritty -e ssh srv-reverse-ssh'),
       Item('Telegram', 'org.telegram.desktop', 'killall Telegram ; QT_QPA_PLATFORMTHEME= Telegram')
         if os.path.exists('/usr/bin/Telegram')
         else Item('Telegram', 'telegram', 'killall telegram-desktop ; QT_QPA_PLATFORMTHEME= telegram-desktop'),
