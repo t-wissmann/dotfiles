@@ -294,8 +294,7 @@ require("lazy").setup({
          }
     },
     {'tpope/vim-fugitive'},
-    {'liuchengxu/vim-which-key'},
-    {'jiangmiao/auto-pairs'},
+    -- {'jiangmiao/auto-pairs'},
     {'neovim/nvim-lspconfig',
         config = function()
           vim.api.nvim_create_autocmd('LspAttach', {
