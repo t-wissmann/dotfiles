@@ -52,4 +52,4 @@
 
 ;; $ git ls-remote --tags https://github.com/agda/agda.git v2.8.0
 ;; 38293ba5880382d126beb4d3a275ec3f42fad766        refs/tags/v2.8.0
-(package! agda2-mode :pin "38293ba5880382d126beb4d3a275ec3f42fad766")
+;; (package! agda2-mode :pin "38293ba5880382d126beb4d3a275ec3f42fad766")
