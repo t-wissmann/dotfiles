@@ -91,7 +91,7 @@ end
 
 
 vim.keymap.set("n", "<Space>", ":WhichKey ' '<CR>", { silent = true })
-vim.keymap.set("n", ",", ":WhichKey ','<CR>", { silent = true })
+-- vim.keymap.set("n", ",", ":WhichKey ','<CR>", { silent = true })
 vim.g.mapleader = " "
 vim.o.timeout = true
 vim.o.title = true
@@ -293,8 +293,23 @@ require("lazy").setup({
            extensions = {}
          }
     },
+    {'nvim-lua/plenary.nvim'},
     {'tpope/vim-fugitive'},
     -- {'jiangmiao/auto-pairs'},
+    {'folke/which-key.nvim',
+     event = "VeryLazy",
+     opts = {},
+     keys = {
+       {
+         "<leader>?",
+         function()
+           require("which-key").show({ global = false })
+         end,
+         desc = "Buffer Local Keymaps (which-key)",
+       },
+     },
+    },
+    --
     {'neovim/nvim-lspconfig',
         config = function()
           vim.api.nvim_create_autocmd('LspAttach', {
