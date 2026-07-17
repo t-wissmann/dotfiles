@@ -41,6 +41,17 @@
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
+(setq-default display-line-numbers-width 0       ; no minimum width — hug the actual digits
+              display-line-numbers-grow-only t)  ; allow shrinking back when numbers get shorter
+
+;; adjust width of line numbers depending on buffer length:
+(defun my/line-number-width-from-buffer ()
+  "Reserve line-number columns to fit this buffer's total line count."
+  (setq-local display-line-numbers-width
+              (length (number-to-string (line-number-at-pos (point-max))))))
+
+(add-hook 'display-line-numbers-mode-hook #'my/line-number-width-from-buffer)
+(add-hook 'after-save-hook #'my/line-number-width-from-buffer)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -75,6 +86,7 @@
   '(default :background "#181818"
               :foreground "#EBDBB2"
               )
+  ;; '(fringe :background "black")
   )
 
 (set-fontset-font "fontset-default" nil
@@ -104,6 +116,7 @@
 ;; exit emacs without confirmation
 (setq confirm-kill-emacs nil)
 
+
 (setq doom-localleader-key ",")
 ;; Also use SPC m for localleader
 (defun my/call-localleader ()
@@ -127,6 +140,7 @@
 ;;   (menu-bar-mode -1))
 ;; (xterm-mouse-mode 1)
 (menu-bar-mode -1)
+;; (vi-tilde-fringe-mode -1)
 
 ;;(add-hook 'after-make-frame-functions 'on-frame-open)
 (add-hook 'window-setup-hook 'on-after-init)
