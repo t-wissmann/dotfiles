@@ -106,8 +106,8 @@
 (defun my/font-size-for-dpi (&optional frame)
   "Pick a font point size based on FRAME's display DPI."
   (let ((dpi (or (my/display-dpi frame) 96)))
-    (cond ((>= dpi 190) 14)   ; hidpi / retina
-          ((>= dpi 140) 13)   ; medium-high
+    (cond ((>= dpi 190) 18)   ; hidpi / retina
+          ((>= dpi 140) 14)   ; medium-high
           (t            12)))) ; standard
 
 ;; Set the font per-frame: as a daemon, config.el runs with no graphical
