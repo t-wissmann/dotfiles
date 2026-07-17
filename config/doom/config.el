@@ -90,10 +90,12 @@
   '(cursor :background "#ff9900")
   )
 
-(set-fontset-font "fontset-default" nil
-   (font-spec :name "Bitstream Vera Sans Mono" :size 8))
+;; (set-fontset-font "fontset-default" nil
+;;    (font-spec :name "Bitstream Vera Sans Mono" :size 8)
+;;    )
 
-(setq doom-font (font-spec :size 18 ))
+(setq doom-font
+   (font-spec :name "Bitstream Vera Sans Mono" :size 12))
 
 
 (after! unicode-fonts
