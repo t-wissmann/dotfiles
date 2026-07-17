@@ -67,9 +67,16 @@
 ;;        ((t (:foreground "#9DDAA1")
 ;;            )))
 ;;      )
+(custom-theme-set-faces! 'doom-gruvbox
+  '(line-number :background "black")
+  '(default :background "#181818" :foreground "#928374")
+  )
 
 (set-fontset-font "fontset-default" nil
    (font-spec :name "Bitstream Vera Sans Mono" :size 8))
+
+(setq doom-font (font-spec :size 18 ))
+
 
 (after! unicode-fonts
   (dolist (unicode-block '("Mathematical Alphanumeric Symbols"
@@ -83,8 +90,6 @@
       (push "DejaVu Math TeX Gyre" (cadr (assoc unicode-block unicode-fonts-block-font-mapping)))))
 
 
-;; (xterm-mouse-mode 1)
-(menu-bar-mode 1)
 ;; (after! core-ui (menu-bar-mode 1))
 (map! :map evil-window-map
       "z" #'doom/window-zoom)
@@ -106,6 +111,20 @@
 ;; https://emacs.stackexchange.com/a/27023/16063
 (add-hook 'evil-insert-state-entry-hook (lambda () (set-input-method "Agda")))
 (add-hook 'evil-insert-state-exit-hook (lambda () (set-input-method nil)))
+
+(add-to-list 'default-frame-alist '(alpha-background . 93))
+
+(defun on-after-init (&optional frame)
+  (unless (display-graphic-p frame)
+    (set-face-background 'default "unspecified-bg" frame)))
+
+;; (unless (display-graphic-p (selected-frame))
+;;   (menu-bar-mode -1))
+;; (xterm-mouse-mode 1)
+(menu-bar-mode -1)
+
+;;(add-hook 'after-make-frame-functions 'on-frame-open)
+(add-hook 'window-setup-hook 'on-after-init)
 
 (defun agda2-normalized-goal-and-context-and-inferred ()
   (interactive)

@@ -191,6 +191,21 @@ def setxkbmap_layout_file(layout_name_or_path, setxkbmap_options, xinput_id=None
         xkbcomp_cmd += ['-w', '0', f'-I{directory}', '-', os.environ['DISPLAY']]
         get_stdout(xkbcomp_cmd, stdin=xkb_keymap)
 
+
+# import ctypes
+# def disable_capslock():
+#     """"https://askubuntu.com/a/941268/547950"""
+#     class Display(Structure):
+#         """ opaque struct """
+# 
+#     X11 = ctypes.cdll.LoadLibrary("libX11.so.6")
+#     X11.XOpenDisplay.restype = POINTER(Display)
+# 
+#     display = X11.XOpenDisplay(ctypes.c_int(0))
+#     X11.XkbLockModifiers(display, ctypes.c_uint(0x0100), ctypes.c_uint(2), ctypes.c_uint(0))
+#     X11.XCloseDisplay(display)
+
+
 def main():
     devices = xinput_devices()
     parser = argparse.ArgumentParser()
@@ -200,8 +215,9 @@ def main():
     get_stdout.verbose = args.verbose
 
 
-    # clear existing keyboard options:
+    # clear active capslock
     get_stdout(['xdotool', 'key', '--clearmodifiers', ''])
+    # clear existing keyboard options:
     get_stdout(['setxkbmap', '-option'])
     # set some default:
     global global_options, default_layout
