@@ -94,8 +94,34 @@
 ;;    (font-spec :name "Bitstream Vera Sans Mono" :size 8)
 ;;    )
 
-(setq doom-font
-   (font-spec :name "Bitstream Vera Sans Mono" :size 12))
+(defun my/display-dpi (&optional frame)
+  "Return the DPI of FRAME's display, or nil if unknown."
+  (let* ((attrs (car (display-monitor-attributes-list frame)))
+         (mm    (alist-get 'mm-size attrs))
+         (geom  (alist-get 'geometry attrs)))
+    (when (and mm geom (> (car mm) 0))
+      (/ (float (nth 2 geom))          ; width in pixels
+         (/ (car mm) 25.4)))))         ; width in inches
+
+(defun my/font-size-for-dpi (&optional frame)
+  "Pick a font point size based on FRAME's display DPI."
+  (let ((dpi (or (my/display-dpi frame) 96)))
+    (cond ((>= dpi 190) 14)   ; hidpi / retina
+          ((>= dpi 140) 13)   ; medium-high
+          (t            12)))) ; standard
+
+;; Set the font per-frame: as a daemon, config.el runs with no graphical
+;; frame, so DPI can only be read once a real frame exists.
+(defun my/set-font-for-frame (&optional frame)
+  (when (display-graphic-p frame)
+    (setq doom-font (font-spec :name "Bitstream Vera Sans Mono"
+                               :size (my/font-size-for-dpi frame)))
+    (when (fboundp 'doom/reload-font)
+      (doom/reload-font))))
+
+(add-hook 'after-make-frame-functions #'my/set-font-for-frame)
+;; Also handle the non-daemon case, where a frame already exists at startup.
+(add-hook 'window-setup-hook #'my/set-font-for-frame)
 
 
 (after! unicode-fonts
