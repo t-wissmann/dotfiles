@@ -68,8 +68,12 @@
 ;;            )))
 ;;      )
 (custom-theme-set-faces! 'doom-gruvbox
-  '(line-number :background "black")
-  '(default :background "#181818" :foreground "#928374")
+  '(line-number :background "black"
+               :foreground "#928374"
+                  )
+  '(default :background "#181818"
+              :foreground "#EBDBB2"
+              )
   )
 
 (set-fontset-font "fontset-default" nil
