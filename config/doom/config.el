@@ -87,6 +87,7 @@
               :foreground "#EBDBB2"
               )
   ;; '(fringe :background "black")
+  '(cursor :background "#ff9900")
   )
 
 (set-fontset-font "fontset-default" nil
@@ -110,7 +111,8 @@
 ;; (after! core-ui (menu-bar-mode 1))
 (map! :map evil-window-map
       "z" #'doom/window-zoom)
-
+(map! :nvm "j" #'evil-next-visual-line
+      :nvm "k" #'evil-previous-visual-line)
 ;; kill processes on exit without asking
 (setq confirm-kill-processes nil)
 ;; exit emacs without confirmation
@@ -163,6 +165,17 @@
          ;; "m" #'lorem-function
          )
   ))
+
+(after! evil
+  (setq evil-normal-state-cursor   '(box      "#ff9900")
+        evil-insert-state-cursor   '((bar . 2) "#ff9900")
+        evil-visual-state-cursor   '(hollow   "#ff9900")
+        evil-replace-state-cursor  '(hbar     "#ff9900")
+        evil-operator-state-cursor '(hbar     "#ff9900")
+        evil-motion-state-cursor   '(box      "#ff9900")
+        evil-emacs-state-cursor    '(bar      "#ff9900")))
+
+
 
 
 
