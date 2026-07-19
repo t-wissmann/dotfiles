@@ -262,10 +262,9 @@ require("lazy").setup({
       {'ctrlpvim/ctrlp.vim'},
       {
        'nvim-lualine/lualine.nvim',
-       dependencies = { 'nvim-tree/nvim-web-devicons' },
        opts = {
            options = {
-             icons_enabled = true,
+             icons_enabled = false,
              theme = 'onedark',
              component_separators = { left = '', right = ''},
              section_separators = { left = '', right = ''},
