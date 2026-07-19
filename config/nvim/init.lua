@@ -145,14 +145,12 @@ vim.api.nvim_create_autocmd('FileType', {
 function setup_colorscheme()
   -- This function should be called in the colorscheme's config function
   vim.cmd.colorscheme('gruvbox')
+  vim.opt.cursorline = true
   colorscheme_lua_code = [[
-  set cursorline
-
   hi LineNr ctermbg=233 guibg=Black
   hi Normal ctermbg=NONE term=NONE guibg=NONE
   hi VertSplit ctermbg=NONE ctermfg=black cterm=NONE guibg=NONE
   hi Visual ctermbg=black cterm=None
-  hi Spellbad ctermbg=red cterm=None
   hi StatusLineNC ctermbg=black ctermfg=white cterm=NONE
   hi StatusLine ctermbg=black ctermfg=green cterm=bold
   hi LineNr ctermbg=black term=NONE ctermfg=gray cterm=NONE
@@ -163,6 +161,7 @@ function setup_colorscheme()
   hi CursorLineNr ctermbg=233 term=NONE ctermfg=green cterm=bold
   ]]
   vim.api.nvim_exec(colorscheme_lua_code, true)
+  vim.api.nvim_set_hl(0, "SpellBad", {fg='red', underline=true})
 
   if vim.g.neovide then
       vim.api.nvim_set_hl(0, "Normal", {bg='#181818'})
