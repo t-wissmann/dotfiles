@@ -157,6 +157,7 @@
 
 ;; Agda-input mode everywhere!
 ;; https://emacs.stackexchange.com/a/27023/16063
+(require 'agda-input)
 (add-hook 'evil-insert-state-entry-hook (lambda () (set-input-method "Agda")))
 (add-hook 'evil-insert-state-exit-hook (lambda () (set-input-method nil)))
 
