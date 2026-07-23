@@ -41,8 +41,10 @@ On startup each PACKAGE is installed if missing, and its CONFIG-FUNCTION
 is called only once the package is actually installed.  All
 package-specific configuration lives inside the respective function.")
 
-(defun my/setup-packages ()
-  "Install missing packages from `my/packages', then run each config."
+(defun my/install-packages ()
+  "Install any packages from `my/packages' that are not yet present.
+Run this manually via \\[my/install-packages]; it is not called on startup."
+  (interactive)
   (let ((missing (seq-remove (lambda (cell) (package-installed-p (car cell)))
                              my/packages)))
     (when missing
@@ -50,12 +52,15 @@ package-specific configuration lives inside the respective function.")
                (mapcar #'car missing))
       (package-refresh-contents)
       (dolist (cell missing)
-        (package-install (car cell)))))
+        (package-install (car cell))))))
+
+(defun my/configure-packages ()
+  "Run each config function from `my/packages' whose package is installed."
   (dolist (cell my/packages)
     (when (package-installed-p (car cell))
       (funcall (cdr cell)))))
 
-(my/setup-packages)
+(my/configure-packages)
 
 ;;; Identity ------------------------------------------------------------------
 
