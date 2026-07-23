@@ -52,7 +52,7 @@ Each :NAME keyword becomes the symbol NAME in the car of the cell."
      ;; `my/unspecify-tty-background' runs at `window-setup-hook').
      (custom-set-faces
       '(line-number ((t (:inherit default :background "black" :foreground "#928374"))))
-      '(hl-line     ((t (:background "#282828"))))
+      '(hl-line     ((t (:background "#3c3836"))))
       '(default     ((((type graphic)) (:background "#181818" :foreground "#EBDBB2"))
                      (t                (:background "unspecified-bg" :foreground "#EBDBB2"))))))
 
