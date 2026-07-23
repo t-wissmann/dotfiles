@@ -6,19 +6,56 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
-(defvar my/packages '(evil gruvbox-theme)
-  "Packages to install on first launch if they are missing.")
+(defvar my/packages
+  `((evil
+     . ,(lambda ()
+          (setq evil-want-keybinding nil)   ; play nicely with other modes
+          (require 'evil)
+          (evil-mode 1)
 
-(defun my/ensure-packages ()
-  "Install any of `my/packages' that are not yet present."
-  (let ((missing (seq-remove #'package-installed-p my/packages)))
+          ;; Move by visual lines.
+          (dolist (map (list evil-normal-state-map
+                             evil-visual-state-map
+                             evil-motion-state-map))
+            (define-key map (kbd "j") #'evil-next-visual-line)
+            (define-key map (kbd "k") #'evil-previous-visual-line))
+
+          ;; Cursor: shape + colour per state (colour must go through evil,
+          ;; not the `cursor' face).
+          (setq evil-normal-state-cursor   '(box       "#ff9900")
+                evil-insert-state-cursor   '((bar . 2) "#ff9900")
+                evil-visual-state-cursor   '(hollow    "#ff9900")
+                evil-replace-state-cursor  '(hbar      "#ff9900")
+                evil-operator-state-cursor '(hbar      "#ff9900")
+                evil-motion-state-cursor   '(box       "#ff9900")
+                evil-emacs-state-cursor    '(bar       "#ff9900"))))
+    (gruvbox-theme
+     . ,(lambda ()
+          (load-theme 'gruvbox t)
+          ;; Overrides layered on top of the theme.
+          (custom-set-faces
+           '(line-number ((t (:inherit default :background "black" :foreground "#928374"))))
+           '(default     ((t (:background "#181818" :foreground "#EBDBB2"))))))))
+  "Alist of (PACKAGE . CONFIG-FUNCTION).
+On startup each PACKAGE is installed if missing, and its CONFIG-FUNCTION
+is called only once the package is actually installed.  All
+package-specific configuration lives inside the respective function.")
+
+(defun my/setup-packages ()
+  "Install missing packages from `my/packages', then run each config."
+  (let ((missing (seq-remove (lambda (cell) (package-installed-p (car cell)))
+                             my/packages)))
     (when missing
-      (message "Refreshing package archives to install: %s" missing)
+      (message "Refreshing package archives to install: %s"
+               (mapcar #'car missing))
       (package-refresh-contents)
-      (dolist (pkg missing)
-        (package-install pkg)))))
+      (dolist (cell missing)
+        (package-install (car cell)))))
+  (dolist (cell my/packages)
+    (when (package-installed-p (car cell))
+      (funcall (cdr cell)))))
 
-(my/ensure-packages)
+(my/setup-packages)
 
 ;;; Identity ------------------------------------------------------------------
 
@@ -54,15 +91,7 @@
 (add-hook 'display-line-numbers-mode-hook #'my/line-number-width-from-buffer)
 (add-hook 'after-save-hook #'my/line-number-width-from-buffer)
 
-;;; Theme ---------------------------------------------------------------------
-
-(when (member 'gruvbox-theme package-activated-list)
-  (load-theme 'gruvbox t))
-
-;; Overrides layered on top of the theme.
-(custom-set-faces
- '(line-number ((t (:inherit default :background "black" :foreground "#928374"))))
- '(default     ((t (:background "#181818" :foreground "#EBDBB2")))))
+;;; Frame appearance ----------------------------------------------------------
 
 (add-to-list 'default-frame-alist '(alpha-background . 93))
 
@@ -99,28 +128,6 @@
                     nil (list frame))))
 (add-hook 'after-make-frame-functions #'my/set-font-for-frame)
 (add-hook 'window-setup-hook #'my/set-font-for-frame)
-
-;;; Evil ----------------------------------------------------------------------
-
-(setq evil-want-keybinding nil)         ; play nicely with other modes
-(require 'evil)
-(evil-mode 1)
-
-;; Move by visual lines.
-(dolist (map (list evil-normal-state-map
-                   evil-visual-state-map
-                   evil-motion-state-map))
-  (define-key map (kbd "j") #'evil-next-visual-line)
-  (define-key map (kbd "k") #'evil-previous-visual-line))
-
-;; Cursor: shape + colour per state (colour must go through evil, not `cursor').
-(setq evil-normal-state-cursor   '(box       "#ff9900")
-      evil-insert-state-cursor   '((bar . 2) "#ff9900")
-      evil-visual-state-cursor   '(hollow    "#ff9900")
-      evil-replace-state-cursor  '(hbar      "#ff9900")
-      evil-operator-state-cursor '(hbar      "#ff9900")
-      evil-motion-state-cursor   '(box       "#ff9900")
-      evil-emacs-state-cursor    '(bar       "#ff9900"))
 
 ;;; Agda input method everywhere ---------------------------------------------
 
