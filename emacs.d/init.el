@@ -1,4 +1,136 @@
-;; emacs init.el
+;;; init.el --- personal Emacs config (post-Doom) -*- lexical-binding: t; -*-
+
+;;; Package bootstrap ---------------------------------------------------------
+
+(require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(package-initialize)
+
+(defvar my/packages '(evil gruvbox-theme)
+  "Packages to install on first launch if they are missing.")
+
+(defun my/ensure-packages ()
+  "Install any of `my/packages' that are not yet present."
+  (let ((missing (seq-remove #'package-installed-p my/packages)))
+    (when missing
+      (message "Refreshing package archives to install: %s" missing)
+      (package-refresh-contents)
+      (dolist (pkg missing)
+        (package-install pkg)))))
+
+(my/ensure-packages)
+
+;;; Identity ------------------------------------------------------------------
+
+(setq user-full-name "Thorsten Wißmann"
+      user-mail-address "edu@thorsten-wissmann.de")
+
+;;; Sane defaults -------------------------------------------------------------
+
+(setq confirm-kill-processes nil        ; kill processes on exit without asking
+      confirm-kill-emacs nil            ; exit without confirmation
+      inhibit-startup-screen t
+      ring-bell-function 'ignore)
+(setq-default indent-tabs-mode nil)
+(menu-bar-mode -1)
+(when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+
+;; Keep customize-set options out of this file.
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(when (file-exists-p custom-file) (load custom-file nil t))
+
+;;; Line numbers --------------------------------------------------------------
+
+(setq display-line-numbers-type t)
+(setq-default display-line-numbers-width 0        ; hug the actual digits
+              display-line-numbers-grow-only t)   ; shrink back when possible
+(global-display-line-numbers-mode 1)
+
+(defun my/line-number-width-from-buffer ()
+  "Reserve line-number columns to fit this buffer's total line count."
+  (setq-local display-line-numbers-width
+              (length (number-to-string (line-number-at-pos (point-max))))))
+(add-hook 'display-line-numbers-mode-hook #'my/line-number-width-from-buffer)
+(add-hook 'after-save-hook #'my/line-number-width-from-buffer)
+
+;;; Theme ---------------------------------------------------------------------
+
+(when (member 'gruvbox-theme package-activated-list)
+  (load-theme 'gruvbox t))
+
+;; Overrides layered on top of the theme.
+(custom-set-faces
+ '(line-number ((t (:inherit default :background "black" :foreground "#928374"))))
+ '(default     ((t (:background "#181818" :foreground "#EBDBB2")))))
+
+(add-to-list 'default-frame-alist '(alpha-background . 93))
+
+;; On a TTY, let the terminal's own background show through.
+(defun my/unspecify-tty-background (&optional frame)
+  (unless (display-graphic-p frame)
+    (set-face-background 'default "unspecified-bg" frame)))
+(add-hook 'window-setup-hook #'my/unspecify-tty-background)
+(add-hook 'after-make-frame-functions #'my/unspecify-tty-background)
+
+;;; Font: size chosen from display DPI, set per-frame -------------------------
+
+(defun my/display-dpi (&optional frame)
+  "Return the DPI of FRAME's display, or nil if unknown."
+  (let* ((attrs (car (display-monitor-attributes-list frame)))
+         (mm    (alist-get 'mm-size attrs))
+         (geom  (alist-get 'geometry attrs)))
+    (when (and mm geom (> (car mm) 0))
+      (/ (float (nth 2 geom))            ; width in pixels
+         (/ (car mm) 25.4)))))           ; width in inches
+
+(defun my/font-size-for-dpi (&optional frame)
+  "Pick a font point size based on FRAME's display DPI."
+  (let ((dpi (or (my/display-dpi frame) 96)))
+    (cond ((>= dpi 190) 18)              ; hidpi / retina
+          ((>= dpi 140) 14)              ; medium-high
+          (t            12))))           ; standard
+
+(defun my/set-font-for-frame (&optional frame)
+  "Set the frame font once a graphical FRAME exists (needed under daemon)."
+  (when (display-graphic-p frame)
+    (set-frame-font (font-spec :name "Bitstream Vera Sans Mono"
+                               :size (my/font-size-for-dpi frame))
+                    nil (list frame))))
+(add-hook 'after-make-frame-functions #'my/set-font-for-frame)
+(add-hook 'window-setup-hook #'my/set-font-for-frame)
+
+;;; Evil ----------------------------------------------------------------------
+
+(setq evil-want-keybinding nil)         ; play nicely with other modes
 (require 'evil)
 (evil-mode 1)
+
+;; Move by visual lines.
+(dolist (map (list evil-normal-state-map
+                   evil-visual-state-map
+                   evil-motion-state-map))
+  (define-key map (kbd "j") #'evil-next-visual-line)
+  (define-key map (kbd "k") #'evil-previous-visual-line))
+
+;; Cursor: shape + colour per state (colour must go through evil, not `cursor').
+(setq evil-normal-state-cursor   '(box       "#ff9900")
+      evil-insert-state-cursor   '((bar . 2) "#ff9900")
+      evil-visual-state-cursor   '(hollow    "#ff9900")
+      evil-replace-state-cursor  '(hbar      "#ff9900")
+      evil-operator-state-cursor '(hbar      "#ff9900")
+      evil-motion-state-cursor   '(box       "#ff9900")
+      evil-emacs-state-cursor    '(bar       "#ff9900"))
+
+;;; Agda input method everywhere ---------------------------------------------
+
+;; Load agda-input.el shipped with the Agda binary (version-agnostic glob).
+(let ((agda-input (car (last (file-expand-wildcards
+                              "~/.local/share/agda/*/emacs-mode/agda-input.el")))))
+  (when agda-input
+    (add-to-list 'load-path (file-name-directory agda-input))
+    (require 'agda-input)
+    (add-hook 'evil-insert-state-entry-hook (lambda () (set-input-method "Agda")))
+    (add-hook 'evil-insert-state-exit-hook  (lambda () (set-input-method nil)))))
+
+;;; init.el ends here
