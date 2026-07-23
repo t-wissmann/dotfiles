@@ -52,6 +52,7 @@ Each :NAME keyword becomes the symbol NAME in the car of the cell."
      ;; `my/unspecify-tty-background' runs at `window-setup-hook').
      (custom-set-faces
       '(line-number ((t (:inherit default :background "black" :foreground "#928374"))))
+      '(hl-line     ((t (:background "#282828"))))
       '(default     ((((type graphic)) (:background "#181818" :foreground "#EBDBB2"))
                      (t                (:background "unspecified-bg" :foreground "#EBDBB2"))))))
 
@@ -146,6 +147,10 @@ Progress is shown in a dedicated buffer.  Run this manually via
               (length (number-to-string (line-number-at-pos (point-max))))))
 (add-hook 'display-line-numbers-mode-hook #'my/line-number-width-from-buffer)
 (add-hook 'after-save-hook #'my/line-number-width-from-buffer)
+
+;;; Cursorline (vim-like current-line highlight) ------------------------------
+
+(global-hl-line-mode 1)
 
 ;;; Frame appearance ----------------------------------------------------------
 
