@@ -40,8 +40,8 @@ homedir=(
     dialogrc
     gitconfig
     tigrc
-    #emacs
-    #emacs.d
+    # emacs
+    emacs.d
     pinforc
     ghci
     screenrc

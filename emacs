@@ -1,7 +1,7 @@
- (require 'evil)
- (evil-mode 1)
-(load-file "/usr/share/emacs/site-lisp/ProofGeneral/generic/proof-site.el")
-(add-hook 'coq-mode-hook (lambda () (local-set-key (kbd "C-c RET") 'proof-goto-point)))
+(require 'evil)
+(evil-mode 1)
+;; (load-file "/usr/share/emacs/site-lisp/ProofGeneral/generic/proof-site.el")
+;; (add-hook 'coq-mode-hook (lambda () (local-set-key (kbd "C-c RET") 'proof-goto-point)))
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -21,4 +21,4 @@
 ;(load-theme 'zenburn t)
 ;;(require 'color-theme-zenburn)
 ;;(color-theme-zenburn)
-(setq scroll-step 1)
+;; (setq scroll-step 1)

@@ -141,13 +141,12 @@
       "z" #'doom/window-zoom)
 (map! :nvm "j" #'evil-next-visual-line
       :nvm "k" #'evil-previous-visual-line)
-;; kill processes on exit without asking
-(setq confirm-kill-processes nil)
-;; exit emacs without confirmation
-(setq confirm-kill-emacs nil)
-
-
-(setq doom-localleader-key ",")
+(setq
+      ;; kill processes on exit without asking
+      confirm-kill-processes nil
+      ;; exit emacs without confirmation
+      confirm-kill-emacs nil
+      doom-localleader-key ",")
 ;; Also use SPC m for localleader
 (defun my/call-localleader ()
   (interactive)
