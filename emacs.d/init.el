@@ -6,40 +6,53 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
+(defun a-list (&rest pairs)
+  "Build an alist from alternating KEYWORD FUNCTION arguments.
+Each :NAME keyword becomes the symbol NAME in the car of the cell."
+  (let (result)
+    (while pairs
+      (let ((key (pop pairs))
+            (fn  (pop pairs)))
+        (push (cons (intern (substring (symbol-name key) 1)) fn) result)))
+    (nreverse result)))
+
 (defvar my/packages
-  `((evil
-     . ,(lambda ()
-          (setq evil-want-keybinding nil)   ; play nicely with other modes
-          (require 'evil)
-          (evil-mode 1)
+  (a-list
+   :evil
+   (lambda ()
+     (setq evil-want-keybinding nil)    ; play nicely with other modes
+     (require 'evil)
+     (evil-mode 1)
 
-          ;; Move by visual lines.
-          (dolist (map (list evil-normal-state-map
-                             evil-visual-state-map
-                             evil-motion-state-map))
-            (define-key map (kbd "j") #'evil-next-visual-line)
-            (define-key map (kbd "k") #'evil-previous-visual-line))
+     ;; Move by visual lines.
+     (dolist (map (list evil-normal-state-map
+                        evil-visual-state-map
+                        evil-motion-state-map))
+       (define-key map (kbd "j") #'evil-next-visual-line)
+       (define-key map (kbd "k") #'evil-previous-visual-line))
 
-          ;; Cursor: shape + colour per state (colour must go through evil,
-          ;; not the `cursor' face).
-          (setq evil-normal-state-cursor   '(box       "#ff9900")
-                evil-insert-state-cursor   '((bar . 2) "#ff9900")
-                evil-visual-state-cursor   '(hollow    "#ff9900")
-                evil-replace-state-cursor  '(hbar      "#ff9900")
-                evil-operator-state-cursor '(hbar      "#ff9900")
-                evil-motion-state-cursor   '(box       "#ff9900")
-                evil-emacs-state-cursor    '(bar       "#ff9900"))))
-    (gruvbox-theme
-     . ,(lambda ()
-          (load-theme 'gruvbox t)
-          ;; Overrides layered on top of the theme.
-          (custom-set-faces
-           '(line-number ((t (:inherit default :background "black" :foreground "#928374"))))
-           '(default     ((t (:background "#181818" :foreground "#EBDBB2"))))))))
+     ;; Cursor: shape + colour per state (colour must go through evil,
+     ;; not the `cursor' face).
+     (setq evil-normal-state-cursor   '(box       "#ff9900")
+           evil-insert-state-cursor   '((bar . 2) "#ff9900")
+           evil-visual-state-cursor   '(hollow    "#ff9900")
+           evil-replace-state-cursor  '(hbar      "#ff9900")
+           evil-operator-state-cursor '(hbar      "#ff9900")
+           evil-motion-state-cursor   '(box       "#ff9900")
+           evil-emacs-state-cursor    '(bar       "#ff9900")))
+
+   :gruvbox-theme
+   (lambda ()
+     (load-theme 'gruvbox t)
+     ;; Overrides layered on top of the theme.
+     (custom-set-faces
+      '(line-number ((t (:inherit default :background "black" :foreground "#928374"))))
+      '(default     ((t (:background "#181818" :foreground "#EBDBB2")))))))
   "Alist of (PACKAGE . CONFIG-FUNCTION).
-On startup each PACKAGE is installed if missing, and its CONFIG-FUNCTION
-is called only once the package is actually installed.  All
-package-specific configuration lives inside the respective function.")
+`my/install-packages' installs each missing PACKAGE, and
+`my/configure-packages' calls each CONFIG-FUNCTION whose package is
+installed.  All package-specific configuration lives inside the
+respective function.")
 
 (defun my/install-packages ()
   "Install any packages from `my/packages' that are not yet present.
