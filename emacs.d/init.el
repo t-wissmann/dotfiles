@@ -64,13 +64,11 @@ installed.  All package-specific configuration lives inside the
 respective function.")
 
 (defun my/install-packages ()
-  "Install any packages from `my/packages' that are not yet present.
+  "Install or update every package in `my/packages'.
 Progress is shown in a dedicated buffer.  Run this manually via
 \\[my/install-packages]; it is not called on startup."
   (interactive)
   (let* ((buffer (get-buffer-create "*my-package-install*"))
-         (missing (seq-remove (lambda (cell) (package-installed-p (car cell)))
-                              my/packages))
          (out (lambda (fmt &rest args)
                 (with-current-buffer buffer
                   (goto-char (point-max))
@@ -86,24 +84,21 @@ Progress is shown in a dedicated buffer.  Run this manually via
       (erase-buffer))
     ;; Show the buffer *before* doing the work so progress is visible live.
     (pop-to-buffer buffer)
-    (if (not missing)
-        (funcall out "Nothing to install; all packages already present.")
-      (funcall out "Installing: %s" (mapcar #'car missing))
-      (advice-add 'message :around relay)
-      (unwind-protect
-          (progn
-            (funcall out "Refreshing package archives...")
-            (package-refresh-contents)
-            (dolist (cell missing)
-              (let ((pkg (car cell)))
-                (funcall out "Installing %s..." pkg)
-                (condition-case err
-                    (progn (package-install pkg)
-                           (funcall out "  done: %s" pkg))
-                  (error (funcall out "  FAILED: %s (%s)"
-                                  pkg (error-message-string err)))))))
-        (advice-remove 'message relay))
-      (funcall out "Finished."))))
+    (advice-add 'message :around relay)
+    (unwind-protect
+        (progn
+          (funcall out "Refreshing package archives...")
+          (package-refresh-contents)
+          (dolist (cell my/packages)
+            (let ((pkg (car cell)))
+              (funcall out "== %s ==" pkg)
+              (condition-case err
+                  (if (package-installed-p pkg)
+                      (package-upgrade pkg)
+                    (package-install pkg))
+                (error (funcall out "  %s: %s" pkg (error-message-string err)))))))
+      (advice-remove 'message relay))
+    (funcall out "Finished.")))
 
 (defun my/configure-packages ()
   "Run each config function from `my/packages' whose package is installed."
