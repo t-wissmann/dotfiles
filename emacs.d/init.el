@@ -2,6 +2,7 @@
 
 ;;; Package bootstrap ---------------------------------------------------------
 
+(require 'cl-lib)
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
@@ -47,7 +48,15 @@ Each :NAME keyword becomes the symbol NAME in the car of the cell."
      ;; Overrides layered on top of the theme.
      (custom-set-faces
       '(line-number ((t (:inherit default :background "black" :foreground "#928374"))))
-      '(default     ((t (:background "#181818" :foreground "#EBDBB2")))))))
+      '(default     ((t (:background "#181818" :foreground "#EBDBB2"))))))
+
+   :which-key
+   (lambda ()
+     (which-key-mode 1))
+
+   :magit
+   (lambda ()
+     (global-set-key (kbd "C-x g") #'magit-status)))
   "Alist of (PACKAGE . CONFIG-FUNCTION).
 `my/install-packages' installs each missing PACKAGE, and
 `my/configure-packages' calls each CONFIG-FUNCTION whose package is
@@ -56,16 +65,45 @@ respective function.")
 
 (defun my/install-packages ()
   "Install any packages from `my/packages' that are not yet present.
-Run this manually via \\[my/install-packages]; it is not called on startup."
+Progress is shown in a dedicated buffer.  Run this manually via
+\\[my/install-packages]; it is not called on startup."
   (interactive)
-  (let ((missing (seq-remove (lambda (cell) (package-installed-p (car cell)))
-                             my/packages)))
-    (when missing
-      (message "Refreshing package archives to install: %s"
-               (mapcar #'car missing))
-      (package-refresh-contents)
-      (dolist (cell missing)
-        (package-install (car cell))))))
+  (let* ((buffer (get-buffer-create "*my-package-install*"))
+         (missing (seq-remove (lambda (cell) (package-installed-p (car cell)))
+                              my/packages))
+         (out (lambda (fmt &rest args)
+                (with-current-buffer buffer
+                  (goto-char (point-max))
+                  (let ((inhibit-read-only t))
+                    (insert (apply #'format fmt args) "\n")))
+                (redisplay t)))
+         ;; Mirror package.el's own `message' output into the buffer.
+         (relay (lambda (orig fmt &rest args)
+                  (when fmt (ignore-errors (apply out fmt args)))
+                  (apply orig fmt args))))
+    (with-current-buffer buffer
+      (setq buffer-read-only nil)
+      (erase-buffer))
+    ;; Show the buffer *before* doing the work so progress is visible live.
+    (pop-to-buffer buffer)
+    (if (not missing)
+        (funcall out "Nothing to install; all packages already present.")
+      (funcall out "Installing: %s" (mapcar #'car missing))
+      (advice-add 'message :around relay)
+      (unwind-protect
+          (progn
+            (funcall out "Refreshing package archives...")
+            (package-refresh-contents)
+            (dolist (cell missing)
+              (let ((pkg (car cell)))
+                (funcall out "Installing %s..." pkg)
+                (condition-case err
+                    (progn (package-install pkg)
+                           (funcall out "  done: %s" pkg))
+                  (error (funcall out "  FAILED: %s (%s)"
+                                  pkg (error-message-string err)))))))
+        (advice-remove 'message relay))
+      (funcall out "Finished."))))
 
 (defun my/configure-packages ()
   "Run each config function from `my/packages' whose package is installed."
