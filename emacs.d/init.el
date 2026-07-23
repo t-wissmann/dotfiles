@@ -46,9 +46,14 @@ Each :NAME keyword becomes the symbol NAME in the car of the cell."
    (lambda ()
      (load-theme 'gruvbox t)
      ;; Overrides layered on top of the theme.
+     ;; On a graphical frame use the solid background; on a TTY keep the
+     ;; background unspecified so the terminal's transparency shows through
+     ;; (otherwise loading the theme re-opacifies the frame until
+     ;; `my/unspecify-tty-background' runs at `window-setup-hook').
      (custom-set-faces
       '(line-number ((t (:inherit default :background "black" :foreground "#928374"))))
-      '(default     ((t (:background "#181818" :foreground "#EBDBB2"))))))
+      '(default     ((((type graphic)) (:background "#181818" :foreground "#EBDBB2"))
+                     (t                (:background "unspecified-bg" :foreground "#EBDBB2"))))))
 
    :which-key
    (lambda ()

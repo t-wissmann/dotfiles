@@ -25,8 +25,11 @@
       scroll-bar-mode nil)
 
 ;; Same colours the theme ends up with, so there is no white flash before
-;; init.el has loaded it.
-(push '(background-color . "#181818") default-frame-alist)
-(push '(foreground-color . "#EBDBB2") default-frame-alist)
+;; init.el has loaded it.  Only on a graphical display, though: on a TTY a
+;; solid background defeats the terminal's transparency (and shows up as a
+;; brief opaque flash at startup), so let the terminal's own background show.
+(when initial-window-system
+  (push '(background-color . "#181818") default-frame-alist)
+  (push '(foreground-color . "#EBDBB2") default-frame-alist))
 
 ;;; early-init.el ends here
