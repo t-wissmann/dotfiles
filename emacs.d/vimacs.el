@@ -70,5 +70,38 @@ Progress is shown in a dedicated buffer.  Run this manually via
     (when (package-installed-p (car cell))
       (funcall (cdr cell)))))
 
+;;; Font: size chosen from display DPI, set per-frame -------------------------
+
+(defun my/display-dpi (&optional frame)
+  "Return the DPI of FRAME's display, or nil if unknown."
+  (let* ((attrs (car (display-monitor-attributes-list frame)))
+         (mm    (alist-get 'mm-size attrs))
+         (geom  (alist-get 'geometry attrs)))
+    (when (and mm geom (> (car mm) 0))
+      (/ (float (nth 2 geom))            ; width in pixels
+         (/ (car mm) 25.4)))))           ; width in inches
+
+(defvar my/font-size-function (lambda (_dpi) 12)
+  "Function mapping a display DPI to a font point size.
+Set it with `set-conditional-font-size'.")
+
+(defun set-conditional-font-size (fn)
+  "Use FN to choose the font point size from a display DPI.
+FN is called with one argument, the DPI, and returns a point size."
+  (setq my/font-size-function fn))
+
+(defun my/font-size-for-dpi (&optional frame)
+  "Pick a font point size based on FRAME's display DPI."
+  (funcall my/font-size-function (or (my/display-dpi frame) 96)))
+
+(defun my/set-font-for-frame (&optional frame)
+  "Set the frame font once a graphical FRAME exists (needed under daemon)."
+  (when (display-graphic-p frame)
+    (set-frame-font (font-spec :name "Bitstream Vera Sans Mono"
+                               :size (my/font-size-for-dpi frame))
+                    nil (list frame))))
+(add-hook 'after-make-frame-functions #'my/set-font-for-frame)
+(add-hook 'window-setup-hook #'my/set-font-for-frame)
+
 (provide 'vimacs)
 ;;; vimacs.el ends here

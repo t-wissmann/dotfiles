@@ -14,8 +14,9 @@
     (package-activate-all)
   (package-initialize))
 
-;; `a-list', `my/install-packages', and `my/configure-packages' live in
-;; vimacs.el.  Loaded here so `a-list' is available for `my/packages' below.
+;; Helpers (`a-list', package install/configure, per-frame DPI font sizing)
+;; live in vimacs.el.  Loaded here so `a-list' is available for `my/packages'
+;; below.
 (load (expand-file-name "vimacs.el" user-emacs-directory))
 
 (defvar my/packages
@@ -122,32 +123,12 @@ respective function.")
 (add-hook 'window-setup-hook #'my/unspecify-tty-background)
 (add-hook 'after-make-frame-functions #'my/unspecify-tty-background)
 
-;;; Font: size chosen from display DPI, set per-frame -------------------------
+;;; Font: size chosen from display DPI (machinery in vimacs.el) ---------------
 
-(defun my/display-dpi (&optional frame)
-  "Return the DPI of FRAME's display, or nil if unknown."
-  (let* ((attrs (car (display-monitor-attributes-list frame)))
-         (mm    (alist-get 'mm-size attrs))
-         (geom  (alist-get 'geometry attrs)))
-    (when (and mm geom (> (car mm) 0))
-      (/ (float (nth 2 geom))            ; width in pixels
-         (/ (car mm) 25.4)))))           ; width in inches
-
-(defun my/font-size-for-dpi (&optional frame)
-  "Pick a font point size based on FRAME's display DPI."
-  (let ((dpi (or (my/display-dpi frame) 96)))
-    (cond ((>= dpi 190) 18)              ; hidpi / retina
-          ((>= dpi 140) 14)              ; medium-high
-          (t            12))))           ; standard
-
-(defun my/set-font-for-frame (&optional frame)
-  "Set the frame font once a graphical FRAME exists (needed under daemon)."
-  (when (display-graphic-p frame)
-    (set-frame-font (font-spec :name "Bitstream Vera Sans Mono"
-                               :size (my/font-size-for-dpi frame))
-                    nil (list frame))))
-(add-hook 'after-make-frame-functions #'my/set-font-for-frame)
-(add-hook 'window-setup-hook #'my/set-font-for-frame)
+(set-conditional-font-size (lambda (dpi)
+   (cond ((>= dpi 190) 18)              ; hidpi / retina
+         ((>= dpi 140) 14)              ; medium-high
+         (t            12))))           ; standard
 
 ;;; Agda input method everywhere ---------------------------------------------
 
