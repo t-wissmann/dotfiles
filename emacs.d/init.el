@@ -312,3 +312,18 @@
           "agda2-mode (delayed)" t)
 ;; (load-file (let ((coding-system-for-read 'utf-8))
 ;;                 (shell-command-to-string "agda --emacs-mode locate")))
+
+;; Advertise the "Agda" input method to `set-input-method' without loading
+;; anything heavy -- the input-method analogue of the `agda2-mode' autoload
+;; above.  `register-input-method' only adds "Agda" to `input-method-alist'
+;; (so it tab-completes in `set-input-method' / `C-x RET C-\'); the
+;; ACTIVATE-FUNC `quail-use-package' does not run until "Agda" is first
+;; selected.  It then `load's its trailing library argument -- setup-agda.el
+;; -- which `require's agda2-mode.el, which `require's agda-input.el, whose
+;; `quail-define-package' defines the real "Agda" Quail package that
+;; `quail-use-package' goes on to activate.  Same lazy file, same one-time
+;; cost as opening the first .agda buffer.
+(register-input-method
+ "Agda" "UTF-8" #'quail-use-package "∏"
+ "Agda input method (\\alpha -> α &c.); loads setup-agda.el on first use."
+ (expand-file-name "setup-agda.el" user-emacs-directory))
