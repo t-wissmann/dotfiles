@@ -14,6 +14,11 @@
       inhibit-x-resources t
       package-quickstart t)
 
+;; Log native-compilation warnings instead of popping the *Warnings* buffer.
+;; Silences upstream false positives (e.g. general.el's `general-normalize-hook'
+;; defined inside a `with-eval-after-load' block) without hiding real errors.
+(setq native-comp-async-report-warnings-errors 'silent)
+
 ;; Set the chrome via `default-frame-alist' rather than the modes, so it is
 ;; never drawn in the first place (no flicker, slightly faster startup).
 (push '(menu-bar-lines . 0) default-frame-alist)

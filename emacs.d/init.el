@@ -140,6 +140,10 @@
       confirm-kill-emacs nil            ; exit without confirmation
       inhibit-startup-screen t
       ring-bell-function 'ignore)
+;; Suppress the "For information about GNU Emacs ... type SPC h C-a." echo-area
+;; message.  Neutering the function (rather than the login-name-guarded
+;; `inhibit-startup-echo-area-message' variable) keeps this portable.
+(fset 'display-startup-echo-area-message #'ignore)
 (setq-default indent-tabs-mode nil)
 (menu-bar-mode -1)
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
