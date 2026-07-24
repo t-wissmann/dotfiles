@@ -24,6 +24,7 @@
      (setq evil-want-keybinding nil)    ; play nicely with other modes
      (require 'evil)
      (evil-mode 1)
+     (setq evil-want-minibuffer t)
 
      ;; Move by visual lines.
      (dolist (map (list evil-normal-state-map
