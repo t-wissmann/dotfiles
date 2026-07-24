@@ -55,16 +55,14 @@ installed is called."
     (when (package-installed-p (car cell))
       (funcall (cdr cell)))))
 
-(defun my/install-packages ()
-  "Install or update every package in `my/packages'.
-Interactively, progress is shown in a dedicated buffer.  In batch mode
-it is printed to the terminal instead, so this can be driven from a shell:
-
-    emacs --batch -l ~/.emacs.d/init.el -f my/install-packages
-
-Run interactively via \\[my/install-packages]; it is not called on startup."
-  (interactive)
-  (let* ((buffer (unless noninteractive (get-buffer-create "*my-package-install*")))
+(defun my/--run-package-op (buffer-name action)
+  "Run ACTION over `my/packages', reporting progress.
+ACTION is called with two arguments: a package symbol and an OUT
+function \(FMT &rest ARGS) for logging.  Interactively, progress is
+shown in a buffer named BUFFER-NAME; in batch mode it is printed to the
+terminal instead.  Archives are refreshed first and the quickstart file
+is rebuilt afterwards."
+  (let* ((buffer (unless noninteractive (get-buffer-create buffer-name)))
          (out (lambda (fmt &rest args)
                 (if noninteractive
                     ;; `message' goes to stderr in batch mode.
@@ -93,17 +91,52 @@ Run interactively via \\[my/install-packages]; it is not called on startup."
           (package-refresh-contents)
           (dolist (cell my/packages)
             (let ((pkg (car cell)))
-              (funcall out "== %s ==" pkg)
               (condition-case err
-                  (if (package-installed-p pkg)
-                      (package-upgrade pkg)
-                    (package-install pkg))
+                  (funcall action pkg out)
                 (error (funcall out "  %s: %s" pkg (error-message-string err))))))
           ;; Rebuild the quickstart file so the next startup uses the fast path.
           (funcall out "Refreshing package-quickstart...")
           (package-quickstart-refresh))
       (unless noninteractive (advice-remove 'message relay)))
     (funcall out "Finished.")))
+
+(defun my/install-packages ()
+  "Install every missing package in `my/packages'.
+Already-installed packages are left untouched; use `my/update-packages'
+to upgrade them.  Interactively, progress is shown in a dedicated
+buffer.  In batch mode it is printed to the terminal instead, so this
+can be driven from a shell:
+
+    emacs --batch -l ~/.emacs.d/init.el -f my/install-packages
+
+Run interactively via \\[my/install-packages]; it is not called on startup."
+  (interactive)
+  (my/--run-package-op
+   "*my-package-install*"
+   (lambda (pkg out)
+     (unless (package-installed-p pkg)
+       (funcall out "== installing %s ==" pkg)
+       (package-install pkg)))))
+
+(defun my/update-packages ()
+  "Upgrade every installed package in `my/packages'.
+Missing packages are installed as well, so this brings everything up to
+date.  Interactively, progress is shown in a dedicated buffer.  In batch
+mode it is printed to the terminal instead, so this can be driven from a
+shell:
+
+    emacs --batch -l ~/.emacs.d/init.el -f my/update-packages
+
+Run interactively via \\[my/update-packages]; it is not called on startup."
+  (interactive)
+  (my/--run-package-op
+   "*my-package-update*"
+   (lambda (pkg out)
+     (if (package-installed-p pkg)
+         (progn (funcall out "== upgrading %s ==" pkg)
+                (package-upgrade pkg))
+       (funcall out "== installing %s ==" pkg)
+       (package-install pkg)))))
 
 ;;; Font: size chosen from display DPI, set per-frame -------------------------
 
