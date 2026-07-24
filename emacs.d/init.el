@@ -14,13 +14,16 @@
     (package-activate-all)
   (package-initialize))
 
-;; Helpers (`a-list', package install/configure, per-frame DPI font sizing)
-;; live in vimacs.el.  Loaded here so `a-list' is available for `my/packages'
-;; below.
+;; Helpers (`configure-packages', package install, per-frame DPI font sizing)
+;; live in vimacs.el.  Loaded here so `configure-packages' is available for
+;; the package declarations below.
 (load (expand-file-name "vimacs.el" user-emacs-directory))
 
-(defvar my/packages
-  (a-list
+;; Declare, configure, and (via `my/install-packages') install each package.
+;; Each :NAME is a package; the following lambda is its config function, run
+;; on startup when the package is installed.  All package-specific setup lives
+;; inside the respective function.
+(configure-packages
    :evil
    (lambda ()
      (setq evil-want-keybinding nil)    ; play nicely with other modes
@@ -66,13 +69,6 @@
    :magit
    (lambda ()
      (global-set-key (kbd "C-x g") #'magit-status)))
-  "Alist of (PACKAGE . CONFIG-FUNCTION).
-`my/install-packages' installs each missing PACKAGE, and
-`my/configure-packages' calls each CONFIG-FUNCTION whose package is
-installed.  All package-specific configuration lives inside the
-respective function.")
-
-(my/configure-packages)
 
 ;;; Identity ------------------------------------------------------------------
 

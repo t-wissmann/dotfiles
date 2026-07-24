@@ -2,27 +2,35 @@
 
 ;;; Commentary:
 ;; Helper functions used by init.el to declare, install, and configure
-;; packages: `a-list' builds the (PACKAGE . CONFIG-FUNCTION) alist,
-;; `my/install-packages' installs/updates them, and
-;; `my/configure-packages' runs each config function.
+;; packages: `configure-packages' records the (PACKAGE . CONFIG-FUNCTION)
+;; alist and runs each config function, and `my/install-packages'
+;; installs/updates them.
 
 ;;; Code:
 
 (require 'cl-lib)
 (require 'package)
 
-;; Defined in init.el; used by the install/configure helpers below.
-(defvar my/packages)
+(defvar my/packages nil
+  "Alist of (PACKAGE . CONFIG-FUNCTION), set by `configure-packages'.
+`my/install-packages' installs each missing PACKAGE.")
 
-(defun a-list (&rest pairs)
-  "Build an alist from alternating KEYWORD FUNCTION arguments.
-Each :NAME keyword becomes the symbol NAME in the car of the cell."
-  (let (result)
-    (while pairs
-      (let ((key (pop pairs))
-            (fn  (pop pairs)))
-        (push (cons (intern (substring (symbol-name key) 1)) fn) result)))
-    (nreverse result)))
+(defun configure-packages (&rest pairs)
+  "Declare packages from alternating :NAME CONFIG-FUNCTION arguments.
+Each :NAME keyword becomes the symbol NAME.  The resulting
+\(PACKAGE . CONFIG-FUNCTION) alist is stored in `my/packages' for
+`my/install-packages', and each CONFIG-FUNCTION whose package is
+installed is called."
+  (setq my/packages
+        (let (result)
+          (while pairs
+            (let ((key (pop pairs))
+                  (fn  (pop pairs)))
+              (push (cons (intern (substring (symbol-name key) 1)) fn) result)))
+          (nreverse result)))
+  (dolist (cell my/packages)
+    (when (package-installed-p (car cell))
+      (funcall (cdr cell)))))
 
 (defun my/install-packages ()
   "Install or update every package in `my/packages'.
@@ -63,12 +71,6 @@ Progress is shown in a dedicated buffer.  Run this manually via
           (package-quickstart-refresh))
       (advice-remove 'message relay))
     (funcall out "Finished.")))
-
-(defun my/configure-packages ()
-  "Run each config function from `my/packages' whose package is installed."
-  (dolist (cell my/packages)
-    (when (package-installed-p (car cell))
-      (funcall (cdr cell)))))
 
 ;;; Font: size chosen from display DPI, set per-frame -------------------------
 
