@@ -138,7 +138,21 @@
 
    :magit
    (lambda ()
-     (global-set-key (kbd "C-x g") #'magit-status)))
+     (global-set-key (kbd "C-x g") #'magit-status))
+
+   :markdown-mode
+   (lambda ()
+     ;; Lazy: this config function runs at startup, but only registers the
+     ;; file-extension mappings onto the *autoloaded* `markdown-mode' /
+     ;; `gfm-mode'.  markdown-mode.el itself is pulled in only when the first
+     ;; Markdown file is opened (like the Agda block above).
+     (add-to-list 'auto-mode-alist '("\\.md\\'"       . markdown-mode))
+     (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+     ;; README.md gets GitHub-Flavoured Markdown (added last, so it takes
+     ;; precedence over the \.md\' entry above).
+     (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
+     ;; Syntax-highlight fenced code blocks in their source language.
+     (setq markdown-fontify-code-blocks-natively t)))
 
 ;;; Identity ------------------------------------------------------------------
 
