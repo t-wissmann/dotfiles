@@ -188,6 +188,13 @@
 (add-hook 'display-line-numbers-mode-hook #'my/line-number-width-from-buffer)
 (add-hook 'after-save-hook #'my/line-number-width-from-buffer)
 
+;; No line-number bar in the Agda info window (*Agda information*, which uses
+;; `compilation-mode').  The global minor mode would otherwise turn it on there.
+(add-hook 'compilation-mode-hook
+          (lambda ()
+            (when (equal (buffer-name) "*Agda information*")
+              (display-line-numbers-mode -1))))
+
 ;;; Cursorline (vim-like current-line highlight) ------------------------------
 
 (global-hl-line-mode 1)
