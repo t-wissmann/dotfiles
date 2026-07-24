@@ -53,6 +53,49 @@
       '(default     ((((type graphic)) (:background "#181818" :foreground "#EBDBB2"))
                      (t                (:background "unspecified-bg" :foreground "#EBDBB2"))))))
 
+   :general
+   (lambda ()
+     ;; SPC leader in normal/visual/motion states, Doom-style.  The which-key
+     ;; popup (see :which-key) labels each prefix as you type.
+     (require 'general)
+     (general-create-definer my/leader
+       :states  '(normal visual motion)
+       :keymaps 'override
+       :prefix  "SPC")
+     (my/leader
+       "SPC" '(execute-extended-command :which-key "M-x")
+       ":"   '(execute-extended-command :which-key "M-x")
+
+       "f"   '(:ignore t :which-key "file")
+       "f f" '(find-file            :which-key "find file")
+       "f s" '(save-buffer          :which-key "save")
+       "f S" '(write-file           :which-key "save as")
+
+       "b"   '(:ignore t :which-key "buffer")
+       "b b" '(switch-to-buffer     :which-key "switch")
+       "b k" '(kill-current-buffer  :which-key "kill")
+       "b n" '(next-buffer          :which-key "next")
+       "b p" '(previous-buffer      :which-key "previous")
+       "b r" '(revert-buffer        :which-key "revert")
+
+       "w"   '(:ignore t :which-key "window")
+       "w v" '(split-window-right   :which-key "split right")
+       "w s" '(split-window-below   :which-key "split below")
+       "w d" '(delete-window        :which-key "delete")
+       "w o" '(delete-other-windows :which-key "only")
+       "w h" '(evil-window-left     :which-key "left")
+       "w j" '(evil-window-down     :which-key "down")
+       "w k" '(evil-window-up       :which-key "up")
+       "w l" '(evil-window-right    :which-key "right")
+
+       "g"   '(:ignore t :which-key "git")
+       "g g" '(magit-status         :which-key "status")
+
+       "h"   '(help-command         :which-key "help")
+
+       "q"   '(:ignore t :which-key "quit")
+       "q q" '(save-buffers-kill-terminal :which-key "quit emacs")))
+
    :vertico
    (lambda ()
      ;; Vertical completion menu — this is the Doom M-x behaviour: as you
