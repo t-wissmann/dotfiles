@@ -189,6 +189,16 @@
 ;; `inhibit-startup-echo-area-message' variable) keeps this portable.
 (fset 'display-startup-echo-area-message #'ignore)
 (setq-default indent-tabs-mode nil)
+
+;; Emacs keeps a buffer's auto-save file (#name#) around when it is killed
+;; unsaved, so exiting via `:qa!' leaves recovery files behind.  Delete every
+;; buffer's auto-save file on exit so a forced quit cleans up after itself.
+(defun my/delete-all-auto-save-files ()
+  "Delete the auto-save file of every live buffer."
+  (dolist (buf (buffer-list))
+    (with-current-buffer buf
+      (delete-auto-save-file-if-necessary t))))
+(add-hook 'kill-emacs-hook #'my/delete-all-auto-save-files)
 (menu-bar-mode -1)
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
