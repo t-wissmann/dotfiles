@@ -52,9 +52,9 @@
      (require 'evil-collection)
      (evil-collection-init '(magit)))
 
-   :gruvbox-theme
+   :doom-themes
    (lambda ()
-     (load-theme 'gruvbox t)
+     (load-theme 'doom-gruvbox t)
      ;; Overrides layered on top of the theme.
      ;; On a graphical frame use the solid background; on a TTY keep the
      ;; background unspecified so the terminal's transparency shows through
