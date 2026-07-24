@@ -3,3 +3,4 @@ elpa/
 package-quickstart.el
 package-quickstart.elc
 \#*#
+custom.el
