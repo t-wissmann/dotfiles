@@ -57,26 +57,36 @@ installed is called."
 
 (defun my/install-packages ()
   "Install or update every package in `my/packages'.
-Progress is shown in a dedicated buffer.  Run this manually via
-\\[my/install-packages]; it is not called on startup."
+Interactively, progress is shown in a dedicated buffer.  In batch mode
+it is printed to the terminal instead, so this can be driven from a shell:
+
+    emacs --batch -l ~/.emacs.d/init.el -f my/install-packages
+
+Run interactively via \\[my/install-packages]; it is not called on startup."
   (interactive)
-  (let* ((buffer (get-buffer-create "*my-package-install*"))
+  (let* ((buffer (unless noninteractive (get-buffer-create "*my-package-install*")))
          (out (lambda (fmt &rest args)
-                (with-current-buffer buffer
-                  (goto-char (point-max))
-                  (let ((inhibit-read-only t))
-                    (insert (apply #'format fmt args) "\n")))
-                (redisplay t)))
-         ;; Mirror package.el's own `message' output into the buffer.
+                (if noninteractive
+                    ;; `message' goes to stderr in batch mode.
+                    (message "%s" (apply #'format fmt args))
+                  (with-current-buffer buffer
+                    (goto-char (point-max))
+                    (let ((inhibit-read-only t))
+                      (insert (apply #'format fmt args) "\n")))
+                  (redisplay t))))
+         ;; Mirror package.el's own `message' output into the buffer.  In batch
+         ;; mode package.el already logs to stderr, so leave `message' alone
+         ;; (advising it here would recurse through `out').
          (relay (lambda (orig fmt &rest args)
                   (when fmt (ignore-errors (apply out fmt args)))
                   (apply orig fmt args))))
-    (with-current-buffer buffer
-      (setq buffer-read-only nil)
-      (erase-buffer))
-    ;; Show the buffer *before* doing the work so progress is visible live.
-    (pop-to-buffer buffer)
-    (advice-add 'message :around relay)
+    (unless noninteractive
+      (with-current-buffer buffer
+        (setq buffer-read-only nil)
+        (erase-buffer))
+      ;; Show the buffer *before* doing the work so progress is visible live.
+      (pop-to-buffer buffer)
+      (advice-add 'message :around relay))
     (unwind-protect
         (progn
           (funcall out "Refreshing package archives...")
@@ -92,7 +102,7 @@ Progress is shown in a dedicated buffer.  Run this manually via
           ;; Rebuild the quickstart file so the next startup uses the fast path.
           (funcall out "Refreshing package-quickstart...")
           (package-quickstart-refresh))
-      (advice-remove 'message relay))
+      (unless noninteractive (advice-remove 'message relay)))
     (funcall out "Finished.")))
 
 ;;; Font: size chosen from display DPI, set per-frame -------------------------
