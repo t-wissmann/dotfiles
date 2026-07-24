@@ -152,7 +152,26 @@
      ;; precedence over the \.md\' entry above).
      (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
      ;; Syntax-highlight fenced code blocks in their source language.
-     (setq markdown-fontify-code-blocks-natively t)))
+     (setq markdown-fontify-code-blocks-natively t))
+
+   :unicode-fonts
+   (lambda ()
+     ;; Render math (and a few symbol) Unicode blocks with DejaVu Math TeX
+     ;; Gyre in preference to whatever else covers them.  `push' onto the
+     ;; front of each block's font list makes DejaVu the first choice; this
+     ;; must happen before `unicode-fonts-setup' builds the fontsets.
+     (require 'unicode-fonts)
+     (dolist (unicode-block '("Mathematical Alphanumeric Symbols"
+                              "Mathematical Operators"
+                              "Miscellaneous Mathematical Symbols-A"
+                              "Miscellaneous Mathematical Symbols-B"
+                              "Letterlike Symbols" ; for ℰ
+                              "Miscellaneous Symbols"
+                              "Miscellaneous Symbols and Arrows"
+                              "Miscellaneous Symbols and Pictographs"))
+       (push "DejaVu Math TeX Gyre"
+             (cadr (assoc unicode-block unicode-fonts-block-font-mapping))))
+     (unicode-fonts-setup)))
 
 ;;; Identity ------------------------------------------------------------------
 
