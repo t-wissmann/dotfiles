@@ -3,7 +3,11 @@
 ;;; Package bootstrap ---------------------------------------------------------
 
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+; (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(setq package-archives
+      '(("gnu"    . "https://www.mirrorservice.org/sites/elpa.gnu.org/packages/")
+        ("nongnu" . "https://www.mirrorservice.org/sites/elpa.nongnu.org/nongnu/")
+        ("melpa"  . "https://www.mirrorservice.org/sites/melpa.org/packages/")))
 
 ;; The machinery (package activation, `configure-packages', package install,
 ;; per-frame DPI font sizing) lives in vimacs.el.  Loading it activates the
