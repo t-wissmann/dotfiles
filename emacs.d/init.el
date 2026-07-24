@@ -196,15 +196,73 @@
          ((>= dpi 140) 14)              ; medium-high
          (t            12))))           ; standard
 
-;;; Agda input method everywhere ---------------------------------------------
+;;; Agda mode ----------------------------------------------------------------
 
-;; Load agda-input.el shipped with the Agda binary (version-agnostic glob).
+;; The Emacs files ship with the Agda binary, not ELPA (version-agnostic glob
+;; finds the emacs-mode directory).  Two things live there:
+;;   agda-input.el  the "Agda" input method (\\alpha -> α &c.)
+;;   agda2.el       a tiny stub that `autoload's `agda2-mode' and maps it onto
+;;                  \\.l?agda\\' in `auto-mode-alist'.  Loading it is cheap; the
+;;                  heavy agda2-mode.el is pulled in lazily only when the first
+;;                  .agda file is opened.
 (let ((agda-input (car (last (file-expand-wildcards
                               "~/.local/share/agda/*/emacs-mode/agda-input.el")))))
   (when agda-input
     (add-to-list 'load-path (file-name-directory agda-input))
+    ;; Agda input method available everywhere, in evil insert state.
     (require 'agda-input)
     (add-hook 'evil-insert-state-entry-hook (lambda () (set-input-method "Agda")))
-    (add-hook 'evil-insert-state-exit-hook  (lambda () (set-input-method nil)))))
+    (add-hook 'evil-insert-state-exit-hook  (lambda () (set-input-method nil)))
+    ;; Register the autoloads for agda2-mode without loading the mode itself.
+    (require 'agda2)))
+
+;; Local-leader keybindings for Agda, under `,' and `SPC m' (Doom-style).
+;; Deferred until agda2-mode.el actually loads (first .agda file), so the
+;; heavy mode stays lazy; `general' is already required by the :general block.
+;;   `,'   is bound in `agda2-mode-map' (buffer-local; the override leader
+;;         map does not capture `,', so it reaches the buffer).
+;;   `SPC m' is bound in the override leader map, because a buffer-local
+;;         `SPC' binding would be shadowed by it; a `:predicate' restricts it
+;;         to Agda buffers so the prefix falls through everywhere else.
+(with-eval-after-load 'agda2-mode
+  (let ((keys
+         (list
+          ""    '(:ignore t                                  :which-key "agda")
+          "l"   '(agda2-load                                 :which-key "load")
+          "r"   '(agda2-refine                               :which-key "refine")
+          "SPC" '(agda2-give                                 :which-key "give")
+          "c"   '(agda2-make-case                            :which-key "case")
+          "a"   '(agda2-mimer-maybe-all                      :which-key "auto")
+          "t"   '(agda2-goal-type                            :which-key "goal type")
+          "e"   '(agda2-show-context                         :which-key "context")
+          "d"   '(agda2-infer-type-maybe-toplevel            :which-key "infer type")
+          "n"   '(agda2-compute-normalised-maybe-toplevel    :which-key "normalise")
+          ","   '(agda2-goal-and-context                     :which-key "goal + context")
+          "."   '(agda2-goal-and-context-and-inferred        :which-key "goal + inferred")
+          ";"   '(agda2-goal-and-context-and-checked         :which-key "goal + checked")
+          "s"   '(agda2-solve-maybe-all                      :which-key "solve constraints")
+          "w"   '(agda2-why-in-scope-maybe-toplevel          :which-key "why in scope")
+          "o"   '(agda2-module-contents-maybe-toplevel       :which-key "module contents")
+          "z"   '(agda2-search-about-toplevel                :which-key "search about")
+          "h"   '(agda2-helper-function-type                 :which-key "helper type")
+          "f"   '(agda2-next-goal                            :which-key "next goal")
+          "b"   '(agda2-previous-goal                        :which-key "prev goal")
+          "?"   '(agda2-show-goals                           :which-key "show goals")
+          "="   '(agda2-show-constraints                     :which-key "show constraints")
+          "g"   '(agda2-goto-definition-keyboard             :which-key "goto definition")
+          "x"   '(:ignore t                                  :which-key "system")
+          "x c" '(agda2-compile                              :which-key "compile")
+          "x r" '(agda2-restart                              :which-key "restart")
+          "x q" '(agda2-quit                                 :which-key "quit")
+          "x a" '(agda2-abort                                :which-key "abort")
+          "x d" '(agda2-remove-annotations                   :which-key "deactivate")
+          "x h" '(agda2-display-implicit-arguments           :which-key "toggle implicit")
+          "x i" '(agda2-display-irrelevant-arguments         :which-key "toggle irrelevant"))))
+    (apply #'general-define-key
+           :states '(normal visual motion) :keymaps 'agda2-mode-map
+           :prefix "," keys)
+    (apply #'general-define-key
+           :states '(normal visual motion) :keymaps 'override
+           :prefix "SPC m" :predicate '(derived-mode-p 'agda2-mode) keys)))
 
 ;;; init.el ends here
