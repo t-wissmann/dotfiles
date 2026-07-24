@@ -197,6 +197,7 @@
 
 ;;; Cursorline (vim-like current-line highlight) ------------------------------
 
+(setq global-hl-line-sticky-flag t)     ; highlight in every window, not just the focused one
 (global-hl-line-mode 1)
 
 ;;; Frame appearance ----------------------------------------------------------
