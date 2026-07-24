@@ -23,9 +23,9 @@
    (lambda ()
      (setq evil-want-keybinding nil)    ; play nicely with other modes
      (setq evil-want-C-u-scroll t)      ; C-u scrolls up (SPC u for prefix arg)
+     ;; (setq evil-want-minibuffer t) ; breaks screen update on ':' and 'M-x'
      (require 'evil)
      (evil-mode 1)
-     (setq evil-want-minibuffer t)
 
      ;; Move by visual lines.
      (dolist (map (list evil-normal-state-map
