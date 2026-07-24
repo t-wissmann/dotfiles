@@ -22,6 +22,7 @@
    :evil
    (lambda ()
      (setq evil-want-keybinding nil)    ; play nicely with other modes
+     (setq evil-want-C-u-scroll t)      ; C-u scrolls up (SPC u for prefix arg)
      (require 'evil)
      (evil-mode 1)
      (setq evil-want-minibuffer t)
@@ -42,6 +43,14 @@
            evil-operator-state-cursor '(hbar      "#ff9900")
            evil-motion-state-cursor   '(box       "#ff9900")
            evil-emacs-state-cursor    '(bar       "#ff9900")))
+
+   :evil-collection
+   (lambda ()
+     ;; Evil (hjkl &c.) bindings inside magit's status/log buffers and its
+     ;; transient popup menus.  Depends on `evil-want-keybinding' nil, set
+     ;; under :evil above, which is why :evil is declared first.
+     (require 'evil-collection)
+     (evil-collection-init '(magit)))
 
    :gruvbox-theme
    (lambda ()
@@ -70,6 +79,7 @@
      (my/leader
        "SPC" '(execute-extended-command :which-key "M-x")
        ":"   '(execute-extended-command :which-key "M-x")
+       "u"   '(universal-argument       :which-key "universal arg")
 
        "f"   '(:ignore t :which-key "file")
        "f f" '(find-file            :which-key "find file")
