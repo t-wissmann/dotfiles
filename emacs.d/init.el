@@ -245,17 +245,16 @@
 ;;   agda2.el       a tiny stub that `autoload's `agda2-mode' and maps it onto
 ;;                  \\.l?agda\\' in `auto-mode-alist'.  Loading it is cheap; the
 ;;                  heavy agda2-mode.el is pulled in lazily only when the first
-;;                  .agda file is opened.
-(let ((agda-input (car (last (file-expand-wildcards
-                              "~/.local/share/agda/*/emacs-mode/agda-input.el")))))
-  (when agda-input
-    (add-to-list 'load-path (file-name-directory agda-input))
-    ;; Agda input method available everywhere, in evil insert state.
-    (require 'agda-input)
-    (add-hook 'evil-insert-state-entry-hook (lambda () (set-input-method "Agda")))
-    (add-hook 'evil-insert-state-exit-hook  (lambda () (set-input-method nil)))
-    ;; Register the autoloads for agda2-mode without loading the mode itself.
-    (require 'agda2)))
+;; ;;                  .agda file is opened.
+;; (let ((agda-input (car (last (file-expand-wildcards
+;;                               "~/.local/share/agda/*/emacs-mode/agda-input.el")))))
+;;   (when agda-input
+;;     (add-to-list 'load-path (file-name-directory agda-input))
+;;     ;; Agda input method available everywhere, in evil insert state.
+;;     (require 'agda-input)
+;;     (add-hook 'evil-insert-state-entry-hook (lambda () (set-input-method "Agda")))
+;;     (add-hook 'evil-insert-state-exit-hook  (lambda () (set-input-method nil)))
+;;     ))
 
 ;; Local-leader keybindings for Agda, under `,' and `SPC m' (Doom-style).
 ;; Deferred until agda2-mode.el actually loads (first .agda file), so the
@@ -308,5 +307,8 @@
 
 ;;; init.el ends here
 
-(load-file (let ((coding-system-for-read 'utf-8))
-                (shell-command-to-string "agda --emacs-mode locate")))
+;; (load (expand-file-name "setup-agda.el" user-emacs-directory))
+(autoload 'agda2-mode (expand-file-name "setup-agda.el" user-emacs-directory)
+          "agda2-mode (delayed)" t)
+;; (load-file (let ((coding-system-for-read 'utf-8))
+;;                 (shell-command-to-string "agda --emacs-mode locate")))
