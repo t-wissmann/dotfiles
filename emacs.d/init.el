@@ -287,3 +287,6 @@
            :prefix "SPC m" :predicate '(derived-mode-p 'agda2-mode) keys)))
 
 ;;; init.el ends here
+
+(load-file (let ((coding-system-for-read 'utf-8))
+                (shell-command-to-string "agda --emacs-mode locate")))
