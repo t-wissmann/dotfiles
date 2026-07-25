@@ -229,94 +229,20 @@
 (setq global-hl-line-sticky-flag t)     ; highlight in every window, not just the focused one
 (global-hl-line-mode 1)
 
-;;; Mode line: buffer path ----------------------------------------------------
+;;; Mode line / window title: buffer path -------------------------------------
 
-;; Doom-style buffer identification: the path relative to the project root,
-;; with the directory dimmed and the file name bright, instead of the stock
-;; bare `%12b' buffer name.  Only foregrounds are specified, so the background
-;; keeps coming from `mode-line' / `mode-line-inactive' underneath.
-(defface my/mode-line-dir
-  '((t (:foreground "#928374")))
-  "Face for the directory part of the path in the mode line.")
-
-(defface my/mode-line-file
-  '((t (:foreground "#fabd2f" :weight bold)))
-  "Face for the file-name part of the path in the mode line.")
-
-(defface my/mode-line-path-inactive
-  '((t (:inherit mode-line-inactive)))
-  "Face for the whole path in the mode line of an unselected window.")
-
-(defun my/mode-line--shorten-path (file)
-  "Shorten FILE to PROJECT/path/to/file, or `~'-abbreviate it if projectless.
-The leading component is the project directory's own name, so the result
-identifies the project without repeating where it is checked out."
-  (let ((root (when-let* ((project (project-current nil (file-name-directory file))))
-                (expand-file-name (project-root project)))))
-    (if (and root (string-prefix-p root (expand-file-name file)))
-        (concat (file-name-nondirectory (directory-file-name root)) "/"
-                (file-relative-name file root))
-      (abbreviate-file-name file))))
-
-(defvar-local my/mode-line--path-cache nil
-  "Cons of (FILE . SHORTENED) memoising `my/mode-line--shorten-path'.
-`project-current' walks up the directory tree looking for a VC root, which
-is far too slow to repeat on every redisplay of the mode line.  Keyed on
-the file name, so a rename or `write-file' recomputes it.")
-
-(defun my/buffer-path ()
-  "Shortened path of this buffer, or its name if it visits no file.
-Shared by the mode line and the frame/terminal title."
-  (let ((file (buffer-file-name)))
-    (cond ((null file) (buffer-name))
-          ((equal (car my/mode-line--path-cache) file)
-           (cdr my/mode-line--path-cache))
-          (t (cdr (setq my/mode-line--path-cache
-                        (cons file (my/mode-line--shorten-path file))))))))
-
-(defun my/mode-line-buffer-path ()
-  "Buffer path for the mode line: dimmed dirname + highlighted file name.
-Buffers not visiting a file show their buffer name.  In an unselected
-window the whole thing is dimmed, as the stock mode line does."
-  (let* ((file (buffer-file-name))
-         (path (my/buffer-path))
-         (str
-          (cond
-           ((not (mode-line-window-selected-p))
-            (propertize path 'face 'my/mode-line-path-inactive))
-           ((null file)
-            (propertize (buffer-name) 'face 'my/mode-line-file))
-           (t
-            (concat (propertize (or (file-name-directory path) "")
-                                'face 'my/mode-line-dir)
-                    (propertize (file-name-nondirectory path)
-                                'face 'my/mode-line-file))))))
-    ;; Keep the stock mouse behaviour (mouse-1/3 cycle buffers) and tooltip.
-    (propertize str
-                'help-echo (or file (buffer-name))
-                'mouse-face 'mode-line-highlight
-                'local-map mode-line-buffer-identification-keymap)))
-
-;; Buffer-local in every buffer, so this sets the value for the buffers that
-;; do not override it themselves (dired, Info, … keep their own).
-(setq-default mode-line-buffer-identification
-              '(:eval (my/mode-line-buffer-path)))
-
-;;; Frame / terminal title ----------------------------------------------------
-
-;; Same path as the mode line, minus the faces (a title is plain text).
-;; This covers graphical frames as well as terminal ones.
-(setq frame-title-format '(:eval (my/buffer-path)))
-
-;; Under `-nw', Emacs emits the title escape only when this is non-nil.
-;; xterm.el reads it once, during terminal initialisation -- which startup
-;; runs *after* loading init.el, so a plain `setq' here is early enough for
-;; the initial terminal frame as well as later `emacsclient -nw' ones.  It is
-;; a defcustom in term/xterm.el, not yet loaded at this point; setting it
-;; first is fine, as `defcustom' leaves an already-bound variable alone.
-;; The title is then refreshed from `post-command-hook', hence the per-buffer
-;; memoisation of the path above.
-(setq xterm-set-window-title t)
+;; Machinery in vimacs.el: the project-relative path replaces the stock bare
+;; `%12b' buffer name in the mode line (dirname dimmed, file name bright) and
+;; becomes the window title, terminal frames included.
+;;
+;; Each colour is given as (TRUECOLOR COLOR256 FALLBACK), one per display
+;; depth.  Letting Emacs approximate the hex itself is what turns the
+;; mode-line background olive-green inside tmux -- see `my/colour-depth-spec'.
+(set-buffer-path-mode-line
+ :dir                 '("#928374" "color-245" "brightblack")
+ :file                '("#fabd2f" "color-214" "yellow")
+ :background          '("#37302f" "color-236" "black")
+ :inactive-background '("#282828" "color-234" "black"))
 
 ;;; Frame appearance ----------------------------------------------------------
 

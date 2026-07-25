@@ -171,5 +171,151 @@ FN is called with one argument, the DPI, and returns a point size."
 (add-hook 'after-make-frame-functions #'my/set-font-for-frame)
 (add-hook 'window-setup-hook #'my/set-font-for-frame)
 
+;;; Mode line / window title: project-relative buffer path --------------------
+
+;; Doom-style buffer identification: the path relative to the project root,
+;; with the directory dimmed and the file name bright, in place of the stock
+;; bare `%12b' buffer name -- and the same path in the window title.
+;; Configured from init.el via `set-buffer-path-mode-line'; the faces below
+;; are left empty here so that call is the single place colours are chosen.
+
+(declare-function project-root "project" (project))
+(defvar xterm-set-window-title)         ; term/xterm.el, loaded at terminal init
+
+(defface my/mode-line-dir '((t nil))
+  "Face for the directory part of the path in the mode line.")
+
+(defface my/mode-line-file '((t nil))
+  "Face for the file-name part of the path in the mode line.")
+
+(defface my/mode-line-path-inactive '((t (:inherit mode-line-inactive)))
+  "Face for the whole path in the mode line of an unselected window.")
+
+(defun my/mode-line--shorten-path (file)
+  "Shorten FILE to PROJECT/path/to/file, or `~'-abbreviate it if projectless.
+The leading component is the project directory's own name, so the result
+identifies the project without repeating where it is checked out."
+  (let ((root (when-let* ((project (project-current nil (file-name-directory file))))
+                (expand-file-name (project-root project)))))
+    (if (and root (string-prefix-p root (expand-file-name file)))
+        (concat (file-name-nondirectory (directory-file-name root)) "/"
+                (file-relative-name file root))
+      (abbreviate-file-name file))))
+
+(defvar-local my/mode-line--path-cache nil
+  "Cons of (FILE . SHORTENED) memoising `my/mode-line--shorten-path'.
+`project-current' walks up the directory tree looking for a VC root, which
+is far too slow to repeat on every redisplay of the mode line -- and the
+window title is refreshed from `post-command-hook' on top of that.  Keyed
+on the file name, so a rename or `write-file' recomputes it.")
+
+(defun my/buffer-path ()
+  "Shortened path of this buffer, or its name if it visits no file.
+Shared by the mode line and the frame/terminal title."
+  (let ((file (buffer-file-name)))
+    (cond ((null file) (buffer-name))
+          ((equal (car my/mode-line--path-cache) file)
+           (cdr my/mode-line--path-cache))
+          (t (cdr (setq my/mode-line--path-cache
+                        (cons file (my/mode-line--shorten-path file))))))))
+
+(defun my/mode-line-buffer-path ()
+  "Buffer path for the mode line: dimmed dirname + highlighted file name.
+Buffers not visiting a file show their buffer name.  In an unselected
+window the whole thing is dimmed, as the stock mode line does."
+  (let* ((file (buffer-file-name))
+         (path (my/buffer-path))
+         (str
+          (cond
+           ((not (mode-line-window-selected-p))
+            (propertize path 'face 'my/mode-line-path-inactive))
+           ((null file)
+            (propertize path 'face 'my/mode-line-file))
+           (t
+            (concat (propertize (or (file-name-directory path) "")
+                                'face 'my/mode-line-dir)
+                    (propertize (file-name-nondirectory path)
+                                'face 'my/mode-line-file))))))
+    ;; Keep the stock mouse behaviour (mouse-1/3 cycle buffers) and tooltip.
+    (propertize str
+                'help-echo (or file (buffer-name))
+                'mouse-face 'mode-line-highlight
+                'local-map mode-line-buffer-identification-keymap)))
+
+(defun my/colour-depth-spec (attribute colour)
+  "Face spec setting ATTRIBUTE to COLOUR, per the display's colour depth.
+COLOUR is either one colour used everywhere, or a list
+
+    \(TRUECOLOR COLOR256 FALLBACK)
+
+picking one per depth.  The split matters because Emacs approximates a hex
+colour into the xterm 256-colour cube itself, and lands well off: the
+gruvbox mode-line background #37302f becomes the olive `color-58', which
+is why the mode line looks green inside tmux (TERM=screen-256color) but
+right in a truecolor terminal.  Naming the 256-colour palette entry
+explicitly -- \"color-236\" and friends -- side-steps that guess.
+FALLBACK covers terminals below 256 colours, where only the 8 ANSI names
+\(\"black\" is SGR 40, and so on) are safe."
+  (if (not (consp colour))
+      `((t (,attribute ,colour)))
+    (let ((truecolor (nth 0 colour))
+          (c256      (nth 1 colour))
+          (fallback  (nth 2 colour)))
+      ;; The graphic branch comes first: `color-236' & co. are tty palette
+      ;; names, meaningless to a window system, so a graphical frame must
+      ;; never reach the 256-colour branch even on an 8-bit visual.
+      `((((type graphic))        (,attribute ,truecolor))
+        (((min-colors 16777216)) (,attribute ,truecolor))
+        (((min-colors 256))      (,attribute ,c256))
+        (t                       (,attribute ,fallback))))))
+
+(defun set-buffer-path-mode-line (&rest colours)
+  "Put the project-relative buffer path in the mode line and the window title.
+COLOURS is a plist; each value is a colour in the form accepted by
+`my/colour-depth-spec' \(one colour, or a per-depth triple):
+
+  :dir                 foreground of the directory part of the path
+  :file                foreground of the file name
+  :background          `mode-line' background
+  :inactive-background `mode-line-inactive' background
+
+The two background keys are optional; omit them to keep whatever the theme
+chose.  They are set as face *overrides*, so they also survive a later
+`load-theme'."
+  (let ((dir     (plist-get colours :dir))
+        (file    (plist-get colours :file))
+        (bg      (plist-get colours :background))
+        (inactive-bg (plist-get colours :inactive-background)))
+    (when dir  (face-spec-set 'my/mode-line-dir  (my/colour-depth-spec :foreground dir)))
+    (when file (face-spec-set 'my/mode-line-file
+                              (let ((spec (my/colour-depth-spec :foreground file)))
+                                ;; Bold on top of whichever depth branch applies.
+                                (mapcar (lambda (entry)
+                                          (list (car entry)
+                                                (append (cadr entry) '(:weight bold))))
+                                        spec))))
+    (when bg (face-spec-set 'mode-line (my/colour-depth-spec :background bg)))
+    (when inactive-bg
+      (face-spec-set 'mode-line-inactive (my/colour-depth-spec :background inactive-bg))))
+
+  ;; Buffer-local in every buffer, so this sets the value for the buffers that
+  ;; do not override it themselves (dired, Info, … keep their own).
+  (setq-default mode-line-buffer-identification
+                '(:eval (my/mode-line-buffer-path)))
+
+  ;; Same path in the title, minus the faces (a title is plain text), with a
+  ;; suffix naming the application -- a bare path in a window list or taskbar
+  ;; gives no hint of what is showing it.  Covers graphical frames as well as
+  ;; terminal ones.
+  (setq frame-title-format '((:eval (my/buffer-path)) " - EMACS"))
+
+  ;; Under `-nw', Emacs emits the title escape only when this is non-nil.
+  ;; xterm.el reads it once, during terminal initialisation -- which startup
+  ;; runs *after* loading init.el, so setting it from there is early enough
+  ;; for the initial terminal frame as well as later `emacsclient -nw' ones.
+  ;; It is a defcustom in term/xterm.el, not necessarily loaded yet; setting
+  ;; it first is fine, as `defcustom' leaves an already-bound variable alone.
+  (setq xterm-set-window-title t))
+
 (provide 'vimacs)
 ;;; vimacs.el ends here
