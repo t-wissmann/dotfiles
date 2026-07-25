@@ -316,10 +316,10 @@
            :prefix "SPC m" :predicate '(derived-mode-p 'agda2-mode) keys)))
 
 ;;; init.el ends here
-
 ;; (load (expand-file-name "setup-agda.el" user-emacs-directory))
 (autoload 'agda2-mode (expand-file-name "setup-agda.el" user-emacs-directory)
           "agda2-mode (delayed)" t)
+(add-to-list 'auto-mode-alist '("\\.agda\\'" . agda2-mode))
 ;; (load-file (let ((coding-system-for-read 'utf-8))
 ;;                 (shell-command-to-string "agda --emacs-mode locate")))
 
