@@ -264,21 +264,26 @@ identifies the project without repeating where it is checked out."
 is far too slow to repeat on every redisplay of the mode line.  Keyed on
 the file name, so a rename or `write-file' recomputes it.")
 
+(defun my/buffer-path ()
+  "Shortened path of this buffer, or its name if it visits no file.
+Shared by the mode line and the frame/terminal title."
+  (let ((file (buffer-file-name)))
+    (cond ((null file) (buffer-name))
+          ((equal (car my/mode-line--path-cache) file)
+           (cdr my/mode-line--path-cache))
+          (t (cdr (setq my/mode-line--path-cache
+                        (cons file (my/mode-line--shorten-path file))))))))
+
 (defun my/mode-line-buffer-path ()
   "Buffer path for the mode line: dimmed dirname + highlighted file name.
 Buffers not visiting a file show their buffer name.  In an unselected
 window the whole thing is dimmed, as the stock mode line does."
   (let* ((file (buffer-file-name))
-         (path (when file
-                 (if (equal (car my/mode-line--path-cache) file)
-                     (cdr my/mode-line--path-cache)
-                   (cdr (setq my/mode-line--path-cache
-                              (cons file (my/mode-line--shorten-path file)))))))
+         (path (my/buffer-path))
          (str
           (cond
            ((not (mode-line-window-selected-p))
-            (propertize (or path (buffer-name))
-                        'face 'my/mode-line-path-inactive))
+            (propertize path 'face 'my/mode-line-path-inactive))
            ((null file)
             (propertize (buffer-name) 'face 'my/mode-line-file))
            (t
@@ -296,6 +301,22 @@ window the whole thing is dimmed, as the stock mode line does."
 ;; do not override it themselves (dired, Info, … keep their own).
 (setq-default mode-line-buffer-identification
               '(:eval (my/mode-line-buffer-path)))
+
+;;; Frame / terminal title ----------------------------------------------------
+
+;; Same path as the mode line, minus the faces (a title is plain text).
+;; This covers graphical frames as well as terminal ones.
+(setq frame-title-format '(:eval (my/buffer-path)))
+
+;; Under `-nw', Emacs emits the title escape only when this is non-nil.
+;; xterm.el reads it once, during terminal initialisation -- which startup
+;; runs *after* loading init.el, so a plain `setq' here is early enough for
+;; the initial terminal frame as well as later `emacsclient -nw' ones.  It is
+;; a defcustom in term/xterm.el, not yet loaded at this point; setting it
+;; first is fine, as `defcustom' leaves an already-bound variable alone.
+;; The title is then refreshed from `post-command-hook', hence the per-buffer
+;; memoisation of the path above.
+(setq xterm-set-window-title t)
 
 ;;; Frame appearance ----------------------------------------------------------
 
