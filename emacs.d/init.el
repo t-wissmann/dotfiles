@@ -229,6 +229,13 @@
 (setq global-hl-line-sticky-flag t)     ; highlight in every window, not just the focused one
 (global-hl-line-mode 1)
 
+;;; Mode line: position --------------------------------------------------------
+
+;; Column next to the line number, so the position reads "(LINE,COLUMN)".
+;; Counted from 1 like vim's ruler, rather than Emacs' 0-based default.
+(setq column-number-indicator-zero-based nil)
+(column-number-mode 1)
+
 ;;; Mode line / window title: buffer path -------------------------------------
 
 ;; Machinery in vimacs.el: the project-relative path replaces the stock bare
