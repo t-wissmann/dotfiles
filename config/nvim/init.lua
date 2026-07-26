@@ -151,8 +151,8 @@ function setup_colorscheme()
   hi Normal ctermbg=NONE term=NONE guibg=NONE
   hi VertSplit ctermbg=NONE ctermfg=black cterm=NONE guibg=NONE
   hi Visual ctermbg=black cterm=None
-  hi StatusLineNC ctermbg=black ctermfg=white cterm=NONE
-  hi StatusLine ctermbg=black ctermfg=green cterm=bold
+  hi! link StatusLineNC Normal
+  hi! link StatusLine Normal
   hi LineNr ctermbg=black term=NONE ctermfg=gray cterm=NONE
   hi SignColumn ctermbg=black term=NONE ctermfg=gray cterm=NONE
   hi CursorLineNr ctermbg=black term=NONE ctermfg=green cterm=bold
@@ -255,42 +255,10 @@ vim.g.maplocalleader = "\\"
 -- Setup lazy.nvim
 require("lazy").setup({
   spec = {
-      { "ellisonleao/gruvbox.nvim",
-        priority = 1000 , lazy = false, config = setup_colorscheme, opts = {}
-      },
-      {'ctrlpvim/ctrlp.vim'},
-      {
-       'nvim-lualine/lualine.nvim',
-       opts = {
-           options = {
-             icons_enabled = false,
-             theme = 'onedark',
-             component_separators = { left = '', right = ''},
-             section_separators = { left = '', right = ''},
-             disabled_filetypes = {},
-             always_divide_middle = true,
-             globalstatus = false,
-           },
-           sections = {
-             lualine_a = {'mode'},
-             lualine_b = {'branch', 'diff'},
-             lualine_c = {'filename'},
-             lualine_x = {},
-             lualine_y = {'encoding'},
-             lualine_z = {'progress', 'location'}
-           },
-           inactive_sections = {
-             lualine_a = {},
-             lualine_b = {},
-             lualine_c = {'filename'},
-             lualine_x = {'location'},
-             lualine_y = {},
-             lualine_z = {}
-           },
-           tabline = {},
-           extensions = {}
-         }
+    { "ellisonleao/gruvbox.nvim",
+      priority = 1000 , lazy = false, config = setup_colorscheme, opts = {}
     },
+    {'ctrlpvim/ctrlp.vim'},
     {'nvim-lua/plenary.nvim'},
     {'tpope/vim-fugitive'},
     -- {'jiangmiao/auto-pairs'},
