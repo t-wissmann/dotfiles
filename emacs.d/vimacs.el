@@ -43,7 +43,11 @@ Keeps `customize'-written settings out of the hand-maintained init files."
 Each :NAME keyword becomes the symbol NAME.  The resulting
 \(PACKAGE . CONFIG-FUNCTION) alist is stored in `my/packages' for
 `my/install-packages', and each CONFIG-FUNCTION whose package is
-installed is called."
+installed is called.  A package that is declared but not installed is
+skipped -- its configuration silently does not take effect -- so each
+one raises a `configure-packages' warning in the *Warnings* buffer.
+Silence those with `warning-suppress-types' if a package is meant to
+stay uninstalled."
   (setq my/packages
         (let (result)
           (while pairs
@@ -52,8 +56,11 @@ installed is called."
               (push (cons (intern (substring (symbol-name key) 1)) fn) result)))
           (nreverse result)))
   (dolist (cell my/packages)
-    (when (package-installed-p (car cell))
-      (funcall (cdr cell)))))
+    (if (package-installed-p (car cell))
+        (funcall (cdr cell))
+      (display-warning 'configure-packages
+                       (format "package %s is not installed."
+                               (car cell))))))
 
 (defun my/--run-package-op (buffer-name action)
   "Run ACTION over `my/packages', reporting progress.
