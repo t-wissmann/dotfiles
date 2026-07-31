@@ -29,13 +29,27 @@ variables:
     \newunicodechar{⊗}{\ensuremath{\otimes}}
     \newunicodechar{〈}{\ensuremath{\langle}}
     \newunicodechar{〉}{\ensuremath{\rangle}}
+    \newunicodechar{→}{\ensuremath{\to}}
+    \newunicodechar{∈}{\ensuremath{\in}}
+    \newunicodechar{∋}{\ensuremath{\ni}}
+    \newunicodechar{⊆}{\ensuremath{\subseteq}}
+    \newunicodechar{⊤}{\ensuremath{\top}}
+    \newunicodechar{⊥}{\ensuremath{\bot}}
+    \newunicodechar{Σ}{\ensuremath{\Sigma}}
+    \newunicodechar{λ}{\ensuremath{\lambda}}
+    \newunicodechar{∀}{\ensuremath{\forall}}
+    \newunicodechar{∃}{\ensuremath{\exists}}
+    \newunicodechar{ℝ}{\ensuremath{\mathbb{R}}}
+    \newunicodechar{ℤ}{\ensuremath{\mathbb{R}}}
+    \newunicodechar{ℕ}{\ensuremath{\mathbb{N}}}
+
+    \ifcsname DeclareUnicodeCharacter\endcsname
     \DeclareUnicodeCharacter{8989}{\ensuremath{\urcorner}}
-    \DeclareUnicodeCharacter{211D}{\ensuremath{\mathbb R}}
     \DeclareUnicodeCharacter{2124}{\ensuremath{\mathbb Z}}
-    \DeclareUnicodeCharacter{2203}{\ensuremath{\exists}}
-    \DeclareUnicodeCharacter{2200}{\ensuremath{\forall}}
-    \DeclareUnicodeCharacter{2192}{\ensuremath{\to}}
-    \DeclareUnicodeCharacter{2208}{\ensuremath{\in}}
+    %\DeclareUnicodeCharacter{2203}{\ensuremath{\exists}}
+    %\DeclareUnicodeCharacter{2200}{\ensuremath{\forall}}
+    %\DeclareUnicodeCharacter{2192}{\ensuremath{\to}}
+    %\DeclareUnicodeCharacter{2208}{\ensuremath{\in}}
     \DeclareUnicodeCharacter{D7}{\ensuremath{\times}}
     \DeclareUnicodeCharacter{2205}{\ensuremath{\emptyset}}
     \DeclareUnicodeCharacter{2286}{\ensuremath{\subseteq}}
@@ -43,5 +57,6 @@ variables:
     \DeclareUnicodeCharacter{27E6}{\ensuremath{\llbracket}} % ⟦
     \DeclareUnicodeCharacter{27E7}{\ensuremath{\rrbracket}} % ⟧
     \DeclareUnicodeCharacter{2264}{\ensuremath{\le}} % ≤
+    \else\fi%
     %
     % WARNING: combining strike-out text and href breaks!
