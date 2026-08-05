@@ -44,8 +44,11 @@
            evil-motion-state-cursor   '(box       "#ff9900")
            evil-emacs-state-cursor    '(bar       "#ff9900"))
 
+     ;; Change cursor in terminal windows:
+     ;; (Alternatively, we could switch to evil-terminal-cursor-changer)
+     (unless (display-graphic-p)
      (add-hook 'evil-insert-state-entry-hook (lambda () (send-string-to-terminal "\033[5 q")))
-     (add-hook 'evil-insert-state-exit-hook  (lambda () (send-string-to-terminal "\033[2 q"))))
+     (add-hook 'evil-insert-state-exit-hook  (lambda () (send-string-to-terminal "\033[2 q")))))
 
    :evil-collection
    (lambda ()
@@ -54,6 +57,7 @@
      ;; under :evil above, which is why :evil is declared first.
      (require 'evil-collection)
      (evil-collection-init '(magit)))
+
 
    :doom-themes
    (lambda ()
@@ -106,8 +110,9 @@
        "w k" '(evil-window-up       :which-key "up")
        "w l" '(evil-window-right    :which-key "right")
 
-       "g"   '(:ignore t :which-key "git")
-       "g g" '(magit-status         :which-key "status")
+       ;; "g"   '(:ignore t :which-key "git")
+       ;; "g g" '(magit-status         :which-key "status")
+       "g" '(magit-status         :which-key "git")
 
        "h"   '(help-command         :which-key "help")
 
