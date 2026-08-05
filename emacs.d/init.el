@@ -32,7 +32,8 @@
                         evil-visual-state-map
                         evil-motion-state-map))
        (define-key map (kbd "j") #'evil-next-visual-line)
-       (define-key map (kbd "k") #'evil-previous-visual-line))
+       (define-key map (kbd "k") #'evil-previous-visual-line)
+       (define-key map (kbd "RET") nil))
 
      ;; Cursor: shape + colour per state (colour must go through evil,
      ;; not the `cursor' face).
