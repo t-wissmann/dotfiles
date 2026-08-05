@@ -314,7 +314,7 @@ chose.  They are set as face *overrides*, so they also survive a later
   ;; suffix naming the application -- a bare path in a window list or taskbar
   ;; gives no hint of what is showing it.  Covers graphical frames as well as
   ;; terminal ones.
-  (setq frame-title-format '((:eval (my/buffer-path)) " - EMACS"))
+  (setq frame-title-format '((:eval (my/buffer-path)) " - Emacs"))
 
   ;; Under `-nw', Emacs emits the title escape only when this is non-nil.
   ;; xterm.el reads it once, during terminal initialisation -- which startup
