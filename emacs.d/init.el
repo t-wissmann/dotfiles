@@ -42,7 +42,10 @@
            evil-replace-state-cursor  '(hbar      "#ff9900")
            evil-operator-state-cursor '(hbar      "#ff9900")
            evil-motion-state-cursor   '(box       "#ff9900")
-           evil-emacs-state-cursor    '(bar       "#ff9900")))
+           evil-emacs-state-cursor    '(bar       "#ff9900"))
+
+     (add-hook 'evil-insert-state-entry-hook (lambda () (send-string-to-terminal "\033[5 q")))
+     (add-hook 'evil-insert-state-exit-hook  (lambda () (send-string-to-terminal "\033[2 q"))))
 
    :evil-collection
    (lambda ()
