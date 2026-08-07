@@ -62,18 +62,23 @@
 
    :doom-themes
    (lambda ()
-     (load-theme 'doom-gruvbox t)
-     ;; Overrides layered on top of the theme.
-     ;; On a graphical frame use the solid background; on a TTY keep the
-     ;; background unspecified so the terminal's transparency shows through
-     ;; (otherwise loading the theme re-opacifies the frame until
-     ;; `my/unspecify-tty-background' runs at `window-setup-hook').
-     (custom-set-faces
+     (deftheme my-gruvbox-tweaks "Face tweaks layered on top of doom-gruvbox.")
+     (custom-theme-set-faces 'my-gruvbox-tweaks
       '(line-number ((t (:inherit default :background "black" :foreground "#928374"))))
       '(line-number-current-line ((t (:inherit line-number :background "#3c3836"))))
       '(hl-line     ((t (:background "#3c3836"))))
+      ;; On a graphical frame use the solid background; on a TTY keep the
+      ;; background unspecified so the terminal's transparency shows through.
       '(default     ((((type graphic)) (:background "#181818" :foreground "#EBDBB2"))
-                     (t                (:background "unspecified-bg" :foreground "#EBDBB2"))))))
+                     (t                (:background "unspecified-bg" :foreground "#EBDBB2")))))
+
+     ;; (add-hook 'my/load-theme-hook
+     ;;    (lambda ()
+     ;;       (when (custom-theme-enabled-p 'doom-gruvbox)
+     ;;           (enable-theme 'my-gruvbox-tweaks))))
+
+     (load-theme 'doom-gruvbox t)
+     (enable-theme 'my-gruvbox-tweaks))
 
    :general
    (lambda ()
