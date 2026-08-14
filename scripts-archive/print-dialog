@@ -1,0 +1,114 @@
+#!/usr/bin/env python3
+"""Print a PDF file through GTK's print dialog.
+"""
+
+# systemctl --user set-environment CUPS_SERVER="$CUPS_SERVER"
+# systemctl --user restart xdg-desktop-portal.service xdg-desktop-portal-gtk.service
+
+import argparse
+import os
+import sys
+
+import gi
+
+gi.require_version("Gtk", "4.0")
+gi.require_version("Poppler", "0.18")
+from gi.repository import Gio, GLib, Gtk, Poppler
+
+
+class PrintApp(Gtk.Application):
+
+  def __init__(self, path):
+    super().__init__(
+        application_id="org.example.StandalonePrint",
+        flags=Gio.ApplicationFlags.NON_UNIQUE,
+    )
+    self.path = path
+    self.document = None
+    self.status = 0
+
+  def do_activate(self):
+    # We never create a window, so hold a reference for the duration of
+    # the (blocking) print operation to keep the application alive.
+    self.hold()
+    try:
+      self.print_pdf()
+    finally:
+      self.release()
+
+  def print_pdf(self):
+    try:
+      self.document = Poppler.Document.new_from_gfile(
+          Gio.File.new_for_path(self.path), None, None
+      )
+    except GLib.Error as err:
+      print(f"cannot open {self.path}: {err.message}", file=sys.stderr)
+      self.status = 1
+      return
+
+    print_op = Gtk.PrintOperation()
+    print_op.set_job_name(os.path.basename(self.path))
+    # Page count must be known before the dialog is shown, so there is no
+    # need for a "begin-print" handler here.
+    print_op.set_n_pages(self.document.get_n_pages())
+    # PDF user space is measured in points, so ask GTK for the same unit
+    # and the cairo context lines up with the page coordinates 1:1.
+    print_op.set_unit(Gtk.Unit.POINTS)
+    print_op.set_use_full_page(True)     # the PDF carries its own margins
+    print_op.set_embed_page_setup(True)  # paper/orientation inside the dialog
+    print_op.connect("draw-page", self.on_draw_page)
+
+    # Default to the orientation of the first page.
+    width, height = self.document.get_page(0).get_size()
+    page_setup = Gtk.PageSetup()
+    page_setup.set_orientation(
+        Gtk.PageOrientation.LANDSCAPE if width > height
+        else Gtk.PageOrientation.PORTRAIT
+    )
+    print_op.set_default_page_setup(page_setup)
+
+    try:
+      result = print_op.run(Gtk.PrintOperationAction.PRINT_DIALOG, None)
+    except GLib.Error as err:
+      print(f"printing failed: {err.message}", file=sys.stderr)
+      self.status = 1
+      return
+
+    if result == Gtk.PrintOperationResult.CANCEL:
+      print("printing cancelled", file=sys.stderr)
+      self.status = 1
+
+  def on_draw_page(self, print_op, context, page_nr):
+    page = self.document.get_page(page_nr)
+    cr = context.get_cairo_context()
+
+    pdf_w, pdf_h = page.get_size()                 # points
+    paper_w, paper_h = context.get_width(), context.get_height()
+
+    # Scale to fit and centre, so a mismatch between the PDF page size and
+    # the selected paper does not clip the content.
+    scale = min(paper_w / pdf_w, paper_h / pdf_h)
+    cr.translate((paper_w - pdf_w * scale) / 2.0,
+                 (paper_h - pdf_h * scale) / 2.0)
+    cr.scale(scale, scale)
+
+    page.render_for_printing(cr)
+
+
+def main():
+  parser = argparse.ArgumentParser(
+      description="Print a PDF file through the GTK print dialog."
+  )
+  parser.add_argument("pdf", metavar="FILE", help="the PDF file to print")
+  args = parser.parse_args()
+
+  if not os.path.isfile(args.pdf):
+    parser.error(f"no such file: {args.pdf}")
+
+  app = PrintApp(os.path.abspath(args.pdf))
+  app.run(None)  # argv was already consumed by argparse
+  return app.status
+
+
+if __name__ == "__main__":
+  sys.exit(main())
