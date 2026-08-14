@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+
+print_usage() {
+cat <<EOF
+Usage: $0 COMMAND...
+
+Tunnel CUPS via SSH to a remote host and run the specified command
+with the tunneled CUPS_SERVER environment variable set. This comand
+requires a section in your ~/.ssh/config of the following form
+
+Host print-via-ssh
+    Hostname INTERMEDIATEHOSTNAMEGOESHERE
+    User YOURUSERNAMEGOESHERE
+    LocalForward 10631 IPV4OFCUPSGOESHERE:631
+    GatewayPorts yes
+    SessionType none
+    # RequestTTY no
+    # SessionType none
+    ServerAliveInterval 10
+    ExitOnForwardFailure yes
+EOF
+}
+
+# the Host section in the ssh config
+# which opens a port 10631 to a CUPS server
+SSHHOST=${SSHHOST:-print-via-ssh}
+CUPS_LOCAL_HOST=${CUPS_LOCAL_HOST:-127.0.0.1} # force ipv4
+CUPS_LOCAL_PORT=${CUPS_LOCAL_PORT:-10631}
+
+CMD=( "$@" )
+
+if [[ "${CMD[0]}" = "" ]] ; then
+    print_usage | sed $'s,[A-Z0-9]*GOES[A-Z0-9]*,\033[1;31m&\033[0m,g' >&2
+    exit 1
+fi
+
+ssh "$SSHHOST" &
+ssh_pid=$!
+
+status=0
+
+cleanup() {
+    kill -TERM "$ssh_pid" 2>/dev/null || true
+    wait "$ssh_pid"
+    exit "$status"
+}
+trap cleanup EXIT INT TERM
+
+echo "Port forwarding to CUPS_SERVER=${CUPS_LOCAL_HOST}:${CUPS_LOCAL_PORT} via ssh ${SSHHOST} (pid $ssh_pid)..." >&2
+while kill -0 "$ssh_pid" 2>/dev/null ; do
+    if (exec 3<>"/dev/tcp/$CUPS_LOCAL_HOST/$CUPS_LOCAL_PORT") 2>/dev/null ; then
+        break
+    fi
+    sleep 0.1
+done
+
+CUPS_SERVER="${CUPS_LOCAL_HOST}:${CUPS_LOCAL_PORT}" "${CMD[@]}"
+status=$?
+
+exit "$status"
