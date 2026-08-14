@@ -4,7 +4,7 @@
 # accordingly. this is only useful, if mpd's output mixer_type is set to
 # 'null'.
 
-# requires: mpc, pactl, ponymix
+# requires: mpc, pactl
 
 from select import select
 import os
@@ -12,6 +12,7 @@ import signal
 import sys
 import subprocess
 import re
+import json
 
 # see: https://www.musicpd.org/doc/user/config_audio_outputs.html
 # https://github.com/Mic92/python-mpd2/blob/master/examples/idle.py
@@ -66,16 +67,22 @@ class MPD2PulseAudio:
             subprocess.call(['mpc', '-q', 'volume', str(vol)])
 
     def get_pa_volume(self):
-        volume = readStdout(['ponymix', 'get-volume'])
-        if self.pa_volume != int(volume):
-            self.pa_volume = int(volume)
+        pactl_cmd = 'pactl -f json get-sink-volume @DEFAULT_SINK@'.split(' ')
+        volume_info = json.loads(readStdout(pactl_cmd))
+        fl = volume_info['volume']['front-left']['value_percent'].rstrip('%')
+        fr = volume_info['volume']['front-right']['value_percent'].rstrip('%')
+        volume = int((float(fl) + float(fr)) / 2)
+        if self.pa_volume != volume:
+            self.pa_volume = volume
             return True
         return False
 
     def set_pa_volume(self, vol):
+        pactl_cmd = 'pactl set-sink-volume @DEFAULT_SINK@'.split(' ')
         if vol != self.pa_volume:
             self.pa_volume = vol
-            subprocess.call(['ponymix', 'set-volume', str(vol) + '%'], \
+            subprocess.call([
+                'pactl', 'set-sink-volume', '@DEFAULT_SINK@', f'{vol}%'],
                 stdout=subprocess.PIPE)
 
     def all_subprocesses_running(self):
