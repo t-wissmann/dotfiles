@@ -1,5 +1,12 @@
 [general]
-import = ["~/.config/alacritty/font.toml"]
+import = ["~/.config/alacritty/font.toml",
+          "~/.config/alacritty/colors.toml",
+          #"~/.config/alacritty/colors-light-bg.toml",
+          #"~/.config/alacritty/alabaster.toml",
+          #"~/.config/alacritty/gruvbox-light.toml",
+          #"~/.config/alacritty/catppuccin-latte.toml",
+          #"~/.config/alacritty/enfocado_light.toml",
+          ]
 # custom_cursor_colors = true
 # dynamic_title = false
 # hide_cursor_when_typing = true
@@ -12,56 +19,6 @@ live_config_reload = true
 [colors]
 draw_bold_text_with_bright_colors = true
 
-[colors.cursor]
-cursor = "0xff9900"
-text = "0x000000"
-
-[colors.line_indicator]
-background = "#9fbc00"
-foreground = "#121212"
-
-[colors.normal]
-black = "0x000000"
-blue = "0x6528DE"
-cyan = "0xFF8000"
-green = "0x52BE3B"
-magenta = "0xC52A48"
-red = "0xcc241d"
-white = "0xF8F0E6"
-yellow = "0xFACF2A"
-
-[colors.bright]
-black = "0x928374"
-blue = "0xD65D0E"
-cyan = "0x8ec07c"
-green = "0xb8bb26"
-magenta = "0xF74B5F"
-red = "0xfb4934"
-white = "0xebdbb2"
-yellow = "0xfabd2f"
-
-[colors.dim]
-black = "0x333333"
-blue = "0x6699cc"
-cyan = "0x66cccc"
-green = "0x99cc99"
-magenta = "0xcc99cc"
-red = "0xf2777a"
-white = "0xdddddd"
-yellow = "0xffcc66"
-
-
-[colors.primary]
-background = "0x181818"
-foreground = "0xffffff"
-
-[colors.selection]
-background = "#965E00"
-text = "#dedede"
-
-[colors.vi_mode_cursor]
-background = "#F10000"
-foreground = "#121212"
 
 [cursor]
 vi_mode_style = "Block"
@@ -599,6 +556,7 @@ semantic_escape_chars = ",│`|:\"' ()[]{}<>"
 [window]
 decorations = "Full"
 opacity = 0.93
+#opacity = 1.0
 
 [window.dimensions]
 columns = 80
