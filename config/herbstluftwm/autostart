@@ -321,15 +321,15 @@ hc keybind Mod4+n spawn ~/dotfiles/menu/utf8select.sh
 
 if timeout 1 pactl info > /dev/null 2>&1 ; then
     #hc keybind Shift+XF86AudioMute spawn ponymix
-    hc keybind XF86AudioMute        spawn ponymix toggle
-    hc keybind XF86AudioMicMute     spawn ponymix --source toggle
+    hc keybind XF86AudioMute        spawn pactl set-sink-mute '@DEFAULT_SINK@' toggle
+    hc keybind XF86AudioMicMute     spawn pactl set-source-mute '@DEFAULT_SOURCE@' toggle
     for key in XF86AudioLowerVolume $Mod-d ; do
-        hc keybind $key spawn bash -c 'ponymix decrease 1 ; ponymix set-balance 0'
-        hc keybind Shift-$key spawn ponymix decrease 4
+        hc keybind $key spawn pactl set-sink-volume '@DEFAULT_SINK@' '-1%'
+        hc keybind Shift-$key spawn pactl set-sink-volume '@DEFAULT_SINK@' '-4%'
     done
     for key in XF86AudioRaiseVolume $Mod-e ; do
-        hc keybind $key spawn bash -c 'ponymix increase 1 ; ponymix set-balance 0'
-        hc keybind Shift-$key spawn ponymix increase 4
+        hc keybind $key spawn pactl set-sink-volume '@DEFAULT_SINK@' '+1%'
+        hc keybind Shift-$key spawn pactl set-sink-volume '@DEFAULT_SINK@' '+4%'
     done
 else
     audioaction() {
