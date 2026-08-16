@@ -151,8 +151,8 @@ function setup_colorscheme()
   hi Normal ctermbg=NONE term=NONE guibg=NONE
   hi VertSplit ctermbg=NONE ctermfg=black cterm=NONE guibg=NONE
   hi Visual ctermbg=black cterm=None
-  hi! link StatusLineNC Normal
-  hi! link StatusLine Normal
+  hi StatusLineNC ctermbg=233 guibg=Black
+  hi StatusLine ctermbg=233 guibg=Black
   hi LineNr ctermbg=black term=NONE ctermfg=gray cterm=NONE
   hi SignColumn ctermbg=black term=NONE ctermfg=gray cterm=NONE
   hi CursorLineNr ctermbg=black term=NONE ctermfg=green cterm=bold
