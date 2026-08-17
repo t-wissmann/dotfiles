@@ -120,6 +120,21 @@
        ;; "g g" '(magit-status         :which-key "status")
        "g" '(magit-status         :which-key "git")
 
+       ;; Global rather than per-mode: xref works without a server too.
+       "c"   '(:ignore t :which-key "code")
+       "c d" '(xref-find-definitions  :which-key "goto definition")
+       "c D" '(xref-find-references   :which-key "find references")
+       "c s" '(consult-eglot-symbols  :which-key "symbol in project")
+       "c e" '(consult-flymake        :which-key "diagnostics")
+       "c a" '(eglot-code-actions     :which-key "code actions")
+       "c r" '(eglot-rename           :which-key "rename")
+       "c f" '(eglot-format           :which-key "format")
+       "c i" '(eglot-find-implementation :which-key "implementation")
+       "c t" '(eglot-find-typeDefinition :which-key "type definition")
+       "c c" '(eglot                  :which-key "connect server")
+       "c R" '(eglot-reconnect        :which-key "reconnect")
+       "c q" '(eglot-shutdown         :which-key "shutdown server")
+
        "h"   '(help-command         :which-key "help")
 
        "q"   '(:ignore t :which-key "quit")
@@ -145,6 +160,19 @@
      ;; Annotations (docstrings, key bindings, …) to the right of each
      ;; candidate, as in Doom.
      (marginalia-mode 1))
+
+   :consult
+   (lambda ()
+     ;; Dependency of consult-eglot.  Only the xref UI is wired up: `M-.' /
+     ;; `M-?' hits get a filterable minibuffer with preview instead of the
+     ;; static *xref* buffer.  Other consult commands stay unbound.
+     (setq xref-show-xrefs-function       #'consult-xref
+           xref-show-definitions-function #'consult-xref))
+
+   :consult-eglot
+   (lambda ()
+     ;; Nothing to enable; `consult-eglot-symbols' (SPC c s) is autoloaded.
+     )
 
    :which-key
    (lambda ()
@@ -284,6 +312,46 @@
    (cond ((>= dpi 190) 18)              ; hidpi / retina
          ((>= dpi 140) 14)              ; medium-high
          (t            12))))           ; standard
+
+;;; LSP (eglot) ---------------------------------------------------------------
+
+;; eglot is built in (1.17 here), hence configured directly rather than
+;; through `configure-packages', which only installs from ELPA.
+
+(with-eval-after-load 'eglot
+  ;; `add-to-list' prepends and eglot takes the first matching entry, so
+  ;; these win over the stock ones.
+  ;;
+  ;; TeX: the stock entry tries digestif before texlab, so digestif
+  ;; (/usr/bin/digestif) always wins.  texlab resolves \ref, \cite, \input
+  ;; and user macros across the document and supports rename; prefer it, and
+  ;; fall back to digestif until it is installed.
+  (add-to-list 'eglot-server-programs
+               `((tex-mode latex-mode LaTeX-mode plain-tex-mode bibtex-mode)
+                 . ,(eglot-alternatives '("texlab" "digestif"))))
+  ;; typst-ts-mode ships no entry of its own (see typst-ts-lsp.el).
+  (add-to-list 'eglot-server-programs
+               '((typst-ts-mode) . ("tinymist" "lsp")))
+
+  ;; The event log is a debugging aid and grows for the life of the
+  ;; connection; keep it off until needed.
+  (setq eglot-events-buffer-config '(:size 0 :format full))
+  (setq eglot-autoshutdown t)      ; stop the server with its last buffer
+  (setq eglot-sync-connect nil)    ; connect in the background, never block
+  (setq eglot-extend-to-xref t))   ; follow xrefs outside the project
+
+;; Only for modes whose server is installed: in a mode with no matching
+;; entry, `eglot-ensure' prompts for a command line on every visit.
+(dolist (hook '(latex-mode-hook typst-ts-mode-hook))
+  (add-hook hook #'eglot-ensure))
+
+;; evil's `gd' tries imenu and a plain symbol search before it would ever
+;; reach xref; point it straight there so the server answers.  `C-o' jumps
+;; back via evil's own jump list.
+(with-eval-after-load 'evil
+  (evil-define-key 'normal 'global
+    "gd" #'xref-find-definitions
+    "gD" #'xref-find-references))
 
 ;;; Agda mode ----------------------------------------------------------------
 
