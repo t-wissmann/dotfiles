@@ -90,7 +90,7 @@ end
 
 
 
-vim.keymap.set("n", "<Space>", ":WhichKey ' '<CR>", { silent = true })
+-- vim.keymap.set("n", "<Space>", ":WhichKey ' '<CR>", { silent = true })
 -- vim.keymap.set("n", ",", ":WhichKey ','<CR>", { silent = true })
 vim.g.mapleader = " "
 vim.o.timeout = true
