@@ -20,6 +20,21 @@ error() {
     "$@"
 }
 
+usage() {
+cat <<EOF
+Usage: "$0" /PATH/TO/DRIVE
+
+Partition and format the given block device as a usb drive.
+EOF
+}
+
+if [[ "$1" == "" ]] \
+   || [[ "$1" == "-h" ]] \
+   || [[ "$1" == "--help" ]] ; then
+   usage
+   exit 0
+fi
+
 
 tran=$(lsblk -S "$drive" --noheadings --output "TRAN")
 name=$(lsblk -S "$drive" --noheadings --output "VENDOR,MODEL,REV,SERIAL")
