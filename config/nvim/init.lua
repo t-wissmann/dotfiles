@@ -114,6 +114,7 @@ vim.keymap.set("n", "<Leader>bd", ":bdelete<CR>")
 vim.keymap.set("n", "<Leader>bw", ":CtrlPBuffer<CR>")
 vim.keymap.set("n", "<Leader>m", ":50messages<CR>")
 -- git
+vim.keymap.set("n", "<Leader>gg", ":Git<CR>")
 vim.keymap.set("n", "<Leader>gc", ":Git commit -v<CR>")
 vim.keymap.set("n", "<Leader>gC", ":Git commit -va<CR>")
 vim.keymap.set("n", "<Leader>gP", ":Git push<CR>")
