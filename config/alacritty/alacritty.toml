@@ -569,23 +569,43 @@ lines = 24
 x = 3
 y = 3
 
-[hints]
-enabled = [
-  { command = "xdg-open",
-    hyperlinks = true,
-    post_processing = true,
-    persist = false,
-    mouse = { mods = "Alt", enabled = true },
-    regex = "(ipfs:|ipns:|mailto:|gopher://|https?://|file:|git://|ssh:|ftp://)[^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`\\\\]+"
-  },
-  { action = "Copy",
-    #command = { program = "bash", args = ['-c', 'echo -ne "$1" | xclip -selection clipboard', '--'] },
-    hyperlinks = true,
-    post_processing = true,
-    persist = false,
-    mouse = { mods = "Control", enabled = true },
-    regex = "(ipfs:|ipns:|mailto:|gopher://|https?://|file:|git://|ssh:|ftp://)[^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`\\\\]+"
-  },
-]
+[[hints.enabled]]
+command = "xdg-open"
+hyperlinks = true
+post_processing = true
+persist = false
+mouse = { mods = "Alt", enabled = true }
+regex = "(ipfs:|ipns:|mailto:|gopher://|https?://|file:|git://|ssh:|ftp://)[^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`\\\\]+"
 
+[[hints.enabled]]
+action = "Copy"
+#command = { program = "bash", args = ['-c', 'echo -ne "$1" | xclip -selection clipboard', '--'] },
+hyperlinks = true
+post_processing = true
+persist = false
+mouse = { mods = "Control", enabled = true }
+regex = "(ipfs:|ipns:|mailto:|gopher://|https?://|file:|git://|ssh:|ftp://)[^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`\\\\]+"
 
+[[hints.enabled]]
+action = "Select"
+hyperlinks = true
+post_processing = true
+persist = false
+binding = { key = "s", mode = "Vi" }
+regex = "(ipfs:|ipns:|mailto:|gopher://|https?://|file:|git://|ssh:|ftp://)[^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`\\\\]+"
+
+[[hints.enabled]]
+command = "xdg-open"
+hyperlinks = true
+post_processing = true
+persist = false
+binding = { key = "o", mode = "Vi" }
+regex = "(ipfs:|ipns:|mailto:|gopher://|https?://|file:|git://|ssh:|ftp://)[^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`\\\\]+"
+
+[[hints.enabled]]
+action = "Copy"
+hyperlinks = true
+post_processing = true
+persist = false
+binding = { key = "c", mode = "Vi" }
+regex = "(ipfs:|ipns:|mailto:|gopher://|https?://|file:|git://|ssh:|ftp://)[^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`\\\\]+"
