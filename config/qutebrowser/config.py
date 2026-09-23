@@ -126,7 +126,7 @@ c.url.searchengines['dictnl'] = 'https://denl.dict.cc/?s={}'
 c.url.searchengines['nl'] = 'https://de.pons.com/%C3%BCbersetzung/niederl%C3%A4ndisch-deutsch/{}'
 c.url.searchengines['wl'] = 'https://woordenlijst.org/#/?q={}'
 c.url.searchengines['dblp'] = 'https://dblp.org/search?q={}'
-c.url.searchengines['hc'] = 'https://https://icalp27-b.hotcrp.com/u/0/review/{}'
+c.url.searchengines['hc'] = 'https://icalp27-b.hotcrp.com/u/0/review/{}'
 c.url.searchengines['git8'] = 'https://git8.cs.fau.de/search?search={}'
 
 
