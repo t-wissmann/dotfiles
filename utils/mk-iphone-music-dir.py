@@ -47,6 +47,7 @@ class InputFile:
         self.rel_targetpath = self.rel_targetpath.replace('./', '/')
         # also remove all question and qutotation marks:
         self.rel_targetpath = self.rel_targetpath.replace('?', '')
+        self.rel_targetpath = self.rel_targetpath.replace(':', '')
         self.rel_targetpath = self.rel_targetpath.replace('"', '')
         remove_characters = r'*?\|,;:+=<>[]"' + "\'"
         # self.abs_targetpath = self.abs_targetpath.translate(str.maketrans(remove_characters, len(remove_characters) * '_'))
