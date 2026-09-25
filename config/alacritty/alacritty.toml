@@ -562,8 +562,9 @@ opacity = 0.93
 #opacity = 1.0
 
 [window.dimensions]
-columns = 80
-lines = 24
+# width / height
+columns = 115
+lines = 43
 
 [window.padding]
 x = 3
