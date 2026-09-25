@@ -7,8 +7,8 @@
 	lastpatch = log  -p HEAD^1..HEAD
 	tree = log --graph --oneline --all --decorate=short
 	t = log --graph --oneline --all --decorate=short
-	P = push
-	p = pull --rebase
+	pp = push
+	f = pull --rebase
 	st = status
 	wdiff = diff --color-words
 	bdiff = diff --color-words=.
