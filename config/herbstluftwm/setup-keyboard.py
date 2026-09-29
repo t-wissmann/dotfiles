@@ -72,7 +72,7 @@ models = [
         'id': '320f:5055',
         'usb_name': 'RDR Model M65 VIA',
         'options': [
-            'lv3:ralt', 'compose:rctrl', 'altwin:swap_alt_win',  # 
+            'compose:rctrl', 'altwin:swap_lalt_lwin',  # 
         ] + caps2control,
     },
     # {
