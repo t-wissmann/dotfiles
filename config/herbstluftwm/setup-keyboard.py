@@ -67,6 +67,14 @@ models = [
             'lv3:rwin_switch', 'compose:ralt',  # swap right win and alt
         ],
     },
+    {
+        'name': 'Vortex M65 Pro2',
+        'id': '320f:5055',
+        'usb_name': 'RDR Model M65 VIA',
+        'options': [
+            'lv3:ralt', 'compose:rctrl', 'altwin:swap_alt_win',  # 
+        ] + caps2control,
+    },
     # {
     #     'name': 'ibm/lenovo full width keyboard',
     #     'id': '04b3:3025',
