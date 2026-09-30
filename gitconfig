@@ -8,7 +8,7 @@
 	tree = log --graph --oneline --all --decorate=short
 	t = log --graph --oneline --all --decorate=short
 	pp = push
-	f = pull --rebase
+	pur = pull --rebase
 	st = status
 	wdiff = diff --color-words
 	bdiff = diff --color-words=.
