@@ -135,6 +135,10 @@ vim.api.nvim_create_autocmd('FileType', {
         -- vim.keymap.set("n", ",b", ":w<CR>:lua build_latex_buffer()<CR>", { silent = false })
         vim.keymap.set("n", ",b", ":lua build_latex_buffer()<CR>", { silent = false })
         vim.keymap.set("n", ",c", ":lua clean_latex_buffer()<CR>", { silent = false })
+        -- open an environment; <Tab> then jumps behind \begin{...}
+        vim.keymap.set("i", "<C-b>", function()
+            vim.snippet.expand("\\begin{$1}$0\n\\end{$1}\n")
+        end, { buffer = true })
 
         -- vim.keymap.set("n", ",w", ":w<CR>", { silent = false })
         vim.o.sw = 2
@@ -142,6 +146,14 @@ vim.api.nvim_create_autocmd('FileType', {
     end,
     desc = 'LaTeX specific settings'
 })
+
+-- jump to the next snippet placeholder (default mapping only in nvim >= 0.11)
+vim.keymap.set({ "i", "s" }, "<Tab>", function()
+    if vim.snippet.active({ direction = 1 }) then
+        return "<cmd>lua vim.snippet.jump(1)<CR>"
+    end
+    return "<Tab>"
+end, { expr = true })
 
 function setup_colorscheme()
   -- This function should be called in the colorscheme's config function
