@@ -571,20 +571,21 @@ x = 3
 y = 3
 
 [[hints.enabled]]
-command = "xdg-open"
-hyperlinks = true
-post_processing = true
-persist = false
-mouse = { mods = "Alt", enabled = true }
-regex = "(ipfs:|ipns:|mailto:|gopher://|https?://|file:|git://|ssh:|ftp://)[^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`\\\\]+"
-
-[[hints.enabled]]
+# This entry must be before the next modifier-less hint
 action = "Copy"
 #command = { program = "bash", args = ['-c', 'echo -ne "$1" | xclip -selection clipboard', '--'] },
 hyperlinks = true
 post_processing = true
 persist = false
 mouse = { mods = "Control", enabled = true }
+regex = "(ipfs:|ipns:|mailto:|gopher://|https?://|file:|git://|ssh:|ftp://)[^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`\\\\]+"
+
+[[hints.enabled]]
+command = "xdg-open"
+hyperlinks = true
+post_processing = true
+persist = false
+mouse = { enabled = true }
 regex = "(ipfs:|ipns:|mailto:|gopher://|https?://|file:|git://|ssh:|ftp://)[^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`\\\\]+"
 
 [[hints.enabled]]
