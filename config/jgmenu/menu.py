@@ -264,7 +264,7 @@ def main():
         maybe_netctl = [
             Item('Network', 'network-wired', netctl_path),
             Item('Docking Station', 'computer', run_in_terminal(os.path.expanduser('~/dotfiles/config/herbstluftwm/x1-docking-station.sh'))),
-            Item('Bluetooth', 'bluetooth', 'blueman-applet'),
+            Item('Bluetooth', 'bluetooth', 'blueman-manager'),
         ]
     menu = Menu('root', [
       Item('Thunar', 'system-file-manager', 'thunar'),
