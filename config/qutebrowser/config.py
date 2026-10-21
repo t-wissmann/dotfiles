@@ -223,6 +223,7 @@ binds = {
     '\'' : 'enter-mode jump_mark',
     'zl' : 'spawn --userscript password_fill',
     'sd' : "spawn --userscript /bin/bash -c 'DOWNLOAD_DIR=~/downloads ~/.config/qutebrowser/userscripts/open_download'",
+    # for socks proxy, run: ssh -D 8080 -q -N server
     'sp' : "config-cycle --temp --print content.proxy system socks://localhost:8080/",
     '<Ctrl-Shift-j>' : "spawn --userscript dict-jp-lookup",
     ';v' : "hint links userscript view_in_mpv",
