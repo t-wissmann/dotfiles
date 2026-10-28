@@ -6,12 +6,12 @@ mkcd() {
   mkdir "$1" && cd "$1"
 }
 alias beep="echo -e '\\a'"
-alias ll='/bin/ls --color=auto -lah'
-alias ll='exa -l -a -a'
-alias ls='ls -B --color=auto'
-alias ls='exa'
-alias la='exa -a'
-alias l='exa'
+alias ll='/bin/ls --color=always -lah --group-directories-first'
+alias ll='exa --color=always -l -a -a --group-directories-first'
+alias ls='ls -B --color=auto --group-directories-first'
+alias ls='exa --group-directories-first'
+alias la='exa -a --group-directories-first'
+alias l='exa --group-directories-first'
 alias g='git'
 #alias cat='bat'
 alias lln='ls -t -lah --color=always|head'
