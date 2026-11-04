@@ -17,7 +17,7 @@ echo "$fzfres"
 killcmd=(
     kill
     "$@"
-    $(cut -d ' ' -f1 <<< "$fzfres"|grep -xoE '[0-9]*')
+    $(cat <<< "$fzfres" | sed 's,^[ ]*,,' | cut -d ' ' -f1 |grep -xoE '[ ]*[0-9]*[ ]*')
 )
 
 if ask "${killcmd[*]}?" ; then
