@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+ask() {
+    local answer=n
+    read -s -n 1 -p "==> $* [y/N]" answer
+    echo
+    [[ $answer =~ [Yy] ]]
+}
+
+fzfres=$(ps -A -o pid,user,args | fzf --header-lines=1 -m)
+status="$?"
+if [[ "$status" -ne 0 ]] ; then
+    exit 0
+fi
+echo "$fzfres"
+
+killcmd=(
+    kill
+    "$@"
+    $(cut -d ' ' -f1 <<< "$fzfres"|grep -xoE '[0-9]*')
+)
+
+if ask "${killcmd[*]}?" ; then
+    # kill "${args[@]}" $pids
+    "${killcmd[@]}"
+fi
