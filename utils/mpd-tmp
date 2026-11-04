@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+
+msg() {
+    echo -e "\e[0;34m::\e[0;33m $*\e[0m" >&2
+}
+
+MPDCLIENT=( ncmpcpp )
+
+MPDDIR=$(mktemp --directory)
+export MPD_PORT=6432
+export MPD_HOST=127.0.0.1
+
+msg "Running in $MPDDIR"
+
+
+print_config() {
+cat <<EOF
+music_directory "$PWD"
+db_file "$MPDDIR/database"
+log_file "$MPDDIR/log"
+pid_file "$MPDDIR/pid"
+state_file "$MPDDIR/state"
+
+# default_permissions "read"
+# password "$password@read,add,control,admin"
+
+
+port "$MPD_PORT"
+# bind_to_address "$MPD_HOST"
+gapless_mp3_playback "yes"
+
+audio_output {
+    type        "pulse"
+    name        "MPD"
+#   server      "localhost"
+#   mixer_type  "null"
+}
+
+decoder {
+    plugin "ffmpeg"
+    enabled "yes"
+}
+
+# disable other decodes than ffmpeg for mp3
+decoder {
+    # the mad decoder plugin creates noise in loud mp3
+    # creates hissing
+    plugin "mad"
+    enabled "yes"
+}
+
+decoder {
+    plugin "mpg123"
+    enabled "yes"
+}
+
+
+EOF
+}
+
+print_config > "$MPDDIR/mpd.conf"
+
+mpd "$MPDDIR/mpd.conf"
+
+mpdpid=$(cat "$MPDDIR/pid")
+
+msg "MPD forked to background; PID=$mpdpid"
+
+mpc update -w
+#mpc listall | mpc add
+mpc status
+"${MPDCLIENT[@]}"
+
+#mpc quit
+kill "$mpdpid"
+rm -rf "${MPDDIR}"
