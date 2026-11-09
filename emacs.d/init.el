@@ -421,6 +421,9 @@
            :states '(normal visual motion) :keymaps 'override
            :prefix "SPC m" :predicate '(derived-mode-p 'agda2-mode) keys)))
 
+(with-eval-after-load 'dired
+    (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file))
+
 ;;; init.el ends here
 ;; (load (expand-file-name "setup-agda.el" user-emacs-directory))
 (autoload 'agda2-mode (expand-file-name "setup-agda.el" user-emacs-directory)
@@ -443,3 +446,4 @@
  "Agda" "UTF-8" #'quail-use-package "∏"
  "Agda input method (\\alpha -> α &c.); loads setup-agda.el on first use."
  (expand-file-name "setup-agda.el" user-emacs-directory))
+(put 'dired-find-alternate-file 'disabled nil)
