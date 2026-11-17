@@ -82,7 +82,8 @@ if vim.g.neovide then
     -- Put anything you want to happen only in Neovide here
     vim.o.guifont = "Source Code Pro:h12" -- text below applies for VimScript
     -- g:neovide_transparency should be 0 if you want to unify transparency of content and title bar.
-    vim.g.neovide_transparency = 0.95
+    -- vim.g.neovide_transparency = 0.95
+    vim.g.neovide_opacity = 0.95
     vim.g.neovide_background_color = "#9fbc0000"
     vim.g.neovide_cursor_animation_length = 0.08
     vim.g.neovide_cursor_trail_size = 0.0
